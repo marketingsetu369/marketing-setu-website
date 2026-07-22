@@ -1,0 +1,276 @@
+import { TranslationDictionary } from "./types";
+
+export const hi: TranslationDictionary = {
+  // Navigation
+  nav_home: "मुख्यपृष्ठ",
+  nav_services: "सेवाएं",
+  nav_pricing: "कीमतें",
+  nav_about: "हमारे बारे में",
+  nav_reviews: "समीक्षाएं",
+  nav_blog: "ब्लॉग",
+  nav_contact: "संपर्क",
+  nav_whatsapp_btn: "व्हाट्सएप करें",
+  nav_explore_services: "सेवाएं खोजें",
+
+  // Footer & Contact
+  footer_tagline: "आपके व्यवसाय और आपके ग्राहकों के बीच का सेतु — भारत के छोटे व्यवसायों के लिए व्हाट्सएप मार्केटिंग, लैंडिंग पेज और लोकल ग्रोथ टूल्स।",
+  footer_company: "कंपनी",
+  footer_services: "सेवाएं",
+  footer_get_in_touch: "संपर्क करें",
+  footer_rights: "© 2026 मार्केटिंगसेतु। सर्वाधिकार सुरक्षित।",
+  footer_privacy: "गोपनीयता नीति",
+  footer_terms: "सेवा की शर्तें",
+
+  // General buttons / shared
+  btn_whatsapp_chat: "💬 व्हाट्सएप पर चैट करें",
+  btn_free_consultation: "मुफ़्त सलाह",
+  btn_ask_whatsapp: "💬 व्हाट्सएप पर पूछें",
+  btn_get_started: "शुरू करें",
+  btn_view_plan: "प्लान देखें",
+  btn_see_all_services: "सभी सेवाएं देखें →",
+
+  // Home Page
+  home_hero_eyebrow: "सेतु · प्रगति का मार्ग",
+  home_hero_title_1: "अपने व्यवसाय को हर ग्राहक तक पहुंचाएं, ",
+  home_hero_title_gradient: "सिर्फ एक मैसेज से।",
+  home_hero_lead: "मार्केटिंगसेतु भारतीय छोटे व्यवसायों और उनके ग्राहकों के बीच का सेतु बनाता है — व्हाट्सएप ऑटोमेशन, लैंडिंग पेज और त्वरित जवाब देने वाला लोकल मार्केटिंग सिस्टम।",
+  home_hero_stat_1: "500+ जुड़े हुए व्यवसाय",
+  home_hero_stat_2: "98% ग्राहक संतुष्टि",
+  home_hero_stat_3: "3 गुना औसत वृद्धि",
+  home_hero_stat_4: "24/7 व्हाट्सएप सपोर्ट",
+
+  home_services_eyebrow: "हमारी सेवाएं",
+  home_services_heading: "आपके व्यवसाय की पहचान बढ़ाने के लिए सभी आवश्यक टूल्स",
+  home_services_subtext: "अपने ग्राहकों तक आसानी से पहुंचने के तरीके: व्हाट्सएप, गूगल और सीधे फोन कॉल के माध्यम से।",
+
+  home_pricing_eyebrow: "कीमत और प्लान्स",
+  home_pricing_heading: "आसान प्लान्स। बेहतरीन परिणाम।",
+  home_pricing_subtext: "अपने व्यवसाय के अनुकूल प्लान चुनें — कोई छुपा हुआ शुल्क नहीं।",
+
+  home_why_eyebrow: "मार्केटिंगसेतु क्यों चुनें",
+  home_why_heading: "परिणाम-उन्मुख। विश्वसनीय। किफायती।",
+
+  home_how_eyebrow: "यह कैसे काम करता है",
+  home_how_heading: "3 आसान स्टेप्स में शुरू करें",
+
+  home_testimonials_eyebrow: "ग्राहकों के अनुभव",
+  home_testimonials_heading: "हमारे ग्राहक क्या कहते हैं",
+
+  home_cta_heading: "अधिक ग्राहकों तक पहुंचने के लिए तैयार हैं?",
+  home_cta_description: "हमें व्हाट्सएप पर मैसेज करें और मुफ़्त सलाह पाएं — अधिकांश व्यवसायों को एक घंटे के भीतर जवाब मिलता है।",
+
+  // About Page
+  about_hero_breadcrumb: "हमारे बारे में",
+  about_hero_eyebrow: "मार्केटिंगसेतु के बारे में",
+  about_hero_lead: "मार्केटिंगसेतु की शुरुआत एक सरल विश्वास के साथ हुई थी: हर स्थानीय दुकान, क्लिनिक और छोटे व्यवसाय को बड़े ब्रांड्स जैसी ही डिजिटल पहुंच मिलनी चाहिए, वह भी बड़े बजट के बिना।",
+  about_story_eyebrow: "हमारी कहानी",
+  about_story_heading: "मिस्ड कॉल से लेकर खोए हुए ग्राहकों तक — हमने इस अंतर को करीब से देखा",
+  about_story_p1: "Working closely with small businesses across Maharashtra, our team kept hearing the same story: a customer calls, no one picks up in time, and the lead is gone. Meanwhile, WhatsApp — the app already open on every customer's phone — was going completely unused for marketing.",
+  about_story_p2: "मार्केटिंगसेतु इसी अंतर को पाटने के लिए बनाया गया है। हम व्हाट्सएप ऑटोमेशन, मिस्ड-कॉल रिप्लाई और फास्ट लैंडिंग पेजेस को एक किफायती वार्षिक प्लान में शामिल करते हैं।",
+  about_serve_eyebrow: "हम किसे सेवा देते हैं",
+  about_serve_heading: "हर प्रकार का छोटा व्यवसायी, सिर्फ एक व्हाट्सएप मैसेज दूर",
+  about_serve_p1: "स्थानीय लॉन्ड्री से लेकर बुटीक, रेस्टोरेंट और रियल एस्टेट एजेंट्स तक — हमारे ग्राहक भारत की अर्थव्यवस्था की रीढ़ हैं। यदि आपके ग्राहक फोन का उपयोग करते हैं, तो वे सबसे पहले आप तक पहुंचेंगे।",
+  about_mission_title: "हमारा उद्देश्य",
+  about_mission_desc: "भारतीय छोटे व्यवसायों और ग्राहकों को जोड़ने वाला सबसे सरल और किफायती सेतु (पुल) बनना।",
+  about_promise_title: "हमारा वादा",
+  about_promise_desc: "कोई जटिल तकनीकी भाषा नहीं, कोई लंबे कॉन्ट्रैक्ट नहीं — केवल वो टूल्स जो सच में काम आएं।",
+  about_values_eyebrow: "हमारे मूल्य",
+  about_values_heading: "हमारे मूल्य",
+  about_process_eyebrow: "हमारी प्रक्रिया",
+  about_process_heading: "हम कैसे काम करते हैं",
+  about_cta_heading: "क्या हम आपके व्यवसाय के लिए सही हैं?",
+  about_cta_description: "व्हाट्सएप पर अपने व्यवसाय के बारे में बताएं — कोई दबाव नहीं, केवल सही और ईमानदार सलाह।",
+
+  // Services Page
+  services_hero_breadcrumb: "सेवाएं",
+  services_hero_eyebrow: "हमारी सेवाएं",
+  services_hero_title: "भारतीय ग्राहकों की संवाद शैली के अनुसार बनाए गए मार्केटिंग टूल्स",
+  services_hero_lead: "पहले मिस्ड कॉल रिप्लाई से लेकर व्हाट्सएप ब्रॉडकास्ट तक, हर सेवा ग्राहकों को आकर्षित करने के लिए बनाई गई है.",
+  services_cta_heading: "कौन सी सेवा आपके व्यवसाय के लिए सही है, इस पर उलझन है?",
+  services_cta_description: "हमें बताएं कि आप क्या बेचते हैं — हम व्हाट्सएप चैट पर ही सही विकल्प सुझाएंगे।",
+
+  // Pricing Page
+  pricing_hero_breadcrumb: "कीमतें",
+  pricing_hero_eyebrow: "कीमत और प्लान्स",
+  pricing_hero_title: "आसान प्लान्स। बेहतरीन परिणाम। कोई छुपा हुआ शुल्क नहीं।",
+  pricing_hero_lead: "हर प्लान का साल में एक ही बार भुगतान करना होता है। आज ही आसान प्लान से शुरुआत करें और जरूरत पड़ने पर अपग्रेड करें।",
+  pricing_help_note: "सभी प्लान्स में ऑनबोर्डिंग सेटअप सपोर्ट शामिल है। प्लान चुनने में मदद चाहिए?",
+  pricing_help_btn: "हमसे बात करें",
+  pricing_faq_eyebrow: "प्रश्नोत्तरी",
+  pricing_faq_heading: "अक्सर पूछे जाने वाले प्रश्न",
+  pricing_cta_heading: "अभी भी सोच रहे हैं?",
+  pricing_cta_description: "अपने व्यवसाय का प्रकार और शहर का नाम मैसेज करें — हम तुरंत सही प्लान सुझाएंगे।",
+
+  // Compare Table
+  compare_table_eyebrow: "प्लान्स की तुलना",
+  compare_table_heading: "सभी खूबियां, आमने-सामने",
+  compare_table_col_feature: "खूबी",
+
+  // Reviews / Testimonials Page
+  reviews_hero_breadcrumb: "समीक्षाएं",
+  reviews_hero_eyebrow: "ग्राहकों के अनुभव",
+  reviews_hero_title: "असली व्यवसाय। असली परिणाम। असली प्रगति।",
+  reviews_hero_lead: "देखें कि कैसे मार्केटिंगसेतु ने महाराष्ट्र के छोटे व्यवसायों को अधिक ग्राहकों से जुड़ने में मदद की।",
+  reviews_join_eyebrow: "जुड़ें",
+  reviews_join_heading: "आपका व्यवसाय हमारी अगली सफलता की कहानी हो सकता है",
+  reviews_join_desc: "अपने व्यवसाय के बारे में बताएं और देखें कि हमारे प्लान आपके लिए कैसे काम कर सकते हैं।",
+
+  // Blog Page
+  blog_hero_breadcrumb: "ब्लॉग",
+  blog_hero_eyebrow: "मार्केटिंगसेतु ब्लॉग",
+  blog_hero_title: "छोटे व्यवसायों के लिए सरल और व्यावहारिक मार्केटिंग सलाह",
+  blog_hero_lead: "व्हाट्सएप मार्केटिंग, गूगल मैप्स और ऑनलाइन व्यापार बढ़ाने के बारे में आसान गाइड।",
+  blog_cta_heading: "मार्केटिंग टिप्स सीधे व्हाट्सएप पर पाना चाहते हैं?",
+  blog_cta_description: "हमें मैसेज करें और हम आपके व्यवसाय से संबंधित टिप्स शेयर करेंगे।",
+
+  // Contact Page
+  contact_hero_breadcrumb: "संपर्क",
+  contact_hero_eyebrow: "संपर्क करें",
+  contact_hero_title: "आइए आपके व्यवसाय को और अधिक ग्राहकों से जोड़ें",
+  contact_hero_lead: "हमारे प्लान्स, सेवाओं या व्हाट्सएप मार्केटिंग के बारे में कोई प्रश्न है? हमें मैसेज भेजें, हमारी टीम मदद करेगी.",
+  contact_info_title: "सीधे संपर्क करें",
+  contact_info_subtitle: "हमें आपके व्यवसाय के बारे में सुनना पसंद आएगा। व्हाट्सएप करें या संदेश भेजें.",
+  contact_form_title: "संदेश भेजें",
+  contact_form_name: "आपका नाम",
+  contact_form_phone: "फ़ोन नंबर",
+  contact_form_business: "व्यवसाय का नाम",
+  contact_form_plan: "रुचि का प्लान",
+  contact_form_message: "हम आपकी किस प्रकार सहायता कर सकते हैं?",
+  contact_form_submit: "संदेश भेजें",
+  contact_form_success: "धन्यवाद! हम जल्द ही आपसे संपर्क करेंगे।",
+  contact_form_name_placeholder: "आपका नाम",
+  contact_form_phone_placeholder: "+91 90000 00000",
+  contact_form_business_placeholder: "आपके बिज़नेस का नाम",
+  contact_form_plan_starter: "Starter – ₹४,९९९",
+  contact_form_plan_growth: "Growth – ₹९,९९९",
+  contact_form_plan_pro: "Pro – ₹१४,९९९",
+  contact_form_submitting: "भेजा जा रहा है...",
+
+  // Dynamic Service Titles & Leads
+  service_wa_title: "व्हाट्सएप मार्केटिंग",
+  service_wa_lead: "अपने ग्राहकों तक सीधे व्हाट्सएप पर पहुंचें, जहां वे पहले से अपना समय बिता रहे हैं।",
+  service_lp_title: "लैंडिंग पेज डिज़ाईन",
+  service_lp_lead: "अतिरिक्त कस्टमर्स और पूछताछ लाने वाला फ़ास्ट और मोबाइल-फ्रेंडली सिंगल लैंडिंग पेज।",
+  service_mc_title: "मिस्ड कॉल ऑटो एसएमएस",
+  service_mc_lead: "कॉल न उठने या व्यस्त रहने पर कस्टमर को तत्काल ऑटोमैटिक एसएमएस रिप्लाई सेंड करें।",
+  service_gb_title: "गूगल बिजनेस सेटअप",
+  service_gb_lead: "अपने बिजनेस प्रोफाइल को गूगल मैप्स के टॉप पर लाएं ताकि लोग आपको आसानी से खोजें।",
+  service_badge_popular: "सबसे लोकप्रिय",
+
+  // Dynamic Plan Details
+  plan_starter_name: "स्टार्टर",
+  plan_starter_price: "₹४,९९९",
+  plan_starter_desc: "छोटे और नए व्यवसायों के लिए",
+  plan_growth_name: "ग्रोथ",
+  plan_growth_price: "₹९,९९९",
+  plan_growth_desc: "बढ़ते हुए स्थानीय आउटलेट्स के लिए",
+  plan_pro_name: "प्रो",
+  plan_pro_price: "₹१४,९९९",
+  plan_pro_desc: "कम्पलीट ऑटोमेशन और लीड मैनेजमेंट",
+
+  plan_feat_lp: "१ लैंडिंग पेज",
+  plan_feat_wa: "व्हाट्सएप ब्रॉडकास्ट",
+  plan_feat_mc: "मिस्ड कॉल ऑटो एसएमएस",
+  plan_feat_gb: "गूगल मैप्स सेटअप",
+  plan_feat_support: "समर्पित सपोर्ट",
+  plan_feat_desc_included: "प्लान की सभी सुविधाएं उपलब्ध हैं",
+  plan_help_choose: "हम मदद करेंगे।",
+
+  // Why Us Features
+  why_us_f1_title: "फास्ट डिलीवरी",
+  why_us_f1_desc: "कैंपेन और डिज़ाइन पर त्वरित डिलीवरी, ताकि आपका व्यवसाय कभी न रुके।",
+  why_us_f2_title: "प्रमाणित परिणाम",
+  why_us_f2_desc: "हमारे क्लाइंट्स को कुछ ही हफ़्तों में लीड्स और सेल्स में वास्तविक ग्रोथ दिखती है।",
+  why_us_f3_title: "किफायती दाम",
+  why_us_f3_desc: "छोटे और बढ़ते व्यवसायों के बजट में बिल्कुल फ़िट होने वाला डिजिटल मार्केटिंग।",
+  why_us_f4_title: "समर्पित सपोर्ट",
+  why_us_f4_desc: "एक पर्सनल मैनेजर जो आपके गोल्स और बिज़नेस को अच्छे से समझे।",
+
+  // How Steps
+  how_s1_title: "संपर्क करें",
+  how_s1_desc: "व्हाट्सएप या फॉर्म द्वारा हमसे कनेक्ट होकर अपने बिजनेस की जानकारी दें।",
+  how_s2_title: "प्लानिंग और सेटअप",
+  how_s2_desc: "हमारी टीम सही स्ट्रेटेजी तैयार कर आपकी कैंपेन जल्द लॉन्च करती है।",
+  how_s3_title: "ग्रोथ ट्रैक करें",
+  how_s3_desc: "नियमित रिपोर्ट प्राप्त करें और अपने ग्राहकों को निरंतर बढ़ते हुए देखें।",
+
+  // Testimonials
+  testi_1_text: "मार्केटिंगसेतु के व्हाट्सएप ब्रॉडकास्ट की मदद से हमारे त्योहारों के ऑर्डर दोगुने हो गए!",
+  testi_1_role: "मालिक, समर्थ गारमेंट्स, पुणे",
+  testi_2_text: "फोन व्यस्त होने पर भी मिस्ड कॉल एसएमएस ऑटोमैटिकली चला जाता है। बेहतरीन सर्विस!",
+  testi_2_role: "डॉक्टर, निरोगी क्लिनिक, नाशिक",
+  testi_3_text: "सिर्फ ३ दिनों के भीतर हमें गूगल मैप्स से सीधे नए कस्टमर्स मिलना शुरू हो गए।",
+  testi_3_role: "मालिक, रॉयल कैफे, कोल्हापूर",
+  testi_4_text: "हमारे ड्राई-क्लीनिंग शॉप को व्हाट्सएप बुकिंग के साथ एक बेहतरीन लैंडिंग पेज मिला — कस्टमर्स अब बिना कॉल किए बुकिंग कर लेते हैं।",
+  testi_4_role: "मालिक, संजय देशमुख, पिंपरी",
+  testi_5_text: "त्योहारों के सोशल मीडिया पोस्ट्स ने हमारा बहुत समय बचाया। हमारा इंस्टाग्राम पर रिस्पॉन्स हर महीने बेहतर हो रहा है।",
+  testi_5_role: "मालिक, वेंकट टी., कैटरिंग व्यवसाय",
+  testi_6_text: "सेटअप बहुत तेज था और टीम ने सबकुछ बहुत सरल हिंदी और इंग्लिश में समझाया। कोई मुश्किल टेक्निकल भाषा नहीं थी।",
+  testi_6_role: "मालिक, नीता जोशी, नर्सरी, मलकापुर",
+
+  // About Values
+  about_val_1_title: "व्यावहारिक सलाह",
+  about_val_1_desc: "हम वही सलाह देते हैं जो आपके व्यवसाय के लिए उपयुक्त हो, न कि कोई मुश्किल टूल्स।",
+  about_val_2_title: "सरल भाषा में सपोर्ट",
+  about_val_2_desc: "हर क्लाइंट को व्हाट्सएप पर उनकी सुविधानुसार सरल भाषा में सपोर्ट मिलता है।",
+  about_val_3_title: "सच्ची ग्रोथ रिपोर्ट",
+  about_val_3_desc: "मंथली लीड्स और मैसेजेस की स्पष्ट रिपोर्ट — कोई दिखावा नहीं।",
+
+  // About Steps
+  about_step_1_title: "आपके बिज़नेस को समझना",
+  about_step_1_desc: "आपके प्रोडक्ट्स और कस्टमर्स को समझने के लिए एक छोटी व्हाट्सएप कॉल या चैट।",
+  about_step_2_title: "सेतु का निर्माण",
+  about_step_2_desc: "हम कुछ ही दिनों में आपके व्हाट्सएप ऑटोमेशन, लैंडिंग पेज और गूगल सेटअप करते हैं।",
+  about_step_3_title: "सपोर्ट और ग्रोथ",
+  about_step_3_desc: "लगातार सपोर्ट, ऑफर्स के आइडियाज और सरल रिपोर्ट ताकि आपको पूरा भरोसा रहे।",
+
+  // About Page Serve tags
+  about_tag_retail: "रिटेल और बुटीक",
+  about_tag_restaurant: "रेस्टोरेंट और कैटरिंग",
+  about_tag_real_estate: "रियल एस्टेट",
+  about_tag_services: "सर्विसेज और ट्रेडर्स",
+
+  // Contact Info keys
+  contact_info_email: "ईमेल",
+  contact_info_location: "पता",
+  contact_info_hours: "समय",
+  contact_info_hours_val: "सोम – शनि, सुबह ९ से शाम ७ बजे",
+  contact_info_wa_now: "💬 तुरंत व्हाट्सएप करें",
+  contact_form_plan_select: "प्लान चुनें",
+  contact_form_plan_not_sure: "अभी तय नहीं",
+  contact_form_msg_placeholder: "हम किस तरह आपकी सहायता कर सकते हैं...",
+  contact_form_btn: "व्हाट्सएप पर भेजें 💬",
+
+  // Faqs lists
+  faq_pricing_q1: "क्या कोई हिडन चार्ज है?",
+  faq_pricing_a1: "बिल्कुल नहीं। हम साल में केवल एक बार निश्चित शुल्क लेते हैं। ऑनबोर्डिंग या सेटअप के लिए कोई अतिरिक्त फीस नहीं ली जाती।",
+  faq_pricing_q2: "क्या मैं अपना प्लान कभी भी बदल सकता हूँ?",
+  faq_pricing_a2: "हाँ, आप किसी भी समय अपने प्लान को अपग्रेड या डाउनग्रेड कर सकते हैं। बची हुई राशि तदनुसार एडजस्ट की जाएगी।",
+  faq_pricing_q3: "क्या इसमें व्हाट्सएप एपीआई की लागत शामिल है?",
+  faq_pricing_a3: "हमारे प्लान्स सामान्य उपयोग के लिए पर्याप्त हैं। बहुत बड़े पैमाने पर संदेश भेजने की स्थिति में मामूली व्हाट्सएप चार्जेस की जानकारी आपको पहले ही दी जाएगी।",
+
+  faq_contact_q1: "साइन अप के बाद काम शुरू होने में कितना समय लगता है?",
+  faq_contact_a1: "आम तौर पर ५ से ७ कार्यदिवसों में आपका लैंडिंग पेज और व्हाट्सएप सिस्टम तैयार हो जाता है।",
+  faq_contact_q2: "क्या मुझे टेक्निकल नॉलेज होना जरूरी है?",
+  faq_contact_a2: "बिल्कुल नहीं। हमारी सपोर्ट टीम पूरा सेटअप, डिज़ाइन और टेक्निकल काम खुद संभालती है।",
+  faq_contact_q3: "क्या मैं अपना मौजूदा मोबाइल नंबर इस्तेमाल कर सकता हूँ?",
+  faq_contact_a3: "हाँ, आप अपने वर्तमान बिजनेस नंबर पर भी व्हाट्सएप ऑटोमेशन एक्टिवेट कर सकते हैं।",
+
+  // Compare Table translation elements
+  comp_feat_lp: "लैंडिंग पेजेस",
+  comp_feat_wa: "व्हाट्सएप ब्रॉडकास्ट",
+  comp_feat_mc: "मिस्ड कॉल ऑटो एसएमएस",
+  comp_feat_gb: "गूगल बिजनेस सेटअप",
+  comp_feat_domain: "कस्टम डोमेन",
+  comp_feat_reports: "मासिक रिपोर्ट्स",
+  comp_feat_call: "ऑनबोर्डिंग कॉल",
+  comp_feat_support: "सपोर्ट",
+  comp_val_month: "१ / महीना",
+  comp_val_unlimited: "असीमित",
+  error_name_required: "नाम आवश्यक है",
+  error_phone_required: "फ़ोन नंबर आवश्यक है",
+  error_phone_invalid: "कृपया १० अंकों का वैध फ़ोन नंबर दर्ज करें",
+  error_business_required: "व्यवसाय का नाम आवश्यक है",
+  error_plan_required: "कृपया एक प्लान चुनें",
+  error_message_required: "संदेश आवश्यक है",
+};
