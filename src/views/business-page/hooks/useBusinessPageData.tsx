@@ -72,6 +72,7 @@ export function useBusinessPageData(data: BusinessPageData | null): UseBusinessP
         actionType,
         iconColor:    "var(--business-primary)",
         imageUrl:     p.imageUrl,
+        buttonName:   p.buttonName ?? (actionType === ProductActionType.Buy ? "Buy Now" : "Enquiry"),
       };
     });
   }, [data?.products]);

@@ -9,10 +9,27 @@ export type { ProductCardItem as ProductProps };
 
 interface ProductCardProps {
   product: ProductCardItem;
+  mobileNumber?: string;
+  businessName?: string;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, mobileNumber, businessName }: ProductCardProps) {
   const isBuy = product.actionType === ProductActionType.Buy;
+
+  const handleEnquiry = () => {
+    if (!mobileNumber) return;
+
+    // Clean phone number format (remove non-digits and add 91 country code if 10-digit)
+    let cleanPhone = mobileNumber.replace(/[^0-9]/g, "");
+    if (cleanPhone.length === 10) {
+      cleanPhone = `91${cleanPhone}`;
+    }
+
+    const message = `Hello ${businessName || "there"}!\n\nI am interested in inquiring about the following product listed on your website:\n\n*Product Name:* ${product.name}\n*Price:* ${product.price}\n*Description:* ${product.description || "N/A"}\n\nCould you please provide more details? Thank you!`;
+
+    const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+    window.open(waUrl, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <div className="product-item-card">
@@ -41,8 +58,11 @@ export default function ProductCard({ product }: ProductCardProps) {
               <span className="product-item-price-subtext">{product.priceSubtext}</span>
             )}
           </div>
-          <AppButton className={`buy-action-btn ${isBuy ? "primary" : "outline"}`}>
-            {isBuy ? "Buy Now" : "Enquiry"}
+          <AppButton 
+            onClick={handleEnquiry}
+            className={`buy-action-btn ${isBuy ? "primary" : "outline"}`}
+          >
+            {product.buttonName || (isBuy ? "Buy Now" : "Enquiry")}
           </AppButton>
         </div>
       </div>

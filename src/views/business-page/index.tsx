@@ -143,7 +143,12 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
             {productsList.length > 0 ? (
               <div className="products-cards-grid">
                 {productsList.map((product: ProductProps) => (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard 
+                    key={product.id} 
+                    product={product} 
+                    mobileNumber={data.mobile_number}
+                    businessName={decodedBusinessName}
+                  />
                 ))}
               </div>
             ) : (

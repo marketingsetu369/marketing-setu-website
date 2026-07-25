@@ -51,6 +51,7 @@ export interface ProductCardItem {
   actionType: ProductActionType;
   iconColor: string;
   imageUrl?: string;
+  buttonName?: string;
 }
 
 export interface QuickActionItem {
