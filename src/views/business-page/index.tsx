@@ -148,6 +148,7 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
                     product={product} 
                     mobileNumber={data.mobile_number}
                     businessName={decodedBusinessName}
+                    slug={data.slug}
                   />
                 ))}
               </div>
