@@ -5,9 +5,10 @@ import { ScooterIcon } from "../svg";
 interface BusinessLogoProps {
   logoUrl?: string;
   businessName?: string;
+  priority?: boolean;
 }
 
-export default function BusinessLogo({ logoUrl, businessName }: BusinessLogoProps) {
+export default function BusinessLogo({ logoUrl, businessName, priority = false }: BusinessLogoProps) {
   if (logoUrl) {
     return (
       <Image
@@ -16,6 +17,7 @@ export default function BusinessLogo({ logoUrl, businessName }: BusinessLogoProp
         width={50}
         height={50}
         className="business-logo-img"
+        priority={priority}
       />
     );
   }

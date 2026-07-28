@@ -27,7 +27,7 @@ export default function StepsSection({
         <div className="steps">
           {steps.map((step, index) => (
             <div key={index} className="step reveal">
-              <div className="num">{step.number}</div>
+              <div className="num">STEP {step.number}</div>
               <h3>{step.title}</h3>
               <p>{step.description}</p>
             </div>

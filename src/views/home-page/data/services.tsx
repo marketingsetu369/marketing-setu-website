@@ -1,9 +1,19 @@
+import React from "react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  BubbleChatIcon,
+  BrowserIcon,
+  CallIncoming01Icon,
+  BotIcon,
+  Location01Icon,
+  Camera01Icon,
+} from "@hugeicons/core-free-icons";
 import { ServiceBlockItem } from "../component/ServiceBlock";
 
 export const servicesData: ServiceBlockItem[] = [
   {
     id: "whatsapp-marketing",
-    icon: "💬",
+    icon: <HugeiconsIcon icon={BubbleChatIcon} size={36} />,
     badge: "Most Popular",
     title: "WhatsApp Marketing",
     lead: "Reach customers where they already spend hours a day. Send bulk promotions, festival offers, and order updates directly to WhatsApp with delivery and open rates far above SMS or email.",
@@ -18,7 +28,7 @@ export const servicesData: ServiceBlockItem[] = [
   },
   {
     id: "landing-pages",
-    icon: "💻",
+    icon: <HugeiconsIcon icon={BrowserIcon} size={36} />,
     title: "Landing Page Design",
     lead: "A beautiful, fast, single-purpose page built around one campaign goal — whether that's bookings, enquiries, or sign-ups. Mobile-first, lightweight, and built to convert.",
     features: [
@@ -33,7 +43,7 @@ export const servicesData: ServiceBlockItem[] = [
   },
   {
     id: "missed-call",
-    icon: "📱",
+    icon: <HugeiconsIcon icon={CallIncoming01Icon} size={36} />,
     title: "Missed Call Auto Text",
     lead: "Never lose a lead to a busy line again. The moment someone calls and hangs up, they automatically receive a warm, personalised SMS from your business.",
     features: [
@@ -47,7 +57,7 @@ export const servicesData: ServiceBlockItem[] = [
   },
   {
     id: "auto-whatsapp",
-    icon: "🤖",
+    icon: <HugeiconsIcon icon={BotIcon} size={36} />,
     title: "Auto WhatsApp Message",
     lead: "Set up automated WhatsApp responses for common enquiries, booking confirmations, and follow-ups — so your business feels responsive 24 hours a day.",
     features: [
@@ -62,7 +72,7 @@ export const servicesData: ServiceBlockItem[] = [
   },
   {
     id: "google-business",
-    icon: "📍",
+    icon: <HugeiconsIcon icon={Location01Icon} size={36} />,
     title: "Google Business Setup",
     lead: "Get found by the customers already searching for you. We set up, verify, and optimise your Google Business Profile so you show up on Search and Maps.",
     features: [
@@ -76,7 +86,7 @@ export const servicesData: ServiceBlockItem[] = [
   },
   {
     id: "social-media",
-    icon: "📷",
+    icon: <HugeiconsIcon icon={Camera01Icon} size={36} />,
     title: "Social Media & Ad Posts",
     lead: "Instagram and Facebook marketing with eye-catching graphic posts, festival creatives, and targeted ad campaigns that build real local audience growth.",
     features: [

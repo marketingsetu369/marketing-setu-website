@@ -124,7 +124,7 @@ export default function HomeView() {
       {/* ─── HERO ─────────────────────────────────────────── */}
       <section className="hero">
         <div className="container hero-grid">
-          <div className="reveal">
+          <div className="reveal animate-fade-in-up">
             <span className="eyebrow">{t.home_hero_eyebrow}</span>
             <h1>
               {t.home_hero_title_1}
@@ -148,14 +148,14 @@ export default function HomeView() {
               ]}
             />
           </div>
-          <div className="hero-art reveal">
+          <div className="hero-art reveal animate-fade-in-up" style={{ animationDelay: "200ms" }}>
             <div className="hero-art-card">
               <BridgeScene />
             </div>
-            <div className="floating-chip chip-top">
+            <div className="floating-chip chip-top animate-bounce-y">
               <span className="dot"></span> {t.home_hero_stat_3}
             </div>
-            <div className="floating-chip chip-bottom">
+            <div className="floating-chip chip-bottom animate-bounce-y" style={{ animationDelay: "400ms" }}>
               💬 {t.home_hero_stat_4}
             </div>
           </div>
@@ -212,7 +212,7 @@ export default function HomeView() {
       <BridgeDivider tinted />
 
       {/* ─── PRICING PLANS ────────────────────────────────── */}
-      <section style={{ background: "var(--green-tint)" }}>
+      <section style={{ background: "var(--bg-light)" }}>
         <div className="container">
           <SectionHead
             eyebrow={t.home_pricing_eyebrow}
@@ -227,6 +227,16 @@ export default function HomeView() {
         </div>
       </section>
 
+      {/* ─── HOW IT WORKS ─────────────────────────────────── */}
+      <StepsSection
+        eyebrow={t.home_how_eyebrow}
+        heading={t.home_how_heading}
+        steps={getTranslatedHomeSteps()}
+        backgroundColor="var(--bg-main)"
+      />
+
+      <BridgeDivider />
+
       {/* ─── WHY CHOOSE US ────────────────────────────────── */}
       <section>
         <div className="container">
@@ -234,15 +244,6 @@ export default function HomeView() {
           <FeatureGrid items={getTranslatedWhyFeatures()} columns={2} />
         </div>
       </section>
-
-      <BridgeDivider />
-
-      {/* ─── HOW IT WORKS ─────────────────────────────────── */}
-      <StepsSection
-        eyebrow={t.home_how_eyebrow}
-        heading={t.home_how_heading}
-        steps={getTranslatedHomeSteps()}
-      />
 
       {/* ─── TESTIMONIALS ─────────────────────────────────── */}
       <section>

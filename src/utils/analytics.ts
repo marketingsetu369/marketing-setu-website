@@ -6,7 +6,7 @@ export type TrackActionType = TrackAction;
 export { TrackAction };
 
 export const trackUniqueAction = async (slug: string, action: TrackAction): Promise<void> => {
-  if (typeof window === "undefined" || !slug) return;
+  if (typeof window === "undefined" || !slug || slug === "doctor-preview") return;
 
   const storageKey =
     action === TrackAction.View
