@@ -1,228 +1,184 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import "./styles.css";
-import { AppButton } from "@/components/library";
-import { trackUniqueAction } from "@/utils";
-import { TrackAction, ThemeMode, ContactIconType } from "@/enums";
-import type { BusinessPageData, ContactItem } from "@/types/businessPage";
-import {
-  useBusinessPageData,
-  useThemeMode,
-  useCopyLink,
-  usePageTracking,
-} from "./hooks";
-
-// Components
-import {
-  ProductCard,
-  SidebarInfoItem,
-  SocialLink,
-  DashboardSection,
-  ProfileCard,
-  GalleryCard,
-  OfflinePage,
-  BusinessLogo,
-  ProductProps,
-} from "./component";
-
-// Data helpers
-import { renderIcon } from "./data";
-import { formatBusinessName } from "@/utils";
-
-// SVGs used directly in this view
-import { WhatsAppIcon, CopyIcon, QrIcon } from "./svg";
+import type { BusinessPageData } from "@/types/businessPage";
+import BakeryView from "./templates/bakery";
+import CafeView from "./templates/cafe";
+import Cafe2View from "./templates/cafe2";
+import DoctorView from "./templates/doctor";
+import GymView from "./templates/gym";
+import HotelView from "./templates/hotel";
+import JewelleryView from "./templates/jewellery";
+import NurseryView from "./templates/nursery";
+import PhotographerView from "./templates/photographer";
+import RealEstateView from "./templates/realEstate";
+import RestaurantView from "./templates/restaurant";
+import SalonSinglePageView from "./templates/salonSinglePage";
+import BusinessView from "./templates/starterTemplate";
+import TravelView from "./templates/travel";
 
 interface BusinessViewProps {
   data: BusinessPageData | null;
   businessName: string;
 }
 
-export default function BusinessView({ data, businessName }: BusinessViewProps) {
-  // ── Hooks ──────────────────────────────────────────────────────
-  const { theme, setTheme, mounted }   = useThemeMode();
-  const { copied, handleCopyLink }     = useCopyLink(data?.slug);
-  usePageTracking(data?.slug);
+export default function MainBusinessView({ data, businessName }: BusinessViewProps) {
+  const category = (data?.business_category || "").toLowerCase();
+  
+  const isDoctor = 
+    category.includes("doctor") || 
+    category.includes("clinic") || 
+    category.includes("dentist") || 
+    category.includes("hospital") || 
+    category.includes("medical") || 
+    category.includes("cardiologist") || 
+    category.includes("physician") || 
+    category.includes("healthcare");
 
-  const { accentColor, quickActions, contactsList, productsList, galleryList, socialsList } =
-    useBusinessPageData(data);
+  const isSalon = 
+    category.includes("salon") || 
+    category.includes("saloon") || 
+    category.includes("parlour") || 
+    category.includes("parlor") || 
+    category.includes("spa") || 
+    category.includes("hair") || 
+    category.includes("beauty") || 
+    category.includes("makeup") || 
+    category.includes("unisex") || 
+    category.includes("barber");
 
-  // ── Derived values ─────────────────────────────────────────────
-  const decodedBusinessName = React.useMemo(
-    () => formatBusinessName(businessName, data?.business_name),
-    [businessName, data?.business_name]
-  );
+  const isHotel = 
+    category.includes("hotel") || 
+    category.includes("resort") || 
+    category.includes("stay") || 
+    category.includes("inn") || 
+    category.includes("suite") || 
+    category.includes("lodging");
 
-  // ── Offline guard ──────────────────────────────────────────────
-  if (!data || !data.business_name) {
-    return <OfflinePage />;
+  // Cafe v2 — triggered by slug containing "cafe2" (preview) or template_data.cafe.variant === "v2"
+  const isCafe2 =
+    (data?.slug ?? "").includes("cafe2") ||
+    (data?.template_data?.cafe as { variant?: string } | undefined)?.variant === "v2";
+
+  const isCafe = 
+    !isCafe2 && (
+      category.includes("cafe") || 
+      category.includes("coffee") || 
+      category.includes("bakery") || 
+      category.includes("bistro") || 
+      category.includes("patio") || 
+      category.includes("espresso")
+    );
+
+  const isRestaurant = 
+    category.includes("restaurant") || 
+    category.includes("dining") || 
+    category.includes("bistro") || 
+    category.includes("eatery") || 
+    category.includes("bar") || 
+    category.includes("tavern");
+
+  const isGym = 
+    category.includes("gym") || 
+    category.includes("fitness") || 
+    category.includes("studio") || 
+    category.includes("crossfit") || 
+    category.includes("training") || 
+    category.includes("fitness center");
+
+  const isRealEstate = 
+    category.includes("real estate") || 
+    category.includes("property") || 
+    category.includes("realtor") || 
+    category.includes("broker") || 
+    category.includes("estate") || 
+    category.includes("housing");
+
+  const isJewellery = 
+    category.includes("jewellery") || 
+    category.includes("jewelry") || 
+    category.includes("gold") || 
+    category.includes("silver") || 
+    category.includes("diamond");
+
+  const isTravel = 
+    category.includes("travel") || 
+    category.includes("tour") || 
+    category.includes("trip") || 
+    category.includes("holiday") || 
+    category.includes("wanderlust");
+
+  const isPhotographer = 
+    category.includes("photograph") || 
+    category.includes("camera") || 
+    category.includes("lens") || 
+    category.includes("portfolio") || 
+    category.includes("shoot");
+
+  const isBakery = 
+    category.includes("bakery") || 
+    category.includes("cake") || 
+    category.includes("bake") || 
+    category.includes("bread") || 
+    category.includes("pastry");
+
+  const isNursery = 
+    category.includes("nursery") || 
+    category.includes("plant") || 
+    category.includes("garden") || 
+    category.includes("flower") || 
+    category.includes("grow");
+
+  if (isDoctor) {
+    return <DoctorView data={data} businessName={businessName} />;
   }
 
-  // ── Main Render ────────────────────────────────────────────────
-  return (
-    <div
-      className="business-page-wrapper"
-      style={{
-        "--business-primary":     accentColor.primary,
-        "--business-primary-rgb": accentColor.primaryRgb,
-      } as React.CSSProperties}
-    >
-      <div className="business-container">
+  if (isSalon) {
+    return <SalonSinglePageView data={data} businessName={businessName} />;
+  }
 
-        {/* LEFT COLUMN - SIDEBAR */}
-        <aside className="business-sidebar">
-          <ProfileCard
-            businessName={decodedBusinessName}
-            category={data.business_category ?? "General Business"}
-            description={data.about_us ?? ""}
-            logo={<BusinessLogo logoUrl={data.logo_url} businessName={data.business_name} />}
-          />
+  if (isHotel) {
+    return <HotelView data={data} businessName={businessName} />;
+  }
 
-          {/* Theme Mode Switcher */}
-          <div className="palette-card">
-            <h3 className="palette-title">Page Mode</h3>
-            <div className="palette-options">
-              {([ThemeMode.Light, ThemeMode.Dark] as const).map((mode) => (
-                <AppButton
-                  key={mode}
-                  onClick={() => setTheme(mode)}
-                  className={`action-pill theme-toggle-btn ${mounted && theme === mode ? "call" : "directions"}`}
-                  type="button"
-                >
-                  {mode === ThemeMode.Light ? "☀️ Light" : "🌙 Dark"}
-                </AppButton>
-              ))}
-            </div>
-          </div>
+  if (isCafe2) {
+    return <Cafe2View data={data} businessName={businessName} />;
+  }
 
-          {/* Quick Actions */}
-          <div className="quick-actions-bar">
-            {quickActions.map((action) => (
-              <Link
-                key={action.id}
-                href={action.href}
-                className={`action-pill ${action.type}`}
-                target={action.type !== TrackAction.Call ? "_blank" : undefined}
-                rel={action.type !== TrackAction.Call ? "noopener noreferrer" : undefined}
-                onClick={() => data.slug && trackUniqueAction(data.slug, action.type)}
-              >
-                {renderIcon(action.type, {
-                  className: `icon-sm${action.type === TrackAction.WhatsApp ? " icon-fill" : ""}`,
-                })}
-                {action.label}
-              </Link>
-            ))}
-          </div>
+  if (isCafe) {
+    return <CafeView data={data} businessName={businessName} />;
+  }
 
-          {/* Contact Details */}
-          <div className="info-card">
-            {contactsList.map((contact: ContactItem) => (
-              <SidebarInfoItem
-                key={contact.id}
-                {...contact}
-                icon={renderIcon(contact.iconType, { className: "icon-md" })}
-                onClick={() => {
-                  if (!data.slug) return;
-                  const actionType =
-                    contact.iconType === ContactIconType.Phone    ? TrackAction.Call
-                    : contact.iconType === ContactIconType.Location ? TrackAction.Directions
-                    : null;
-                  if (actionType) trackUniqueAction(data.slug, actionType);
-                }}
-              />
-            ))}
-          </div>
-        </aside>
+  if (isRestaurant) {
+    return <RestaurantView data={data} businessName={businessName} />;
+  }
 
-        {/* RIGHT COLUMN - MAIN CONTENT */}
-        <main className="business-main-content">
+  if (isGym) {
+    return <GymView data={data} businessName={businessName} />;
+  }
 
-          {/* Products & Services */}
-          <DashboardSection title="Products & Services">
-            {productsList.length > 0 ? (
-              <div className="products-cards-grid">
-                {productsList.map((product: ProductProps) => (
-                  <ProductCard 
-                    key={product.id} 
-                    product={product} 
-                    mobileNumber={data.mobile_number}
-                    businessName={decodedBusinessName}
-                    slug={data.slug}
-                  />
-                ))}
-              </div>
-            ) : (
-              <p className="section-empty-text">No products listed yet.</p>
-            )}
-          </DashboardSection>
+  if (isRealEstate) {
+    return <RealEstateView data={data} businessName={businessName} />;
+  }
 
-          {/* Gallery */}
-          <DashboardSection title="Gallery">
-            {galleryList.length > 0 ? (
-              <div className="gallery-layout-grid">
-                {galleryList.map((gallery) => (
-                  <GalleryCard key={gallery.id} colorClass={gallery.colorClass} imageUrl={gallery.imageUrl} icon={null} />
-                ))}
-              </div>
-            ) : (
-              <p className="section-empty-text">No gallery photos uploaded yet.</p>
-            )}
-          </DashboardSection>
+  if (isJewellery) {
+    return <JewelleryView data={data} businessName={businessName} />;
+  }
 
-          {/* Follow Us */}
-          {socialsList.length > 0 && (
-            <DashboardSection title="Follow Us">
-              <div className="socials-flex-container">
-                {socialsList.map((social) => (
-                  <SocialLink
-                    key={social.id}
-                    href={social.href}
-                    type={social.type}
-                    icon={renderIcon(social.type, {
-                      className: `icon-lg${social.type !== "web" ? " icon-fill" : ""}`,
-                    })}
-                  />
-                ))}
-              </div>
-            </DashboardSection>
-          )}
+  if (isTravel) {
+    return <TravelView data={data} businessName={businessName} />;
+  }
 
-          {/* Share Page */}
-          <DashboardSection title="Share Page">
-            <div className="share-dashboard-grid">
-              <div className="share-left-box">
-                <h3 className="share-pill-title">Share this business page</h3>
-                <div className="share-action-grid">
-                  <Link
-                    href={`https://api.whatsapp.com/send?text=${typeof window !== "undefined" ? encodeURIComponent(window.location.href) : ""}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="share-pill-button"
-                    onClick={() => data.slug && trackUniqueAction(data.slug, TrackAction.WhatsApp)}
-                  >
-                    <WhatsAppIcon className="icon-whatsapp-share" />
-                    WhatsApp
-                  </Link>
-                  <AppButton onClick={handleCopyLink} className="share-pill-button">
-                    <CopyIcon className="icon-copy-share" />
-                    {copied ? "Copied!" : "Copy Link"}
-                  </AppButton>
-                </div>
-              </div>
-              <div className="share-right-box">
-                <div className="qr-code-holder">
-                  <div className="qr-bordered-pattern">
-                    <QrIcon className="icon-qr" />
-                  </div>
-                </div>
-                <span className="qr-holder-caption">QR Code — Scan to visit</span>
-              </div>
-            </div>
-          </DashboardSection>
+  if (isPhotographer) {
+    return <PhotographerView data={data} businessName={businessName} />;
+  }
 
-        </main>
-      </div>
-    </div>
-  );
+  if (isBakery) {
+    return <BakeryView data={data} businessName={businessName} />;
+  }
+
+  if (isNursery) {
+    return <NurseryView data={data} businessName={businessName} />;
+  }
+
+  return <BusinessView data={data} businessName={businessName} />;
 }
