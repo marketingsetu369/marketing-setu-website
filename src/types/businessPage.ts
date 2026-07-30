@@ -31,6 +31,11 @@ export interface DoctorTemplateData {
   qualifications?: string;
   /** Shown below name in hero */
   specialty_line?: string;
+  hero_title?: string;
+  hero_subtitle?: string;
+  experience_years?: string;
+  opd_timing?: string;
+  qualifications_list?: string[];
   stats?: TemplateStat[];
   education_timeline?: Array<{
     period: string;
@@ -48,130 +53,21 @@ export interface DoctorTemplateData {
   }>;
 }
 
-export interface SalonHighlight {
-  title: string;
-  desc: string;
-  /** HugeIcons icon name string — template resolves to actual icon */
-  icon_name?: string;
-}
-
-export interface SalonTemplateData {
-  stats?: TemplateStat[];
-  highlights?: SalonHighlight[];
-  testimonials?: Array<{
-    text: string;
-    client: string;
-    location: string;
-  }>;
-  timings?: Array<{
-    day: string;
-    time: string;
-  }>;
-  /** Floating rating card values */
-  rating_value?: string;
-  rating_label?: string;
-}
-
-export interface GymTemplateData {
-  stats?: TemplateStat[];
-  /** Short tagline shown in focus-rows section */
-  programs_intro?: string;
-  focus_cards?: Array<{
-    title: string;
-    desc: string;
-    /** "bright" applies the accent highlight style */
-    variant?: "default" | "bright";
-  }>;
-}
-
-export interface HotelTemplateData {
-  hero_tagline?: string;
-  checkin?: string;
-  checkout?: string;
-  amenities?: string[];
-  /** Asymmetric service rows displayed in main section */
-  service_rows?: Array<{
-    title: string;
-    desc: string;
-    /** CSS class for the image box, e.g. "room-img" | "restaurant-img" */
-    image_class?: string;
-    /** "left-image" | "right-image" */
-    layout?: "left-image" | "right-image";
-  }>;
-}
-
 export interface CafeTemplateData {
-  /** Chalkboard "Today's Specials" list */
-  specials?: string[];
-  bakery_items?: string[];
-  /** Tagline shown above about_us in hero */
-  hero_tagline?: string;
-}
-
-export interface RestaurantTemplateData {
-  highlight_card?: {
-    label: string;
+  tagline?: string;
+  timing?: string;
+  categories?: Array<{
     title: string;
     desc: string;
-  };
-  testimonial_note?: {
-    heading: string;
-    body: string;
-    quote: string;
-    author: string;
-  };
-}
-
-export interface GoldRate {
-  label: string;
-  value: string;
-  subtext?: string;
-}
-
-export interface JewelleryTemplateData {
-  gold_rates?: GoldRate[];
-  /** Section tagline e.g. "The Gold Standard" */
-  eyebrow?: string;
-}
-
-export interface RealEstateTemplateData {
-  key_stats?: TemplateStat[];
-}
-
-export interface TravelTemplateData {
-  service_tiles?: Array<{
-    title: string;
-    desc: string;
+    img: string;
+  }>;
+  packagedProducts?: Array<{
+    name: string;
+    price: string;
+    image: string;
   }>;
 }
 
-export interface PhotographerTemplateData {
-  fields?: Array<{
-    title: string;
-    desc: string;
-  }>;
-  eyebrow?: string;
-}
-
-export interface BakeryTemplateData {
-  custom_order_cta?: {
-    heading: string;
-    body: string;
-    button_label: string;
-    whatsapp_message?: string;
-  };
-  badge_label?: string;
-}
-
-export interface NurseryTemplateData {
-  care_tip_cta?: {
-    heading: string;
-    body: string;
-    button_label: string;
-    whatsapp_message?: string;
-  };
-  badge_label?: string;
-}
 
 /**
  * template_data holds all per-template optional fields.
@@ -179,17 +75,7 @@ export interface NurseryTemplateData {
  */
 export interface TemplateData {
   doctor?: DoctorTemplateData;
-  salon?: SalonTemplateData;
-  gym?: GymTemplateData;
-  hotel?: HotelTemplateData;
   cafe?: CafeTemplateData;
-  restaurant?: RestaurantTemplateData;
-  jewellery?: JewelleryTemplateData;
-  real_estate?: RealEstateTemplateData;
-  travel?: TravelTemplateData;
-  photographer?: PhotographerTemplateData;
-  bakery?: BakeryTemplateData;
-  nursery?: NurseryTemplateData;
 }
 
 export interface BusinessPageData {
@@ -209,6 +95,7 @@ export interface BusinessPageData {
   gallery_images?: string[];
   /** Template-specific extra data — keyed by template name */
   template_data?: TemplateData;
+  template_key?: string;
 }
 
 // ── Derived / UI Types ─────────────────────────────────────────────────────
@@ -216,6 +103,7 @@ export interface BusinessPageData {
 export interface AccentColor {
   primary: string;
   primaryRgb: string;
+  primaryHover?: string;
 }
 
 /** Typed product card props — maps from raw `ProductItem` */

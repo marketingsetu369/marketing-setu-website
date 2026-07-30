@@ -2,7 +2,7 @@
 
 import { AppButton } from "@/components/library";
 import { ThemeMode, TrackAction } from "@/enums";
-import type { BusinessPageData, ContactItem } from "@/types/businessPage";
+import type { BusinessPageData } from "@/types/businessPage";
 import { trackUniqueAction } from "@/utils";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -35,57 +35,54 @@ import {
 
 // Components
 import {
-    BusinessLogo,
     OfflinePage,
     ProductCard,
     ProductProps,
-    SocialLink,
 } from "../component";
 
 // Data helpers
 import { formatBusinessName } from "@/utils";
-import { renderIcon } from "../data";
 
 // SVGs used directly in this view
 import { CopyIcon as SVGCopyIcon, QrIcon as SVGQrIcon, WhatsAppIcon } from "../svg";
 
-// Single Mock Data Object
-const mockDoctorData = {
-  brandName: "ProCares",
-  doctorName: "Dr. Alex Morgan",
-  specialization: "Senior Healthcare Provider & Cardiologist",
-  heroTitle: "Let's Make An Appointment For Health Care Provider",
-  heroSubtitle: "Dr. Aarav Mehta is a leading cardiologist with over 15 years of experience in advanced cardiac care, diagnostic cardiology, and personalized heart health treatments.",
-  experienceYears: "12+",
-  phone: "+91 98765 43210",
-  email: "care@procares.com",
-  opdTiming: "Mon - Sat: 09:00 AM - 08:00 PM",
-  clinicAddress: "Suite 402, Medical Enclave, City Center",
+// Single Mock Data Object for Lawyer/Advocate as per html request
+const mockLawerData = {
+  brandName: "THEMIS LAW AGENCY",
+  lawerName: "Adv. Rohan Sharma",
+  specialization: "Providing high-yield legal consultancy, litigation support, and strategic legal counsel across corporate and personal sectors.",
+  heroTitle: "Aiming To Provide High-Quality Legal Consultancy",
+  heroSubtitle: "We approach each problem with three essential elements: strategic thinking, creative solutions, and proven results.",
+  experienceYears: "25+",
+  phone: "+0123 456 789",
+  email: "hello@themis.com",
+  opdTiming: "Mon - Fri (8:00 - 20:00)",
+  clinicAddress: "123 Legal Avenue, Suite 400, Financial District, NY 10001",
   qualifications: [
-    "MBBS, MD (General Medicine)",
-    "Board Certified Specialist",
-    "10,000+ Patient Consultations",
-    "Modern Diagnostic Lab"
+    "25+ Years Experience",
+    "99% Case Success Rate",
+    "Dedicated Legal Team",
+    "Client-Centric Strategy"
   ],
   services: [
     {
       id: "s1",
-      name: "Cardiology Care",
-      description: "Comprehensive heart checkups, ECG monitoring, and personalized cardiovascular treatment plans.",
+      name: "Bankruptcy",
+      description: "Sound legal support and protection of assets through complex bankruptcy litigation and counseling.",
       price: "₹1,500",
       actionType: "enquiry"
     },
     {
       id: "s2",
-      name: "General Consultation",
-      description: "Thorough physical examinations, preventive health screenings, and expert medical advice.",
+      name: "Car Accidents",
+      description: "Relentless courtroom strategy and advocacy to secure maximum claims in accident damages.",
       price: "₹800",
       actionType: "enquiry"
     },
     {
       id: "s3",
-      name: "Telemedicine & Video OPD",
-      description: "Connect with doctor remotely for follow-ups, prescription renewals, and instant guidance.",
+      name: "Capital Market",
+      description: "Thorough legal advice, compliance guidelines, and disputes settlement in the capital market.",
       price: "₹1,000",
       actionType: "enquiry"
     }
@@ -97,7 +94,7 @@ interface BusinessViewProps {
   businessName: string;
 }
 
-export default function DoctorPortfolioView({ data, businessName }: BusinessViewProps) {
+export default function LawerPortfolioView({ data, businessName }: BusinessViewProps) {
   const { theme, setTheme, mounted }   = useThemeMode();
   const { copied, handleCopyLink }     = useCopyLink(data?.slug);
   usePageTracking(data?.slug);
@@ -122,39 +119,39 @@ export default function DoctorPortfolioView({ data, businessName }: BusinessView
   // Bind dynamic data / fallbacks to template
   const td = data.template_data?.doctor;
   
-  const brandName = data.business_name || mockDoctorData.brandName;
-  const doctorName = decodedBusinessName ? `Dr. ${decodedBusinessName}` : mockDoctorData.doctorName;
-  const specialty = td?.specialty_line ?? data.business_category ?? mockDoctorData.specialization;
-  const heroTitle = td?.hero_title ?? mockDoctorData.heroTitle;
-  const heroSubtitle = td?.hero_subtitle ?? data.about_us ?? mockDoctorData.heroSubtitle;
-  const experienceYears = td?.experience_years ?? mockDoctorData.experienceYears;
-  const phoneNumber = data.mobile_number || mockDoctorData.phone;
-  const opdTiming = td?.opd_timing ?? mockDoctorData.opdTiming;
-  const clinicAddress = data.location_address || mockDoctorData.clinicAddress;
+  const brandName = data.business_name || mockLawerData.brandName;
+  const doctorName = decodedBusinessName ? `Adv. ${decodedBusinessName}` : mockLawerData.lawerName;
+  const specialty = data.business_category ?? mockLawerData.specialization;
+  const heroTitle = mockLawerData.heroTitle;
+  const heroSubtitle = data.about_us ?? mockLawerData.heroSubtitle;
+  const experienceYears = mockLawerData.experienceYears;
+  const phoneNumber = data.mobile_number || mockLawerData.phone;
+  const opdTiming = mockLawerData.opdTiming;
+  const clinicAddress = data.location_address || mockLawerData.clinicAddress;
   
-  const qualifications = td?.qualifications_list ?? mockDoctorData.qualifications;
-  const servicesToRender = productsList.length > 0 ? productsList : mockDoctorData.services;
+  const qualifications = mockLawerData.qualifications;
+  const servicesToRender = productsList.length > 0 ? productsList : mockLawerData.services;
 
   // Contact Form Submission Handler
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget as HTMLFormElement);
-    const patientName = formData.get("patientName");
-    const patientPhone = formData.get("patientPhone");
-    const patientMessage = formData.get("patientMessage");
-    alert(`Enquiry submitted successfully!\nName: ${patientName}\nPhone: ${patientPhone}\nMessage: ${patientMessage}`);
+    const clientName = formData.get("clientName");
+    const clientPhone = formData.get("clientPhone");
+    const clientMessage = formData.get("clientMessage");
+    alert(`Enquiry submitted successfully!\nName: ${clientName}\nPhone: ${clientPhone}\nMessage: ${clientMessage}`);
     (e.currentTarget as HTMLFormElement).reset();
   };
 
-  const primaryColor = accentColor.primary || "#0247A5";
-  const primaryHover = accentColor.primaryHover || "#01347A";
+  const primaryColor = accentColor.primary || "#E5A117";
+  const primaryHover = accentColor.primaryHover || "#C98A0C";
 
   return (
     <div
       className="doctor-portfolio-wrapper"
       style={{
-        "--business-primary": primaryColor,
-        "--business-primary-hover": primaryHover,
+        "--primary-blue": primaryColor,
+        "--primary-hover": primaryHover,
       } as React.CSSProperties}
     >
       {/* HEADER / NAVBAR */}
@@ -236,7 +233,7 @@ export default function DoctorPortfolioView({ data, businessName }: BusinessView
           <div className="doc-hero-image-wrapper">
             <div className="doc-dotted-circle-frame">
               <img
-                src={data.logo_url || "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80"}
+                src={data.logo_url || "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80"}
                 alt={doctorName}
                 className="doc-hero-doctor-img"
               />
@@ -250,7 +247,7 @@ export default function DoctorPortfolioView({ data, businessName }: BusinessView
         <div className="doc-container">
           <div className="doc-section-header">
             <span>Our Specializations</span>
-            <h2>High Quality Healthcare Services</h2>
+            <h2>High Quality Legal Services</h2>
           </div>
 
           {productsList.length > 0 ? (
@@ -267,7 +264,7 @@ export default function DoctorPortfolioView({ data, businessName }: BusinessView
             </div>
           ) : (
             <div className="doc-services-grid-new">
-              {mockDoctorData.services.map((service) => (
+              {mockLawerData.services.map((service) => (
                 <div key={service.id} className="doc-service-card-new">
                   <div className="doc-service-icon-new">
                     <HugeiconsIcon 
@@ -284,11 +281,11 @@ export default function DoctorPortfolioView({ data, businessName }: BusinessView
         </div>
       </section>
 
-      {/* ABOUT DOCTOR */}
+      {/* ABOUT LAWER */}
       <section id="about" className="doc-section-padding doc-about-section">
         <div className="doc-container doc-about-grid">
           <div className="doc-about-img-box">
-            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80" alt="Clinic Clinic" />
+            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80" alt="Chambers" />
             <div className="doc-experience-badge">
               <h3>{experienceYears}</h3>
               <p>Years Experience</p>
@@ -296,7 +293,7 @@ export default function DoctorPortfolioView({ data, businessName }: BusinessView
           </div>
 
           <div className="doc-about-content">
-            <h2>Dedicated To Providing Compassionate Clinical Excellence</h2>
+            <h2>Defending Your Rights With Uncompromising Integrity</h2>
             <p>{specialty}</p>
 
             <div className="doc-doctor-qualifications">
@@ -319,7 +316,7 @@ export default function DoctorPortfolioView({ data, businessName }: BusinessView
             <div>
               <span style={{ color: "var(--primary-blue)", fontWeight: 700, textTransform: "uppercase" }}>Direct Consultation</span>
               <h2 style={{ fontSize: "2.2rem", color: "var(--text-dark)", margin: "10px 0 16px" }}>Send Us Your Enquiry</h2>
-              <p style={{ color: "var(--text-muted)", marginBottom: 24 }}>Fill out the form below to send an enquiry. Our medical support team will reach out to you shortly.</p>
+              <p style={{ color: "var(--text-muted)", marginBottom: 24 }}>Fill out the form below to send an enquiry. Our legal support team will reach out to you shortly.</p>
               
               <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -337,15 +334,15 @@ export default function DoctorPortfolioView({ data, businessName }: BusinessView
               <form onSubmit={handleContactSubmit}>
                 <div className="doc-form-group">
                   <label>Full Name</label>
-                  <input type="text" name="patientName" className="doc-form-control" placeholder="e.g. John Doe" required />
+                  <input type="text" name="clientName" className="doc-form-control" placeholder="e.g. John Doe" required />
                 </div>
                 <div className="doc-form-group">
                   <label>Phone Number</label>
-                  <input type="tel" name="patientPhone" className="doc-form-control" placeholder="+91 98765 43210" required />
+                  <input type="tel" name="clientPhone" className="doc-form-control" placeholder="+91 98765 43210" required />
                 </div>
                 <div className="doc-form-group">
                   <label>Your Message / Requirements</label>
-                  <textarea name="patientMessage" className="doc-form-control" placeholder="Describe your healthcare requirement..." rows={3} required />
+                  <textarea name="clientMessage" className="doc-form-control" placeholder="Describe your case details or legal requirements..." rows={3} required />
                 </div>
                 <button type="submit" className="doc-btn doc-btn-primary" style={{ width: "100%" }}>Send Enquiry</button>
               </form>
@@ -358,7 +355,7 @@ export default function DoctorPortfolioView({ data, businessName }: BusinessView
       <section className="doc-container doc-share-profile-card">
         <div className="doc-share-profile-box">
           <div className="doc-share-profile-left">
-            <h2>Share Digital Clinic Card</h2>
+            <h2>Share Digital Profile Card</h2>
             <p>Scan the QR Code or copy the link to share the profile with friends or family.</p>
             <div className="doc-share-profile-actions">
               <Link
@@ -397,26 +394,26 @@ export default function DoctorPortfolioView({ data, businessName }: BusinessView
                 )}
                 <span style={{ color: "white" }}>{brandName}</span>
               </a>
-              <p>Empowering healthcare through personalized consultations, online booking, and dedicated medical treatment.</p>
+              <p>Providing high-yield legal consultancy, litigation support, and strategic legal counsel across corporate and personal sectors.</p>
             </div>
 
             <div>
               <h4 className="doc-footer-title">Quick Links</h4>
               <ul className="doc-footer-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#about">About Doctor</a></li>
+                <li><a href="#about">About Lawer</a></li>
                 <li><a href="#services">Services</a></li>
-                <li><a href="#appointment">Book Visit</a></li>
+                <li><a href="#appointment">Enquiry</a></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="doc-footer-title">Services</h4>
+              <h4 className="doc-footer-title">Legal Areas</h4>
               <ul className="doc-footer-links">
-                <li><a href="#">Cardiology</a></li>
-                <li><a href="#">Health Checks</a></li>
-                <li><a href="#">Tele-Consultation</a></li>
-                <li><a href="#">Emergency Care</a></li>
+                <li><a href="#">Bankruptcy</a></li>
+                <li><a href="#">Car Accidents</a></li>
+                <li><a href="#">Capital Market</a></li>
+                <li><a href="#">Family Law</a></li>
               </ul>
             </div>
 

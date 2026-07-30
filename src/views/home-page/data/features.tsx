@@ -9,7 +9,11 @@ import {
   Agreement01Icon,
   AnalyticsUpIcon,
 } from "@hugeicons/core-free-icons";
-import { FeatureItem } from "./features";
+export interface FeatureItem {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
 
 export const whyUsFeatures: FeatureItem[] = [
   {
