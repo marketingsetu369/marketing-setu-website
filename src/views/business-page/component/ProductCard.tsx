@@ -50,18 +50,7 @@ export default function ProductCard({ product, mobileNumber, businessName, slug 
       });
 
       if (response.ok) {
-        // Clean target business phone number
-        let cleanPhone = mobileNumber ? mobileNumber.replace(/[^0-9]/g, "") : "";
-        if (cleanPhone.length === 10) {
-          cleanPhone = `91${cleanPhone}`;
-        }
-
-        const waMessage = `Hello ${businessName || "there"}!\n\nMy name is *${visitorName}* (Phone: ${visitorPhone}).\n\nI am interested in inquiring about your product *${product.name}* (Price: ${product.price}).\n\n*My Message:* ${visitorMessage || "N/A"}`;
-        const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(waMessage)}`;
-
-        // Open WhatsApp link to send directly from visitor's phone
-        window.open(waUrl, "_blank", "noopener,noreferrer");
-
+        alert("Enquiry submitted successfully! The business owner will get back to you soon.");
         setIsModalOpen(false);
         setVisitorName("");
         setVisitorPhone("");
