@@ -15,6 +15,7 @@ export interface ProductItem {
   price_subtext?: string;
   buttonName?: string;
   imageUrl?: string;
+  showPrice?: boolean;
 }
 
 export interface BusinessPageData {
@@ -52,6 +53,7 @@ export interface ProductCardItem {
   iconColor: string;
   imageUrl?: string;
   buttonName?: string;
+  showPrice?: boolean;
 }
 
 export interface QuickActionItem {

@@ -88,12 +88,14 @@ export default function ProductCard({ product, mobileNumber, businessName, slug 
           <h3 className="product-item-name">{product.name}</h3>
           <p className="product-item-desc">{product.description}</p>
           <div className="product-footer-row">
-            <div className="product-price-stack">
-              <span className="product-item-price">{product.price}</span>
-              {product.priceSubtext && (
-                <span className="product-item-price-subtext">{product.priceSubtext}</span>
-              )}
-            </div>
+            {product.showPrice === true && (
+              <div className="product-price-stack">
+                <span className="product-item-price">{product.price}</span>
+                {product.priceSubtext && (
+                  <span className="product-item-price-subtext">{product.priceSubtext}</span>
+                )}
+              </div>
+            )}
             <AppButton
               onClick={handleEnquiryClick}
               className="buy-action-btn outline"
