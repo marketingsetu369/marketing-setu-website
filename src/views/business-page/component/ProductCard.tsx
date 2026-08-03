@@ -46,6 +46,7 @@ export default function ProductCard({ product, mobileNumber, businessName, slug 
           productPrice: product.price,
           productDescription: product.description,
           message: visitorMessage,
+          isProduct: true,
         }),
       });
 

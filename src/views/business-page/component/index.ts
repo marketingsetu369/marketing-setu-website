@@ -7,3 +7,5 @@ export { default as ProfileCard } from "./ProfileCard";
 export { default as GalleryCard } from "./GalleryCard";
 export { default as OfflinePage } from "./OfflinePage";
 export { default as BusinessLogo } from "./BusinessLogo";
+export { default as GeneralEnquirySection } from "./GeneralEnquirySection";
+

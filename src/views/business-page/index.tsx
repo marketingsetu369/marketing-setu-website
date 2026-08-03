@@ -24,6 +24,7 @@ import {
   GalleryCard,
   OfflinePage,
   BusinessLogo,
+  GeneralEnquirySection,
   ProductProps,
 } from "./component";
 
@@ -156,6 +157,16 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
               <p className="section-empty-text">No products listed yet.</p>
             )}
           </DashboardSection>
+
+          {/* General Enquiry */}
+          {data.slug && (
+            <DashboardSection title="Send an Enquiry">
+              <GeneralEnquirySection
+                slug={data.slug}
+                businessName={decodedBusinessName}
+              />
+            </DashboardSection>
+          )}
 
           {/* Gallery */}
           <DashboardSection title="Gallery">
