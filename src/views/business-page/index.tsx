@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import "./styles.css";
 import { AppButton } from "@/components/library";
 import { trackUniqueAction } from "@/utils";
 import { TrackAction, ThemeMode, ContactIconType } from "@/enums";
