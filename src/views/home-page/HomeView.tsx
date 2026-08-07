@@ -1,14 +1,76 @@
 "use client";
 
 import { useThemeStore } from "@/store/themeStore";
-import { useWhatsApp, PageWrapper } from "@/views/home-page/component";
-import { translations } from "@/views/home-page/data";
+import { useWhatsApp, PageWrapper, PricingCard } from "@/views/home-page/component";
+import { translations, pricingPlans } from "@/views/home-page/data";
 import Link from "next/link";
 
 export default function HomeView() {
   const { openWhatsApp } = useWhatsApp();
   const { language } = useThemeStore();
   const t = translations[language] || translations.en;
+
+  const getTranslatedPlans = () => {
+    return pricingPlans.map((plan) => {
+      let badge = plan.badge;
+      let name = plan.name;
+      let price = plan.price;
+      let description = plan.description;
+
+      if (plan.id === "quick-connect") {
+        badge = t.plan_quick_badge;
+        name = t.plan_quick_name;
+        price = t.plan_quick_price;
+        description = t.plan_quick_desc;
+      } else if (plan.id === "smart-connect") {
+        badge = t.plan_smart_badge;
+        name = t.plan_smart_name;
+        price = t.plan_smart_price;
+        description = t.plan_smart_desc;
+      } else if (plan.id === "power-connect") {
+        badge = t.plan_power_badge;
+        name = t.plan_power_name;
+        price = t.plan_power_price;
+        description = t.plan_power_desc;
+      }
+
+      const featureMapping: Record<string, { bold: string; desc?: string }> = {
+        "Digital Business Card": { bold: t.plan_feat_digital_card },
+        "Auto SMS on Missed Call": { bold: t.plan_feat_auto_sms },
+        "Auto WhatsApp on Missed Call": { bold: t.plan_feat_auto_wa },
+        "Custom Landing Page": { bold: t.plan_feat_landing_page },
+        "Festival Social Media Posts": { bold: t.plan_feat_festivals },
+        "Everything in Starter": { bold: t.plan_feat_everything_starter },
+        "Everything in Growth": { bold: t.plan_feat_everything_growth },
+        "Everything in Smart Connect": { bold: t.plan_feat_everything_growth },
+        "Custom Landing Page + Domain": { bold: t.plan_feat_domain },
+        "Google Business Setup": { bold: t.plan_feat_google },
+      };
+
+      const translateFeatures = (featuresList: typeof plan.features) => {
+        return featuresList.map((f) => {
+          const mapped = featureMapping[f.bold];
+          if (mapped) {
+            return {
+              bold: mapped.bold,
+              desc: f.desc ? t.plan_feat_desc_included : undefined,
+            };
+          }
+          return f;
+        });
+      };
+
+      return {
+        ...plan,
+        badge,
+        name,
+        price,
+        description,
+        features: translateFeatures(plan.features),
+        compactFeatures: plan.compactFeatures ? translateFeatures(plan.compactFeatures) : undefined,
+      };
+    });
+  };
 
   return (
     <PageWrapper>
@@ -141,7 +203,7 @@ export default function HomeView() {
                 <div className="flex flex-col h-full justify-between">
                   <div>
                     <div className="mb-6 inline-block bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full w-max">{t.service_badge_popular}</div>
-                    <div className="w-14 h-14 bg-green-500 text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-green-200">
+                    <div className="w-14 h-14 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm rotate-6">
                       <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
                       </svg>
@@ -237,90 +299,13 @@ export default function HomeView() {
               <p className="text-brand-gray text-lg">{t.home_pricing_subtext}</p>
             </div>
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
-              {/* Starter Plan */}
-              <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm card-hover flex flex-col justify-between text-brand-dark">
-                <div>
-                  <div className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2">Starter • Setu Connect</div>
-                  <h3 className="text-2xl font-heading font-bold mb-4">{t.plan_starter_name}</h3>
-                  <p className="text-gray-500 text-sm h-12">{t.plan_starter_desc}</p>
-                  <div className="my-8">
-                    <span className="text-4xl font-bold font-heading">{t.plan_starter_price}</span>
-                    <span className="text-gray-500">/year</span>
-                  </div>
-                  <ul className="space-y-4 mb-8">
-                    <li className="flex items-start">
-                      <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                      <span className="text-sm text-gray-700">Digital Business Card</span>
-                    </li>
-                    <li className="flex items-start">
-                      <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                      <span className="text-sm text-gray-700">Auto SMS on Missed Call</span>
-                    </li>
-                  </ul>
-                </div>
-                <Link className="block w-full text-center px-6 py-3 border border-gray-300 rounded-full text-brand-dark font-medium hover:bg-gray-50 transition-colors mt-auto" href="/pricing">View Plan</Link>
-              </div>
-              {/* Growth Plan (Highlighted) */}
-              <div className="bg-brand-dark text-white rounded-3xl p-8 border border-brand-purple shadow-xl shadow-brand-purple/20 transform md:-translate-y-4 relative flex flex-col justify-between">
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <span className="bg-brand-purple text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">Most Popular</span>
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-brand-purpleLight opacity-80 uppercase tracking-wider mb-2 mt-2">Growth • Setu Bridge</div>
-                  <h3 className="text-2xl font-heading font-bold mb-4">{t.plan_growth_name}</h3>
-                  <p className="text-gray-300 text-sm h-12">{t.plan_growth_desc}</p>
-                  <div className="my-8">
-                    <span className="text-4xl font-bold font-heading">{t.plan_growth_price}</span>
-                    <span className="text-gray-400">/year</span>
-                  </div>
-                  <ul className="space-y-4 mb-8">
-                    <li className="flex items-start">
-                      <svg className="h-5 w-5 text-brand-teal mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                      <span className="text-sm text-gray-200">Everything in Starter</span>
-                    </li>
-                    <li className="flex items-start">
-                      <svg className="h-5 w-5 text-brand-teal mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                      <span className="text-sm text-gray-200">Auto WhatsApp on Missed Call</span>
-                    </li>
-                    <li className="flex items-start">
-                      <svg className="h-5 w-5 text-brand-teal mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                      <span className="text-sm text-gray-200">Custom Landing Page</span>
-                    </li>
-                    <li className="flex items-start">
-                      <svg className="h-5 w-5 text-brand-teal mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                      <span className="text-sm text-gray-200">Festival Social Media Posts</span>
-                    </li>
-                  </ul>
-                </div>
-                <Link className="block w-full text-center px-6 py-3 bg-brand-purple hover:bg-opacity-90 rounded-full text-white font-medium transition-colors mt-auto" href="/pricing">View Plan</Link>
-              </div>
-              {/* Pro Plan */}
-              <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm card-hover flex flex-col justify-between text-brand-dark">
-                <div>
-                  <div className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-2">Pro • Setu Summit</div>
-                  <h3 className="text-2xl font-heading font-bold mb-4">{t.plan_pro_name}</h3>
-                  <p className="text-gray-500 text-sm h-12">{t.plan_pro_desc}</p>
-                  <div className="my-8">
-                    <span className="text-4xl font-bold font-heading">{t.plan_pro_price}</span>
-                    <span className="text-gray-500">/year</span>
-                  </div>
-                  <ul className="space-y-4 mb-8">
-                    <li className="flex items-start">
-                      <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                      <span className="text-sm text-gray-700">Everything in Growth</span>
-                    </li>
-                    <li className="flex items-start">
-                      <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                      <span className="text-sm text-gray-700">Landing Page + Custom Domain</span>
-                    </li>
-                    <li className="flex items-start">
-                      <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                      <span className="text-sm text-gray-700">Google Business Setup</span>
-                    </li>
-                  </ul>
-                </div>
-                <Link className="block w-full text-center px-6 py-3 border border-gray-300 rounded-full text-brand-dark font-medium hover:bg-gray-50 transition-colors mt-auto" href="/pricing">View Plan</Link>
-              </div>
+              {getTranslatedPlans().map((plan, idx) => (
+                <PricingCard
+                  key={idx}
+                  plan={plan}
+                  href="/pricing"
+                />
+              ))}
             </div>
           </div>
         </section>

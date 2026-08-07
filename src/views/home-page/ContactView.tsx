@@ -19,20 +19,11 @@ export default function ContactView() {
   const t = translations[language] || translations.en;
 
   const getTranslatedFaqs = () => {
-    if (language === "mr") {
-      return [
-        { question: "साइन अप केल्यानंतर सेटअप व्हायला किती वेळ लागतो?", answer: "मोठ्या प्रमाणावर ५ ते ७ दिवसांत तुमचे लँडिंग पेज आणि व्हॉट्सॲप सेटअप तयार होते." },
-        { question: "मला तांत्रिक कामांची माहिती असणे आवश्यक आहे का?", answer: "बिलकुल नाही. आमची टीम सर्व सेटअप, डिझाइन आणि तांत्रिक बाजू स्वतः हाताळते." },
-        { question: "मी माझा चालू असलेला मोबाईल नंबर वापरू शकतो का?", answer: "होय, तुम्ही तुमच्या चालू असलेल्या बिझनेस नंबरवर देखील ही सेवा सुरू करू शकता." }
-      ];
-    } else if (language === "hi") {
-      return [
-        { question: "साइन अप के बाद काम शुरू होने में कितना समय लगता है?", answer: "आम तौर पर ५ से ७ कार्यदिवसों में आपका लैंडिंग पेज और व्हाट्सएप सिस्टम तैयार हो जाता है।" },
-        { question: "क्या मुझे टेक्निकल नॉलेज होना जरूरी है?", answer: "बिल्कुल नहीं। हमारी सपोर्ट टीम पूरा सेटअप, डिज़ाइन और टेक्निकल काम खुद संभालती है।" },
-        { question: "क्या मैं अपना मौजूदा मोबाइल नंबर इस्तेमाल कर सकता हूँ?", answer: "हाँ, आप अपने वर्तमान बिजनेस नंबर पर भी व्हाट्सएप ऑटोमेशन एक्टिवेट कर सकते हैं।" }
-      ];
-    }
-    return contactFaqs;
+    return [
+      { question: t.faq_contact_q1, answer: t.faq_contact_a1 },
+      { question: t.faq_contact_q2, answer: t.faq_contact_a2 },
+      { question: t.faq_contact_q3, answer: t.faq_contact_a3 },
+    ];
   };
 
   return (
@@ -46,51 +37,61 @@ export default function ContactView() {
       />
 
       {/* CONTACT CONTENT */}
-      <section style={{ paddingTop: 0 }}>
-        <div className="container contact-grid">
-          <div className="reveal">
-            <h2 style={{ fontSize: "24px" }}>{t.contact_info_title}</h2>
-            <p>{t.contact_info_subtitle}</p>
-            
-            <div className="contact-info-row">
-              <div className="icon" style={{ width: "40px", height: "40px", borderRadius: "10px", background: "var(--green-tint)", color: "var(--green)", display: "flex", alignItems: "center", justifyContent: "center" }}>💬</div>
-              <div>
-                <b>WhatsApp</b><br />
-                <button onClick={() => openWhatsApp()} className="bg-transparent border-none p-0 cursor-pointer text-brand-blue font-bold hover:underline">{contactInfo.phone}</button>
+      <section className="py-24 bg-white dark:bg-brand-dark/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
+            <div className="space-y-8 bg-brand-grayLight/30 dark:bg-brand-dark/40 rounded-3xl p-8 border border-gray-100 dark:border-gray-800/80">
+              <div className="space-y-3">
+                <h2 className="text-2xl font-heading font-bold text-brand-dark dark:text-white">{t.contact_info_title}</h2>
+                <p className="text-brand-gray dark:text-gray-300">{t.contact_info_subtitle}</p>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-green-50 dark:bg-green-500/10 text-green-500 flex items-center justify-center text-xl font-bold flex-shrink-0">💬</div>
+                  <div>
+                    <h4 className="font-bold text-brand-dark dark:text-white">WhatsApp</h4>
+                    <button onClick={() => openWhatsApp()} className="bg-transparent border-none p-0 cursor-pointer text-brand-purple dark:text-brand-light font-bold hover:underline">{contactInfo.phone}</button>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-brand-purpleLight dark:bg-brand-purple/10 text-brand-purple flex items-center justify-center text-xl font-bold flex-shrink-0">📧</div>
+                  <div>
+                    <h4 className="font-bold text-brand-dark dark:text-white">{t.contact_info_email}</h4>
+                    <a href={`mailto:${contactInfo.email}`} className="text-brand-purple dark:text-brand-light font-medium hover:underline">{contactInfo.email}</a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-teal-50 dark:bg-brand-teal/10 text-brand-teal flex items-center justify-center text-xl font-bold flex-shrink-0">📍</div>
+                  <div>
+                    <h4 className="font-bold text-brand-dark dark:text-white">{t.contact_info_location}</h4>
+                    <span className="text-brand-gray dark:text-gray-300">{contactInfo.location}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-500/10 text-blue-500 flex items-center justify-center text-xl font-bold flex-shrink-0">🕐</div>
+                  <div>
+                    <h4 className="font-bold text-brand-dark dark:text-white">{t.contact_info_hours}</h4>
+                    <span className="text-brand-gray dark:text-gray-300">{t.contact_info_hours_val}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4">
+                <AppButton onClick={() => openWhatsApp()} variant="whatsapp" fullWidth>
+                  {t.contact_info_wa_now}
+                </AppButton>
               </div>
             </div>
 
-            <div className="contact-info-row">
-              <div className="icon" style={{ width: "40px", height: "40px", borderRadius: "10px", background: "var(--green-tint)", color: "var(--green)", display: "flex", alignItems: "center", justifyContent: "center" }}>📧</div>
-              <div>
-                <b>{language === "mr" ? "ईमेल" : language === "hi" ? "ईमेल" : "Email"}</b><br />
-                <a href={`mailto:${contactInfo.email}`} style={{ color: "var(--blue)" }}>{contactInfo.email}</a>
-              </div>
+            {/* Renders the unified contact form component */}
+            <div className="bg-white dark:bg-brand-dark/40 rounded-3xl p-8 border border-gray-100 dark:border-gray-800 shadow-sm">
+              <ContactForm />
             </div>
-
-            <div className="contact-info-row">
-              <div className="icon" style={{ width: "40px", height: "40px", borderRadius: "10px", background: "var(--green-tint)", color: "var(--green)", display: "flex", alignItems: "center", justifyContent: "center" }}>📍</div>
-              <div>
-                <b>{language === "mr" ? "पत्ता" : language === "hi" ? "पता" : "Location"}</b><br />
-                {contactInfo.location}
-              </div>
-            </div>
-
-            <div className="contact-info-row">
-              <div className="icon" style={{ width: "40px", height: "40px", borderRadius: "10px", background: "var(--green-tint)", color: "var(--green)", display: "flex", alignItems: "center", justifyContent: "center" }}>🕐</div>
-              <div>
-                <b>{language === "mr" ? "वेळ" : language === "hi" ? "समय" : "Hours"}</b><br />
-                {language === "mr" ? "सोम – शनि, सकाळी ९ ते संध्याकाळी ७" : language === "hi" ? "सोम – शनि, सुबह ९ से शाम ७ बजे" : contactInfo.hours}
-              </div>
-            </div>
-
-            <AppButton onClick={() => openWhatsApp()} variant="whatsapp" style={{ marginTop: "28px" }}>
-              {language === "mr" ? "💬 त्वरित संपर्क करा" : language === "hi" ? "💬 तुरंत व्हाट्सएप करें" : "💬 WhatsApp Us Now"}
-            </AppButton>
           </div>
-
-          {/* Renders the unified contact form component */}
-          <ContactForm />
         </div>
       </section>
 
@@ -98,9 +99,8 @@ export default function ContactView() {
 
       {/* QUICK ANSWERS */}
       <FaqSection
-        eyebrow={language === "mr" ? "महत्त्वाची उत्तरे" : language === "hi" ? "त्वरित समाधान" : "Quick Answers"}
-        heading={language === "mr" ? "संपर्क साधण्यापूर्वी" : language === "hi" ? "संपर्क करने से पहले" : "Before you reach out"}
-        backgroundColor="var(--green-tint)"
+        eyebrow={t.contact_faq_eyebrow}
+        heading={t.contact_faq_heading}
         items={getTranslatedFaqs()}
       />
     </PageWrapper>

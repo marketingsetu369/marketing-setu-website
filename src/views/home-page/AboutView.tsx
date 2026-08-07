@@ -18,37 +18,19 @@ export default function AboutView() {
   const t = translations[language] || translations.en;
 
   const getTranslatedValues = () => {
-    if (language === "mr") {
-      return [
-        { icon: "🎯", title: "विकासात्मक आणि सोपे", description: "आम्ही तुमच्या विशिष्ट व्यवसायासाठी योग्य असलेलाच सल्ला देतो, फॅन्सी टूल्स नाही." },
-        { icon: "🤝", title: "सोप्या भाषेतील सपोर्ट", description: "प्रत्येक ग्राहकाला व्हॉट्सॲपवर त्यांच्या आवडत्या भाषेत थेट सहकार्य मिळते." },
-        { icon: "📈", title: "मोजता येणारी वाढ", description: "मिळलेले ग्राहक आणि मेसेजेसचे स्पष्ट मासिक रिपोर्ट — काहीही लपलेले नाही." }
-      ];
-    } else if (language === "hi") {
-      return [
-        { icon: "🎯", title: "व्यावहारिक सलाह", description: "हम वही सलाह देते हैं जो आपके व्यवसाय के लिए उपयुक्त हो, न कि कोई मुश्किल टूल्स।" },
-        { icon: "🤝", title: "सरल भाषा में सपोर्ट", description: "हर क्लाइंट को व्हाट्सएप पर उनकी सुविधानुसार सरल भाषा में सपोर्ट मिलता है।" },
-        { icon: "📈", title: "सच्ची ग्रोथ रिपोर्ट", description: "मंथली लीड्स और मैसेजेस की स्पष्ट रिपोर्ट — कोई दिखावा नहीं।" }
-      ];
-    }
-    return aboutValues;
+    return [
+      { icon: "🎯", title: t.about_val_1_title, description: t.about_val_1_desc },
+      { icon: "🤝", title: t.about_val_2_title, description: t.about_val_2_desc },
+      { icon: "📈", title: t.about_val_3_title, description: t.about_val_3_desc },
+    ];
   };
 
   const getTranslatedSteps = () => {
-    if (language === "mr") {
-      return [
-        { number: "01", title: "तुमचा व्यवसाय समजून घेणे", description: "तुमचा माल, तुमचे ग्राहक आणि अडथळे जाणून घेण्यासाठी एक लहान व्हॉट्सॲप संवाद." },
-        { number: "02", title: "तुमचा सेतू तयार करणे", description: "आम्ही व्हॉट्सॲप ऑटोमेशन, लँडिंग पेज आणि गुगल प्रोफाईल काही दिवसात सेट करतो." },
-        { number: "03", title: "मदत आणि वाढ", description: "नियमित सपोर्ट, सणांचे कॅम्पेन आयडिया आणि साधे रिपोर्टिंग जेणेकरून प्रगती कळेल." }
-      ];
-    } else if (language === "hi") {
-      return [
-        { number: "01", title: "आपके बिज़नेस को समझना", description: "आपके प्रोडक्ट्स और कस्टमर्स को समझने के लिए एक छोटी व्हाट्सएप कॉल या चैट।" },
-        { number: "02", title: "सेतु का निर्माण", description: "हम कुछ ही दिनों में आपके व्हाट्सएप ऑटोमेशन, लैंडिंग पेज और गूगल सेटअप करते हैं।" },
-        { number: "03", title: "सपोर्ट और ग्रोथ", description: "लगातार सपोर्ट, ऑफर्स के आइडियाज और सरल रिपोर्ट ताकि आपको पूरा भरोसा रहे।" }
-      ];
-    }
-    return aboutSteps;
+    return [
+      { number: "01", title: t.about_step_1_title, description: t.about_step_1_desc },
+      { number: "02", title: t.about_step_2_title, description: t.about_step_2_desc },
+      { number: "03", title: t.about_step_3_title, description: t.about_step_3_desc },
+    ];
   };
 
   return (
@@ -58,35 +40,47 @@ export default function AboutView() {
         breadcrumbLabel={t.about_hero_breadcrumb}
         eyebrow={t.about_hero_eyebrow}
         title={
-          language === "mr" ? (
-            <>आम्ही पूल — <em style={{ fontStyle: "italic", color: "var(--blue)" }}>सेतू</em> — बांधतो, छोटे व्यवसाय आणि त्यांच्या ग्राहकांमध्ये</>
-          ) : language === "hi" ? (
-            <>हम सेतु — <em style={{ fontStyle: "italic", color: "var(--blue)" }}>पुल</em> — बनाते हैं, छोटे व्यवसायों और ग्राहकों के बीच</>
-          ) : (
-            <>We build the bridge — <em style={{ fontStyle: "italic", color: "var(--blue)" }}>setu</em> — between small businesses and the customers looking for them</>
-          )
+          <>
+            {t.about_hero_title_pre}
+            <em className="not-italic text-brand-purple">
+              {t.about_hero_title_highlight}
+            </em>
+            {t.about_hero_title_post}
+          </>
         }
         lead={t.about_hero_lead}
       />
 
       {/* STORY SECTION */}
-      <section>
-        <div className="container">
-          <div className="grid grid-2 about-visual" style={{ alignItems: "center", gap: "56px" }}>
-            <div className="reveal">
-              <span className="eyebrow">{t.about_story_eyebrow}</span>
-              <h2>{t.about_story_heading}</h2>
-              <p>{t.about_story_p1}</p>
-              <p>{t.about_story_p2}</p>
+      <section className="py-24 bg-white dark:bg-brand-dark/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div className="space-y-6">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-purpleLight text-brand-purple text-xs font-bold uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-purple animate-pulse"></span>
+                {t.about_story_eyebrow}
+              </span>
+              <h2 className="text-3xl md:text-4xl font-heading font-bold text-brand-dark dark:text-white leading-tight">
+                {t.about_story_heading}
+              </h2>
+              <p className="text-lg text-brand-gray dark:text-gray-300 leading-relaxed">
+                {t.about_story_p1}
+              </p>
+              <p className="text-lg text-brand-gray dark:text-gray-300 leading-relaxed">
+                {t.about_story_p2}
+              </p>
             </div>
-            <div className="reveal">
-              <Image
-                src="https://images.unsplash.com/photo-1758873268745-dd2cf0d677b5?auto=format&fit=crop&w=900&q=80"
-                alt="MarketingSetu team collaborating on a client's digital marketing strategy"
-                width={640}
-                height={480}
-                priority
-              />
+            <div className="bg-brand-grayLight dark:bg-brand-dark/40 flex items-center justify-center p-8 rounded-3xl border border-gray-100 dark:border-gray-800/60">
+              <div className="relative h-[280px] md:h-[340px] w-full rounded-2xl overflow-hidden shadow-xl border border-white dark:border-brand-dark transform rotate-3 hover:rotate-0 transition-transform duration-300">
+                <Image
+                  src="https://images.unsplash.com/photo-1758873268745-dd2cf0d677b5?auto=format&fit=crop&w=900&q=80"
+                  alt="MarketingSetu team collaborating on a client's digital marketing strategy"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover"
+                  priority
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -95,27 +89,45 @@ export default function AboutView() {
       <BridgeDivider />
 
       {/* SERVE SECTION */}
-      <section style={{ background: "var(--green-tint)" }}>
-        <div className="container">
-          <div className="grid grid-2 about-visual" style={{ alignItems: "center", gap: "56px" }}>
-            <div className="reveal" style={{ order: 2 }}>
-              <span className="eyebrow">{t.about_serve_eyebrow}</span>
-              <h2>{t.about_serve_heading}</h2>
-              <p>{t.about_serve_p1}</p>
-              <div className="tag-row">
-                <span className="tag">{language === "mr" ? "रिटेल आणि बुटीक" : language === "hi" ? "रिटेल और बुटीक" : "Retail & Boutiques"}</span>
-                <span className="tag">{language === "mr" ? "रेस्टॉरंट्स आणि कॅटरिंग" : language === "hi" ? "रेस्टोरेंट और कैटरिंग" : "Restaurants & Catering"}</span>
-                <span className="tag">{language === "mr" ? "रिअल इस्टेट" : language === "hi" ? "रियल एस्टेट" : "Real Estate"}</span>
-                <span className="tag">{language === "mr" ? "सेवा आणि व्यापारी" : language === "hi" ? "सर्विसेज और ट्रेडर्स" : "Services & Trades"}</span>
+      <section className="py-24 bg-brand-grayLight dark:bg-brand-dark/40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div className="bg-brand-purpleLight dark:bg-brand-purple/10 flex items-center justify-center p-8 rounded-3xl border border-brand-purple/10 md:order-1">
+              <div className="relative h-[280px] md:h-[340px] w-full rounded-2xl overflow-hidden shadow-xl border border-white dark:border-brand-dark transform -rotate-3 hover:rotate-0 transition-transform duration-300">
+                <Image
+                  src="https://images.unsplash.com/photo-1778550579010-cb0d00cd94e6?auto=format&fit=crop&w=900&q=80"
+                  alt="Small business shopkeeper MarketingSetu serves"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover"
+                />
               </div>
             </div>
-            <div className="reveal" style={{ order: 1 }}>
-              <Image
-                src="https://images.unsplash.com/photo-1778550579010-cb0d00cd94e6?auto=format&fit=crop&w=900&q=80"
-                alt="Small business shopkeeper MarketingSetu serves"
-                width={640}
-                height={480}
-              />
+            <div className="space-y-6 md:order-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-50 text-green-600 dark:bg-green-500/10 dark:text-green-400 text-xs font-bold uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                {t.about_serve_eyebrow}
+              </span>
+              <h2 className="text-3xl md:text-4xl font-heading font-bold text-brand-dark dark:text-white leading-tight">
+                {t.about_serve_heading}
+              </h2>
+              <p className="text-lg text-brand-gray dark:text-gray-300 leading-relaxed">
+                {t.about_serve_p1}
+              </p>
+              <div className="flex flex-wrap gap-2.5 pt-2">
+                <span className="px-4 py-2 rounded-full bg-white dark:bg-brand-dark text-sm font-semibold text-brand-dark dark:text-white border border-gray-200 dark:border-gray-800 shadow-sm">
+                  {t.about_tag_retail}
+                </span>
+                <span className="px-4 py-2 rounded-full bg-white dark:bg-brand-dark text-sm font-semibold text-brand-dark dark:text-white border border-gray-200 dark:border-gray-800 shadow-sm">
+                  {t.about_tag_restaurant}
+                </span>
+                <span className="px-4 py-2 rounded-full bg-white dark:bg-brand-dark text-sm font-semibold text-brand-dark dark:text-white border border-gray-200 dark:border-gray-800 shadow-sm">
+                  {t.about_tag_real_estate}
+                </span>
+                <span className="px-4 py-2 rounded-full bg-white dark:bg-brand-dark text-sm font-semibold text-brand-dark dark:text-white border border-gray-200 dark:border-gray-800 shadow-sm">
+                  {t.about_tag_services}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -124,15 +136,27 @@ export default function AboutView() {
       <BridgeDivider tinted />
 
       {/* MISSION & PROMISE */}
-      <section>
-        <div className="container">
-          <div className="grid grid-2" style={{ alignItems: "center", gap: "56px" }}>
-            <div className="reveal">
-              <div className="card" style={{ background: "var(--blue-mist)", borderColor: "var(--blue-light)" }}>
-                <h3 style={{ fontSize: "20px" }}>{t.about_mission_title}</h3>
-                <p style={{ marginBottom: "20px" }}>{t.about_mission_desc}</p>
-                <h3 style={{ fontSize: "20px" }}>{t.about_promise_title}</h3>
-                <p style={{ margin: 0 }}>{t.about_promise_desc}</p>
+      <section className="py-24 bg-white dark:bg-brand-dark/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-[1fr_auto_1fr] gap-8 bg-brand-purpleLight/40 dark:bg-brand-purple/10 rounded-3xl p-8 md:p-12 border border-brand-purple/10 shadow-sm backdrop-blur-sm relative overflow-hidden">
+              <div className="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 rounded-full bg-brand-purple/10 blur-xl"></div>
+              <div className="space-y-3 relative z-10">
+                <h3 className="text-xl md:text-2xl font-heading font-bold text-brand-purple dark:text-brand-light flex items-center gap-2">
+                  <span>🎯</span> {t.about_mission_title}
+                </h3>
+                <p className="text-brand-gray dark:text-gray-200 leading-relaxed text-sm">
+                  {t.about_mission_desc}
+                </p>
+              </div>
+              <div className="hidden md:block w-px bg-brand-purple/20 self-stretch my-2"></div>
+              <div className="space-y-3 relative z-10">
+                <h3 className="text-xl md:text-2xl font-heading font-bold text-brand-purple dark:text-brand-light flex items-center gap-2">
+                  <span>🤝</span> {t.about_promise_title}
+                </h3>
+                <p className="text-brand-gray dark:text-gray-200 leading-relaxed text-sm">
+                  {t.about_promise_desc}
+                </p>
               </div>
             </div>
           </div>
@@ -142,10 +166,20 @@ export default function AboutView() {
       <BridgeDivider />
 
       {/* VALUES */}
-      <section style={{ background: "var(--green-tint)" }}>
-        <div className="container">
+      <section className="py-24 bg-brand-grayLight dark:bg-brand-dark/40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHead eyebrow={t.about_values_eyebrow} heading={t.about_values_heading} />
-          <FeatureGrid columns={3} items={getTranslatedValues()} />
+          <div className="grid md:grid-cols-3 gap-8">
+            {getTranslatedValues().map((val, idx) => (
+              <div key={idx} className="bg-white dark:bg-brand-dark/60 rounded-3xl p-8 border border-gray-100 dark:border-gray-800/80 shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                <div className="w-12 h-12 rounded-2xl bg-brand-purpleLight dark:bg-brand-purple/10 flex items-center justify-center text-2xl mb-6">
+                  {val.icon}
+                </div>
+                <h3 className="text-xl font-heading font-bold text-brand-dark dark:text-white mb-3">{val.title}</h3>
+                <p className="text-brand-gray dark:text-gray-400 text-sm leading-relaxed">{val.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

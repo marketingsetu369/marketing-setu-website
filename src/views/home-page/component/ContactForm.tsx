@@ -50,13 +50,7 @@ export default function ContactForm() {
     // Stop submission if validation errors are found
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      toast.error(
-        language === "mr" 
-          ? "कृपया सर्व फील्ड्स अचूक भरा." 
-          : language === "hi" 
-            ? "कृपया सभी फ़ील्ड्स सही से भरें।" 
-            : "Please correct the errors in the form."
-      );
+      toast.error(t.error_form_invalid);
       return;
     }
 

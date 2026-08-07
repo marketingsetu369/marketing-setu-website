@@ -8,17 +8,21 @@ import {
   PageWrapper,
   ServiceBlock,
 } from "@/views/home-page/component";
-import { servicesData } from "@/views/home-page/data";
+import { servicesData, translations } from "@/views/home-page/data";
+import { useThemeStore } from "@/store/themeStore";
 
 export default function ServicesView() {
+  const { language } = useThemeStore();
+  const t = translations[language] || translations.en;
+
   return (
     <PageWrapper>
       {/* PAGE HERO */}
       <PageHero
-        breadcrumbLabel="Services"
-        eyebrow="Our Services"
-        title="Marketing tools built for how Indian customers actually communicate"
-        lead="From the first missed call to the hundredth WhatsApp broadcast, every MarketingSetu service is designed to turn attention into paying customers — without needing a marketing team of your own."
+        breadcrumbLabel={t.services_hero_breadcrumb}
+        eyebrow={t.services_hero_eyebrow}
+        title={t.services_hero_title}
+        lead={t.services_hero_lead}
       />
 
       {/* SERVICE BLOCKS */}
@@ -33,9 +37,9 @@ export default function ServicesView() {
 
       {/* CTA BAND */}
       <CtaBand
-        heading="Not sure which service fits your business?"
-        description="Tell us what you sell and who you sell to — we'll recommend the right mix in one WhatsApp chat."
-        buttonText="💬 Ask on WhatsApp"
+        heading={t.services_cta_heading}
+        description={t.services_cta_description}
+        buttonText={t.btn_ask_whatsapp}
         whatsappMessage="Hi MarketingSetu! I'd like help choosing the right service for my business."
       />
     </PageWrapper>

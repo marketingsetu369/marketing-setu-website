@@ -34,11 +34,13 @@ export default function PageWrapper({ children }: PageWrapperProps) {
   const t = translations[language] || translations.en;
 
   const navLinks = [
-    { label: "Home", href: "/" },
-    { label: "Services", href: "/services" },
-    { label: "Pricing", href: "/pricing" },
-    { label: "Reviews", href: "/testimonials" },
-    { label: "Contact", href: "/contact" },
+    { label: t.nav_home, href: "/" },
+    { label: t.nav_services, href: "/services" },
+    { label: t.nav_pricing, href: "/pricing" },
+    { label: t.nav_about, href: "/about" },
+    { label: t.nav_reviews, href: "/testimonials" },
+    { label: t.nav_blog, href: "/blog" },
+    { label: t.nav_contact, href: "/contact" },
   ];
 
   return (
@@ -93,11 +95,12 @@ export default function PageWrapper({ children }: PageWrapperProps) {
               {mounted && (
                 <select
                   value={language}
-                  onChange={(e) => setLanguage(e.target.value as "en" | "mr")}
+                  onChange={(e) => setLanguage(e.target.value as "en" | "mr" | "hi")}
                   className="bg-transparent border-none text-gray-700 dark:text-gray-200 text-sm font-semibold focus:ring-0 focus:outline-none cursor-pointer pr-8 py-2"
                 >
                   <option value="en" className="dark:bg-brand-dark">EN</option>
                   <option value="mr" className="dark:bg-brand-dark">मराठी</option>
+                  <option value="hi" className="dark:bg-brand-dark">हिंदी</option>
                 </select>
               )}
 
@@ -159,13 +162,14 @@ export default function PageWrapper({ children }: PageWrapperProps) {
                 <select
                   value={language}
                   onChange={(e) => {
-                    setLanguage(e.target.value as "en" | "mr");
+                    setLanguage(e.target.value as "en" | "mr" | "hi");
                     setIsMobileMenuOpen(false);
                   }}
                   className="bg-transparent border-none text-gray-700 dark:text-gray-200 text-sm font-semibold focus:ring-0 focus:outline-none cursor-pointer py-2"
                 >
                   <option value="en" className="dark:bg-brand-dark">English</option>
                   <option value="mr" className="dark:bg-brand-dark">मराठी</option>
+                  <option value="hi" className="dark:bg-brand-dark">हिंदी</option>
                 </select>
               )}
               <button

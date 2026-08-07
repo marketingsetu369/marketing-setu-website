@@ -1,7 +1,44 @@
 @import "tailwindcss";
 
 @theme {
-  /* ========== Grayscale Palette ========== */
+  --font-sans: var(--font-inter);
+
+  /* Brand Primary Accents */
+  --color-brand-lighter: #EDEAFC;
+  --color-brand-light: #A59DEE;
+  --color-brand-main: #7265E3;
+  --color-brand-dark: #4A3DAB;
+  --color-brand-darker: #2B1F70;
+
+  /* Info */
+  --color-info-lighter: #CAFDF5;
+  --color-info-light: #74CAFF;
+  --color-info-main: #1890FF;
+  --color-info-dark: #0C53B7;
+  --color-info-darker: #003768;
+
+  /* Warning */
+  --color-warning-lighter: #FFF5CC;
+  --color-warning-light: #FFE16A;
+  --color-warning-main: #FFC107;
+  --color-warning-dark: #B78103;
+  --color-warning-darker: #7A4100;
+
+  /* Error */
+  --color-error-lighter: #FFE9D5;
+  --color-error-light: #FFA48D;
+  --color-error-main: #FF4842;
+  --color-error-dark: #B72136;
+  --color-error-darker: #7A0916;
+
+  /* Success (using requested palette green tokens) */
+  --color-success-lighter: #D8FBDE;
+  --color-success-light: #86E8AB;
+  --color-success-main: #10C85A;
+  --color-success-dark: #1B806A;
+  --color-success-darker: #0A5554;
+
+  /* Grey scale */
   --color-grey-100: #F9FAFB;
   --color-grey-200: #F4F6F8;
   --color-grey-300: #DFE3E8;
@@ -12,239 +49,137 @@
   --color-grey-800: #212B36;
   --color-grey-900: #161C24;
 
-  /* ========== Brand Colors ========== */
-  --color-brand-light: #A59DEE;
-  --color-brand-main: #7265E3;
-  --color-brand-dark-shade: #4A3DAB;
+  /* Contextual aliases — resolves per :root / [data-theme="dark"] mode */
+  --color-background: var(--bg-default);
+  --color-paper: var(--bg-paper);
+  --color-neutral: var(--bg-neutral);
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-disabled: var(--text-disabled);
+  --color-outline: var(--border);
 
-  /* ========== Semantic Colors ========== */
-  --color-success: #36B37E;
-  --color-warning: #FFC107;
-  --color-error: #FF4842;
-  --color-info: #1890FF;
-  --color-orange: #FF9800;
+  /* Elevation shadows */
+  --shadow-z1: 0 1px 2px 0 var(--shadow-alpha);
+  --shadow-z4: 0 4px 8px 0 var(--shadow-alpha);
+  --shadow-z8: 0 8px 16px 0 var(--shadow-alpha);
+  --shadow-z12: 0 12px 24px -4px var(--shadow-alpha);
+  --shadow-z16: 0 16px 32px -4px var(--shadow-alpha);
+  --shadow-z20: 0 20px 40px -4px var(--shadow-alpha);
+  --shadow-z24: 0 24px 48px 0 var(--shadow-alpha);
+  --shadow-card: 0 0 2px 0 var(--shadow-card-1), 0 12px 24px -4px var(--shadow-card-2);
+  --shadow-dialog: -40px 40px 80px -8px var(--shadow-dialog-alpha);
+  --shadow-dropdown: 0 0 2px 0 var(--shadow-dropdown-1), -20px 20px 40px -4px var(--shadow-dropdown-2);
 
-  /* ========== Legacy Aliases — exact match to original HTML tailwind.config ========== */
-  --color-brand-purple: #7265E3;
-  --color-brand-purpleLight: #F3F1FD;  /* light lavender bg — NOT the purple shade */
-  --color-brand-teal: #20B2AA;
-  --color-brand-dark: #111827;
-  --color-brand-gray: #6B7280;
-  --color-brand-grayLight: #F3F4F6;
+  /* Spacing & Radius */
+  --spacing-container-desktop: 40px;
+  --spacing-container-mobile: 16px;
+  --radius-card: 16px;
+  --radius-input: 8px;
+  --radius-button: 8px;
 }
 
-/* ============================================================
-   RGB CHANNEL VARIABLES — Flutter equivalent: color.withValues(alpha: x)
+/* Define Tailwind dark: variant mappings for document elements */
+@variant dark ([data-theme="dark"] &);
 
-   CSS usage:
-     rgb(var(--primary-rgb) / 0.1)   →  primary.withValues(alpha: 0.1)
-     rgb(var(--success-rgb) / 0.15)  →  success.withValues(alpha: 0.15)
+/* ─── Contextual Utility Variables ─── */
+@layer base {
+  :root {
+    --bg-default: var(--color-grey-100);
+    --bg-paper: #ffffff;
+    --bg-neutral: var(--color-grey-200);
 
-   Or use color-mix (simpler, no channel vars needed):
-     color-mix(in srgb, var(--primary) 10%, transparent)
-   ============================================================ */
+    --text-primary: var(--color-grey-800);
+    --text-secondary: var(--color-grey-600);
+    --text-disabled: var(--color-grey-500);
+    --border: rgba(145, 158, 171, 0.24);
 
-:root {
-  --primary-rgb: 114, 101, 227;
-  /* #7265E3 */
-  --success-rgb: 54, 179, 126;
-  /* #36B37E */
-  --warning-rgb: 255, 193, 7;
-  /* #FFC107 */
-  --error-rgb: 255, 72, 66;
-  /* #FF4842 */
-  --info-rgb: 24, 144, 255;
-  /* #1890FF */
-  --orange-rgb: 255, 152, 0;
-  /* #FF9800 */
-  --white-rgb: 255, 255, 255;
-  --black-rgb: 0, 0, 0;
+    --shadow-alpha: rgba(145, 158, 171, 0.16);
+    --shadow-card-1: rgba(145, 158, 171, 0.2);
+    --shadow-card-2: rgba(145, 158, 171, 0.12);
+    --shadow-dialog-alpha: rgba(145, 158, 171, 0.24);
+    --shadow-dropdown-1: rgba(145, 158, 171, 0.24);
+    --shadow-dropdown-2: rgba(145, 158, 171, 0.24);
+  }
+
+  [data-theme="dark"] {
+    --bg-default: var(--color-grey-900);
+    --bg-paper: var(--color-grey-800);
+    --bg-neutral: rgba(145, 158, 171, 0.12);
+
+    --text-primary: #ffffff;
+    --text-secondary: var(--color-grey-500);
+    --text-disabled: var(--color-grey-600);
+    --border: rgba(145, 158, 171, 0.24);
+
+    --shadow-alpha: rgba(0, 0, 0, 0.16);
+    --shadow-card-1: rgba(0, 0, 0, 0.2);
+    --shadow-card-2: rgba(0, 0, 0, 0.12);
+    --shadow-dialog-alpha: rgba(0, 0, 0, 0.24);
+    --shadow-dropdown-1: rgba(0, 0, 0, 0.24);
+    --shadow-dropdown-2: rgba(0, 0, 0, 0.24);
+  }
 }
 
-@variant dark (.dark &);
-
-/* ============================================================
-   SEMANTIC THEME VARIABLES — auto-switch on .dark
-   Maps to Flutter AppColors light/dark theme values
-   ============================================================ */
-
-:root {
-  /* Surfaces */
-  --bg: #F4F6F8;
-  /* grey200 = scaffold bg */
-  --surface: #FFFFFF;
-  /* card/panel bg */
-  --surface-alt: #F9FAFB;
-  /* subtle tinted surface */
-
-  /* Text */
-  --text-primary: #161C24;
-  /* grey900 */
-  --text-secondary: #637381;
-  /* grey600 */
-  --text-tertiary: #C4CDD5;
-  /* grey400 */
-
-  /* Borders */
-  --border: #DFE3E8;
-  /* grey300 */
-  --border-soft: #F4F6F8;
-  /* grey200 */
-
-  /* Brand */
-  --primary: #A59DEE;
-  --primary-light: #A59DEE;
-  --primary-dark: #4A3DAB;
-
-  /* Semantic */
-  --success: #36B37E;
-  --warning: #FFC107;
-  --error: #FF4842;
-  --info: #1890FF;
-  --orange: #FF9800;
-
-  /* Shadow */
-  --shadow-sm: 0 2px 8px -2px rgba(22, 28, 36, 0.08);
-  --shadow: 0 8px 24px -6px rgba(22, 28, 36, 0.14);
-  --shadow-lg: 0 20px 48px -12px rgba(22, 28, 36, 0.22);
+/* ─── Smooth theme switching — applied globally ─── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      border-color 0.3s ease,
+      fill 0.3s ease,
+      stroke 0.3s ease,
+      box-shadow 0.3s ease;
+  }
 }
 
-.dark {
-  /* Surfaces */
-  --bg: #161C24;
-  /* grey900 = dark scaffold */
-  --surface: #212B36;
-  /* grey800 = dark card */
-  --surface-alt: #1C2531;
-  /* slightly lighter than card */
-
-  /* Text */
-  --text-primary: #F9FAFB;
-  /* grey100 */
-  --text-secondary: #C4CDD5;
-  /* grey400 */
-  --text-tertiary: #919EAB;
-  /* grey500 */
-
-  /* Borders */
-  --border: #454F5B;
-  /* grey700 */
-  --border-soft: #212B36;
-  /* grey800 */
-
-  /* Shadow (stronger in dark) */
-  --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.4);
-  --shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.55);
-  --shadow-lg: 0 20px 48px -12px rgba(0, 0, 0, 0.65);
-}
-
-/* ============================================================
-   BASE STYLES — use semantic vars so entire page responds
-   ============================================================ */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
+/* ─── Base ─── */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 body {
-  margin: 0;
-  background-color: var(--bg);
+  background-color: var(--bg-default);
   color: var(--text-primary);
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--text-primary);
-  margin: 0 0 0.5em;
-  line-height: 1.2;
-  transition: color 0.3s ease;
+/* ─── Forms & Inputs ─── */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
 }
 
-p {
-  color: var(--text-secondary);
-  margin: 0 0 1em;
-  transition: color 0.3s ease;
+input[type=number] {
+  -moz-appearance: textfield !important;
+  appearance: textfield !important;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.2s ease;
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
 }
 
-img {
-  max-width: 100%;
-  display: block;
+::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.2s;
 }
 
-ul,
-ol {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+*:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(145, 158, 171, 0.48);
 }
 
-::selection {
-  background: var(--primary);
-  color: #fff;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
-
-hr {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 24px 0;
-}
-
-@utility text-gradient {
-  background: linear-gradient(90deg, #7265E3 0%, #20B2AA 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-@utility glass-effect {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-}
-
-@utility container {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 24px;
-  padding-right: 24px;
-}
-
-@utility grid-2 {
-  display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: 32px;
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@utility grid-3 {
-  display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: 32px;
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-

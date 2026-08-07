@@ -1,5 +1,6 @@
 "use client";
 
+import { AppButton } from "@/components/library";
 import {
   PageHero,
   PageWrapper,
@@ -7,35 +8,51 @@ import {
   TestimonialCard,
   useWhatsApp,
 } from "@/views/home-page/component";
-import { testimonialsData } from "@/views/home-page/data";
-import { AppButton } from "@/components/library";
+import { testimonialsData, translations } from "@/views/home-page/data";
+import { useThemeStore } from "@/store/themeStore";
+import { TranslationDictionary } from "@/translation";
 
 export default function TestimonialsView() {
   const { openWhatsApp } = useWhatsApp();
+  const { language } = useThemeStore();
+  const t = translations[language] || translations.en;
+
+  const getTranslatedTestimonials = () => {
+    return testimonialsData.map((tItem, index) => {
+      const num = index + 1;
+      const textKey = `testi_${num}_text` as keyof TranslationDictionary;
+      const roleKey = `testi_${num}_role` as keyof TranslationDictionary;
+      return {
+        ...tItem,
+        text: (t[textKey] as string) || tItem.text,
+        role: (t[roleKey] as string) || tItem.role,
+      };
+    });
+  };
 
   return (
     <PageWrapper>
       {/* PAGE HERO */}
       <PageHero
-        breadcrumbLabel="Reviews"
-        eyebrow="Client Stories"
-        title="Real businesses. Real results. Real stories."
-        lead="From dry-cleaners to real estate agents, here's how MarketingSetu has helped small businesses across Maharashtra connect with more customers."
+        breadcrumbLabel={t.reviews_hero_breadcrumb}
+        eyebrow={t.reviews_hero_eyebrow}
+        title={t.reviews_hero_title}
+        lead={t.reviews_hero_lead}
       >
         <StatBar
           stats={[
-            { value: "4.9★", label: "Average Rating" },
-            { value: "128+", label: "Client Reviews" },
-            { value: "500+", label: "Businesses Served" },
+            { value: "4.9★", label: t.reviews_stat_rating },
+            { value: "128+", label: t.reviews_stat_reviews },
+            { value: "500+", label: t.reviews_stat_served },
           ]}
         />
       </PageHero>
 
       {/* TESTIMONIALS GRID */}
-      <section style={{ paddingTop: "24px" }}>
-        <div className="container">
-          <div className="grid grid-3">
-            {testimonialsData.map((item, idx) => (
+      <section className="py-24 bg-white dark:bg-brand-dark/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-3 gap-8 items-stretch">
+            {getTranslatedTestimonials().map((item, idx) => (
               <TestimonialCard key={idx} testimonial={item} />
             ))}
           </div>
@@ -43,19 +60,26 @@ export default function TestimonialsView() {
       </section>
 
       {/* JOIN THEM SECTION */}
-      <section style={{ background: "var(--blue-mist)" }}>
-        <div className="container center-text">
-          <span className="eyebrow" style={{ display: "inline-flex" }}>Join Them</span>
-          <h2>Your business could be our next success story</h2>
-          <p style={{ maxWidth: "520px", margin: "0 auto 24px" }}>
-            Tell us about your business and we'll show you exactly how our plans would work for you.
+      <section className="py-24 bg-brand-grayLight dark:bg-brand-dark/40 border-t border-gray-100 dark:border-gray-800">
+        <div className="max-w-3xl mx-auto px-4 text-center space-y-6">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-purpleLight text-brand-purple text-xs font-bold uppercase tracking-wider">
+            <span className="w-1.5 h-1.5 rounded-full bg-brand-purple animate-pulse"></span>
+            {t.reviews_join_eyebrow}
+          </span>
+          <h2 className="text-3xl md:text-4xl font-heading font-bold text-brand-dark dark:text-white leading-tight">
+            {t.reviews_join_heading}
+          </h2>
+          <p className="text-lg text-brand-gray dark:text-gray-300 max-w-lg mx-auto">
+            {t.reviews_join_desc}
           </p>
-          <AppButton
-            onClick={() => openWhatsApp("Hi MarketingSetu! I'd like to hear more client success stories relevant to my business.")}
-            variant="whatsapp"
-          >
-            💬 Chat on WhatsApp
-          </AppButton>
+          <div className="pt-4">
+            <AppButton
+              onClick={() => openWhatsApp("Hi MarketingSetu! I'd like to hear more client success stories relevant to my business.")}
+              variant="whatsapp"
+            >
+              {t.btn_whatsapp_chat}
+            </AppButton>
+          </div>
         </div>
       </section>
     </PageWrapper>
