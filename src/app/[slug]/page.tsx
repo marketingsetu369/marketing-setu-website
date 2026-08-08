@@ -10,6 +10,20 @@ interface PageProps {
   }>;
 }
 
+const getImageUrl = (url?: string) => {
+  if (!url) return "";
+  if (url.startsWith("http") && !url.includes("localhost") && !url.includes("10.0.2.2") && !url.includes("127.0.0.1")) {
+    return url;
+  }
+  const match = url.match(/\/uploads\/(.+)$/);
+  if (match && match[1]) {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3005";
+    const cleanApiUrl = apiUrl.replace(/\/$/, "");
+    return `${cleanApiUrl}/uploads/${match[1]}`;
+  }
+  return url;
+};
+
 // Fetch helper for server context
 async function getBusinessData(slug: string) {
   try {
@@ -38,13 +52,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = `${businessName} - ${businessCategory} in ${locationAddress}`;
   const description = data.header?.tagline || data.about_us || `Learn more about ${businessName}`;
 
+  const logoUrl = getImageUrl(data.header?.logo_url || data.logo_url);
+
   return {
     title,
     description,
     openGraph: {
       title,
       description,
-      images: (data.header?.logo_url || data.logo_url) ? [{ url: data.header?.logo_url || data.logo_url }] : [],
+      images: logoUrl ? [{ url: logoUrl }] : [],
     },
   };
 }
@@ -58,7 +74,7 @@ export default async function Page({ params }: PageProps) {
   const telephone = data?.contact?.phone || data?.mobile_number || "";
   const email = data?.contact?.email || data?.email_address || "";
   const streetAddress = data?.contact?.maps_link || data?.location_address || "";
-  const logo = data?.header?.logo_url || data?.logo_url || undefined;
+  const logo = getImageUrl(data?.header?.logo_url || data?.logo_url) || undefined;
 
   // JSON-LD LocalBusiness Schema
   const jsonLd = data ? {
@@ -83,7 +99,7 @@ export default async function Page({ params }: PageProps) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       )}
-      <BusinessView data={data} businessName={businessName || resolvedParams.slug} />
+      <BusinessView data={data} slug={resolvedParams.slug} />
     </>
   );
 }

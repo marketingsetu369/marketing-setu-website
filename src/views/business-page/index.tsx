@@ -1,28 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { BusinessPageApi } from "@/api/repositories/businessPageApi";
 import {
-  CallIcon,
-  WhatsappIcon,
-  Mail01Icon,
-  Location01Icon,
-  CheckmarkCircle02Icon,
-  StarIcon,
-  InstagramIcon,
-  FacebookIcon,
-  YoutubeIcon,
-  TwitterIcon,
   ArrowLeft02Icon,
   ArrowRight02Icon,
+  CallIcon,
+  CheckmarkCircle02Icon,
+  FacebookIcon,
   FavouriteIcon,
-  PlayIcon,
+  InstagramIcon,
+  Location01Icon,
+  Mail01Icon,
   Message01Icon,
-  MotorbikeIcon,
+  PlayIcon,
+  StarIcon,
   Store01Icon,
+  TwitterIcon,
   UserIcon,
+  WhatsappIcon,
+  YoutubeIcon
 } from "@hugeicons/core-free-icons";
-import { BusinessPageApi } from "@/api/repositories/businessPageApi";
+import { HugeiconsIcon } from "@hugeicons/react";
+import React, { useState } from "react";
 
 // Fonts
 const FONT_HEADER = "var(--font-poppins)";
@@ -30,10 +29,10 @@ const FONT_SANS = "var(--font-inter)";
 
 interface BusinessViewProps {
   data: any;
-  businessName: string;
+  slug: string;
 }
 
-export default function BusinessView({ data, businessName }: BusinessViewProps) {
+export default function BusinessView({ data, slug }: BusinessViewProps) {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   const [formData, setFormData] = useState({ name: "", phone: "", message: "" });
@@ -59,7 +58,7 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
     setErrorMessage("");
 
     try {
-      await BusinessPageApi.submitEnquiry(businessName, {
+      await BusinessPageApi.submitEnquiry(slug, {
         name: formData.name.trim(),
         phone: formData.phone.trim(),
         message: formData.message.trim(),
@@ -88,6 +87,21 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
     }
   };
 
+  const getImageUrl = (url?: string) => {
+    if (!url) return "";
+    if (url.startsWith("http") && !url.includes("localhost") && !url.includes("10.0.2.2") && !url.includes("127.0.0.1")) {
+      return url;
+    }
+    const match = url.match(/\/uploads\/(.+)$/);
+    if (match && match[1]) {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3005";
+      // Remove any trailing slashes from api url
+      const cleanApiUrl = apiUrl.replace(/\/$/, "");
+      return `${cleanApiUrl}/uploads/${match[1]}`;
+    }
+    return url;
+  };
+
   // Safe defaults from database
   const header = data?.header || {};
   const contact = data?.contact || {};
@@ -114,7 +128,7 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
               <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100 mb-4 overflow-hidden p-3">
                 {header.logo_url ? (
                   <img
-                    src={header.logo_url}
+                    src={getImageUrl(header.logo_url)}
                     alt={header.business_name || "Logo"}
                     className="w-full h-full object-cover rounded-full"
                   />
@@ -193,74 +207,76 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
             </header>
 
             {/* Owner profile cards overlay */}
-            <div className="px-6 -mt-[65px] relative z-10 space-y-4 animate-fade-in-up">
-              {ownerList.map((owner: any, idx: number) => (
-                <div key={idx} className="bg-white rounded-3xl p-6 shadow-lg shadow-gray-150/40 border border-gray-100">
-                  <div className="flex gap-4">
-                    <div className="w-16 h-16 rounded-full overflow-hidden relative border border-gray-100 flex-shrink-0">
-                      {owner.avatar_url ? (
-                        <img
-                          src={owner.avatar_url}
-                          alt={owner.name}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div 
-                          className="w-full h-full rounded-full flex items-center justify-center"
-                          style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR }}
-                        >
-                          <HugeiconsIcon icon={UserIcon} size={20} />
+            {ownerList.length > 0 && (
+              <div className="px-6 -mt-[65px] relative z-10 space-y-4 animate-fade-in-up">
+                {ownerList.map((owner: any, idx: number) => (
+                  <div key={idx} className="bg-white rounded-3xl p-6 shadow-lg shadow-gray-150/40 border border-gray-100">
+                    <div className="flex gap-4">
+                      <div className="w-16 h-16 rounded-full overflow-hidden relative border border-gray-100 flex-shrink-0">
+                        {owner.avatar_url ? (
+                          <img
+                            src={getImageUrl(owner.avatar_url)}
+                            alt={owner.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div 
+                            className="w-full h-full rounded-full flex items-center justify-center"
+                            style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR }}
+                          >
+                            <HugeiconsIcon icon={UserIcon} size={20} />
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex-grow">
+                        <div className="flex items-center gap-1">
+                          <h3 className="font-extrabold text-gray-900 text-base" style={{ fontFamily: FONT_HEADER }}>
+                            {owner.name}
+                          </h3>
+                          <span style={{ color: PRIMARY_COLOR }}>
+                            <HugeiconsIcon icon={CheckmarkCircle02Icon} size={16} />
+                          </span>
                         </div>
-                      )}
-                    </div>
-                    <div className="flex-grow">
-                      <div className="flex items-center gap-1">
-                        <h3 className="font-extrabold text-gray-900 text-base" style={{ fontFamily: FONT_HEADER }}>
-                          {owner.name}
-                        </h3>
-                        <span style={{ color: PRIMARY_COLOR }}>
-                          <HugeiconsIcon icon={CheckmarkCircle02Icon} size={16} />
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-gray-400 font-semibold mb-1">{owner.title}</p>
-                      <div className="flex items-center gap-1">
-                        <span className="text-yellow-400">
-                          <HugeiconsIcon icon={StarIcon} size={14} />
-                        </span>
-                        <span className="text-xs font-bold text-gray-800">{owner.rating || 4.9}</span>
-                        <span className="text-[10px] text-gray-400">({owner.reviews_count || 0} Reviews)</span>
+                        <p className="text-[11px] text-gray-400 font-semibold mb-1">{owner.title}</p>
+                        <div className="flex items-center gap-1">
+                          <span className="text-yellow-400">
+                            <HugeiconsIcon icon={StarIcon} size={14} />
+                          </span>
+                          <span className="text-xs font-bold text-gray-800">{owner.rating || 4.9}</span>
+                          <span className="text-[10px] text-gray-400">({owner.reviews_count || 0} Reviews)</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Stats */}
-                  <div className="grid grid-cols-3 gap-2 border-y border-gray-100 py-3.5 my-4.5 text-center">
-                    <div>
-                      <p className="text-base font-black" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>{owner.sales_count || 0}</p>
-                      <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Sales</p>
+                    {/* Stats */}
+                    <div className="grid grid-cols-3 gap-2 border-y border-gray-100 py-3.5 my-4.5 text-center">
+                      <div>
+                        <p className="text-base font-black" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>{owner.sales_count || 0}</p>
+                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Sales</p>
+                      </div>
+                      <div className="border-x border-gray-100">
+                        <p className="text-base font-black" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>{owner.experience_years || 0}+</p>
+                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Years</p>
+                      </div>
+                      <div>
+                        <p className="text-base font-black" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>{owner.active_listings_count || 0}</p>
+                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Active</p>
+                      </div>
                     </div>
-                    <div className="border-x border-gray-100">
-                      <p className="text-base font-black" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>{owner.experience_years || 0}+</p>
-                      <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Years</p>
-                    </div>
-                    <div>
-                      <p className="text-base font-black" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>{owner.active_listings_count || 0}</p>
-                      <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Active</p>
-                    </div>
-                  </div>
 
-                  {/* About Biography */}
-                  {owner.bio && (
-                    <div>
-                      <h4 className="text-sm font-black text-gray-900 mb-1.5" style={{ fontFamily: FONT_HEADER }}>About</h4>
-                      <p className="text-xs text-gray-500 leading-relaxed font-medium">
-                        {owner.bio}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+                    {/* About Biography */}
+                    {owner.bio && (
+                      <div>
+                        <h4 className="text-sm font-black text-gray-900 mb-1.5" style={{ fontFamily: FONT_HEADER }}>About</h4>
+                        <p className="text-xs text-gray-500 leading-relaxed font-medium">
+                          {owner.bio}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Desktop Only CTA Actions (Relative Flow) */}
@@ -314,13 +330,13 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
                 {products.map((prod: any, idx: number) => (
                   <div
                     key={idx}
-                    className="w-48 flex-shrink-0 bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 flex flex-col group cursor-pointer hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+                    className="w-52 flex-shrink-0 bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 flex flex-col group cursor-pointer hover:shadow-md hover:-translate-y-1 transition-all duration-300"
                   >
-                    <div className="h-28 relative bg-gray-100">
-                      {prod.image && (
+                    <div className="h-32 relative bg-gray-100">
+                      {(prod.image || prod.imageUrl) && (
                         <img
-                          src={prod.image}
-                          alt={prod.title}
+                          src={getImageUrl(prod.image || prod.imageUrl)}
+                          alt={prod.name || prod.title}
                           className="w-full h-full object-cover"
                         />
                       )}
@@ -337,29 +353,43 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
                       <div>
                         {prod.type && (
                           <span 
-                            className="inline-block text-[8px] font-black px-2 py-0.5 rounded-md mb-2"
+                            className="inline-block text-[8px] font-black px-2 py-0.5 rounded-md mb-1.5"
                             style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR }}
                           >
                             {prod.type}
                           </span>
                         )}
-                        <h3 className="font-extrabold text-gray-900 text-xs tracking-tight line-clamp-1 mb-1">
-                          {prod.title}
+                        <h3 className="font-extrabold text-gray-900 text-xs tracking-tight line-clamp-1">
+                          {prod.name || prod.title}
                         </h3>
+                        {prod.description && (
+                          <p className="text-[10px] text-gray-500 line-clamp-2 mt-1 mb-2 font-medium leading-normal">
+                            {prod.description}
+                          </p>
+                        )}
                         {prod.location && (
-                          <div className="flex items-center gap-0.5 text-gray-400 mb-3">
+                          <div className="flex items-center gap-0.5 text-gray-400 mt-1 mb-2">
                             <HugeiconsIcon icon={Location01Icon} size={12} className="flex-shrink-0" />
                             <span className="text-[9px] font-semibold line-clamp-1">{prod.location}</span>
                           </div>
                         )}
                       </div>
-                      <div className="flex justify-between items-center mt-auto">
-                        <p className="text-[11px] font-black text-gray-900">
-                          {prod.price}
-                        </p>
-                        <span className="text-gray-400 hover:text-red-500 transition-colors">
-                          <HugeiconsIcon icon={FavouriteIcon} size={14} />
-                        </span>
+                      
+                      <div className="mt-auto">
+                        <div className="flex justify-between items-center mb-2">
+                          <p className="text-[11px] font-black text-gray-900">
+                            {prod.price}
+                          </p>
+                          <span className="text-gray-400 hover:text-red-500 transition-colors">
+                            <HugeiconsIcon icon={FavouriteIcon} size={14} />
+                          </span>
+                        </div>
+                        <button 
+                          className="w-full text-white py-2 rounded-2xl font-bold text-[10px] uppercase tracking-wider active:scale-95 transition-all shadow-sm"
+                          style={{ backgroundColor: PRIMARY_COLOR }}
+                        >
+                          {prod.buttonName || "Enquire"}
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -378,7 +408,7 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
               <div className="grid grid-cols-3 gap-3">
                 {gallery.map((item: any, idx: number) => (
                   <div key={idx} className="aspect-square rounded-2xl overflow-hidden bg-gray-100 hover:shadow-md relative group transition-shadow cursor-pointer">
-                    <img src={item.url} alt={`Gallery ${idx}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                    <img src={getImageUrl(item.url)} alt={`Gallery ${idx}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                     {item.type === "video" && (
                       <div className="absolute inset-0 bg-black/25 flex items-center justify-center">
                         <div className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow-md text-gray-800">
@@ -406,7 +436,7 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
               <div className="w-full flex flex-col items-center">
                 <div className="w-16 h-16 rounded-full overflow-hidden border-2 p-0.5 mb-4 shadow-md transition-all duration-300" style={{ borderColor: PRIMARY_COLOR }}>
                   <img
-                    src={testimonials[activeTestimonial].avatar}
+                    src={getImageUrl(testimonials[activeTestimonial].avatar)}
                     alt={testimonials[activeTestimonial].name}
                     className="w-full h-full object-cover rounded-full animate-fade-in-up"
                   />
@@ -447,49 +477,51 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
           )}
 
           {/* Social Links Section */}
-          <section className="mt-8 pt-8 border-t border-gray-100 first:mt-0 first:pt-0 first:border-0 animate-fade-in-up animation-delay-400">
-            <h2 className="text-base font-black text-gray-900 mb-4.5" style={{ fontFamily: FONT_HEADER }}>
-              Social Links
-            </h2>
-            
-            <div className="grid grid-cols-4 gap-4 text-center">
-              {socialLinks.instagram && (
-                <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
-                    <HugeiconsIcon icon={InstagramIcon} size={20} />
-                  </div>
-                  <span className="text-[10px] font-bold text-gray-500">Instagram</span>
-                </a>
-              )}
+          {(socialLinks.instagram || socialLinks.facebook || socialLinks.youtube || socialLinks.twitter) && (
+            <section className="mt-8 pt-8 border-t border-gray-100 first:mt-0 first:pt-0 first:border-0 animate-fade-in-up animation-delay-400">
+              <h2 className="text-base font-black text-gray-900 mb-4.5" style={{ fontFamily: FONT_HEADER }}>
+                Social Links
+              </h2>
+              
+              <div className="grid grid-cols-4 gap-4 text-center">
+                {socialLinks.instagram && (
+                  <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
+                      <HugeiconsIcon icon={InstagramIcon} size={20} />
+                    </div>
+                    <span className="text-[10px] font-bold text-gray-500">Instagram</span>
+                  </a>
+                )}
 
-              {socialLinks.facebook && (
-                <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
-                  <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
-                    <HugeiconsIcon icon={FacebookIcon} size={20} />
-                  </div>
-                  <span className="text-[10px] font-bold text-gray-500">Facebook</span>
-                </a>
-              )}
+                {socialLinks.facebook && (
+                  <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
+                    <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
+                      <HugeiconsIcon icon={FacebookIcon} size={20} />
+                    </div>
+                    <span className="text-[10px] font-bold text-gray-500">Facebook</span>
+                  </a>
+                )}
 
-              {socialLinks.youtube && (
-                <a href={socialLinks.youtube} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
-                  <div className="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
-                    <HugeiconsIcon icon={YoutubeIcon} size={20} />
-                  </div>
-                  <span className="text-[10px] font-bold text-gray-500">Youtube</span>
-                </a>
-              )}
+                {socialLinks.youtube && (
+                  <a href={socialLinks.youtube} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
+                    <div className="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
+                      <HugeiconsIcon icon={YoutubeIcon} size={20} />
+                    </div>
+                    <span className="text-[10px] font-bold text-gray-500">Youtube</span>
+                  </a>
+                )}
 
-              {socialLinks.twitter && (
-                <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
-                  <div className="w-12 h-12 rounded-full bg-black text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
-                    <HugeiconsIcon icon={TwitterIcon} size={18} />
-                  </div>
-                  <span className="text-[10px] font-bold text-gray-500">Twitter</span>
-                </a>
-              )}
-            </div>
-          </section>
+                {socialLinks.twitter && (
+                  <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
+                    <div className="w-12 h-12 rounded-full bg-black text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
+                      <HugeiconsIcon icon={TwitterIcon} size={18} />
+                    </div>
+                    <span className="text-[10px] font-bold text-gray-500">Twitter</span>
+                  </a>
+                )}
+              </div>
+            </section>
+          )}
 
           {/* Enquiry Form */}
           <section className="mt-8 pt-8 border-t border-gray-100 first:mt-0 first:pt-0 first:border-0 animate-fade-in-up animation-delay-500">
