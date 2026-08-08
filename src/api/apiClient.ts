@@ -12,6 +12,7 @@ const fetchClient = {
 
     try {
       const response = await fetch(url, {
+        cache: "no-store",
         ...options,
         headers,
       });

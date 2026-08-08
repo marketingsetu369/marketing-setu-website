@@ -20,6 +20,7 @@ import {
   Message01Icon,
   MotorbikeIcon,
   Store01Icon,
+  UserIcon,
 } from "@hugeicons/core-free-icons";
 import { BusinessPageApi } from "@/api/repositories/businessPageApi";
 
@@ -99,34 +100,14 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center items-center md:py-0" style={{ fontFamily: FONT_SANS }}>
       {/* Premium Keyframes for Smooth Fade-In entry animations */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(24px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in-up {
-          opacity: 0;
-          animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        .animation-delay-100 { animation-delay: 100ms; }
-        .animation-delay-200 { animation-delay: 200ms; }
-        .animation-delay-300 { animation-delay: 300ms; }
-        .animation-delay-400 { animation-delay: 400ms; }
-        .animation-delay-500 { animation-delay: 500ms; }
-      `}} />
+     
 
-      {/* Main wrapper: max-w-md (phone size) on mobile, max-w-5xl (splitscreen) on desktop */}
-      <div className="w-full max-w-md md:max-w-[1100px] bg-white min-h-screen md:min-h-[820px] md:h-[820px] md:shadow-none shadow-2xl relative flex flex-col md:flex-row md:rounded-3xl overflow-hidden animate-fade-in-up">
+      {/* Main wrapper: 100% width on mobile, max-w-[1100px] on desktop, no shadow */}
+      <div className="w-full md:max-w-[1100px] bg-white min-h-screen md:min-h-[820px] md:h-[820px] shadow-none relative flex flex-col md:flex-row md:rounded-3xl md:overflow-hidden animate-fade-in-up">
         
         {/* ── LEFT COLUMN: Header & Profile Card ── */}
         <div className="w-full md:w-[42%] bg-white flex flex-col justify-between border-r border-gray-100 relative pb-4 md:pb-0 animate-fade-in-up">
-          <div className="overflow-y-auto max-h-[calc(100vh-80px)] md:max-h-full [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-6">
+          <div className="md:overflow-y-auto md:max-h-full [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-6">
             {/* Header Section */}
             <header className="bg-gray-100 pt-10 pb-[90px] px-6 text-center flex flex-col items-center">
               {/* Logo */}
@@ -228,7 +209,7 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
                           className="w-full h-full rounded-full flex items-center justify-center"
                           style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR }}
                         >
-                          <HugeiconsIcon icon={Store01Icon} size={20} />
+                          <HugeiconsIcon icon={UserIcon} size={20} />
                         </div>
                       )}
                     </div>
@@ -300,11 +281,11 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
         </div>
 
         {/* ── RIGHT COLUMN: Content Sections ── */}
-        <div className="w-full md:w-[58%] px-6 py-6 flex flex-col overflow-y-auto md:h-full [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden space-y-12 pb-32 md:pb-12">
+        <div className="w-full md:w-[58%] px-6 pt-8 flex flex-col md:overflow-y-auto md:h-full [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-32 md:pb-12">
           
           {/* Products or Services Section */}
           {products.length > 0 && (
-            <section className="animate-fade-in-up animation-delay-100">
+            <section className="mt-8 pt-8 border-t border-gray-100 first:mt-0 first:pt-0 first:border-0 animate-fade-in-up animation-delay-100">
               <div className="flex justify-between items-center mb-4.5">
                 <h2 className="text-base font-black text-gray-900" style={{ fontFamily: FONT_HEADER }}>
                   Product or Services
@@ -389,7 +370,7 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
 
           {/* Gallery Section */}
           {gallery.length > 0 && (
-            <section className="animate-fade-in-up animation-delay-200">
+            <section className="mt-8 pt-8 border-t border-gray-100 first:mt-0 first:pt-0 first:border-0 animate-fade-in-up animation-delay-200">
               <div className="flex justify-between items-center mb-4.5">
                 <h2 className="text-base font-black text-gray-900" style={{ fontFamily: FONT_HEADER }}>Gallery</h2>
               </div>
@@ -413,7 +394,7 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
 
           {/* Testimonials Section */}
           {testimonials.length > 0 && (
-            <section className="text-center flex flex-col items-center animate-fade-in-up animation-delay-300">
+            <section className="mt-8 pt-8 border-t border-gray-100 first:mt-0 first:pt-0 first:border-0 text-center flex flex-col items-center animate-fade-in-up animation-delay-300">
               <h2 className="text-xl font-black text-gray-900 mb-2" style={{ fontFamily: FONT_HEADER }}>
                 What do they <span className="text-orange-500">say?</span>
               </h2>
@@ -466,7 +447,7 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
           )}
 
           {/* Social Links Section */}
-          <section className="animate-fade-in-up animation-delay-400">
+          <section className="mt-8 pt-8 border-t border-gray-100 first:mt-0 first:pt-0 first:border-0 animate-fade-in-up animation-delay-400">
             <h2 className="text-base font-black text-gray-900 mb-4.5" style={{ fontFamily: FONT_HEADER }}>
               Social Links
             </h2>
@@ -511,112 +492,113 @@ export default function BusinessView({ data, businessName }: BusinessViewProps) 
           </section>
 
           {/* Enquiry Form */}
-          <section className="bg-gray-50 rounded-3xl p-6 animate-fade-in-up animation-delay-500">
-            <h2 className="text-base font-black text-gray-900 mb-1" style={{ fontFamily: FONT_HEADER }}>
-              Send an Enquiry
-            </h2>
-            <p className="text-[11px] text-gray-400 font-semibold mb-4">Have questions? Fill out the details below to contact us.</p>
-            
-            <form onSubmit={handleEnquirySubmit} className="space-y-4">
-              <div>
-                <label htmlFor="clientName" className="block text-[10px] font-black text-gray-600 uppercase tracking-wider mb-1">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  id="clientName"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Enter your name"
-                  className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all"
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="clientPhone" className="block text-[10px] font-black text-gray-600 uppercase tracking-wider mb-1">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  id="clientPhone"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder="Enter your mobile number"
-                  className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all"
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="clientMessage" className="block text-[10px] font-black text-gray-600 uppercase tracking-wider mb-1">
-                  Message (Optional)
-                </label>
-                <textarea
-                  id="clientMessage"
-                  rows={3}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Enter your message"
-                  className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all resize-none"
-                />
-              </div>
-
-              {submitStatus === "success" && (
-                <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs px-4 py-3 rounded-xl font-semibold">
-                  Enquiry submitted successfully! We will contact you soon.
+          <section className="mt-8 pt-8 border-t border-gray-100 first:mt-0 first:pt-0 first:border-0 animate-fade-in-up animation-delay-500">
+            <div className="bg-gray-50 rounded-3xl p-6">
+              <h2 className="text-base font-black text-gray-900 mb-1" style={{ fontFamily: FONT_HEADER }}>
+                Send an Enquiry
+              </h2>
+              <p className="text-[11px] text-gray-400 font-semibold mb-4">Have questions? Fill out the details below to contact us.</p>
+              
+              <form onSubmit={handleEnquirySubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="clientName" className="block text-[10px] font-black text-gray-600 uppercase tracking-wider mb-1">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    id="clientName"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="Enter your name"
+                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all"
+                    required
+                  />
                 </div>
-              )}
 
-              {submitStatus === "error" && (
-                <div className="bg-red-50 border border-red-200 text-red-700 text-xs px-4 py-3 rounded-xl font-semibold">
-                  {errorMessage}
+                <div>
+                  <label htmlFor="clientPhone" className="block text-[10px] font-black text-gray-600 uppercase tracking-wider mb-1">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="clientPhone"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    placeholder="Enter your mobile number"
+                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all"
+                    required
+                  />
                 </div>
-              )}
 
-              <div className="flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFormData({ name: "", phone: "", message: "" });
-                    setSubmitStatus("idle");
-                    setErrorMessage("");
-                  }}
-                  className="w-[30%] bg-transparent hover:bg-gray-100 text-gray-500 py-3.5 rounded-2xl font-bold text-xs border border-gray-200 active:scale-[0.98] transition-all cursor-pointer text-center"
-                >
-                  Reset
-                </button>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-[70%] text-white py-3.5 rounded-2xl font-bold text-xs active:scale-[0.98] transition-all cursor-pointer"
-                  style={{ backgroundColor: PRIMARY_COLOR, boxShadow: `0 8px 16px ${PRIMARY_COLOR}10` }}
-                >
-                  {isSubmitting ? "Submitting..." : "Submit Enquiry"}
-                </button>
-              </div>
-            </form>
+                <div>
+                  <label htmlFor="clientMessage" className="block text-[10px] font-black text-gray-600 uppercase tracking-wider mb-1">
+                    Message (Optional)
+                  </label>
+                  <textarea
+                    id="clientMessage"
+                    rows={3}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    placeholder="Enter your message"
+                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all resize-none"
+                  />
+                </div>
+
+                {submitStatus === "success" && (
+                  <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs px-4 py-3 rounded-xl font-semibold">
+                    Enquiry submitted successfully! We will contact you soon.
+                  </div>
+                )}
+
+                {submitStatus === "error" && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 text-xs px-4 py-3 rounded-xl font-semibold">
+                    {errorMessage}
+                  </div>
+                )}
+
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData({ name: "", phone: "", message: "" });
+                      setSubmitStatus("idle");
+                      setErrorMessage("");
+                    }}
+                    className="w-[30%] bg-transparent hover:bg-gray-100 text-gray-500 py-3.5 rounded-2xl font-bold text-xs border border-gray-200 active:scale-[0.98] transition-all cursor-pointer text-center"
+                  >
+                    Reset
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-[70%] text-white py-3.5 rounded-2xl font-bold text-xs active:scale-[0.98] transition-all cursor-pointer"
+                    style={{ backgroundColor: PRIMARY_COLOR, boxShadow: `0 8px 16px ${PRIMARY_COLOR}10` }}
+                  >
+                    {isSubmitting ? "Submitting..." : "Submit Enquiry"}
+                  </button>
+                </div>
+              </form>
+            </div>
           </section>
 
-        </div>
+      </div>
 
-        {/* Mobile Only CTA Actions (Fixed at absolute bottom of phone screen viewport, Z-50) */}
-        <div className="md:hidden fixed bottom-0 left-0 right-0 h-20 bg-white/95 backdrop-blur-md border-t border-gray-100 flex items-center justify-between px-6 pb-2 z-50">
-          <button 
-            className="w-[48%] text-white py-3 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
-            style={{ backgroundColor: PRIMARY_COLOR, boxShadow: `0 8px 16px ${PRIMARY_COLOR}15` }}
-          >
-            <HugeiconsIcon icon={Message01Icon} size={16} /> Message
-          </button>
-          <button 
-            className="w-[48%] py-3 rounded-2xl font-bold text-sm border flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
-            style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR, borderColor: PRIMARY_BORDER }}
-          >
-            <HugeiconsIcon icon={CallIcon} size={16} /> Call Now
-          </button>
-        </div>
-
+      {/* Mobile Only CTA Actions (Fixed at absolute bottom of phone screen viewport, Z-50) */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 h-20 bg-white/95 backdrop-blur-md border-t border-gray-100 flex items-center justify-between px-6 pb-2 z-50">
+        <button 
+          className="w-[48%] text-white py-3 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
+          style={{ backgroundColor: PRIMARY_COLOR, boxShadow: `0 8px 16px ${PRIMARY_COLOR}15` }}
+        >
+          <HugeiconsIcon icon={Message01Icon} size={16} /> Message
+        </button>
+        <button 
+          className="w-[48%] py-3 rounded-2xl font-bold text-sm border flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
+          style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR, borderColor: PRIMARY_BORDER }}
+        >
+          <HugeiconsIcon icon={CallIcon} size={16} /> Call Now
+        </button>
       </div>
     </div>
-  );
+  </div>
+);
 }
