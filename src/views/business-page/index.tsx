@@ -22,6 +22,9 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import React, { useState } from "react";
+import { usePageTracking } from "./hooks/usePageTracking";
+import { trackUniqueAction } from "@/utils/analytics";
+import { TrackAction } from "@/enums";
 
 // Fonts
 const FONT_HEADER = "var(--font-poppins)";
@@ -33,9 +36,13 @@ interface BusinessViewProps {
 }
 
 export default function BusinessView({ data, slug }: BusinessViewProps) {
+  // Page View Tracking on Mount
+  usePageTracking(slug);
+
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   const [formData, setFormData] = useState({ name: "", phone: "", message: "" });
+  const [isProductEnquiry, setIsProductEnquiry] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -62,7 +69,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
         name: formData.name.trim(),
         phone: formData.phone.trim(),
         message: formData.message.trim(),
-        isProduct: false,
+        isProduct: isProductEnquiry,
       });
       setSubmitStatus("success");
       setFormData({ name: "", phone: "", message: "" });
@@ -169,7 +176,11 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
               {/* Quick Actions */}
               <div className="grid grid-cols-4 gap-4 w-full mt-8">
                 {contact.phone && (
-                  <a href={`tel:${contact.phone}`} className="flex flex-col items-center gap-2 group">
+                  <a 
+                    href={`tel:${contact.phone}`} 
+                    onClick={() => { if (slug) trackUniqueAction(slug, TrackAction.Call); }}
+                    className="flex flex-col items-center gap-2 group"
+                  >
                     <div className="w-12 h-12 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center text-gray-600 group-hover:bg-gray-100 transition-colors">
                       <HugeiconsIcon icon={CallIcon} size={20} />
                     </div>
@@ -178,7 +189,13 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                 )}
                 
                 {contact.whatsapp && (
-                  <a href={`https://wa.me/${contact.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
+                  <a 
+                    href={`https://wa.me/${contact.whatsapp}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    onClick={() => { if (slug) trackUniqueAction(slug, TrackAction.WhatsApp); }}
+                    className="flex flex-col items-center gap-2 group"
+                  >
                     <div className="w-12 h-12 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center text-gray-600 group-hover:bg-gray-100 transition-colors">
                       <HugeiconsIcon icon={WhatsappIcon} size={20} />
                     </div>
@@ -196,7 +213,13 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                 )}
 
                 {contact.maps_link && (
-                  <a href={contact.maps_link} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
+                  <a 
+                    href={contact.maps_link} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    onClick={() => { if (slug) trackUniqueAction(slug, TrackAction.Directions); }}
+                    className="flex flex-col items-center gap-2 group"
+                  >
                     <div className="w-12 h-12 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center text-gray-600 group-hover:bg-gray-100 transition-colors">
                       <HugeiconsIcon icon={Location01Icon} size={20} />
                     </div>
@@ -282,17 +305,31 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           {/* Desktop Only CTA Actions (Relative Flow) */}
           <div className="hidden md:flex relative h-auto mt-6 px-6 pb-6 items-center justify-between z-10">
             <button 
+              onClick={() => {
+                setIsProductEnquiry(false);
+                const element = document.getElementById("clientName");
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth" });
+                  element.focus();
+                }
+              }}
               className="w-[48%] text-white py-3.5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
               style={{ backgroundColor: PRIMARY_COLOR, boxShadow: `0 8px 16px ${PRIMARY_COLOR}15` }}
             >
               <HugeiconsIcon icon={Message01Icon} size={16} /> Message
             </button>
-            <button 
-              className="w-[48%] py-3.5 rounded-2xl font-bold text-sm border flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
-              style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR, borderColor: PRIMARY_BORDER }}
-            >
-              <HugeiconsIcon icon={CallIcon} size={16} /> Call Now
-            </button>
+            {contact.phone && (
+              <button 
+                onClick={() => {
+                  if (slug) trackUniqueAction(slug, TrackAction.Call);
+                  window.location.href = `tel:${contact.phone}`;
+                }}
+                className="w-[48%] py-3.5 rounded-2xl font-bold text-sm border flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
+                style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR, borderColor: PRIMARY_BORDER }}
+              >
+                <HugeiconsIcon icon={CallIcon} size={16} /> Call Now
+              </button>
+            )}
           </div>
         </div>
 
@@ -618,17 +655,31 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
       {/* Mobile Only CTA Actions (Fixed at absolute bottom of phone screen viewport, Z-50) */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 h-20 bg-white/95 backdrop-blur-md border-t border-gray-100 flex items-center justify-between px-6 pb-2 z-50">
         <button 
+          onClick={() => {
+            setIsProductEnquiry(false);
+            const element = document.getElementById("clientName");
+            if (element) {
+              element.scrollIntoView({ behavior: "smooth" });
+              element.focus();
+            }
+          }}
           className="w-[48%] text-white py-3 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
           style={{ backgroundColor: PRIMARY_COLOR, boxShadow: `0 8px 16px ${PRIMARY_COLOR}15` }}
         >
           <HugeiconsIcon icon={Message01Icon} size={16} /> Message
         </button>
-        <button 
-          className="w-[48%] py-3 rounded-2xl font-bold text-sm border flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
-          style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR, borderColor: PRIMARY_BORDER }}
-        >
-          <HugeiconsIcon icon={CallIcon} size={16} /> Call Now
-        </button>
+        {contact.phone && (
+          <button 
+            onClick={() => {
+              if (slug) trackUniqueAction(slug, TrackAction.Call);
+              window.location.href = `tel:${contact.phone}`;
+            }}
+            className="w-[48%] py-3 rounded-2xl font-bold text-sm border flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
+            style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR, borderColor: PRIMARY_BORDER }}
+          >
+            <HugeiconsIcon icon={CallIcon} size={16} /> Call Now
+          </button>
+        )}
       </div>
     </div>
   </div>
