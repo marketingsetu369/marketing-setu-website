@@ -1,6 +1,8 @@
 "use client";
 
 import { BusinessPageApi } from "@/api/repositories/businessPageApi";
+import { TrackAction } from "@/enums";
+import { trackUniqueAction } from "@/utils/analytics";
 import {
   ArrowLeft02Icon,
   ArrowRight02Icon,
@@ -23,8 +25,6 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import React, { useState } from "react";
 import { usePageTracking } from "./hooks/usePageTracking";
-import { trackUniqueAction } from "@/utils/analytics";
-import { TrackAction } from "@/enums";
 
 // Fonts
 const FONT_HEADER = "var(--font-poppins)";
@@ -101,7 +101,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
     }
     const match = url.match(/\/uploads\/(.+)$/);
     if (match && match[1]) {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3005";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://187.127.128.193:3005";
       // Remove any trailing slashes from api url
       const cleanApiUrl = apiUrl.replace(/\/$/, "");
       return `${cleanApiUrl}/uploads/${match[1]}`;
