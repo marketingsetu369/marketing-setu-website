@@ -272,18 +272,14 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                     </div>
 
                     {/* Stats */}
-                    <div className="grid grid-cols-3 gap-2 border-y border-gray-100 py-3.5 my-4.5 text-center">
+                    <div className="grid grid-cols-2 gap-2 border-y border-gray-100 py-3.5 my-4.5 text-center">
                       <div>
-                        <p className="text-base font-black" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>{owner.sales_count || 0}</p>
-                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Sales</p>
+                        <p className="text-base font-black" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>{owner.happy_customers_count || 0}+</p>
+                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Happy Customers</p>
                       </div>
-                      <div className="border-x border-gray-100">
+                      <div className="border-l border-gray-100">
                         <p className="text-base font-black" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>{owner.experience_years || 0}+</p>
-                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Years</p>
-                      </div>
-                      <div>
-                        <p className="text-base font-black" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>{owner.active_listings_count || 0}</p>
-                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Active</p>
+                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Years Exp.</p>
                       </div>
                     </div>
 
