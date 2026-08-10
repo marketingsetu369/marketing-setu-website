@@ -4,6 +4,7 @@ import { useThemeStore } from "@/store/themeStore";
 import { PageWrapper, PricingCard, useWhatsApp } from "@/views/home-page/component";
 import { pricingPlans, translations } from "@/views/home-page/data";
 import CafeCardView from "@/views/home-page/hero-section/CafeCardView";
+import SolarCardView from "@/views/home-page/hero-section/SolarCardView";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -341,72 +342,10 @@ export default function HomeView() {
 
                           {card.layoutType === "cafe-artisan" ? (
                             <CafeCardView isCenter={isActive} />
+                          ) : card.layoutType === "solar-tech" ? (
+                            <SolarCardView isCenter={isActive} />
                           ) : (
                             <div className={`w-full flex flex-col space-y-4 pb-12 pt-6 ${isActive ? "animate-vertical-scroll" : ""}`}>
-                              {/* SOLAR ENERGY SELLER LAYOUT */}
-                              {card.layoutType === "solar-tech" && (
-                                <div className="space-y-3 bg-cyan-50/30 pb-4">
-                                  <header className="pt-6 pb-6 px-4 text-center bg-gradient-to-b from-cyan-950 via-teal-900 to-slate-950 text-white relative">
-                                    <div className="w-16 h-16 rounded-2xl bg-cyan-500 text-slate-950 mx-auto flex items-center justify-center text-3xl mb-2 shadow-lg border-2 border-white">
-                                      {card.avatar}
-                                    </div>
-                                    <span className="text-[8.5px] font-bold tracking-widest text-cyan-300 uppercase">SOLAR POWER SYSTEMS</span>
-                                    <h3 className="font-black text-base text-white tracking-tight mt-0.5">{card.title}</h3>
-                                    <p className="text-[9.5px] text-cyan-200">{card.tagline}</p>
-                                  </header>
-
-                                  <div className="px-4 grid grid-cols-2 gap-2 text-[10px]">
-                                    <button className="py-2.5 rounded-xl bg-cyan-600 text-white font-bold text-center shadow-xs">
-                                      ⚡ Free Solar Audit
-                                    </button>
-                                    <button className="py-2.5 rounded-xl bg-white text-cyan-900 border border-cyan-200 font-bold text-center">
-                                      💬 Solar WhatsApp
-                                    </button>
-                                  </div>
-
-                                  <div className="px-4">
-                                    <div className="p-3 bg-white rounded-2xl border border-cyan-100 shadow-2xs space-y-1">
-                                      <div className="flex items-center gap-2">
-                                        <div className="w-8 h-8 rounded-full bg-cyan-100 text-cyan-800 font-bold flex items-center justify-center text-xs">
-                                          SV
-                                        </div>
-                                        <div>
-                                          <h4 className="font-bold text-[11px] text-slate-900">{card.owner}</h4>
-                                          <p className="text-[8.5px] text-cyan-700 font-semibold">{card.role}</p>
-                                        </div>
-                                      </div>
-                                      <p className="text-[9px] text-slate-600 leading-snug">{card.about}</p>
-                                    </div>
-                                  </div>
-
-                                  <div className="px-4 grid grid-cols-2 gap-2 text-center text-[9.5px]">
-                                    <div className="p-2.5 rounded-xl bg-cyan-100/80 text-cyan-950 font-bold">
-                                      <span className="block text-base font-black text-cyan-700">{card.stat1}</span>
-                                      <span className="text-[8px] uppercase tracking-wider text-cyan-800">{card.stat1Label}</span>
-                                    </div>
-                                    <div className="p-2.5 rounded-xl bg-teal-100/80 text-teal-950 font-bold">
-                                      <span className="block text-base font-black text-teal-700">{card.stat2}</span>
-                                      <span className="text-[8px] uppercase tracking-wider text-teal-800">{card.stat2Label}</span>
-                                    </div>
-                                  </div>
-
-                                  <div className="px-4 space-y-1.5">
-                                    <h4 className="font-bold text-[11px] text-slate-900">Rooftop Packages</h4>
-                                    {card.services.map((s, idx) => (
-                                      <div key={idx} className="p-2.5 bg-white rounded-xl border border-cyan-100 flex items-center justify-between">
-                                        <div className="flex items-center gap-2.5">
-                                          <span className="text-2xl">{s.icon}</span>
-                                          <div>
-                                            <p className="font-bold text-[9.5px] text-slate-900 leading-tight">{s.name}</p>
-                                            <span className="text-[8px] text-slate-400">Govt Subsidy Eligible</span>
-                                          </div>
-                                        </div>
-                                        <span className="font-black text-cyan-700 text-[10px]">{s.price}</span>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
 
                               {/* BEAUTY PARLOUR LAYOUT */}
                               {card.layoutType === "parlour-beauty" && (
