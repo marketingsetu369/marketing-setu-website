@@ -8,16 +8,14 @@ import {
   ArrowRight02Icon,
   CallIcon,
   Cancel01Icon,
-  CheckmarkCircle02Icon,
+  CheckmarkBadge01Icon,
   FacebookIcon,
   InstagramIcon,
   Location01Icon,
   Mail01Icon,
   Message01Icon,
-  PlayIcon,
   RupeeIcon,
   Share01Icon,
-  StarIcon,
   Store01Icon,
   TwitterIcon,
   UserIcon,
@@ -185,7 +183,10 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
   const showVideo = !!(data?.youtube_url && getYouTubeId(data.youtube_url));
 
+  const showStats = !!mainOwner;
+
   const visibleStates = [
+    showStats,
     showVideo,
     products.length > 0,
     testimonials.length > 0,
@@ -195,19 +196,32 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
     !!contact.maps_link,
   ];
 
-  const getSectionClassName = (sectionKey: string) => {
-    const keys = ["video", "products", "testimonials", "gallery", "social", "enquiry", "location"];
+  const getSectionStyle = (sectionKey: string) => {
+    const keys = ["stats", "video", "products", "testimonials", "gallery", "social", "enquiry", "location"];
     const activeKeys = keys.filter((key, idx) => visibleStates[idx]);
     const index = activeKeys.indexOf(sectionKey);
+    if (index === -1) return "bg-white py-12 px-6";
+
+    const productsIndex = activeKeys.indexOf("products");
+    const isLightGray = productsIndex !== -1 
+      ? Math.abs(index - productsIndex) % 2 === 0
+      : index % 2 !== 0;
+
+    const bgClass = isLightGray ? "bg-grey-100" : "bg-white";
     
-    if (index === 0) {
-      const hasStatsAboveOnMobile = !!mainOwner;
-      return hasStatsAboveOnMobile
-        ? "mt-8 pt-8 border-t border-gray-100 md:mt-0 md:pt-0 md:border-t-0"
-        : "mt-0 pt-0 border-t-0";
+    const isFirst = index === 0;
+    const isLast = index === activeKeys.length - 1;
+    
+    let paddingClass = "py-12 px-6";
+    if (isFirst && isLast) {
+      paddingClass = "pt-12 pb-36 md:pb-16 px-6";
+    } else if (isFirst) {
+      paddingClass = "pt-12 pb-12 px-6";
+    } else if (isLast) {
+      paddingClass = "pt-12 pb-36 md:pb-16 px-6";
     }
     
-    return "mt-8 pt-8 border-t border-gray-100";
+    return `${bgClass} ${paddingClass}`;
   };
 
   return (
@@ -216,8 +230,8 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
       <div className="w-full md:max-w-[1100px] bg-white min-h-screen md:min-h-[820px] md:h-[820px] md:shadow-lg relative flex flex-col md:flex-row md:rounded-3xl overflow-hidden animate-fade-in-up">
         
         {/* ── LEFT COLUMN: Header & Profile Card ── */}
-        <div className="w-full md:w-[42%] bg-white flex flex-col justify-between border-r border-gray-100 relative pb-4 md:pb-0">
-          <div className="pb-6">
+        <div className="w-full md:w-[42%] bg-white flex flex-col justify-between border-r border-gray-100 relative md:pb-0">
+          <div>
             {/* Soft top-to-bottom gradient background that fades from primary-tint to transparent/white */}
             <header 
               className="pt-14 pb-[90px] px-6 text-center flex flex-col items-center relative"
@@ -268,22 +282,23 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                 <h1 className="text-xl font-semibold text-gray-900 tracking-tight" style={{ fontFamily: FONT_HEADER }}>
                   {header.business_name || ""}
                 </h1>
-                <span className="text-emerald-500">
-                  <HugeiconsIcon icon={CheckmarkCircle02Icon} size={18} />
+                <span className="text-[#2e7d32] flex items-center justify-center">
+                  <HugeiconsIcon icon={CheckmarkBadge01Icon} size={18} />
                 </span>
               </div>
-              
-              <p className="text-[11px] text-gray-500 font-semibold tracking-wide mb-3">
-                {header.tagline || "Built on trust"}
+
+              {/* Subtitle text */}
+              <p className="text-sm text-gray-600 font-normal mb-3">
+                Built on trust
               </p>
               
-              {/* Category tag bubble matches "Electric Scooter Showroom" styling */}
-              {header.business_category && (
+              {/* Tagline pill using theme background color */}
+              {header.tagline && (
                 <span 
-                  className="text-white text-[10px] font-semibold px-4.5 py-1.5 rounded-full tracking-wide"
-                  style={{ backgroundColor: "#2e7d32" }}
+                  className="text-white text-[11px] font-medium px-4.5 py-1.5 rounded-full tracking-wide"
+                  style={{ backgroundColor: PRIMARY_COLOR }}
                 >
-                  {header.business_category}
+                  {header.tagline}
                 </span>
               )}
 
@@ -347,7 +362,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
             {ownerList.length > 0 && (
               <div className="px-6 -mt-[65px] relative z-10 space-y-4 animate-fade-in-up">
                 {ownerList.map((owner: any, idx: number) => (
-                  <div key={idx} className="bg-white rounded-[32px] p-8 border border-gray-100/80 shadow-sm shadow-gray-100/30">
+                  <div key={idx} className="bg-white rounded-[32px] p-8">
                     <div className="flex items-center gap-4.5">
                       <div className="w-16 h-16 rounded-3xl overflow-hidden relative border border-gray-100 flex-shrink-0">
                         {owner.avatar_url ? (
@@ -370,8 +385,8 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                           <h3 className="font-semibold text-gray-950 text-lg" style={{ fontFamily: FONT_HEADER }}>
                             {owner.name}
                           </h3>
-                          <span className="text-emerald-500 flex items-center justify-center">
-                            <HugeiconsIcon icon={CheckmarkCircle02Icon} size={18} />
+                          <span className="text-[#2e7d32] flex items-center justify-center">
+                            <HugeiconsIcon icon={CheckmarkBadge01Icon} size={18} />
                           </span>
                         </div>
                         <p className="text-sm text-gray-400 font-medium mt-0.5">{owner.title}</p>
@@ -405,7 +420,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                     element.focus();
                   }
                 }}
-                className="flex-1 text-white py-3.5 rounded-full font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer shadow-sm"
+                className="flex-1 text-white py-3.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer shadow-sm"
                 style={{ backgroundColor: PRIMARY_COLOR, boxShadow: `0 8px 16px ${PRIMARY_COLOR}15` }}
               >
                 <HugeiconsIcon icon={Message01Icon} size={16} /> Message
@@ -416,7 +431,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                     if (slug) trackUniqueAction(slug, TrackAction.Call);
                     window.location.href = `tel:${contact.phone}`;
                   }}
-                  className="flex-1 py-3.5 rounded-full font-bold text-sm border flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
+                  className="flex-1 py-3.5 rounded-lg font-bold text-sm border flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
                   style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR, borderColor: PRIMARY_BORDER }}
                 >
                   <HugeiconsIcon icon={CallIcon} size={16} /> Call Now
@@ -428,13 +443,13 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
 
         {/* ── CONTENT SECTION: Scrollable Body Card ── */}
-        <div className="w-full md:w-[58%] px-6 pt-0 md:pt-8 flex flex-col overflow-y-auto md:h-full no-scrollbar pb-32 md:pb-12">
+        <div className="w-full md:w-[58%] flex flex-col overflow-y-auto md:h-full no-scrollbar bg-white">
           
           {/* Mobile Only: Stats */}
           {mainOwner && (
-            <div className="block md:hidden space-y-8">
+            <div className="block md:hidden">
               {/* Stats Section */}
-              <section className="grid grid-cols-2 gap-4 py-4 text-center animate-fade-in-up">
+              <section className={`grid grid-cols-2 gap-4 text-center animate-fade-in-up ${getSectionStyle("stats")}`}>
                 <div>
                   <p className="text-2xl font-semibold" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
                     {mainOwner.happy_customers_count || 140}+
@@ -453,7 +468,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
           {/* Standalone Video/Promo Section (Visible on both desktop & mobile) */}
           {showVideo && getYouTubeId(data?.youtube_url) && (
-            <section className={`animate-fade-in-up ${getSectionClassName("video")}`}>
+            <section className={`animate-fade-in-up ${getSectionStyle("video")}`}>
               <div className="w-full aspect-video rounded-3xl overflow-hidden bg-gray-100 relative group shadow-md">
                 <iframe
                   className="w-full h-full border-0"
@@ -468,7 +483,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           
           {/* Products or Services Section */}
           {products.length > 0 && (
-            <section className={`animate-fade-in-up animation-delay-100 ${getSectionClassName("products")}`}>
+            <section className={`animate-fade-in-up animation-delay-100 ${getSectionStyle("products")}`}>
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight" style={{ fontFamily: FONT_HEADER }}>
                   Product or Services
@@ -485,9 +500,9 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                 {products.map((prod: any, idx: number) => (
                   <div
                     key={idx}
-                    className="w-56 flex-shrink-0 bg-white rounded-lg overflow-hidden flex flex-col group cursor-pointer hover:-translate-y-1 transition-all duration-300"
+                    className="w-56 flex-shrink-0 bg-white rounded-2xl overflow-hidden flex flex-col group cursor-pointer hover:-translate-y-1 transition-all duration-300"
                   >
-                      <div className="aspect-[3/3.5] relative bg-gray-100 rounded-lg overflow-hidden">
+                      <div className="aspect-square relative bg-gray-100 rounded-t-2xl overflow-hidden">
                         {(prod.image || prod.imageUrl) && (
                           <img
                             src={getImageUrl(prod.image || prod.imageUrl)}
@@ -521,7 +536,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                           </p>
                         </div>
                         <button 
-                          className="w-full bg-transparent hover:bg-gray-50 text-xs py-2 rounded-full font-bold active:scale-95 transition-all border text-center"
+                          className="w-full bg-transparent hover:bg-gray-50 text-xs py-2 rounded-lg font-bold active:scale-95 transition-all border text-center"
                           style={{ borderColor: PRIMARY_COLOR, color: PRIMARY_COLOR }}
                         >
                           {prod.buttonName || "Enquiry"}
@@ -537,7 +552,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           {/* Gallery Section */}
           {/* Testimonials Section */}
           {testimonials.length > 0 && (
-            <section className={`text-center flex flex-col items-center animate-fade-in-up animation-delay-300 ${getSectionClassName("testimonials")}`}>
+            <section className={`text-center flex flex-col items-center animate-fade-in-up animation-delay-300 w-full ${getSectionStyle("testimonials")}`}>
               <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: FONT_HEADER }}>
                 What our happy client says
               </h2>
@@ -612,7 +627,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
           {/* Gallery Section */}
           {gallery.length > 0 && (
-            <section className={`animate-fade-in-up animation-delay-200 ${getSectionClassName("gallery")}`}>
+            <section className={`animate-fade-in-up animation-delay-200 ${getSectionStyle("gallery")}`}>
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight" style={{ fontFamily: FONT_HEADER }}>Gallery</h2>
                 <span className="text-xs font-semibold hover:underline cursor-pointer" style={{ color: PRIMARY_COLOR }}>
@@ -648,7 +663,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
           {/* Social Links Section */}
           {(socialLinks.instagram || socialLinks.facebook || socialLinks.youtube || socialLinks.twitter) && (
-            <section className={`animate-fade-in-up animation-delay-400 ${getSectionClassName("social")}`}>
+            <section className={`animate-fade-in-up animation-delay-400 ${getSectionStyle("social")}`}>
               <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-4" style={{ fontFamily: FONT_HEADER }}>
                 Social Links
               </h2>
@@ -694,8 +709,8 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           )}
 
           {/* Enquiry Form */}
-          <section className={`animate-fade-in-up animation-delay-500 ${getSectionClassName("enquiry")}`}>
-            <div className="bg-white rounded-3xl p-8 border border-gray-100/80 shadow-sm shadow-gray-100/30">
+          <section className={`animate-fade-in-up animation-delay-500 ${getSectionStyle("enquiry")}`}>
+            <div className="bg-white rounded-3xl p-8">
               <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-5" style={{ fontFamily: FONT_HEADER }}>
                 Send an Enquiry
               </h2>
@@ -765,14 +780,14 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                       setSubmitStatus("idle");
                       setErrorMessage("");
                     }}
-                    className="flex-1 bg-slate-50 hover:bg-slate-100 text-gray-950 py-3.5 rounded-full font-bold text-sm active:scale-[0.98] transition-all cursor-pointer text-center"
+                    className="flex-1 bg-slate-50 hover:bg-slate-100 text-gray-950 py-3.5 rounded-lg font-bold text-sm active:scale-[0.98] transition-all cursor-pointer text-center"
                   >
                     Reset
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex-1 text-white py-3.5 rounded-full font-bold text-sm active:scale-[0.98] transition-all cursor-pointer"
+                    className="flex-1 text-white py-3.5 rounded-lg font-bold text-sm active:scale-[0.98] transition-all cursor-pointer"
                     style={{ backgroundColor: PRIMARY_COLOR }}
                   >
                     {isSubmitting ? "Submitting..." : "Submit"}
@@ -784,8 +799,8 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
           {/* Location Section */}
           {contact.maps_link && (
-            <section className={`animate-fade-in-up ${getSectionClassName("location")}`}>
-              <div className="bg-white rounded-3xl p-8 border border-gray-100/80 shadow-sm shadow-gray-100/30">
+            <section className={`animate-fade-in-up ${getSectionStyle("location")}`}>
+              <div className="bg-white rounded-3xl p-8">
                 <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: FONT_HEADER }}>
                   Our Location
                 </h2>
@@ -826,7 +841,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
               element.focus();
             }
           }}
-          className="w-[48%] text-white py-3 rounded-full font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
+          className="w-[48%] text-white py-3 rounded-lg font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
           style={{ backgroundColor: PRIMARY_COLOR, boxShadow: `0 8px 16px ${PRIMARY_COLOR}15` }}
         >
           <HugeiconsIcon icon={Message01Icon} size={16} /> Message
@@ -837,7 +852,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
               if (slug) trackUniqueAction(slug, TrackAction.Call);
               window.location.href = `tel:${contact.phone}`;
             }}
-            className="w-[48%] py-3 rounded-full font-bold text-sm border flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
+            className="w-[48%] py-3 rounded-lg font-bold text-sm border flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
             style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR, borderColor: PRIMARY_BORDER }}
           >
             <HugeiconsIcon icon={CallIcon} size={16} /> Call Now
