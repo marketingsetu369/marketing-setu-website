@@ -1,8 +1,8 @@
 "use client";
 
 import { useThemeStore } from "@/store/themeStore";
-import { PageWrapper, PricingCard, useWhatsApp } from "@/views/home-page/component";
-import { pricingPlans, translations } from "@/views/home-page/data";
+import { PageWrapper, PricingCard, TestimonialCard, useWhatsApp } from "@/views/home-page/component";
+import { pricingPlans, testimonialsData, translations } from "@/views/home-page/data";
 import CafeCardView from "@/views/home-page/hero-section/CafeCardView";
 import SolarCardView from "@/views/home-page/hero-section/SolarCardView";
 import PortfolioCardView from "@/views/home-page/hero-section/PortfolioCardView";
@@ -199,6 +199,19 @@ export default function HomeView() {
         description,
         features: translateFeatures(plan.features),
         compactFeatures: plan.compactFeatures ? translateFeatures(plan.compactFeatures) : undefined,
+      };
+    });
+  };
+
+  const getTranslatedTestimonials = () => {
+    return testimonialsData.slice(0, 3).map((tItem, index) => {
+      const num = index + 1;
+      const textKey = `testi_${num}_text` as any;
+      const roleKey = `testi_${num}_role` as any;
+      return {
+        ...tItem,
+        text: (t[textKey] as string) || tItem.text,
+        role: (t[roleKey] as string) || tItem.role,
       };
     });
   };
@@ -616,45 +629,9 @@ export default function HomeView() {
               <p className="text-gray-500 text-base">Real stories from small businesses across Maharashtra growing with MarketingSetu.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="group bg-white p-8 rounded-3xl shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
-                <div>
-                  <div className="flex text-amber-400 mb-4 text-base">★★★★★</div>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-6 font-normal">"{t.testi_1_text}"</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gray-100 text-gray-900 rounded-full flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform duration-300">RS</div>
-                  <div>
-                    <h4 className="font-bold text-gray-950 text-sm">Rahul Sharma</h4>
-                    <p className="text-xs text-gray-400">{t.testi_1_role}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="group bg-white p-8 rounded-3xl shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
-                <div>
-                  <div className="flex text-amber-400 mb-4 text-base">★★★★★</div>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-6 font-normal">"{t.testi_2_text}"</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gray-100 text-gray-900 rounded-full flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform duration-300">PM</div>
-                  <div>
-                    <h4 className="font-bold text-gray-950 text-sm">Priya Mehta</h4>
-                    <p className="text-xs text-gray-400">{t.testi_2_role}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="group bg-white p-8 rounded-3xl shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
-                <div>
-                  <div className="flex text-amber-400 mb-4 text-base">★★★★★</div>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-6 font-normal">"{t.testi_3_text}"</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gray-100 text-gray-900 rounded-full flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform duration-300">AK</div>
-                  <div>
-                    <h4 className="font-bold text-gray-950 text-sm">Anil Kulkarni</h4>
-                    <p className="text-xs text-gray-400">{t.testi_3_role}</p>
-                  </div>
-                </div>
-              </div>
+              {getTranslatedTestimonials().map((item, idx) => (
+                <TestimonialCard key={idx} testimonial={item} />
+              ))}
             </div>
           </div>
         </section>
