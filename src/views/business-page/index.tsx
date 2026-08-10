@@ -149,7 +149,10 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
   const mainOwner = ownerList[0];
 
+  const showVideo = !!data?.youtube_url;
+
   const visibleStates = [
+    showVideo,
     products.length > 0,
     testimonials.length > 0,
     gallery.length > 0,
@@ -159,7 +162,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
   ];
 
   const getSectionClassName = (sectionKey: string) => {
-    const keys = ["products", "testimonials", "gallery", "social", "enquiry", "location"];
+    const keys = ["video", "products", "testimonials", "gallery", "social", "enquiry", "location"];
     const activeKeys = keys.filter((key, idx) => visibleStates[idx]);
     const index = activeKeys.indexOf(sectionKey);
     
@@ -388,39 +391,9 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
         {/* ── CONTENT SECTION: Scrollable Body Card ── */}
         <div className="w-full md:w-[58%] px-6 pt-8 flex flex-col overflow-y-auto md:h-full [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-32 md:pb-12">
           
-          {/* Mobile Only: About, Video, Stats */}
+          {/* Mobile Only: Stats */}
           {mainOwner && (
             <div className="block md:hidden space-y-8">
-              {/* Video/Promo Section (Fallback to first video, or show placeholder if gallery has a video) */}
-              {(data?.youtube_url || gallery.some((item: any) => item.type === "video")) && (
-                <section className="animate-fade-in-up">
-                  <div className="w-full aspect-video rounded-3xl overflow-hidden bg-gray-100 relative group shadow-md">
-                    {data?.youtube_url && getYouTubeId(data.youtube_url) ? (
-                      <iframe
-                        className="w-full h-full border-0"
-                        src={`https://www.youtube.com/embed/${getYouTubeId(data.youtube_url)}`}
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    ) : (
-                      <div className="w-full h-full relative cursor-pointer">
-                        <img 
-                          src={getImageUrl(gallery.find((item: any) => item.type === "video")?.url || gallery[0]?.url) || "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&auto=format&fit=crop&q=60"} 
-                          alt="Intro Video" 
-                          className="w-full h-full object-cover" 
-                        />
-                        <div className="absolute inset-0 bg-black/25 flex items-center justify-center">
-                          <div className="w-14 h-14 rounded-full bg-white/95 flex items-center justify-center shadow-lg text-gray-800 hover:scale-105 transition-transform">
-                            <HugeiconsIcon icon={PlayIcon} size={20} />
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </section>
-              )}
-
               {/* Stats Section */}
               <section className="grid grid-cols-2 gap-4 py-4 border-t border-gray-100 text-center animate-fade-in-up">
                 <div>
@@ -437,6 +410,21 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                 </div>
               </section>
             </div>
+          )}
+
+          {/* Standalone Video/Promo Section (Visible on both desktop & mobile) */}
+          {showVideo && getYouTubeId(data?.youtube_url) && (
+            <section className={`animate-fade-in-up ${getSectionClassName("video")}`}>
+              <div className="w-full aspect-video rounded-3xl overflow-hidden bg-gray-100 relative group shadow-md">
+                <iframe
+                  className="w-full h-full border-0"
+                  src={`https://www.youtube.com/embed/${getYouTubeId(data.youtube_url)}`}
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </section>
           )}
           
           {/* Products or Services Section */}
