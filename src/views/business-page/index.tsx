@@ -362,7 +362,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
             {ownerList.length > 0 && (
               <div className="px-6 -mt-[65px] relative z-10 space-y-4 animate-fade-in-up">
                 {ownerList.map((owner: any, idx: number) => (
-                  <div key={idx} className="bg-white rounded-[32px] pt-8 px-8 pb-1">
+                  <div key={idx} className="bg-white rounded-[32px] pt-8 px-8 pb-8">
                     <div className="flex items-center gap-4.5">
                       <div className="w-16 h-16 rounded-full overflow-hidden relative border border-gray-100 flex-shrink-0">
                         {owner.avatar_url ? (
@@ -443,7 +443,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
 
         {/* ── CONTENT SECTION: Scrollable Body Card ── */}
-        <div className="w-full md:w-[58%] flex flex-col overflow-y-auto md:h-full no-scrollbar bg-white">
+        <div className="w-full md:w-[58%] flex flex-col overflow-y-auto md:h-full no-scrollbar bg-white pb-36 md:pb-20">
           
           {/* Stats Section */}
           {mainOwner && (
@@ -547,84 +547,8 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           )}
 
           {/* Gallery Section */}
-          {/* Testimonials Section */}
-          {testimonials.length > 0 && (
-            <section className={`text-center flex flex-col items-center animate-fade-in-up animation-delay-300 w-full ${getSectionStyle("testimonials")}`}>
-              <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: FONT_HEADER }}>
-                What our happy client says
-              </h2>
-              <p className="text-[11px] text-gray-400 font-semibold max-w-[250px] leading-relaxed mb-8">
-                This is an honest review from members
-              </p>
-
-              {/* Testimonial Active Display */}
-              <div className="w-full flex flex-col items-center">
-                <div className="w-16 h-16 rounded-full overflow-hidden border-2 p-0.5 mb-4 shadow-md transition-all duration-300" style={{ borderColor: PRIMARY_COLOR }}>
-                  <img
-                    src={getImageUrl(testimonials[activeTestimonial].avatar)}
-                    alt={testimonials[activeTestimonial].name}
-                    className="w-full h-full object-cover rounded-full animate-fade-in-up"
-                  />
-                </div>
-                
-                {/* Stars with dynamic linear gradient fill based on decimal ratings */}
-                <div className="flex gap-0.5 mb-3 text-yellow-400">
-                  {Array.from({ length: 5 }).map((_, idx) => {
-                    const rating = Number(testimonials[activeTestimonial].rating) || 5;
-                    const fillPercent = Math.max(0, Math.min(100, (rating - idx) * 100));
-                    const gradId = `star-grad-${idx}-${activeTestimonial}`;
-                    return (
-                      <svg
-                        key={idx}
-                        className="w-3.5 h-3.5"
-                        viewBox="0 0 24 24"
-                        fill={`url(#${gradId})`}
-                      >
-                        <defs>
-                          <linearGradient id={gradId}>
-                            <stop offset={`${fillPercent}%`} stopColor="#facc15" />
-                            <stop offset={`${fillPercent}%`} stopColor="#e5e7eb" />
-                          </linearGradient>
-                        </defs>
-                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                      </svg>
-                    );
-                  })}
-                </div>
-
-                <h3 className="font-semibold text-gray-900 text-sm mb-2">{testimonials[activeTestimonial].name}</h3>
-                <p className="text-xs text-gray-500 leading-relaxed max-w-[300px] mb-6 font-medium italic min-h-[48px]">
-                  &ldquo;{testimonials[activeTestimonial].comment}&rdquo;
-                </p>
-
-                {/* Divider line under comment */}
-                <div className="w-24 border-t-2 mb-6" style={{ borderColor: PRIMARY_COLOR }} />
-
-                {/* Navigation buttons */}
-                {testimonials.length > 1 && (
-                  <div className="flex gap-4">
-                    <button
-                      onClick={() => setActiveTestimonial((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))}
-                      className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 active:scale-95 transition-all cursor-pointer"
-                    >
-                      <HugeiconsIcon icon={ArrowLeft02Icon} size={18} />
-                    </button>
-                    <button
-                      onClick={() => setActiveTestimonial((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))}
-                      className="w-10 h-10 rounded-full text-white flex items-center justify-center active:scale-95 transition-all shadow-md cursor-pointer"
-                      style={{ backgroundColor: PRIMARY_COLOR, boxShadow: `0 4px 10px ${PRIMARY_COLOR}25` }}
-                    >
-                      <HugeiconsIcon icon={ArrowRight02Icon} size={18} />
-                    </button>
-                  </div>
-                )}
-              </div>
-            </section>
-          )}
-
-          {/* Gallery Section */}
           {gallery.length > 0 && (
-            <section className={`animate-fade-in-up animation-delay-200 ${getSectionStyle("gallery")}`}>
+            <section className="animate-fade-in-up animation-delay-200 bg-white py-12 px-6">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight" style={{ fontFamily: FONT_HEADER }}>Gallery</h2>
                 <span className="text-xs font-semibold hover:underline cursor-pointer" style={{ color: PRIMARY_COLOR }}>
@@ -658,9 +582,82 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
             </section>
           )}
 
+          {/* Testimonials (Happy Clients) Section */}
+          {testimonials.length > 0 && (
+            <section className="text-center flex flex-col items-center animate-fade-in-up animation-delay-300 w-full bg-gray-100 py-8 px-6">
+              <h2 className="text-2xl font-bold text-gray-900 mb-1.5" style={{ fontFamily: FONT_HEADER }}>
+                What our happy clients say
+              </h2>
+              <p className="text-sm text-gray-500 font-medium mb-16">
+                Honest reviews from our members
+              </p>
+
+              {/* Testimonial Active Display Card */}
+              <div className="relative w-full max-w-md bg-white rounded-[32px] px-8 pb-10 pt-16 shadow-xs flex flex-col items-center mb-8">
+                {/* Overlapping Avatar Container */}
+                <div className="absolute -top-14 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden border border-gray-100/50 bg-white ring-8 ring-[var(--color-gray-100)] shadow-sm">
+                  <img
+                    src={getImageUrl(testimonials[activeTestimonial].avatar)}
+                    alt={testimonials[activeTestimonial].name}
+                    className="w-full h-full object-cover rounded-full animate-fade-in-up"
+                  />
+                </div>
+                
+                {/* Yellow Hollow Stars */}
+                <div className="flex gap-1.5 mb-4 text-yellow-400">
+                  {Array.from({ length: 5 }).map((_, idx) => (
+                    <svg
+                      key={idx}
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M11.48 3.499c.307-.887 1.57-.887 1.877 0l1.819 5.257a1 1 0 00.95.69h5.53c.928 0 1.314 1.185.57 1.76l-4.473 3.39a1 1 0 00-.364 1.118l1.82 5.257c.307.887-.752 1.642-1.47 1.118l-4.47-3.39a1 1 0 00-1.178 0l-4.47 3.39c-.718.524-1.777-.23-1.47-1.118l1.82-5.257a1 1 0 00-.364-1.118L2.05 11.206C1.307 10.63 1.693 9.445 2.62 9.445h5.53a1 1 0 00.95-.69l1.819-5.257z"
+                      />
+                    </svg>
+                  ))}
+                </div>
+
+                {/* Client Name */}
+                <h3 className="font-bold text-gray-900 text-lg mb-2" style={{ fontFamily: FONT_HEADER }}>
+                  {testimonials[activeTestimonial].name}
+                </h3>
+                
+                {/* Quote Comment */}
+                <p className="text-gray-600 text-sm leading-relaxed text-center italic max-w-sm">
+                  &ldquo;{testimonials[activeTestimonial].comment}&rdquo;
+                </p>
+              </div>
+
+              {/* Navigation buttons */}
+              {testimonials.length > 1 && (
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => setActiveTestimonial((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))}
+                    className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-gray-600 hover:bg-gray-50 active:scale-95 transition-all shadow-xs border border-gray-100 cursor-pointer"
+                  >
+                    <HugeiconsIcon icon={ArrowLeft02Icon} size={20} />
+                  </button>
+                  <button
+                    onClick={() => setActiveTestimonial((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))}
+                    className="w-12 h-12 rounded-full text-white flex items-center justify-center active:scale-95 transition-all shadow-md cursor-pointer"
+                    style={{ backgroundColor: PRIMARY_COLOR, boxShadow: `0 4px 12px ${PRIMARY_COLOR}30` }}
+                  >
+                    <HugeiconsIcon icon={ArrowRight02Icon} size={20} />
+                  </button>
+                </div>
+              )}
+            </section>
+          )}
+
           {/* Social Links Section */}
           {(socialLinks.instagram || socialLinks.facebook || socialLinks.youtube || socialLinks.twitter) && (
-            <section className={`animate-fade-in-up animation-delay-400 ${getSectionStyle("social")}`}>
+            <section className="animate-fade-in-up animation-delay-400 bg-white py-8 px-6">
               <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-4" style={{ fontFamily: FONT_HEADER }}>
                 Social Links
               </h2>
