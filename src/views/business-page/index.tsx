@@ -389,7 +389,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
 
         {/* ── CONTENT SECTION: Scrollable Body Card ── */}
-        <div className="w-full md:w-[58%] px-6 pt-8 flex flex-col overflow-y-auto md:h-full [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-32 md:pb-12">
+        <div className="w-full md:w-[58%] px-6 pt-8 flex flex-col overflow-y-auto md:h-full no-scrollbar pb-32 md:pb-12">
           
           {/* Mobile Only: Stats */}
           {mainOwner && (
