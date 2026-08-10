@@ -495,14 +495,6 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                             className="w-full h-full object-cover"
                           />
                         )}
-                        {prod.rating && (
-                          <span className="absolute top-2 right-2 bg-white/90 backdrop-blur-xs text-[9px] font-black px-2 py-0.5 rounded-full flex items-center gap-0.5 shadow-xs">
-                            <span className="text-yellow-400">
-                              <HugeiconsIcon icon={StarIcon} size={10} />
-                            </span>{" "}
-                            {prod.rating}
-                          </span>
-                        )}
                       </div>
                     <div className="p-3.5 flex-grow flex flex-col justify-between">
                       <div>
@@ -563,11 +555,29 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                   />
                 </div>
                 
-                {/* Stars */}
-                <div className="flex gap-0.5 mb-3 text-yellow-450">
-                  {Array.from({ length: testimonials[activeTestimonial].rating || 5 }).map((_: any, idx: number) => (
-                    <HugeiconsIcon key={idx} icon={StarIcon} size={14} />
-                  ))}
+                {/* Stars with dynamic linear gradient fill based on decimal ratings */}
+                <div className="flex gap-0.5 mb-3 text-yellow-400">
+                  {Array.from({ length: 5 }).map((_, idx) => {
+                    const rating = Number(testimonials[activeTestimonial].rating) || 5;
+                    const fillPercent = Math.max(0, Math.min(100, (rating - idx) * 100));
+                    const gradId = `star-grad-${idx}-${activeTestimonial}`;
+                    return (
+                      <svg
+                        key={idx}
+                        className="w-3.5 h-3.5"
+                        viewBox="0 0 24 24"
+                        fill={`url(#${gradId})`}
+                      >
+                        <defs>
+                          <linearGradient id={gradId}>
+                            <stop offset={`${fillPercent}%`} stopColor="#facc15" />
+                            <stop offset={`${fillPercent}%`} stopColor="#e5e7eb" />
+                          </linearGradient>
+                        </defs>
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                      </svg>
+                    );
+                  })}
                 </div>
 
                 <h3 className="font-semibold text-gray-900 text-sm mb-2">{testimonials[activeTestimonial].name}</h3>
