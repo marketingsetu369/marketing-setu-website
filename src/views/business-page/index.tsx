@@ -99,15 +99,12 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
   const getImageUrl = (url?: string) => {
     if (!url) return "";
-    if (url.startsWith("http") && !url.includes("localhost") && !url.includes("10.0.2.2") && !url.includes("127.0.0.1")) {
-      return url;
-    }
     const match = url.match(/\/uploads\/(.+)$/);
     if (match && match[1]) {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://187.127.128.193:3005";
-      // Remove any trailing slashes from api url
-      const cleanApiUrl = apiUrl.replace(/\/$/, "");
-      return `${cleanApiUrl}/uploads/${match[1]}`;
+      return `/uploads/${match[1]}`;
+    }
+    if (url.startsWith("http") && !url.includes("localhost") && !url.includes("10.0.2.2") && !url.includes("127.0.0.1")) {
+      return url;
     }
     return url;
   };
