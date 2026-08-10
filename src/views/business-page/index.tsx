@@ -289,7 +289,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
               {/* Subtitle text */}
               <p className="text-sm text-gray-600 font-normal mb-3">
-                Built on trust
+                {header.business_category || ""}
               </p>
               
               {/* Tagline pill using theme background color */}
@@ -362,7 +362,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
             {ownerList.length > 0 && (
               <div className="px-6 -mt-[65px] relative z-10 space-y-4 animate-fade-in-up">
                 {ownerList.map((owner: any, idx: number) => (
-                  <div key={idx} className="bg-white rounded-[32px] p-8">
+                  <div key={idx} className="bg-white rounded-[32px] pt-8 px-8 pb-1">
                     <div className="flex items-center gap-4.5">
                       <div className="w-16 h-16 rounded-3xl overflow-hidden relative border border-gray-100 flex-shrink-0">
                         {owner.avatar_url ? (
@@ -445,25 +445,22 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
         {/* ── CONTENT SECTION: Scrollable Body Card ── */}
         <div className="w-full md:w-[58%] flex flex-col overflow-y-auto md:h-full no-scrollbar bg-white">
           
-          {/* Mobile Only: Stats */}
+          {/* Stats Section */}
           {mainOwner && (
-            <div className="block md:hidden">
-              {/* Stats Section */}
-              <section className={`grid grid-cols-2 gap-4 text-center animate-fade-in-up ${getSectionStyle("stats")}`}>
-                <div>
-                  <p className="text-2xl font-semibold" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
-                    {mainOwner.happy_customers_count || 140}+
-                  </p>
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-1">Happy Customers</p>
-                </div>
-                <div className="border-l border-gray-100">
-                  <p className="text-2xl font-semibold" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
-                    {mainOwner.experience_years || 4}+
-                  </p>
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-1">Years Exp.</p>
-                </div>
-              </section>
-            </div>
+            <section className={`grid grid-cols-2 gap-4 text-center animate-fade-in-up ${getSectionStyle("stats")}`}>
+              <div>
+                <p className="text-2xl font-semibold" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
+                  {mainOwner.happy_customers_count || 140}+
+                </p>
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-1">Happy Customers</p>
+              </div>
+              <div className="border-l border-gray-100">
+                <p className="text-2xl font-semibold" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
+                  {mainOwner.experience_years || 4}+
+                </p>
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-1">Years Exp.</p>
+              </div>
+            </section>
           )}
 
           {/* Standalone Video/Promo Section (Visible on both desktop & mobile) */}
