@@ -111,9 +111,43 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
   const getYouTubeId = (url?: string) => {
     if (!url) return null;
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
+    try {
+      const cleanUrl = url.trim();
+      if (cleanUrl.includes("youtu.be/")) {
+        const parts = cleanUrl.split("youtu.be/");
+        if (parts[1]) {
+          const id = parts[1].split(/[?#]/)[0];
+          if (id.length === 11) return id;
+        }
+      }
+      const paths = ["/shorts/", "/live/", "/embed/", "/v/"];
+      for (const path of paths) {
+        if (cleanUrl.includes(path)) {
+          const parts = cleanUrl.split(path);
+          if (parts[1]) {
+            const id = parts[1].split(/[?#&]/)[0];
+            if (id.length === 11) return id;
+          }
+        }
+      }
+      if (cleanUrl.includes("watch?v=")) {
+        const parts = cleanUrl.split("watch?v=");
+        if (parts[1]) {
+          const id = parts[1].split(/[?#&]/)[0];
+          if (id.length === 11) return id;
+        }
+      }
+      const urlObj = new URL(cleanUrl);
+      const v = urlObj.searchParams.get("v");
+      if (v && v.length === 11) return v;
+    } catch (e) {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      if (match && match[2] && match[2].length === 11) {
+        return match[2];
+      }
+    }
+    return null;
   };
 
   // Safe defaults from database / Static Mock Data fallback
@@ -149,7 +183,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
   const mainOwner = ownerList[0];
 
-  const showVideo = !!data?.youtube_url;
+  const showVideo = !!(data?.youtube_url && getYouTubeId(data.youtube_url));
 
   const visibleStates = [
     showVideo,
@@ -166,9 +200,14 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
     const activeKeys = keys.filter((key, idx) => visibleStates[idx]);
     const index = activeKeys.indexOf(sectionKey);
     
-    return index === 0
-      ? "mt-8 pt-8 border-t border-gray-100 md:mt-0 md:pt-0 md:border-t-0"
-      : "mt-8 pt-8 border-t border-gray-100";
+    if (index === 0) {
+      const hasStatsAboveOnMobile = !!mainOwner;
+      return hasStatsAboveOnMobile
+        ? "mt-8 pt-8 border-t border-gray-100 md:mt-0 md:pt-0 md:border-t-0"
+        : "mt-0 pt-0 border-t-0";
+    }
+    
+    return "mt-8 pt-8 border-t border-gray-100";
   };
 
   return (
@@ -389,13 +428,13 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
 
         {/* ── CONTENT SECTION: Scrollable Body Card ── */}
-        <div className="w-full md:w-[58%] px-6 pt-8 flex flex-col overflow-y-auto md:h-full no-scrollbar pb-32 md:pb-12">
+        <div className="w-full md:w-[58%] px-6 pt-0 md:pt-8 flex flex-col overflow-y-auto md:h-full no-scrollbar pb-32 md:pb-12">
           
           {/* Mobile Only: Stats */}
           {mainOwner && (
             <div className="block md:hidden space-y-8">
               {/* Stats Section */}
-              <section className="grid grid-cols-2 gap-4 py-4 border-t border-gray-100 text-center animate-fade-in-up">
+              <section className="grid grid-cols-2 gap-4 py-4 text-center animate-fade-in-up">
                 <div>
                   <p className="text-2xl font-semibold" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
                     {mainOwner.happy_customers_count || 140}+
@@ -430,8 +469,8 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           {/* Products or Services Section */}
           {products.length > 0 && (
             <section className={`animate-fade-in-up animation-delay-100 ${getSectionClassName("products")}`}>
-              <div className="flex justify-between items-center mb-4.5">
-                <h2 className="text-base font-semibold text-gray-900" style={{ fontFamily: FONT_HEADER }}>
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight" style={{ fontFamily: FONT_HEADER }}>
                   Product or Services
                 </h2>
                 <span className="text-xs font-semibold hover:underline cursor-pointer" style={{ color: PRIMARY_COLOR }}>
@@ -507,7 +546,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           {/* Testimonials Section */}
           {testimonials.length > 0 && (
             <section className={`text-center flex flex-col items-center animate-fade-in-up animation-delay-300 ${getSectionClassName("testimonials")}`}>
-              <h2 className="text-base font-semibold text-gray-900 mb-1" style={{ fontFamily: FONT_HEADER }}>
+              <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: FONT_HEADER }}>
                 What our happy client says
               </h2>
               <p className="text-[11px] text-gray-400 font-semibold max-w-[250px] leading-relaxed mb-8">
@@ -564,8 +603,8 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           {/* Gallery Section */}
           {gallery.length > 0 && (
             <section className={`animate-fade-in-up animation-delay-200 ${getSectionClassName("gallery")}`}>
-              <div className="flex justify-between items-center mb-4.5">
-                <h2 className="text-base font-semibold text-gray-900" style={{ fontFamily: FONT_HEADER }}>Gallery</h2>
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight" style={{ fontFamily: FONT_HEADER }}>Gallery</h2>
                 <span className="text-xs font-semibold hover:underline cursor-pointer" style={{ color: PRIMARY_COLOR }}>
                   See All
                 </span>
@@ -600,7 +639,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           {/* Social Links Section */}
           {(socialLinks.instagram || socialLinks.facebook || socialLinks.youtube || socialLinks.twitter) && (
             <section className={`animate-fade-in-up animation-delay-400 ${getSectionClassName("social")}`}>
-              <h2 className="text-base font-semibold text-gray-900 mb-4.5" style={{ fontFamily: FONT_HEADER }}>
+              <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-4" style={{ fontFamily: FONT_HEADER }}>
                 Social Links
               </h2>
               
@@ -646,8 +685,8 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
           {/* Enquiry Form */}
           <section className={`animate-fade-in-up animation-delay-500 ${getSectionClassName("enquiry")}`}>
-            <div className="bg-white rounded-[32px] p-8 border border-gray-100/80 shadow-sm shadow-gray-100/30">
-              <h2 className="text-2xl font-bold text-gray-950 mb-6" style={{ fontFamily: FONT_HEADER }}>
+            <div className="bg-white rounded-3xl p-8 border border-gray-100/80 shadow-sm shadow-gray-100/30">
+              <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-5" style={{ fontFamily: FONT_HEADER }}>
                 Send an Enquiry
               </h2>
               
@@ -736,8 +775,8 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           {/* Location Section */}
           {contact.maps_link && (
             <section className={`animate-fade-in-up ${getSectionClassName("location")}`}>
-              <div className="bg-white rounded-[32px] p-8 border border-gray-100/80 shadow-sm shadow-gray-100/30">
-                <h2 className="text-base font-semibold text-gray-900 mb-1.5" style={{ fontFamily: FONT_HEADER }}>
+              <div className="bg-white rounded-3xl p-8 border border-gray-100/80 shadow-sm shadow-gray-100/30">
+                <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: FONT_HEADER }}>
                   Our Location
                 </h2>
                 <p className="text-xs text-gray-500 font-semibold mb-4 leading-relaxed">
