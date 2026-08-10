@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import {
-  BridgeDivider,
   CtaBand,
   PageHero,
   PageWrapper,
@@ -57,7 +56,7 @@ export default function AboutView() {
       />
 
       {/* STORY SECTION */}
-      <section className="py-16 md:py-24 bg-background border-b border-outline">
+      <section className="py-16 md:py-20 bg-background">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="space-y-6">
@@ -75,8 +74,8 @@ export default function AboutView() {
                 {t.about_story_p2}
               </p>
             </div>
-            <div className="bg-neutral flex items-center justify-center p-6 sm:p-8 rounded-[32px] border border-outline">
-              <div className="relative h-[280px] md:h-[340px] w-full rounded-[24px] overflow-hidden shadow-z12 border border-outline transform rotate-2 hover:rotate-0 transition-transform duration-300">
+            <div className="bg-neutral flex items-center justify-center p-6 sm:p-8 rounded-[32px]">
+              <div className="relative h-[280px] md:h-[340px] w-full rounded-[24px] overflow-hidden shadow-z12 transform rotate-2 hover:rotate-0 transition-transform duration-300">
                 <Image
                   src="https://images.unsplash.com/photo-1758873268745-dd2cf0d677b5?auto=format&fit=crop&w=900&q=80"
                   alt="MarketingSetu team collaborating on a client's digital marketing strategy"
@@ -91,14 +90,12 @@ export default function AboutView() {
         </div>
       </section>
 
-      <BridgeDivider />
-
       {/* SERVE SECTION */}
-      <section className="py-16 md:py-24 bg-background border-b border-outline">
+      <section className="py-16 md:py-20 bg-gray-100 dark:bg-background">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div className="bg-neutral flex items-center justify-center p-6 sm:p-8 rounded-[32px] border border-outline md:order-1">
-              <div className="relative h-[280px] md:h-[340px] w-full rounded-[24px] overflow-hidden shadow-z12 border border-outline transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+            <div className="bg-neutral flex items-center justify-center p-6 sm:p-8 rounded-[32px] md:order-1">
+              <div className="relative h-[280px] md:h-[340px] w-full rounded-[24px] overflow-hidden shadow-z12 transform -rotate-2 hover:rotate-0 transition-transform duration-300">
                 <Image
                   src="https://images.unsplash.com/photo-1778550579010-cb0d00cd94e6?auto=format&fit=crop&w=900&q=80"
                   alt="Small business shopkeeper MarketingSetu serves"
@@ -131,50 +128,46 @@ export default function AboutView() {
         </div>
       </section>
 
-      <BridgeDivider tinted />
-
       {/* MISSION & PROMISE */}
-      <section className="py-16 md:py-24 bg-background border-b border-outline">
+      <section className="py-16 md:py-20 bg-background">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-[1fr_auto_1fr] gap-8 bg-paper border border-outline rounded-[24px] p-8 md:p-12 shadow-card relative overflow-hidden">
+            <div className="grid md:grid-cols-[1fr_auto_1fr] gap-8 bg-paper rounded-[24px] p-8 md:p-12 shadow-card relative overflow-hidden">
               <div className="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 bg-brand-lighter/25 dark:bg-brand-dark/15 rounded-full blur-xl"></div>
-              
+
               <div className="space-y-3 relative z-10">
                 <h3 className="text-xl font-bold text-brand-main flex items-center gap-2">
-                  <span className="w-8 h-8 rounded-lg bg-brand-lighter text-brand-main dark:bg-brand-dark dark:text-brand-lighter flex items-center justify-center text-base"><HugeiconsIcon icon={Target01Icon} size={18} /></span>
+                  <span className="w-8 h-8 rounded-lg bg-brand-lighter text-brand-main dark:bg-brand-dark dark:text-brand-lighter flex items-center justify-center text-base">
+                    <HugeiconsIcon icon={Target01Icon} size={18} />
+                  </span>
                   {t.about_mission_title}
                 </h3>
-                <p className="text-secondary leading-relaxed text-sm">
-                  {t.about_mission_desc}
-                </p>
+                <p className="text-secondary leading-relaxed text-sm">{t.about_mission_desc}</p>
               </div>
-              
+
               <div className="hidden md:block w-px bg-outline self-stretch my-2"></div>
-              
+
               <div className="space-y-3 relative z-10">
                 <h3 className="text-xl font-bold text-brand-main flex items-center gap-2">
-                  <span className="w-8 h-8 rounded-lg bg-brand-lighter text-brand-main dark:bg-brand-dark dark:text-brand-lighter flex items-center justify-center text-base"><HugeiconsIcon icon={HandshakeIcon} size={18} /></span>
+                  <span className="w-8 h-8 rounded-lg bg-brand-lighter text-brand-main dark:bg-brand-dark dark:text-brand-lighter flex items-center justify-center text-base">
+                    <HugeiconsIcon icon={HandshakeIcon} size={18} />
+                  </span>
                   {t.about_promise_title}
                 </h3>
-                <p className="text-secondary leading-relaxed text-sm">
-                  {t.about_promise_desc}
-                </p>
+                <p className="text-secondary leading-relaxed text-sm">{t.about_promise_desc}</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <BridgeDivider />
-
       {/* VALUES */}
-      <section className="py-16 md:py-24 bg-background border-b border-outline">
+      <section className="py-16 md:py-20 bg-gray-100 dark:bg-background">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <SectionHead eyebrow={t.about_values_eyebrow} heading={t.about_values_heading} />
           <div className="grid md:grid-cols-3 gap-8">
             {getTranslatedValues().map((val, idx) => (
-              <div key={idx} className="bg-paper text-primary border border-outline rounded-[24px] p-8 shadow-card hover:shadow-z12 transition-all duration-350">
+              <div key={idx} className="bg-paper text-primary rounded-[24px] p-8 shadow-card hover:shadow-z12 transition-all duration-300">
                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-6 shadow-z4 ${val.color}`}>
                   <HugeiconsIcon icon={val.icon} size={24} strokeWidth={1.8} />
                 </div>
@@ -187,14 +180,16 @@ export default function AboutView() {
       </section>
 
       {/* PROCESS */}
-      <div className="bg-background border-b border-outline">
-        <StepsSection
-          eyebrow={t.about_process_eyebrow}
-          heading={t.about_process_heading}
-          backgroundColor="transparent"
-          steps={getTranslatedSteps()}
-        />
-      </div>
+      <section className="py-16 md:py-20 bg-background">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <StepsSection
+            eyebrow={t.about_process_eyebrow}
+            heading={t.about_process_heading}
+            backgroundColor="transparent"
+            steps={getTranslatedSteps()}
+          />
+        </div>
+      </section>
 
       {/* CTA BAND */}
       <CtaBand
@@ -205,4 +200,3 @@ export default function AboutView() {
     </PageWrapper>
   );
 }
-

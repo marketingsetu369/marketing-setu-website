@@ -2,7 +2,6 @@
 
 import React from "react";
 import {
-  BridgeDivider,
   CtaBand,
   PageHero,
   PageWrapper,
@@ -27,13 +26,8 @@ export default function ServicesView() {
 
       {/* SERVICE BLOCKS */}
       {servicesData.map((service, idx) => (
-        <React.Fragment key={service.id}>
-          <ServiceBlock service={service} />
-          {idx < servicesData.length - 1 && <BridgeDivider />}
-        </React.Fragment>
+        <ServiceBlock key={service.id} service={service} />
       ))}
-
-      <BridgeDivider />
 
       {/* CTA BAND */}
       <CtaBand

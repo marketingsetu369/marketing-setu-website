@@ -9,6 +9,7 @@ import PortfolioCardView from "@/views/home-page/hero-section/PortfolioCardView"
 import MarketingSetuCardView from "@/views/home-page/hero-section/MarketingSetuCardView";
 import ParlourCardView from "@/views/home-page/hero-section/ParlourCardView";
 import TwoWheelerCardView from "@/views/home-page/hero-section/TwoWheelerCardView";
+import { TranslationDictionary } from "@/translation";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -206,12 +207,12 @@ export default function HomeView() {
   const getTranslatedTestimonials = () => {
     return testimonialsData.slice(0, 3).map((tItem, index) => {
       const num = index + 1;
-      const textKey = `testi_${num}_text` as any;
-      const roleKey = `testi_${num}_role` as any;
+      const textKey = `testi_${num}_text` as keyof TranslationDictionary;
+      const roleKey = `testi_${num}_role` as keyof TranslationDictionary;
       return {
         ...tItem,
-        text: (t[textKey] as string) || tItem.text,
-        role: (t[roleKey] as string) || tItem.role,
+        text: t[textKey] || tItem.text,
+        role: t[roleKey] || tItem.role,
       };
     });
   };

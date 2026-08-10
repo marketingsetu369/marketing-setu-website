@@ -1,16 +1,16 @@
 "use client";
 
-import { AppButton } from "@/components/library";
 import {
   PageHero,
   PageWrapper,
   StatBar,
   TestimonialCard,
-  useWhatsApp,
+  CtaBand,
 } from "@/views/home-page/component";
 import { testimonialsData, translations } from "@/views/home-page/data";
 import { useThemeStore } from "@/store/themeStore";
 import { TranslationDictionary } from "@/translation";
+import { useWhatsApp } from "@/views/home-page/component";
 
 export default function TestimonialsView() {
   const { openWhatsApp } = useWhatsApp();
@@ -48,10 +48,21 @@ export default function TestimonialsView() {
         />
       </PageHero>
 
-      {/* TESTIMONIALS GRID */}
-      <section className="py-16 md:py-24 bg-background border-b border-outline">
+      {/* MASONRY TESTIMONIALS GRID */}
+      <section className="py-16 md:py-24 bg-gray-100 dark:bg-background">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8 items-stretch">
+          {/* Section heading */}
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-primary tracking-tight">
+              What our customers are saying
+            </h2>
+            <p className="text-secondary text-sm mt-3 max-w-xl mx-auto leading-relaxed">
+              Real results from real small businesses across India.
+            </p>
+          </div>
+
+          {/* Pinterest-style masonry columns */}
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-6">
             {getTranslatedTestimonials().map((item, idx) => (
               <TestimonialCard key={idx} testimonial={item} />
             ))}
@@ -59,30 +70,13 @@ export default function TestimonialsView() {
         </div>
       </section>
 
-      {/* JOIN THEM SECTION */}
-      <section className="py-16 md:py-24 bg-background border-b border-outline">
-        <div className="max-w-3xl mx-auto px-4 text-center space-y-6">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-paper border border-outline text-[11px] font-semibold text-secondary shadow-z1 mx-auto">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-main animate-pulse"></span>
-            {t.reviews_join_eyebrow}
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-primary leading-tight">
-            {t.reviews_join_heading}
-          </h2>
-          <p className="text-base sm:text-lg text-secondary max-w-lg mx-auto leading-relaxed">
-            {t.reviews_join_desc}
-          </p>
-          <div className="pt-4">
-            <AppButton
-              onClick={() => openWhatsApp("Hi MarketingSetu! I'd like to hear more client success stories relevant to my business.")}
-              variant="whatsapp"
-            >
-              {t.btn_whatsapp_chat}
-            </AppButton>
-          </div>
-        </div>
-      </section>
+      {/* CTA BAND */}
+      <CtaBand
+        heading={t.reviews_join_heading}
+        description={t.reviews_join_desc}
+        buttonText={t.btn_whatsapp_chat}
+        whatsappMessage="Hi MarketingSetu! I'd like to hear more client success stories relevant to my business."
+      />
     </PageWrapper>
   );
 }
-
