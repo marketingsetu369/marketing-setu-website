@@ -5,6 +5,10 @@ import { PageWrapper, PricingCard, useWhatsApp } from "@/views/home-page/compone
 import { pricingPlans, translations } from "@/views/home-page/data";
 import CafeCardView from "@/views/home-page/hero-section/CafeCardView";
 import SolarCardView from "@/views/home-page/hero-section/SolarCardView";
+import PortfolioCardView from "@/views/home-page/hero-section/PortfolioCardView";
+import MarketingSetuCardView from "@/views/home-page/hero-section/MarketingSetuCardView";
+import ParlourCardView from "@/views/home-page/hero-section/ParlourCardView";
+import TwoWheelerCardView from "@/views/home-page/hero-section/TwoWheelerCardView";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -12,14 +16,14 @@ export default function HomeView() {
   const { openWhatsApp } = useWhatsApp();
   const { language } = useThemeStore();
   const t = translations[language] || translations.en;
-  const [activeCardIndex, setActiveCardIndex] = useState(2);
+  const [activeCardIndex, setActiveCardIndex] = useState(5);
 
   const carouselCards = [
     {
       id: "card-1",
       layoutType: "cafe-artisan",
-      title: "Artisan Brew Cafe",
-      category: "Cafe & Roastery",
+      title: "Cafe",
+      category: "Cafe",
       avatar: "☕",
       tagline: "Freshly Roasted Organic Coffee",
       bgClass: "bg-gradient-to-br from-amber-950 via-stone-900 to-amber-950",
@@ -38,8 +42,8 @@ export default function HomeView() {
     {
       id: "card-2",
       layoutType: "solar-tech",
-      title: "SunPower Solar Systems",
-      category: "Solar Energy Seller",
+      title: "Solar",
+      category: "Solar",
       avatar: "☀️",
       tagline: "Zero Electricity Bill Guarantee",
       bgClass: "bg-gradient-to-br from-cyan-950 via-teal-900 to-slate-950",
@@ -58,8 +62,8 @@ export default function HomeView() {
     {
       id: "card-3",
       layoutType: "parlour-beauty",
-      title: "Glow & Style Beauty Parlour",
-      category: "Beauty Parlour & Salon",
+      title: "Parlour",
+      category: "Parlour",
       avatar: "💅",
       tagline: "Radiant Skin & Modern Hair Styling",
       bgClass: "bg-gradient-to-br from-rose-950 via-pink-900 to-slate-950",
@@ -78,8 +82,8 @@ export default function HomeView() {
     {
       id: "card-4",
       layoutType: "two-wheeler-broker",
-      title: "SpeedyWheels Bike Broker",
-      category: "Two-Wheeler Deals & Insurance",
+      title: "Two Wheeler Broker",
+      category: "Two Wheeler Broker",
       avatar: "🏍️",
       tagline: "Best Deals on Pre-Owned & New Bikes",
       bgClass: "bg-gradient-to-br from-red-950 via-orange-900 to-slate-950",
@@ -98,8 +102,8 @@ export default function HomeView() {
     {
       id: "card-5",
       layoutType: "personal-portfolio",
-      title: "Rohan Das Portfolio",
-      category: "UI/UX Designer & Creator",
+      title: "Personal Portfolio",
+      category: "Personal Portfolio",
       avatar: "👨‍💻",
       tagline: "Crafting Digital Experiences",
       bgClass: "bg-gradient-to-br from-purple-950 via-indigo-900 to-slate-950",
@@ -118,8 +122,8 @@ export default function HomeView() {
     {
       id: "card-6",
       layoutType: "default-marketing-setu",
-      title: "MarketingSetu Smart Card",
-      category: "Default Digital Business Card",
+      title: "Default",
+      category: "Default",
       avatar: "🚀",
       tagline: "Original Smart Business Page",
       bgClass: "bg-gradient-to-br from-blue-950 via-indigo-900 to-slate-950",
@@ -144,17 +148,17 @@ export default function HomeView() {
       let price = plan.price;
       let description = plan.description;
 
-      if (plan.id === "quick-connect") {
+      if (plan.id === "default-card" || plan.id === "quick-connect") {
         badge = t.plan_quick_badge;
         name = t.plan_quick_name;
         price = t.plan_quick_price;
         description = t.plan_quick_desc;
-      } else if (plan.id === "smart-connect") {
+      } else if (plan.id === "category-card" || plan.id === "smart-connect") {
         badge = t.plan_smart_badge;
         name = t.plan_smart_name;
         price = t.plan_smart_price;
         description = t.plan_smart_desc;
-      } else if (plan.id === "power-connect") {
+      } else if (plan.id === "custom-website" || plan.id === "power-connect") {
         badge = t.plan_power_badge;
         name = t.plan_power_name;
         price = t.plan_power_price;
@@ -344,238 +348,18 @@ export default function HomeView() {
                             <CafeCardView isCenter={isActive} />
                           ) : card.layoutType === "solar-tech" ? (
                             <SolarCardView isCenter={isActive} />
+                          ) : card.layoutType === "personal-portfolio" ? (
+                            <PortfolioCardView isCenter={isActive} />
+                          ) : card.layoutType === "default-marketing-setu" ? (
+                            <MarketingSetuCardView isCenter={isActive} />
+                          ) : card.layoutType === "parlour-beauty" ? (
+                            <ParlourCardView isCenter={isActive} />
+                          ) : card.layoutType === "two-wheeler-broker" ? (
+                            <TwoWheelerCardView isCenter={isActive} />
                           ) : (
-                            <div className={`w-full flex flex-col space-y-4 pb-12 pt-6 ${isActive ? "animate-vertical-scroll" : ""}`}>
-
-                              {/* BEAUTY PARLOUR LAYOUT */}
-                              {card.layoutType === "parlour-beauty" && (
-                                <div className="space-y-3 bg-pink-50/40 pb-4">
-                                  <header className="pt-6 pb-6 px-4 text-center bg-gradient-to-br from-rose-700 via-pink-600 to-rose-800 text-white relative rounded-b-3xl">
-                                    <div className="w-16 h-16 rounded-full bg-white text-rose-600 mx-auto flex items-center justify-center text-3xl mb-2 shadow-lg border-2 border-pink-200">
-                                      {card.avatar}
-                                    </div>
-                                    <span className="text-[8.5px] font-bold tracking-widest text-pink-200 uppercase">BEAUTY & SALON STUDIO</span>
-                                    <h3 className="font-serif text-base font-bold text-white tracking-wide mt-0.5">{card.title}</h3>
-                                    <p className="text-[9.5px] text-pink-100 italic">{card.tagline}</p>
-                                  </header>
-
-                                  <div className="px-4 grid grid-cols-2 gap-2 text-[10px]">
-                                    <button className="py-2.5 rounded-xl bg-rose-600 text-white font-bold text-center shadow-xs">
-                                      💄 Book Appointment
-                                    </button>
-                                    <button className="py-2.5 rounded-xl bg-white text-rose-800 border border-rose-200 font-bold text-center">
-                                      💬 Chat WhatsApp
-                                    </button>
-                                  </div>
-
-                                  <div className="px-4">
-                                    <div className="p-3 bg-white rounded-2xl border border-rose-100 shadow-2xs space-y-1">
-                                      <div className="flex items-center justify-between">
-                                        <h4 className="font-bold text-[11px] text-rose-950">{card.owner}</h4>
-                                        <span className="text-[8px] px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 font-bold">{card.role}</span>
-                                      </div>
-                                      <p className="text-[9px] text-rose-900/80 leading-snug">{card.about}</p>
-                                    </div>
-                                  </div>
-
-                                  <div className="px-4 grid grid-cols-2 gap-2 text-center text-[9.5px]">
-                                    <div className="p-2.5 rounded-xl bg-pink-100 text-rose-900 font-bold">
-                                      <span className="block text-base font-black text-rose-700">{card.stat1}</span>
-                                      <span className="text-[8px] uppercase text-rose-800">{card.stat1Label}</span>
-                                    </div>
-                                    <div className="p-2.5 rounded-xl bg-pink-100 text-rose-900 font-bold">
-                                      <span className="block text-base font-black text-rose-700">{card.stat2}</span>
-                                      <span className="text-[8px] uppercase text-rose-800">{card.stat2Label}</span>
-                                    </div>
-                                  </div>
-
-                                  <div className="px-4 space-y-1.5">
-                                    <h4 className="font-serif font-bold text-[11px] text-rose-950">Popular Beauty Services</h4>
-                                    {card.services.map((s, idx) => (
-                                      <div key={idx} className="p-2.5 bg-white rounded-xl border border-rose-100 flex items-center justify-between">
-                                        <div className="flex items-center gap-2">
-                                          <span className="text-xl">{s.icon}</span>
-                                          <span className="font-bold text-[9.5px] text-rose-950">{s.name}</span>
-                                        </div>
-                                        <span className="font-extrabold text-rose-600 text-[10px]">{s.price}</span>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-
-                              {/* TWO-WHEELER BROKER LAYOUT */}
-                              {card.layoutType === "two-wheeler-broker" && (
-                                <div className="space-y-3 bg-slate-900 text-white pb-4">
-                                  <header className="pt-6 pb-6 px-4 text-center bg-gradient-to-br from-red-900 via-slate-900 to-black text-white relative">
-                                    <div className="w-16 h-16 rounded-2xl bg-red-600 text-white mx-auto flex items-center justify-center text-3xl mb-2 shadow-lg border-2 border-red-500/50">
-                                      {card.avatar}
-                                    </div>
-                                    <span className="text-[8.5px] font-black tracking-widest text-red-400 uppercase">BIKE BROKER & AUTOMOTIVE</span>
-                                    <h3 className="font-black text-base text-white tracking-tight mt-0.5">{card.title}</h3>
-                                    <p className="text-[9.5px] text-slate-300">{card.tagline}</p>
-                                  </header>
-
-                                  <div className="px-4 grid grid-cols-2 gap-2 text-[10px]">
-                                    <button className="py-2.5 rounded-xl bg-red-600 text-white font-bold text-center shadow-xs">
-                                      🏍️ View Bike Inventory
-                                    </button>
-                                    <button className="py-2.5 rounded-xl bg-slate-800 text-red-300 border border-red-500/30 font-bold text-center">
-                                      💬 Instant Deal
-                                    </button>
-                                  </div>
-
-                                  <div className="px-4">
-                                    <div className="p-3 bg-slate-800/80 rounded-2xl border border-red-900/40 space-y-1">
-                                      <div className="flex justify-between items-center">
-                                        <h4 className="font-bold text-[11px] text-red-400">{card.owner}</h4>
-                                        <span className="text-[8px] px-2 py-0.5 rounded-md bg-red-950 text-red-200 border border-red-800">{card.role}</span>
-                                      </div>
-                                      <p className="text-[9px] text-slate-300 leading-snug">{card.about}</p>
-                                    </div>
-                                  </div>
-
-                                  <div className="px-4 grid grid-cols-2 gap-2 text-center text-[9.5px]">
-                                    <div className="p-2.5 rounded-xl bg-slate-800 border border-red-900/40">
-                                      <span className="block font-black text-red-500 text-base">{card.stat1}</span>
-                                      <span className="text-[8px] text-slate-400 font-bold uppercase">{card.stat1Label}</span>
-                                    </div>
-                                    <div className="p-2.5 rounded-xl bg-slate-800 border border-red-900/40">
-                                      <span className="block font-black text-red-500 text-base">{card.stat2}</span>
-                                      <span className="text-[8px] text-slate-400 font-bold uppercase">{card.stat2Label}</span>
-                                    </div>
-                                  </div>
-
-                                  <div className="px-4 space-y-1.5">
-                                    <h4 className="font-bold text-[11px] text-slate-200">Brokerage Services</h4>
-                                    {card.services.map((s, idx) => (
-                                      <div key={idx} className="p-2.5 bg-slate-800/80 rounded-xl border border-red-900/40 flex items-center justify-between">
-                                        <div className="flex items-center gap-2">
-                                          <span className="text-xl">{s.icon}</span>
-                                          <span className="font-bold text-[9.5px] text-slate-200">{s.name}</span>
-                                        </div>
-                                        <span className="font-extrabold text-red-400 text-[10px]">{s.price}</span>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-
-                              {/* PERSONAL PORTFOLIO LAYOUT */}
-                              {card.layoutType === "personal-portfolio" && (
-                                <div className="space-y-3 bg-purple-50/30 pb-4">
-                                  <header className="pt-6 pb-6 px-4 text-center bg-gradient-to-br from-purple-900 via-indigo-900 to-slate-950 text-white relative rounded-b-3xl">
-                                    <div className="w-16 h-16 rounded-full bg-indigo-600 text-white mx-auto flex items-center justify-center text-3xl mb-2 shadow-lg border-2 border-purple-300">
-                                      {card.avatar}
-                                    </div>
-                                    <span className="text-[8.5px] font-mono tracking-widest text-purple-300 uppercase">CREATOR & DESIGNER</span>
-                                    <h3 className="font-extrabold text-base text-white tracking-tight mt-0.5">{card.title}</h3>
-                                    <p className="text-[9.5px] text-purple-200">{card.tagline}</p>
-                                  </header>
-
-                                  <div className="px-4 grid grid-cols-2 gap-2 text-[10px]">
-                                    <button className="py-2.5 rounded-xl bg-purple-600 text-white font-bold text-center shadow-xs">
-                                      📁 View Portfolio
-                                    </button>
-                                    <button className="py-2.5 rounded-xl bg-white text-purple-900 border border-purple-200 font-bold text-center">
-                                      💬 Hire Me
-                                    </button>
-                                  </div>
-
-                                  <div className="px-4">
-                                    <div className="p-3 bg-white rounded-2xl border border-purple-100 shadow-2xs space-y-1">
-                                      <div className="flex justify-between items-center">
-                                        <h4 className="font-bold text-[11px] text-purple-950">{card.owner}</h4>
-                                        <span className="text-[8px] px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 font-bold">{card.role}</span>
-                                      </div>
-                                      <p className="text-[9px] text-slate-600 leading-snug">{card.about}</p>
-                                    </div>
-                                  </div>
-
-                                  <div className="px-4 grid grid-cols-2 gap-2 text-center text-[9.5px]">
-                                    <div className="p-2.5 rounded-xl bg-purple-100/70 text-purple-950 font-bold">
-                                      <span className="block text-base font-black text-purple-700">{card.stat1}</span>
-                                      <span className="text-[8px] uppercase text-purple-800">{card.stat1Label}</span>
-                                    </div>
-                                    <div className="p-2.5 rounded-xl bg-purple-100/70 text-purple-950 font-bold">
-                                      <span className="block text-base font-black text-purple-700">{card.stat2}</span>
-                                      <span className="text-[8px] uppercase text-purple-800">{card.stat2Label}</span>
-                                    </div>
-                                  </div>
-
-                                  <div className="px-4 space-y-1.5">
-                                    <h4 className="font-bold text-[11px] text-slate-900">Design Offerings</h4>
-                                    {card.services.map((s, idx) => (
-                                      <div key={idx} className="p-2.5 bg-white rounded-xl border border-purple-100 flex items-center justify-between">
-                                        <div className="flex items-center gap-2">
-                                          <span className="text-xl">{s.icon}</span>
-                                          <span className="font-bold text-[9.5px] text-slate-900">{s.name}</span>
-                                        </div>
-                                        <span className="font-extrabold text-purple-700 text-[10px]">{s.price}</span>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-
-                              {/* DEFAULT MARKETINGSETU SMART CARD LAYOUT */}
-                              {card.layoutType === "default-marketing-setu" && (
-                                <div className="space-y-3 bg-blue-50/30 pb-4">
-                                  <header className="pt-6 pb-6 px-4 text-center bg-gradient-to-b from-blue-900 via-indigo-900 to-slate-950 text-white relative">
-                                    <div className="w-16 h-16 rounded-full bg-brand-main text-white mx-auto flex items-center justify-center text-3xl mb-2 shadow-lg border-2 border-white">
-                                      {card.avatar}
-                                    </div>
-                                    <span className="text-[8.5px] font-bold tracking-widest text-brand-main bg-white px-2 py-0.5 rounded-full uppercase">OFFICIAL SMART CARD</span>
-                                    <h3 className="font-black text-base text-white tracking-tight mt-1">{card.title}</h3>
-                                    <p className="text-[9.5px] text-blue-200">{card.tagline}</p>
-                                  </header>
-
-                                  <div className="px-4 grid grid-cols-2 gap-2 text-[10px]">
-                                    <button className="py-2.5 rounded-xl bg-brand-main text-white font-bold text-center shadow-xs">
-                                      💳 Get NFC Card
-                                    </button>
-                                    <button className="py-2.5 rounded-xl bg-white text-brand-main border border-brand-main/20 font-bold text-center">
-                                      💬 Chat WhatsApp
-                                    </button>
-                                  </div>
-
-                                  <div className="px-4">
-                                    <div className="p-3 bg-white rounded-2xl border border-blue-100 shadow-2xs space-y-1">
-                                      <div className="flex items-center justify-between">
-                                        <h4 className="font-bold text-[11px] text-slate-900">{card.owner}</h4>
-                                        <span className="text-[8px] px-2 py-0.5 rounded-full bg-brand-lighter text-brand-main font-bold">{card.role}</span>
-                                      </div>
-                                      <p className="text-[9px] text-slate-600 leading-snug">{card.about}</p>
-                                    </div>
-                                  </div>
-
-                                  <div className="px-4 grid grid-cols-2 gap-2 text-center text-[9.5px]">
-                                    <div className="p-2.5 rounded-xl bg-blue-100/70 text-blue-950 font-bold">
-                                      <span className="block text-base font-black text-brand-main">{card.stat1}</span>
-                                      <span className="text-[8px] uppercase text-blue-900">{card.stat1Label}</span>
-                                    </div>
-                                    <div className="p-2.5 rounded-xl bg-blue-100/70 text-blue-950 font-bold">
-                                      <span className="block text-base font-black text-brand-main">{card.stat2}</span>
-                                      <span className="text-[8px] uppercase text-blue-900">{card.stat2Label}</span>
-                                    </div>
-                                  </div>
-
-                                  <div className="px-4 space-y-1.5">
-                                    <h4 className="font-bold text-[11px] text-slate-900">Platform Plans</h4>
-                                    {card.services.map((s, idx) => (
-                                      <div key={idx} className="p-2.5 bg-white rounded-xl border border-blue-100 flex items-center justify-between">
-                                        <div className="flex items-center gap-2">
-                                          <span className="text-xl">{s.icon}</span>
-                                          <span className="font-bold text-[9.5px] text-slate-900">{s.name}</span>
-                                        </div>
-                                        <span className="font-extrabold text-brand-main text-[10px]">{s.price}</span>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-                            </div>
+                            <div className="w-full flex flex-col pb-4 pt-6" />
                           )}
+
                         </div>
                       </div>
                     );

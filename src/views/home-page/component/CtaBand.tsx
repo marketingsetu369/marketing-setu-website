@@ -18,17 +18,18 @@ export default function CtaBand({
   const { openWhatsApp } = useWhatsApp();
 
   return (
-    <section className="py-20 bg-white dark:bg-brand-dark transition-colors duration-300">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-brand-purple to-brand-teal rounded-3xl p-10 md:p-16 text-center text-white shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-white opacity-10 blur-2xl"></div>
-          <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 rounded-full bg-black opacity-10 blur-2xl"></div>
-          <div className="relative z-10">
-            <h2 className="text-3xl md:text-4xl font-heading font-extrabold mb-4">{heading}</h2>
-            <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto leading-relaxed">{description}</p>
+    <section className="py-16 md:py-24 bg-background">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-gradient-to-br from-brand-dark via-brand-main to-brand-darker rounded-[24px] p-8 md:p-14 text-center text-white shadow-z24 relative overflow-hidden">
+          <div className="absolute top-0 right-0 -mr-20 -mt-20 w-72 h-72 rounded-full bg-white/10 blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-72 h-72 rounded-full bg-black/20 blur-3xl pointer-events-none" />
+          
+          <div className="relative z-10 space-y-6">
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">{heading}</h2>
+            <p className="text-sm sm:text-lg text-white/80 max-w-2xl mx-auto leading-relaxed font-normal">{description}</p>
             <button
               onClick={() => openWhatsApp(whatsappMessage)}
-              className="inline-flex items-center justify-center gap-2.5 bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-green-500/20 hover:shadow-green-500/30 hover:-translate-y-0.5 transition-all cursor-pointer"
+              className="inline-flex items-center justify-center gap-2.5 bg-[#10C85A] hover:bg-[#0EB551] text-white px-8 py-4 rounded-xl font-bold shadow-z12 hover:shadow-z16 hover:-translate-y-0.5 transition-all cursor-pointer text-sm sm:text-base"
             >
               {buttonText}
             </button>
@@ -38,3 +39,4 @@ export default function CtaBand({
     </section>
   );
 }
+

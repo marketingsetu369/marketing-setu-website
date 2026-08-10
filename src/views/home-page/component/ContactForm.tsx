@@ -79,12 +79,14 @@ export default function ContactForm() {
   const fields = getContactFieldsConfig(t);
 
   return (
-    <div className="contact-card reveal">
-      <h3>{t.contact_form_title}</h3>
+    <div className="space-y-6">
+      <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-primary">
+        {t.contact_form_title}
+      </h3>
 
       {/* noValidate turns off browser defaults to display premium red error messages */}
-      <form onSubmit={handleSubmit} id="contactForm" noValidate>
-        <div className="form-grid">
+      <form onSubmit={handleSubmit} id="contactForm" noValidate className="space-y-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {fields.map((field) => {
             const commonProps = {
               id: field.id,
@@ -107,38 +109,43 @@ export default function ContactForm() {
               error: errors[field.id],
             };
 
+            const cellClass = field.fullWidth ? "col-span-1 sm:col-span-2" : "col-span-1";
+
             if (field.component === "input") {
               return (
-                <AppInput 
-                  key={field.id}
-                  {...commonProps}
-                  type={field.type}
-                  placeholder={field.placeholder}
-                  required={field.required}
-                />
+                <div key={field.id} className={cellClass}>
+                  <AppInput 
+                    {...commonProps}
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    required={field.required}
+                  />
+                </div>
               );
             }
 
             if (field.component === "select") {
               return (
-                <AppSelect 
-                  key={field.id}
-                  {...commonProps}
-                  options={field.options || []}
-                  required={field.required}
-                />
+                <div key={field.id} className={cellClass}>
+                  <AppSelect 
+                    {...commonProps}
+                    options={field.options || []}
+                    required={field.required}
+                  />
+                </div>
               );
             }
 
             if (field.component === "textarea") {
               return (
-                <AppTextArea 
-                  key={field.id}
-                  {...commonProps}
-                  placeholder={field.placeholder}
-                  required={field.required}
-                  rows={4}
-                />
+                <div key={field.id} className={cellClass}>
+                  <AppTextArea 
+                    {...commonProps}
+                    placeholder={field.placeholder}
+                    required={field.required}
+                    rows={4}
+                  />
+                </div>
               );
             }
 
@@ -146,15 +153,18 @@ export default function ContactForm() {
           })}
         </div>
 
-        <AppButton 
-          type="submit" 
-          disabled={status === "submitting"}
-          fullWidth
-          variant="whatsapp"
-        >
-          {status === "submitting" ? t.contact_form_submitting : t.contact_form_submit}
-        </AppButton>
+        <div className="pt-2">
+          <AppButton 
+            type="submit" 
+            disabled={status === "submitting"}
+            fullWidth
+            variant="whatsapp"
+          >
+            {status === "submitting" ? t.contact_form_submitting : t.contact_form_submit}
+          </AppButton>
+        </div>
       </form>
     </div>
   );
 }
+

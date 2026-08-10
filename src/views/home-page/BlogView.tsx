@@ -24,20 +24,20 @@ export default function BlogView() {
       />
 
       {/* BLOG GRID */}
-      <section className="py-24 bg-white dark:bg-brand-dark/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 md:py-24 bg-background border-b border-outline">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             {blogPosts.map((post, index) => {
               const cardBody = (
-                <div className="bg-brand-grayLight/30 dark:bg-brand-dark/40 border border-gray-100 dark:border-gray-800 rounded-3xl p-8 h-full flex flex-col justify-between hover:shadow-lg transition-all duration-300">
+                <div className="bg-paper text-primary border border-outline rounded-[24px] p-8 h-full flex flex-col justify-between shadow-card hover:shadow-z12 hover:-translate-y-1 transition-all duration-350">
                   <div className="space-y-4">
-                    <div className="text-xs font-semibold text-brand-purple tracking-wider uppercase">
+                    <div className="text-[10px] font-bold text-brand-main tracking-wider uppercase">
                       {post.date === "Coming soon" && language === "mr" ? "लवकरच येत आहे" : post.date === "Coming soon" && language === "hi" ? "जल्द आ रहा है" : post.date} · {post.category}
                     </div>
-                    <h3 className="text-xl font-heading font-bold text-brand-dark dark:text-white leading-tight">
+                    <h3 className="text-xl font-bold text-primary leading-tight">
                       {post.title}
                     </h3>
-                    <p className="text-sm text-brand-gray dark:text-gray-300 leading-relaxed">
+                    <p className="text-sm text-secondary leading-relaxed font-normal">
                       {post.description}
                     </p>
                   </div>
@@ -71,3 +71,4 @@ export default function BlogView() {
     </PageWrapper>
   );
 }
+

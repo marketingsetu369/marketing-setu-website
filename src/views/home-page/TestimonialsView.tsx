@@ -49,8 +49,8 @@ export default function TestimonialsView() {
       </PageHero>
 
       {/* TESTIMONIALS GRID */}
-      <section className="py-24 bg-white dark:bg-brand-dark/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 md:py-24 bg-background border-b border-outline">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8 items-stretch">
             {getTranslatedTestimonials().map((item, idx) => (
               <TestimonialCard key={idx} testimonial={item} />
@@ -60,16 +60,16 @@ export default function TestimonialsView() {
       </section>
 
       {/* JOIN THEM SECTION */}
-      <section className="py-24 bg-brand-grayLight dark:bg-brand-dark/40 border-t border-gray-100 dark:border-gray-800">
+      <section className="py-16 md:py-24 bg-background border-b border-outline">
         <div className="max-w-3xl mx-auto px-4 text-center space-y-6">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-purpleLight text-brand-purple text-xs font-bold uppercase tracking-wider">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-purple animate-pulse"></span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-paper border border-outline text-[11px] font-semibold text-secondary shadow-z1 mx-auto">
+            <span className="w-1.5 h-1.5 rounded-full bg-brand-main animate-pulse"></span>
             {t.reviews_join_eyebrow}
           </span>
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-brand-dark dark:text-white leading-tight">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary leading-tight">
             {t.reviews_join_heading}
           </h2>
-          <p className="text-lg text-brand-gray dark:text-gray-300 max-w-lg mx-auto">
+          <p className="text-base sm:text-lg text-secondary max-w-lg mx-auto leading-relaxed">
             {t.reviews_join_desc}
           </p>
           <div className="pt-4">
@@ -85,3 +85,4 @@ export default function TestimonialsView() {
     </PageWrapper>
   );
 }
+

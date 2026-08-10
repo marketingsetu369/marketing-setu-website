@@ -99,8 +99,8 @@ export default function PricingView() {
       />
 
       {/* PLANS GRID */}
-      <section className="py-24 bg-white dark:bg-brand-dark/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-16 md:py-24 bg-background border-b border-outline">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8 items-stretch">
             {getTranslatedPlans().map((plan, idx) => (
               <PricingCard
@@ -110,11 +110,11 @@ export default function PricingView() {
               />
             ))}
           </div>
-          <p className="text-center text-sm mt-8 text-brand-gray dark:text-gray-400">
+          <p className="text-center text-sm mt-10 text-secondary">
             📌 {t.pricing_help_note}{" "}
             <button
               onClick={() => openWhatsApp("Hi MarketingSetu! I'm not sure which plan is right for my business — can you help?")}
-              className="bg-transparent border-none p-0 cursor-pointer text-brand-purple font-bold hover:underline"
+              className="bg-transparent border-none p-0 cursor-pointer text-brand-main font-bold hover:underline"
             >
               {t.pricing_help_btn}
             </button>{" "}
@@ -126,14 +126,18 @@ export default function PricingView() {
       <BridgeDivider />
 
       {/* COMPARE TABLE */}
-      <CompareTable />
+      <div className="bg-background border-b border-outline">
+        <CompareTable />
+      </div>
 
       {/* PRICING FAQ */}
-      <FaqSection
-        eyebrow={t.pricing_faq_eyebrow}
-        heading={t.pricing_faq_heading}
-        items={getTranslatedFaqs()}
-      />
+      <div className="bg-background border-b border-outline">
+        <FaqSection
+          eyebrow={t.pricing_faq_eyebrow}
+          heading={t.pricing_faq_heading}
+          items={getTranslatedFaqs()}
+        />
+      </div>
 
       {/* CTA BAND */}
       <CtaBand
@@ -144,3 +148,4 @@ export default function PricingView() {
     </PageWrapper>
   );
 }
+
