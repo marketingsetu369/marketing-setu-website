@@ -212,13 +212,16 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
     const isFirst = index === 0;
     const isLast = index === activeKeys.length - 1;
     
-    let paddingClass = "py-12 px-6";
+    const isLocation = sectionKey === "location";
+    const xPadding = isLocation ? "px-0" : "px-6";
+    
+    let paddingClass = `py-12 ${xPadding}`;
     if (isFirst && isLast) {
-      paddingClass = "pt-12 pb-36 md:pb-16 px-6";
+      paddingClass = `pt-12 pb-36 md:pb-16 ${xPadding}`;
     } else if (isFirst) {
-      paddingClass = "pt-12 pb-12 px-6";
+      paddingClass = `pt-12 pb-12 ${xPadding}`;
     } else if (isLast) {
-      paddingClass = "pt-12 pb-36 md:pb-16 px-6";
+      paddingClass = `pt-12 pb-36 md:pb-16 ${xPadding}`;
     }
     
     return `${bgClass} ${paddingClass}`;
@@ -800,18 +803,18 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           {/* Location Section */}
           {contact.maps_link && (
             <section className={`animate-fade-in-up ${getSectionStyle("location")}`}>
-              <div className="bg-white rounded-3xl p-8">
-                <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: FONT_HEADER }}>
+              <div className="bg-white rounded-3xl py-8 px-0">
+                <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-1 px-6" style={{ fontFamily: FONT_HEADER }}>
                   Our Location
                 </h2>
-                <p className="text-xs text-gray-500 font-semibold mb-4 leading-relaxed">
+                <p className="text-xs text-gray-500 font-semibold mb-4 leading-relaxed px-6">
                   {contact.address || "Find us on the map below for directions and visiting hours."}
                 </p>
                 <a 
                   href={contact.maps_link} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="block w-full h-44 rounded-2xl overflow-hidden relative border border-gray-100 group active:scale-[0.99] transition-all shadow-xs"
+                  className="block w-full h-44 rounded-none overflow-hidden relative border border-gray-100 group active:scale-[0.99] transition-all shadow-xs"
                 >
                   <img 
                     src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&auto=format&fit=crop&q=60" 
