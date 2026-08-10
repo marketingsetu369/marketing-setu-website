@@ -8,7 +8,6 @@ import {
   ArrowRight02Icon,
   CallIcon,
   Cancel01Icon,
-  CheckmarkBadge01Icon,
   FacebookIcon,
   InstagramIcon,
   Location01Icon,
@@ -16,6 +15,7 @@ import {
   Message01Icon,
   RupeeIcon,
   Share01Icon,
+  ShieldCheck,
   Store01Icon,
   TwitterIcon,
   UserIcon,
@@ -282,8 +282,8 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                 <h1 className="text-xl font-semibold text-gray-900 tracking-tight" style={{ fontFamily: FONT_HEADER }}>
                   {header.business_name || ""}
                 </h1>
-                <span className="text-[#2e7d32] flex items-center justify-center">
-                  <HugeiconsIcon icon={CheckmarkBadge01Icon} size={18} />
+                <span className="flex items-center justify-center" style={{ color: PRIMARY_COLOR }}>
+                  <HugeiconsIcon icon={ShieldCheck} size={18} />
                 </span>
               </div>
 
@@ -364,7 +364,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                 {ownerList.map((owner: any, idx: number) => (
                   <div key={idx} className="bg-white rounded-[32px] pt-8 px-8 pb-1">
                     <div className="flex items-center gap-4.5">
-                      <div className="w-16 h-16 rounded-3xl overflow-hidden relative border border-gray-100 flex-shrink-0">
+                      <div className="w-16 h-16 rounded-full overflow-hidden relative border border-gray-100 flex-shrink-0">
                         {owner.avatar_url ? (
                           <img
                             src={getImageUrl(owner.avatar_url)}
@@ -373,7 +373,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                           />
                         ) : (
                           <div 
-                            className="w-full h-full rounded-3xl flex items-center justify-center"
+                            className="w-full h-full rounded-full flex items-center justify-center"
                             style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR }}
                           >
                             <HugeiconsIcon icon={UserIcon} size={20} />
@@ -386,7 +386,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                             {owner.name}
                           </h3>
                           <span className="text-[#2e7d32] flex items-center justify-center">
-                            <HugeiconsIcon icon={CheckmarkBadge01Icon} size={18} />
+                            <HugeiconsIcon icon={ShieldCheck} size={18} color="#2e7d32" />
                           </span>
                         </div>
                         <p className="text-sm text-gray-400 font-medium mt-0.5">{owner.title}</p>
