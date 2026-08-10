@@ -7,14 +7,16 @@ import {
   ArrowLeft02Icon,
   ArrowRight02Icon,
   CallIcon,
+  Cancel01Icon,
   CheckmarkCircle02Icon,
   FacebookIcon,
-  FavouriteIcon,
   InstagramIcon,
   Location01Icon,
   Mail01Icon,
   Message01Icon,
   PlayIcon,
+  RupeeIcon,
+  Share01Icon,
   StarIcon,
   Store01Icon,
   TwitterIcon,
@@ -40,6 +42,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
   usePageTracking(slug);
 
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null);
 
   const [formData, setFormData] = useState({ name: "", phone: "", message: "" });
   const [isProductEnquiry, setIsProductEnquiry] = useState(false);
@@ -109,106 +112,178 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
     return url;
   };
 
-  // Safe defaults from database
-  const header = data?.header || {};
-  const contact = data?.contact || {};
+  const getYouTubeId = (url?: string) => {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
+
+  // Safe defaults from database / Static Mock Data fallback
+  const header = {
+    business_name: data?.header?.business_name || "",
+    tagline: data?.header?.tagline || "",
+    business_category: data?.header?.business_category || "",
+    logo_url: data?.header?.logo_url || ""
+  };
+
+  const contact = {
+    phone: data?.contact?.phone || "",
+    whatsapp: data?.contact?.whatsapp || "",
+    email: data?.contact?.email || "",
+    maps_link: data?.contact?.maps_link || "",
+    address: data?.contact?.address || ""
+  };
+
   const ownerList = Array.isArray(data?.owner) ? data.owner : [];
+
   const products = Array.isArray(data?.products) ? data.products : [];
+
   const gallery = Array.isArray(data?.gallery) ? data.gallery : [];
+
   const testimonials = Array.isArray(data?.testimonials) ? data.testimonials : [];
-  const socialLinks = data?.social_links || {};
+
+  const socialLinks = {
+    instagram: data?.social_links?.instagram || "",
+    facebook: data?.social_links?.facebook || "",
+    youtube: data?.social_links?.youtube || "",
+    twitter: data?.social_links?.twitter || ""
+  };
+
+  const mainOwner = ownerList[0];
+
+  const visibleStates = [
+    products.length > 0,
+    testimonials.length > 0,
+    gallery.length > 0,
+    !!(socialLinks.instagram || socialLinks.facebook || socialLinks.youtube || socialLinks.twitter),
+    true, // Enquiry form is always visible
+    !!contact.maps_link,
+  ];
+
+  const getSectionClassName = (sectionKey: string) => {
+    const keys = ["products", "testimonials", "gallery", "social", "enquiry", "location"];
+    const activeKeys = keys.filter((key, idx) => visibleStates[idx]);
+    const index = activeKeys.indexOf(sectionKey);
+    
+    return index === 0
+      ? "mt-8 pt-8 border-t border-gray-100 md:mt-0 md:pt-0 md:border-t-0"
+      : "mt-8 pt-8 border-t border-gray-100";
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center items-center md:py-0" style={{ fontFamily: FONT_SANS }}>
-      {/* Premium Keyframes for Smooth Fade-In entry animations */}
-     
-
-      {/* Main wrapper: 100% width on mobile, max-w-[1100px] on desktop, no shadow */}
-      <div className="w-full md:max-w-[1100px] bg-white min-h-screen md:min-h-[820px] md:h-[820px] shadow-none relative flex flex-col md:flex-row md:rounded-3xl md:overflow-hidden animate-fade-in-up">
+    <div className="min-h-screen bg-gray-50 flex justify-center items-start md:items-center py-0 md:py-8" style={{ fontFamily: FONT_SANS }}>
+      {/* Container wrapper: responsive split-screen layout max-w-md on mobile, max-w-[1100px] on desktop */}
+      <div className="w-full md:max-w-[1100px] bg-white min-h-screen md:min-h-[820px] md:h-[820px] md:shadow-lg relative flex flex-col md:flex-row md:rounded-3xl overflow-hidden animate-fade-in-up">
         
         {/* ── LEFT COLUMN: Header & Profile Card ── */}
-        <div className="w-full md:w-[42%] bg-white flex flex-col justify-between border-r border-gray-100 relative pb-4 md:pb-0 animate-fade-in-up">
-          <div className="md:overflow-y-auto md:max-h-full [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-6">
-            {/* Header Section */}
-            <header className="bg-gray-100 pt-10 pb-[90px] px-6 text-center flex flex-col items-center">
-              {/* Logo */}
-              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100 mb-4 overflow-hidden p-3">
+        <div className="w-full md:w-[42%] bg-white flex flex-col justify-between border-r border-gray-100 relative pb-4 md:pb-0">
+          <div className="pb-6">
+            {/* Soft top-to-bottom gradient background that fades from primary-tint to transparent/white */}
+            <header 
+              className="pt-14 pb-[90px] px-6 text-center flex flex-col items-center relative"
+              style={{ 
+                background: `linear-gradient(to bottom, ${PRIMARY_COLOR}35 0%, ${PRIMARY_COLOR}15 50%, ${PRIMARY_COLOR}02 100%)`
+              }}
+            >
+              {/* Share button on top right of the header */}
+              <div className="absolute top-4 right-4 z-20">
+                <button 
+                  onClick={() => {
+                    if (navigator.share) {
+                      navigator.share({
+                        title: header.business_name || "Business Profile",
+                        url: window.location.href
+                      }).catch(console.error);
+                    } else {
+                      navigator.clipboard.writeText(window.location.href);
+                      alert("Link copied to clipboard!");
+                    }
+                  }}
+                  className="w-9 h-9 rounded-full bg-white shadow-xs flex items-center justify-center text-gray-800 hover:bg-gray-50 active:scale-95 transition-all cursor-pointer"
+                >
+                  <HugeiconsIcon icon={Share01Icon} size={16} />
+                </button>
+              </div>
+
+              {/* Logo - Large floating circle with thick white border matching screenshot */}
+              <div className="w-28 h-28 bg-white rounded-full flex items-center justify-center shadow-md border-4 border-white mb-4.5 overflow-hidden p-1.5">
                 {header.logo_url ? (
                   <img
                     src={getImageUrl(header.logo_url)}
                     alt={header.business_name || "Logo"}
-                    className="w-full h-full object-cover rounded-full"
+                    className="w-full h-full object-contain rounded-full"
                   />
                 ) : (
                   <div 
                     className="w-full h-full rounded-full flex items-center justify-center border"
                     style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR, borderColor: PRIMARY_BORDER }}
                   >
-                    <HugeiconsIcon icon={Store01Icon} size={32} />
+                    <HugeiconsIcon icon={Store01Icon} size={36} />
                   </div>
                 )}
               </div>
 
-              {/* Title */}
+              {/* Title with Verified Checkmark */}
               <div className="flex items-center gap-1.5 justify-center mb-1">
-                <h1 className="text-2xl font-black text-gray-900 tracking-tight" style={{ fontFamily: FONT_HEADER }}>
-                  {header.business_name || "MarketingSetu Client"}
+                <h1 className="text-xl font-semibold text-gray-900 tracking-tight" style={{ fontFamily: FONT_HEADER }}>
+                  {header.business_name || ""}
                 </h1>
-                <span style={{ color: PRIMARY_COLOR }}>
-                  <HugeiconsIcon icon={CheckmarkCircle02Icon} size={20} />
+                <span className="text-emerald-500">
+                  <HugeiconsIcon icon={CheckmarkCircle02Icon} size={18} />
                 </span>
               </div>
               
-              <p className="text-xs text-gray-500 font-semibold tracking-wide mb-3">
+              <p className="text-[11px] text-gray-500 font-semibold tracking-wide mb-3">
                 {header.tagline || "Built on trust"}
               </p>
               
-              {/* Badge */}
+              {/* Category tag bubble matches "Electric Scooter Showroom" styling */}
               {header.business_category && (
                 <span 
-                  className="text-white text-[10px] font-bold px-4.5 py-1.5 rounded-full tracking-wide uppercase shadow-sm"
-                  style={{ backgroundColor: PRIMARY_COLOR, boxShadow: `0 2px 4px ${PRIMARY_COLOR}20` }}
+                  className="text-white text-[10px] font-semibold px-4.5 py-1.5 rounded-full tracking-wide"
+                  style={{ backgroundColor: "#2e7d32" }}
                 >
                   {header.business_category}
                 </span>
               )}
 
-              {/* Quick Actions */}
-              <div className="grid grid-cols-4 gap-4 w-full mt-8">
+              {/* Quick Action Icons Row */}
+              <div className="grid grid-cols-4 gap-4 w-full mt-7 px-1">
                 {contact.phone && (
                   <a 
                     href={`tel:${contact.phone}`} 
                     onClick={() => { if (slug) trackUniqueAction(slug, TrackAction.Call); }}
-                    className="flex flex-col items-center gap-2 group"
+                    className="flex flex-col items-center gap-1.5 group"
                   >
-                    <div className="w-12 h-12 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center text-gray-600 group-hover:bg-gray-100 transition-colors">
-                      <HugeiconsIcon icon={CallIcon} size={20} />
+                    <div className="w-11 h-11 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
+                      <HugeiconsIcon icon={CallIcon} size={16} />
                     </div>
-                    <span className="text-[11px] font-bold text-gray-600">Call</span>
+                    <span className="text-[10px] font-semibold text-gray-950">Call</span>
                   </a>
                 )}
                 
-                {contact.whatsapp && (
+                {(contact.whatsapp || contact.phone) && (
                   <a 
-                    href={`https://wa.me/${contact.whatsapp}`} 
+                    href={`https://wa.me/${(contact.whatsapp || contact.phone).replace(/\D/g, '')}`} 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     onClick={() => { if (slug) trackUniqueAction(slug, TrackAction.WhatsApp); }}
-                    className="flex flex-col items-center gap-2 group"
+                    className="flex flex-col items-center gap-1.5 group"
                   >
-                    <div className="w-12 h-12 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center text-gray-600 group-hover:bg-gray-100 transition-colors">
-                      <HugeiconsIcon icon={WhatsappIcon} size={20} />
+                    <div className="w-11 h-11 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
+                      <HugeiconsIcon icon={WhatsappIcon} size={16} />
                     </div>
-                    <span className="text-[11px] font-bold text-gray-600">WhatsApp</span>
+                    <span className="text-[10px] font-semibold text-gray-950">WhatsApp</span>
                   </a>
                 )}
 
                 {contact.email && (
-                  <a href={`mailto:${contact.email}`} className="flex flex-col items-center gap-2 group">
-                    <div className="w-12 h-12 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center text-gray-600 group-hover:bg-gray-100 transition-colors">
-                      <HugeiconsIcon icon={Mail01Icon} size={20} />
+                  <a href={`mailto:${contact.email}`} className="flex flex-col items-center gap-1.5 group">
+                    <div className="w-11 h-11 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
+                      <HugeiconsIcon icon={Mail01Icon} size={16} />
                     </div>
-                    <span className="text-[11px] font-bold text-gray-600">Email</span>
+                    <span className="text-[10px] font-semibold text-gray-950">Email</span>
                   </a>
                 )}
 
@@ -218,12 +293,12 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                     target="_blank" 
                     rel="noopener noreferrer" 
                     onClick={() => { if (slug) trackUniqueAction(slug, TrackAction.Directions); }}
-                    className="flex flex-col items-center gap-2 group"
+                    className="flex flex-col items-center gap-1.5 group"
                   >
-                    <div className="w-12 h-12 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center text-gray-600 group-hover:bg-gray-100 transition-colors">
-                      <HugeiconsIcon icon={Location01Icon} size={20} />
+                    <div className="w-11 h-11 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
+                      <HugeiconsIcon icon={Location01Icon} size={16} />
                     </div>
-                    <span className="text-[11px] font-bold text-gray-600">Direction</span>
+                    <span className="text-[10px] font-semibold text-gray-950">Location</span>
                   </a>
                 )}
               </div>
@@ -233,9 +308,9 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
             {ownerList.length > 0 && (
               <div className="px-6 -mt-[65px] relative z-10 space-y-4 animate-fade-in-up">
                 {ownerList.map((owner: any, idx: number) => (
-                  <div key={idx} className="bg-white rounded-3xl p-6 shadow-lg shadow-gray-150/40 border border-gray-100">
-                    <div className="flex gap-4">
-                      <div className="w-16 h-16 rounded-full overflow-hidden relative border border-gray-100 flex-shrink-0">
+                  <div key={idx} className="bg-white rounded-[32px] p-8 border border-gray-100/80 shadow-sm shadow-gray-100/30">
+                    <div className="flex items-center gap-4.5">
+                      <div className="w-16 h-16 rounded-3xl overflow-hidden relative border border-gray-100 flex-shrink-0">
                         {owner.avatar_url ? (
                           <img
                             src={getImageUrl(owner.avatar_url)}
@@ -244,7 +319,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                           />
                         ) : (
                           <div 
-                            className="w-full h-full rounded-full flex items-center justify-center"
+                            className="w-full h-full rounded-3xl flex items-center justify-center"
                             style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR }}
                           >
                             <HugeiconsIcon icon={UserIcon} size={20} />
@@ -252,42 +327,25 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                         )}
                       </div>
                       <div className="flex-grow">
-                        <div className="flex items-center gap-1">
-                          <h3 className="font-extrabold text-gray-900 text-base" style={{ fontFamily: FONT_HEADER }}>
+                        <div className="flex items-center gap-1.5">
+                          <h3 className="font-semibold text-gray-950 text-lg" style={{ fontFamily: FONT_HEADER }}>
                             {owner.name}
                           </h3>
-                          <span style={{ color: PRIMARY_COLOR }}>
-                            <HugeiconsIcon icon={CheckmarkCircle02Icon} size={16} />
+                          <span className="text-emerald-500 flex items-center justify-center">
+                            <HugeiconsIcon icon={CheckmarkCircle02Icon} size={18} />
                           </span>
                         </div>
-                        <p className="text-[11px] text-gray-400 font-semibold mb-1">{owner.title}</p>
-                        <div className="flex items-center gap-1">
-                          <span className="text-yellow-400">
-                            <HugeiconsIcon icon={StarIcon} size={14} />
-                          </span>
-                          <span className="text-xs font-bold text-gray-800">{owner.rating || 4.9}</span>
-                          <span className="text-[10px] text-gray-400">({owner.reviews_count || 0} Reviews)</span>
-                        </div>
+                        <p className="text-sm text-gray-400 font-medium mt-0.5">{owner.title}</p>
                       </div>
                     </div>
 
-                    {/* Stats */}
-                    <div className="grid grid-cols-2 gap-2 border-y border-gray-100 py-3.5 my-4.5 text-center">
-                      <div>
-                        <p className="text-base font-black" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>{owner.happy_customers_count || 0}+</p>
-                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Happy Customers</p>
-                      </div>
-                      <div className="border-l border-gray-100">
-                        <p className="text-base font-black" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>{owner.experience_years || 0}+</p>
-                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Years Exp.</p>
-                      </div>
-                    </div>
+                    <div className="border-t border-gray-100/80 my-6" />
 
                     {/* About Biography */}
                     {owner.bio && (
                       <div>
-                        <h4 className="text-sm font-black text-gray-900 mb-1.5" style={{ fontFamily: FONT_HEADER }}>About</h4>
-                        <p className="text-xs text-gray-500 leading-relaxed font-medium">
+                        <h2 className="text-xl font-semibold text-gray-950 mb-3" style={{ fontFamily: FONT_HEADER }}>About</h2>
+                        <p className="text-sm text-gray-500 leading-relaxed font-normal">
                           {owner.bio}
                         </p>
                       </div>
@@ -296,103 +354,135 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                 ))}
               </div>
             )}
-          </div>
 
-          {/* Desktop Only CTA Actions (Relative Flow) */}
-          <div className="hidden md:flex relative h-auto mt-6 px-6 pb-6 items-center justify-between z-10">
-            <button 
-              onClick={() => {
-                setIsProductEnquiry(false);
-                const element = document.getElementById("clientName");
-                if (element) {
-                  element.scrollIntoView({ behavior: "smooth" });
-                  element.focus();
-                }
-              }}
-              className="w-[48%] text-white py-3.5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
-              style={{ backgroundColor: PRIMARY_COLOR, boxShadow: `0 8px 16px ${PRIMARY_COLOR}15` }}
-            >
-              <HugeiconsIcon icon={Message01Icon} size={16} /> Message
-            </button>
-            {contact.phone && (
+            {/* Desktop CTA Actions below profile card */}
+            <div className="hidden md:flex gap-4 px-6 mt-6">
               <button 
                 onClick={() => {
-                  if (slug) trackUniqueAction(slug, TrackAction.Call);
-                  window.location.href = `tel:${contact.phone}`;
+                  setIsProductEnquiry(false);
+                  const element = document.getElementById("clientName");
+                  if (element) {
+                    element.scrollIntoView({ behavior: "smooth" });
+                    element.focus();
+                  }
                 }}
-                className="w-[48%] py-3.5 rounded-2xl font-bold text-sm border flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
-                style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR, borderColor: PRIMARY_BORDER }}
+                className="flex-1 text-white py-3.5 rounded-full font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer shadow-sm"
+                style={{ backgroundColor: PRIMARY_COLOR, boxShadow: `0 8px 16px ${PRIMARY_COLOR}15` }}
               >
-                <HugeiconsIcon icon={CallIcon} size={16} /> Call Now
+                <HugeiconsIcon icon={Message01Icon} size={16} /> Message
               </button>
-            )}
+              {contact.phone && (
+                <button 
+                  onClick={() => {
+                    if (slug) trackUniqueAction(slug, TrackAction.Call);
+                    window.location.href = `tel:${contact.phone}`;
+                  }}
+                  className="flex-1 py-3.5 rounded-full font-bold text-sm border flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
+                  style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR, borderColor: PRIMARY_BORDER }}
+                >
+                  <HugeiconsIcon icon={CallIcon} size={16} /> Call Now
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* ── RIGHT COLUMN: Content Sections ── */}
-        <div className="w-full md:w-[58%] px-6 pt-8 flex flex-col md:overflow-y-auto md:h-full [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-32 md:pb-12">
+
+        {/* ── CONTENT SECTION: Scrollable Body Card ── */}
+        <div className="w-full md:w-[58%] px-6 pt-8 flex flex-col overflow-y-auto md:h-full [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-32 md:pb-12">
+          
+          {/* Mobile Only: About, Video, Stats */}
+          {mainOwner && (
+            <div className="block md:hidden space-y-8">
+              {/* Video/Promo Section (Fallback to first video, or show placeholder if gallery has a video) */}
+              {(data?.youtube_url || gallery.some((item: any) => item.type === "video")) && (
+                <section className="animate-fade-in-up">
+                  <div className="w-full aspect-video rounded-3xl overflow-hidden bg-gray-100 relative group shadow-md">
+                    {data?.youtube_url && getYouTubeId(data.youtube_url) ? (
+                      <iframe
+                        className="w-full h-full border-0"
+                        src={`https://www.youtube.com/embed/${getYouTubeId(data.youtube_url)}`}
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <div className="w-full h-full relative cursor-pointer">
+                        <img 
+                          src={getImageUrl(gallery.find((item: any) => item.type === "video")?.url || gallery[0]?.url) || "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&auto=format&fit=crop&q=60"} 
+                          alt="Intro Video" 
+                          className="w-full h-full object-cover" 
+                        />
+                        <div className="absolute inset-0 bg-black/25 flex items-center justify-center">
+                          <div className="w-14 h-14 rounded-full bg-white/95 flex items-center justify-center shadow-lg text-gray-800 hover:scale-105 transition-transform">
+                            <HugeiconsIcon icon={PlayIcon} size={20} />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </section>
+              )}
+
+              {/* Stats Section */}
+              <section className="grid grid-cols-2 gap-4 py-4 border-t border-gray-100 text-center animate-fade-in-up">
+                <div>
+                  <p className="text-2xl font-semibold" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
+                    {mainOwner.happy_customers_count || 140}+
+                  </p>
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-1">Happy Customers</p>
+                </div>
+                <div className="border-l border-gray-100">
+                  <p className="text-2xl font-semibold" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
+                    {mainOwner.experience_years || 4}+
+                  </p>
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-1">Years Exp.</p>
+                </div>
+              </section>
+            </div>
+          )}
           
           {/* Products or Services Section */}
           {products.length > 0 && (
-            <section className="mt-8 pt-8 border-t border-gray-100 first:mt-0 first:pt-0 first:border-0 animate-fade-in-up animation-delay-100">
+            <section className={`animate-fade-in-up animation-delay-100 ${getSectionClassName("products")}`}>
               <div className="flex justify-between items-center mb-4.5">
-                <h2 className="text-base font-black text-gray-900" style={{ fontFamily: FONT_HEADER }}>
+                <h2 className="text-base font-semibold text-gray-900" style={{ fontFamily: FONT_HEADER }}>
                   Product or Services
                 </h2>
-                <div className="flex items-center gap-1.5">
-                  <button
-                    onClick={() => scrollProducts("left")}
-                    className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 active:scale-95 transition-all cursor-pointer"
-                  >
-                    <HugeiconsIcon icon={ArrowLeft02Icon} size={14} />
-                  </button>
-                  <button
-                    onClick={() => scrollProducts("right")}
-                    className="w-7 h-7 rounded-full text-white flex items-center justify-center active:scale-95 transition-all shadow-md cursor-pointer"
-                    style={{ backgroundColor: PRIMARY_COLOR }}
-                  >
-                    <HugeiconsIcon icon={ArrowRight02Icon} size={14} />
-                  </button>
-                </div>
+                <span className="text-xs font-semibold hover:underline cursor-pointer" style={{ color: PRIMARY_COLOR }}>
+                  See All
+                </span>
               </div>
 
               <div
                 ref={productContainerRef}
-                className="flex gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-2"
+                className="flex gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-2 -mx-6 px-6"
               >
                 {products.map((prod: any, idx: number) => (
                   <div
                     key={idx}
-                    className="w-52 flex-shrink-0 bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 flex flex-col group cursor-pointer hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+                    className="w-56 flex-shrink-0 bg-white rounded-lg overflow-hidden flex flex-col group cursor-pointer hover:-translate-y-1 transition-all duration-300"
                   >
-                    <div className="h-32 relative bg-gray-100">
-                      {(prod.image || prod.imageUrl) && (
-                        <img
-                          src={getImageUrl(prod.image || prod.imageUrl)}
-                          alt={prod.name || prod.title}
-                          className="w-full h-full object-cover"
-                        />
-                      )}
-                      {prod.rating && (
-                        <span className="absolute top-2 right-2 bg-white/90 backdrop-blur-xs text-[9px] font-black px-2 py-0.5 rounded-full flex items-center gap-0.5 shadow-xs">
-                          <span className="text-yellow-400">
-                            <HugeiconsIcon icon={StarIcon} size={10} />
-                          </span>{" "}
-                          {prod.rating}
-                        </span>
-                      )}
-                    </div>
-                    <div className="p-3.5 flex-grow flex flex-col justify-between">
-                      <div>
-                        {prod.type && (
-                          <span 
-                            className="inline-block text-[8px] font-black px-2 py-0.5 rounded-md mb-1.5"
-                            style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR }}
-                          >
-                            {prod.type}
+                      <div className="aspect-[3/3.5] relative bg-gray-100 rounded-lg overflow-hidden">
+                        {(prod.image || prod.imageUrl) && (
+                          <img
+                            src={getImageUrl(prod.image || prod.imageUrl)}
+                            alt={prod.name || prod.title}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
+                        {prod.rating && (
+                          <span className="absolute top-2 right-2 bg-white/90 backdrop-blur-xs text-[9px] font-black px-2 py-0.5 rounded-full flex items-center gap-0.5 shadow-xs">
+                            <span className="text-yellow-400">
+                              <HugeiconsIcon icon={StarIcon} size={10} />
+                            </span>{" "}
+                            {prod.rating}
                           </span>
                         )}
-                        <h3 className="font-extrabold text-gray-900 text-xs tracking-tight line-clamp-1">
+                      </div>
+                    <div className="p-3.5 flex-grow flex flex-col justify-between">
+                      <div>
+                        <h3 className="font-semibold text-gray-900 text-xs tracking-tight line-clamp-1">
                           {prod.name || prod.title}
                         </h3>
                         {prod.description && (
@@ -407,21 +497,18 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                           </div>
                         )}
                       </div>
-                      
                       <div className="mt-auto">
-                        <div className="flex justify-between items-center mb-2">
-                          <p className="text-[11px] font-black text-gray-900">
-                            {prod.price}
+                        <div className="mb-3 flex items-center gap-0.5 text-gray-900">
+                          <HugeiconsIcon icon={RupeeIcon} size={12} className="flex-shrink-0" />
+                          <p className="text-xs font-semibold">
+                            {prod.price ? prod.price.replace(/[₹$]/g, "") : ""}
                           </p>
-                          <span className="text-gray-400 hover:text-red-500 transition-colors">
-                            <HugeiconsIcon icon={FavouriteIcon} size={14} />
-                          </span>
                         </div>
                         <button 
-                          className="w-full text-white py-2 rounded-2xl font-bold text-[10px] uppercase tracking-wider active:scale-95 transition-all shadow-sm"
-                          style={{ backgroundColor: PRIMARY_COLOR }}
+                          className="w-full bg-transparent hover:bg-gray-50 text-xs py-2 rounded-full font-bold active:scale-95 transition-all border text-center"
+                          style={{ borderColor: PRIMARY_COLOR, color: PRIMARY_COLOR }}
                         >
-                          {prod.buttonName || "Enquire"}
+                          {prod.buttonName || "Enquiry"}
                         </button>
                       </div>
                     </div>
@@ -432,37 +519,14 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           )}
 
           {/* Gallery Section */}
-          {gallery.length > 0 && (
-            <section className="mt-8 pt-8 border-t border-gray-100 first:mt-0 first:pt-0 first:border-0 animate-fade-in-up animation-delay-200">
-              <div className="flex justify-between items-center mb-4.5">
-                <h2 className="text-base font-black text-gray-900" style={{ fontFamily: FONT_HEADER }}>Gallery</h2>
-              </div>
-
-              <div className="grid grid-cols-3 gap-3">
-                {gallery.map((item: any, idx: number) => (
-                  <div key={idx} className="aspect-square rounded-2xl overflow-hidden bg-gray-100 hover:shadow-md relative group transition-shadow cursor-pointer">
-                    <img src={getImageUrl(item.url)} alt={`Gallery ${idx}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                    {item.type === "video" && (
-                      <div className="absolute inset-0 bg-black/25 flex items-center justify-center">
-                        <div className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center shadow-md text-gray-800">
-                          <HugeiconsIcon icon={PlayIcon} size={14} />
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-
           {/* Testimonials Section */}
           {testimonials.length > 0 && (
-            <section className="mt-8 pt-8 border-t border-gray-100 first:mt-0 first:pt-0 first:border-0 text-center flex flex-col items-center animate-fade-in-up animation-delay-300">
-              <h2 className="text-xl font-black text-gray-900 mb-2" style={{ fontFamily: FONT_HEADER }}>
-                What do they <span className="text-orange-500">say?</span>
+            <section className={`text-center flex flex-col items-center animate-fade-in-up animation-delay-300 ${getSectionClassName("testimonials")}`}>
+              <h2 className="text-base font-semibold text-gray-900 mb-1" style={{ fontFamily: FONT_HEADER }}>
+                What our happy client says
               </h2>
               <p className="text-[11px] text-gray-400 font-semibold max-w-[250px] leading-relaxed mb-8">
-                This is an honest review from members who have joined us
+                This is an honest review from members
               </p>
 
               {/* Testimonial Active Display */}
@@ -476,16 +540,19 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                 </div>
                 
                 {/* Stars */}
-                <div className="flex gap-0.5 mb-3 text-yellow-400">
+                <div className="flex gap-0.5 mb-3 text-yellow-450">
                   {Array.from({ length: testimonials[activeTestimonial].rating || 5 }).map((_: any, idx: number) => (
                     <HugeiconsIcon key={idx} icon={StarIcon} size={14} />
                   ))}
                 </div>
 
-                <h3 className="font-extrabold text-gray-900 text-sm mb-2">{testimonials[activeTestimonial].name}</h3>
-                <p className="text-xs text-gray-500 leading-relaxed max-w-[300px] mb-8 font-medium italic min-h-[48px]">
+                <h3 className="font-semibold text-gray-900 text-sm mb-2">{testimonials[activeTestimonial].name}</h3>
+                <p className="text-xs text-gray-500 leading-relaxed max-w-[300px] mb-6 font-medium italic min-h-[48px]">
                   &ldquo;{testimonials[activeTestimonial].comment}&rdquo;
                 </p>
+
+                {/* Divider line under comment */}
+                <div className="w-24 border-t-2 mb-6" style={{ borderColor: PRIMARY_COLOR }} />
 
                 {/* Navigation buttons */}
                 {testimonials.length > 1 && (
@@ -509,10 +576,46 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
             </section>
           )}
 
+          {/* Gallery Section */}
+          {gallery.length > 0 && (
+            <section className={`animate-fade-in-up animation-delay-200 ${getSectionClassName("gallery")}`}>
+              <div className="flex justify-between items-center mb-4.5">
+                <h2 className="text-base font-semibold text-gray-900" style={{ fontFamily: FONT_HEADER }}>Gallery</h2>
+                <span className="text-xs font-semibold hover:underline cursor-pointer" style={{ color: PRIMARY_COLOR }}>
+                  See All
+                </span>
+              </div>
+
+              <div className="columns-2 md:columns-3 gap-3 [column-fill:balance] space-y-3">
+                {gallery.slice(0, 7).map((item: any, idx: number) => {
+                  const isLast = idx === 6 && gallery.length > 7;
+                  return (
+                    <div 
+                      key={idx} 
+                      onClick={() => setActiveImageIndex(idx)}
+                      className="break-inside-avoid mb-3 rounded-2xl overflow-hidden bg-gray-100 hover:shadow-md relative group transition-shadow cursor-pointer"
+                    >
+                      <img 
+                        src={getImageUrl(item.url)} 
+                        alt={`Gallery ${idx}`} 
+                        className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500 rounded-2xl" 
+                      />
+                      {isLast && (
+                        <div className="absolute inset-0 bg-black/55 flex items-center justify-center text-white font-bold text-lg select-none animate-fade-in">
+                          +{(gallery.length - 6).toString().padStart(2, '0')}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
           {/* Social Links Section */}
           {(socialLinks.instagram || socialLinks.facebook || socialLinks.youtube || socialLinks.twitter) && (
-            <section className="mt-8 pt-8 border-t border-gray-100 first:mt-0 first:pt-0 first:border-0 animate-fade-in-up animation-delay-400">
-              <h2 className="text-base font-black text-gray-900 mb-4.5" style={{ fontFamily: FONT_HEADER }}>
+            <section className={`animate-fade-in-up animation-delay-400 ${getSectionClassName("social")}`}>
+              <h2 className="text-base font-semibold text-gray-900 mb-4.5" style={{ fontFamily: FONT_HEADER }}>
                 Social Links
               </h2>
               
@@ -557,16 +660,15 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           )}
 
           {/* Enquiry Form */}
-          <section className="mt-8 pt-8 border-t border-gray-100 first:mt-0 first:pt-0 first:border-0 animate-fade-in-up animation-delay-500">
-            <div className="bg-gray-50 rounded-3xl p-6">
-              <h2 className="text-base font-black text-gray-900 mb-1" style={{ fontFamily: FONT_HEADER }}>
+          <section className={`animate-fade-in-up animation-delay-500 ${getSectionClassName("enquiry")}`}>
+            <div className="bg-white rounded-[32px] p-8 border border-gray-100/80 shadow-sm shadow-gray-100/30">
+              <h2 className="text-2xl font-bold text-gray-950 mb-6" style={{ fontFamily: FONT_HEADER }}>
                 Send an Enquiry
               </h2>
-              <p className="text-[11px] text-gray-400 font-semibold mb-4">Have questions? Fill out the details below to contact us.</p>
               
-              <form onSubmit={handleEnquirySubmit} className="space-y-4">
+              <form onSubmit={handleEnquirySubmit} className="space-y-5">
                 <div>
-                  <label htmlFor="clientName" className="block text-[10px] font-black text-gray-600 uppercase tracking-wider mb-1">
+                  <label htmlFor="clientName" className="block text-sm font-semibold text-gray-950 mb-2">
                     Full Name
                   </label>
                   <input
@@ -575,53 +677,53 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Enter your name"
-                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all"
+                    className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all"
                     required
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="clientPhone" className="block text-[10px] font-black text-gray-600 uppercase tracking-wider mb-1">
-                    Phone Number
+                  <label htmlFor="clientPhone" className="block text-sm font-semibold text-gray-950 mb-2">
+                    Mobile Number
                   </label>
                   <input
                     type="tel"
                     id="clientPhone"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="Enter your mobile number"
-                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all"
+                    placeholder="Mobile Number"
+                    className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all"
                     required
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="clientMessage" className="block text-[10px] font-black text-gray-600 uppercase tracking-wider mb-1">
-                    Message (Optional)
+                  <label htmlFor="clientMessage" className="block text-sm font-semibold text-gray-950 mb-2">
+                    Message
                   </label>
                   <textarea
                     id="clientMessage"
-                    rows={3}
+                    rows={4}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Enter your message"
-                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all resize-none"
+                    placeholder=""
+                    className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all resize-none"
                   />
                 </div>
 
                 {submitStatus === "success" && (
-                  <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs px-4 py-3 rounded-xl font-semibold">
+                  <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs px-4 py-3 rounded-lg font-semibold animate-fade-in">
                     Enquiry submitted successfully! We will contact you soon.
                   </div>
                 )}
 
                 {submitStatus === "error" && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 text-xs px-4 py-3 rounded-xl font-semibold">
+                  <div className="bg-red-50 border border-red-200 text-red-700 text-xs px-4 py-3 rounded-lg font-semibold animate-fade-in">
                     {errorMessage}
                   </div>
                 )}
 
-                <div className="flex gap-3">
+                <div className="flex gap-4 pt-2">
                   <button
                     type="button"
                     onClick={() => {
@@ -629,27 +731,58 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                       setSubmitStatus("idle");
                       setErrorMessage("");
                     }}
-                    className="w-[30%] bg-transparent hover:bg-gray-100 text-gray-500 py-3.5 rounded-2xl font-bold text-xs border border-gray-200 active:scale-[0.98] transition-all cursor-pointer text-center"
+                    className="flex-1 bg-slate-50 hover:bg-slate-100 text-gray-950 py-3.5 rounded-full font-bold text-sm active:scale-[0.98] transition-all cursor-pointer text-center"
                   >
                     Reset
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-[70%] text-white py-3.5 rounded-2xl font-bold text-xs active:scale-[0.98] transition-all cursor-pointer"
-                    style={{ backgroundColor: PRIMARY_COLOR, boxShadow: `0 8px 16px ${PRIMARY_COLOR}10` }}
+                    className="flex-1 text-white py-3.5 rounded-full font-bold text-sm active:scale-[0.98] transition-all cursor-pointer"
+                    style={{ backgroundColor: PRIMARY_COLOR }}
                   >
-                    {isSubmitting ? "Submitting..." : "Submit Enquiry"}
+                    {isSubmitting ? "Submitting..." : "Submit"}
                   </button>
                 </div>
               </form>
             </div>
           </section>
 
+          {/* Location Section */}
+          {contact.maps_link && (
+            <section className={`animate-fade-in-up ${getSectionClassName("location")}`}>
+              <div className="bg-white rounded-[32px] p-8 border border-gray-100/80 shadow-sm shadow-gray-100/30">
+                <h2 className="text-base font-semibold text-gray-900 mb-1.5" style={{ fontFamily: FONT_HEADER }}>
+                  Our Location
+                </h2>
+                <p className="text-xs text-gray-500 font-semibold mb-4 leading-relaxed">
+                  {contact.address || "Find us on the map below for directions and visiting hours."}
+                </p>
+                <a 
+                  href={contact.maps_link} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block w-full h-44 rounded-2xl overflow-hidden relative border border-gray-100 group active:scale-[0.99] transition-all shadow-xs"
+                >
+                  <img 
+                    src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&auto=format&fit=crop&q=60" 
+                    alt="Map Location" 
+                    className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500" 
+                  />
+                  <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
+                    <div className="bg-white/95 backdrop-blur-xs text-gray-800 text-[10px] font-black uppercase tracking-wider px-4 py-2.5 rounded-full shadow-md flex items-center gap-1.5 group-hover:bg-white transition-colors">
+                      <HugeiconsIcon icon={Location01Icon} size={12} style={{ color: PRIMARY_COLOR }} /> View on Google Maps
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </section>
+          )}
+
       </div>
 
-      {/* Mobile Only CTA Actions (Fixed at absolute bottom of phone screen viewport, Z-50) */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 h-20 bg-white/95 backdrop-blur-md border-t border-gray-100 flex items-center justify-between px-6 pb-2 z-50">
+      {/* Floating CTA Actions (Fixed at absolute bottom of phone screen viewport, Z-50, hidden on desktop) */}
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] h-20 bg-white/95 backdrop-blur-md border-t border-gray-100 flex items-center justify-between px-6 pb-2 z-50 md:hidden">
         <button 
           onClick={() => {
             setIsProductEnquiry(false);
@@ -659,7 +792,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
               element.focus();
             }
           }}
-          className="w-[48%] text-white py-3 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
+          className="w-[48%] text-white py-3 rounded-full font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
           style={{ backgroundColor: PRIMARY_COLOR, boxShadow: `0 8px 16px ${PRIMARY_COLOR}15` }}
         >
           <HugeiconsIcon icon={Message01Icon} size={16} /> Message
@@ -670,14 +803,59 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
               if (slug) trackUniqueAction(slug, TrackAction.Call);
               window.location.href = `tel:${contact.phone}`;
             }}
-            className="w-[48%] py-3 rounded-2xl font-bold text-sm border flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
+            className="w-[48%] py-3 rounded-full font-bold text-sm border flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"
             style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR, borderColor: PRIMARY_BORDER }}
           >
             <HugeiconsIcon icon={CallIcon} size={16} /> Call Now
           </button>
         )}
       </div>
+
+      {/* Lightbox Modal */}
+      {activeImageIndex !== null && (
+        <div className="fixed inset-0 z-[9999] bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-md animate-fade-in">
+          {/* Close button */}
+          <button
+            onClick={() => setActiveImageIndex(null)}
+            className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors p-2.5 cursor-pointer z-50 bg-black/40 rounded-full active:scale-95"
+          >
+            <HugeiconsIcon icon={Cancel01Icon} size={22} />
+          </button>
+
+          {/* Navigation Controls & Main Image */}
+          <div className="relative w-full max-w-4xl aspect-video md:aspect-[16/10] flex items-center justify-center">
+            {/* Prev button */}
+            <button
+              onClick={() => setActiveImageIndex((prev) => (prev === null || prev === 0 ? gallery.length - 1 : prev - 1))}
+              className="absolute left-2 md:left-4 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white flex items-center justify-center active:scale-95 transition-all cursor-pointer"
+            >
+              <HugeiconsIcon icon={ArrowLeft02Icon} size={20} />
+            </button>
+
+            {/* Main Image */}
+            <img
+              src={getImageUrl(gallery[activeImageIndex].url)}
+              alt={`Gallery Full View ${activeImageIndex}`}
+              className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl animate-fade-in-up"
+            />
+
+            {/* Next button */}
+            <button
+              onClick={() => setActiveImageIndex((prev) => (prev === null || prev === gallery.length - 1 ? 0 : prev + 1))}
+              className="absolute right-2 md:right-4 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white flex items-center justify-center active:scale-95 transition-all cursor-pointer"
+            >
+              <HugeiconsIcon icon={ArrowRight02Icon} size={20} />
+            </button>
+          </div>
+
+          {/* Indicator text */}
+          <p className="text-white/60 text-xs font-semibold mt-4">
+            {activeImageIndex + 1} / {gallery.length}
+          </p>
+        </div>
+      )}
+
     </div>
   </div>
-);
+  );
 }
