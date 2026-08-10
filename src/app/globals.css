@@ -3,7 +3,7 @@
 @theme {
   --font-sans: var(--font-inter);
 
-  /* Brand Primary Accents */
+  /* Brand Primary Accents (Synced with Flutter App Theme) */
   --color-brand-lighter: #EDEAFC;
   --color-brand-light: #A59DEE;
   --color-brand-main: #7265E3;
@@ -84,9 +84,9 @@
 /* ─── Contextual Utility Variables ─── */
 @layer base {
   :root {
-    --bg-default: var(--color-grey-100);
+    --bg-default: #ffffff;
     --bg-paper: #ffffff;
-    --bg-neutral: var(--color-grey-200);
+    --bg-neutral: var(--color-grey-100);
 
     --text-primary: var(--color-grey-800);
     --text-secondary: var(--color-grey-600);
@@ -202,4 +202,27 @@ input[type=number] {
 .no-scrollbar {
   -ms-overflow-style: none !important;
   scrollbar-width: none !important;
+}
+
+/* Continuous Vertical Auto-Scroll Loop for the Active Center Card */
+@keyframes verticalScrollLoop {
+  0% {
+    transform: translateY(0%);
+  }
+  45% {
+    transform: translateY(calc(-100% + 460px));
+  }
+  50% {
+    transform: translateY(calc(-100% + 460px));
+  }
+  95% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.animate-vertical-scroll {
+  animation: verticalScrollLoop 15s ease-in-out infinite;
 }

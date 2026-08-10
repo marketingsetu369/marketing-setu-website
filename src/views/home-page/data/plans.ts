@@ -20,22 +20,32 @@ export const pricingPlans: PricingPlan[] = [
     id: "quick-connect",
     badge: "🌿 Starter · Setu Connect",
     name: "Quick Connect",
-    description: "Perfect for small businesses just getting started with a digital presence.",
+    description: "Perfect for small businesses starting with a smart digital card.",
     price: "₹1,999",
     whatsappMessage: "Hi MarketingSetu! I'd like to start with the Quick Connect (₹1,999) plan.",
     features: [
       {
         bold: "Digital Business Card",
-        desc: "A smart digital card to share your business info instantly."
+        desc: "Smart digital card to share your business details instantly."
       },
       {
-        bold: "Auto SMS on Missed Call",
-        desc: "Never lose a lead — auto-reply via text when you miss a call."
+        bold: "Header & Brand Details",
+        desc: "Logo, business name, category, and custom URL slug."
+      },
+      {
+        bold: "Contact & Map Links",
+        desc: "Direct phone, WhatsApp messaging, email, and Google Maps location."
+      },
+      {
+        bold: "Owner & Partner Profile",
+        desc: "Display business owners, partners, and team members."
       }
     ],
     compactFeatures: [
       { bold: "Digital Business Card" },
-      { bold: "Auto SMS on Missed Call" }
+      { bold: "Header & Brand Details" },
+      { bold: "Contact & Map Links" },
+      { bold: "Owner & Partner Profile" }
     ]
   },
   {
@@ -43,54 +53,62 @@ export const pricingPlans: PricingPlan[] = [
     badge: "🚀 Growth · Setu Bridge",
     featured: true,
     name: "Smart Connect",
-    description: "Ideal for growing businesses ready to build a brand online.",
+    description: "Ideal for growing businesses expanding their digital showcase.",
     price: "₹5,999",
     whatsappMessage: "Hi MarketingSetu! I'd like to start with the Smart Connect (₹5,999) plan.",
     features: [
-      { bold: "Digital Business Card" },
-      { bold: "Auto SMS on Missed Call" },
+      { bold: "Everything in Quick Connect" },
       {
-        bold: "Auto WhatsApp on Missed Call",
-        desc: "Instantly send a WhatsApp message when someone calls you."
+        bold: "Social Links Showcase",
+        desc: "Connect your Instagram, Facebook, and social profiles."
       },
       {
-        bold: "Custom Landing Page",
-        desc: "A stunning page built to attract and convert customers."
+        bold: "Products & Services Catalog",
+        desc: "Add your items, pricing, photos, and item details."
       },
       {
-        bold: "Festival Social Media Posts",
-        desc: "Eye-catching branded posts for every festival."
+        bold: "Photo Gallery Showcase",
+        desc: "Upload business showcase photos to build trust."
+      },
+      {
+        bold: "Customer Reviews & Testimonials",
+        desc: "Highlight customer comments and ratings."
       }
     ],
     compactFeatures: [
-      { bold: "Everything in Starter" },
-      { bold: "Auto WhatsApp on Missed Call" },
-      { bold: "Custom Landing Page" },
-      { bold: "Festival Social Media Posts" }
+      { bold: "Everything in Quick Connect" },
+      { bold: "Products & Services Catalog" },
+      { bold: "Photo Gallery Showcase" },
+      { bold: "Customer Reviews & Testimonials" }
     ]
   },
   {
     id: "power-connect",
     badge: "👑 Pro · Setu Summit",
     name: "Power Connect",
-    description: "For businesses serious about dominating their market online.",
+    description: "Full suite for businesses looking to scale their digital presence.",
     price: "₹9,999",
     whatsappMessage: "Hi MarketingSetu! I'd like to start with the Power Connect (₹9,999) plan.",
     features: [
       { bold: "Everything in Smart Connect" },
       {
-        bold: "Custom Landing Page + Domain",
-        desc: "A professional website on your own domain name."
+        bold: "Auto SMS & WhatsApp Automation",
+        desc: "Automated instant customer responses and missed-call follow ups."
       },
       {
-        bold: "Google Business Setup",
-        desc: "Get found on Google Maps with an optimised profile."
+        bold: "Custom Landing Page & Domain",
+        desc: "Dedicated campaign page connected to your custom brand domain."
+      },
+      {
+        bold: "Google Business Optimisation",
+        desc: "Optimised Google Maps profile setup for local search ranking."
       }
     ],
     compactFeatures: [
-      { bold: "Everything in Growth" },
-      { bold: "Landing Page + Custom Domain" },
-      { bold: "Google Business Setup" }
+      { bold: "Everything in Smart Connect" },
+      { bold: "Auto SMS & WhatsApp Automation" },
+      { bold: "Custom Landing Page & Domain" },
+      { bold: "Google Business Optimisation" }
     ]
   }
 ];

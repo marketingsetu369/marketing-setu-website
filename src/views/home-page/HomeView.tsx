@@ -1,14 +1,140 @@
 "use client";
 
 import { useThemeStore } from "@/store/themeStore";
-import { useWhatsApp, PageWrapper, PricingCard } from "@/views/home-page/component";
-import { translations, pricingPlans } from "@/views/home-page/data";
+import { PageWrapper, PricingCard, useWhatsApp } from "@/views/home-page/component";
+import { pricingPlans, translations } from "@/views/home-page/data";
+import CafeCardView from "@/views/home-page/hero-section/CafeCardView";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function HomeView() {
   const { openWhatsApp } = useWhatsApp();
   const { language } = useThemeStore();
   const t = translations[language] || translations.en;
+  const [activeCardIndex, setActiveCardIndex] = useState(2);
+
+  const carouselCards = [
+    {
+      id: "card-1",
+      layoutType: "cafe-artisan",
+      title: "Artisan Brew Cafe",
+      category: "Cafe & Roastery",
+      avatar: "☕",
+      tagline: "Freshly Roasted Organic Coffee",
+      bgClass: "bg-gradient-to-br from-amber-950 via-stone-900 to-amber-950",
+      owner: "Kabir Mehta",
+      role: "Head Barista & Owner",
+      about: "Handcrafted espresso, artisan pastries, specialty cold brews, and cozy workspace ambiance.",
+      stat1: "4.9 ★",
+      stat1Label: "Coffee Rating",
+      stat2: "15k+",
+      stat2Label: "Cups Served",
+      services: [
+        { icon: "☕", name: "Specialty Hazelnut Latte", price: "₹240" },
+        { icon: "🥐", name: "Fresh Almond Croissant", price: "₹180" }
+      ]
+    },
+    {
+      id: "card-2",
+      layoutType: "solar-tech",
+      title: "SunPower Solar Systems",
+      category: "Solar Energy Seller",
+      avatar: "☀️",
+      tagline: "Zero Electricity Bill Guarantee",
+      bgClass: "bg-gradient-to-br from-cyan-950 via-teal-900 to-slate-950",
+      owner: "Siddharth Verma",
+      role: "Solar Consultant & Owner",
+      about: "Turnkey residential and commercial rooftop solar installations with subsidy guidance and net metering.",
+      stat1: "3.2 MW",
+      stat1Label: "Solar Installed",
+      stat2: "850+",
+      stat2Label: "Rooftops Powered",
+      services: [
+        { icon: "⚡", name: "3kW Home Solar Plant", price: "₹1,40,000" },
+        { icon: "🔋", name: "5kW Hybrid Battery System", price: "₹2,25,000" }
+      ]
+    },
+    {
+      id: "card-3",
+      layoutType: "parlour-beauty",
+      title: "Glow & Style Beauty Parlour",
+      category: "Beauty Parlour & Salon",
+      avatar: "💅",
+      tagline: "Radiant Skin & Modern Hair Styling",
+      bgClass: "bg-gradient-to-br from-rose-950 via-pink-900 to-slate-950",
+      owner: "Neha Kapoor",
+      role: "Senior Beauty Artist",
+      about: "Bridal makeup, organic facial treatments, hair spa, nail art, and luxury skin care rejuvenation.",
+      stat1: "1,400+",
+      stat1Label: "Happy Brides",
+      stat2: "10 Yrs",
+      stat2Label: "Salon Exp.",
+      services: [
+        { icon: "💄", name: "HD Bridal Makeup", price: "₹12,500" },
+        { icon: "✨", name: "Gold Hydra Glow Facial", price: "₹2,499" }
+      ]
+    },
+    {
+      id: "card-4",
+      layoutType: "two-wheeler-broker",
+      title: "SpeedyWheels Bike Broker",
+      category: "Two-Wheeler Deals & Insurance",
+      avatar: "🏍️",
+      tagline: "Best Deals on Pre-Owned & New Bikes",
+      bgClass: "bg-gradient-to-br from-red-950 via-orange-900 to-slate-950",
+      owner: "Vikram Rathore",
+      role: "Automotive Broker",
+      about: "Instant buy, sell, loan approval, RTO transfer, and 1-year warranty on verified pre-owned two-wheelers.",
+      stat1: "2,100+",
+      stat1Label: "Bikes Delivered",
+      stat2: "100%",
+      stat2Label: "Verified RTO",
+      services: [
+        { icon: "🛵", name: "RTO Transfer & RC Renewal", price: "₹1,800" },
+        { icon: "📑", name: "Instant Bike Insurance", price: "₹1,200" }
+      ]
+    },
+    {
+      id: "card-5",
+      layoutType: "personal-portfolio",
+      title: "Rohan Das Portfolio",
+      category: "UI/UX Designer & Creator",
+      avatar: "👨‍💻",
+      tagline: "Crafting Digital Experiences",
+      bgClass: "bg-gradient-to-br from-purple-950 via-indigo-900 to-slate-950",
+      owner: "Rohan Das",
+      role: "Lead Product Designer",
+      about: "Specialized in web application design, mobile UI design systems, interactive prototypes, and design audit.",
+      stat1: "60+",
+      stat1Label: "Apps Shipped",
+      stat2: "7 Yrs",
+      stat2Label: "UX Design",
+      services: [
+        { icon: "🎨", name: "Full App Redesign", price: "₹35,000" },
+        { icon: "📱", name: "Figma UI Kit Design", price: "₹18,000" }
+      ]
+    },
+    {
+      id: "card-6",
+      layoutType: "default-marketing-setu",
+      title: "MarketingSetu Smart Card",
+      category: "Default Digital Business Card",
+      avatar: "🚀",
+      tagline: "Original Smart Business Page",
+      bgClass: "bg-gradient-to-br from-blue-950 via-indigo-900 to-slate-950",
+      owner: "Dhananjay L.",
+      role: "Founder & MarketingSetu",
+      about: "Share your professional identity, products, contact links, and business details with one smart link.",
+      stat1: "10,000+",
+      stat1Label: "Cards Created",
+      stat2: "#1",
+      stat2Label: "India Platform",
+      services: [
+        { icon: "💳", name: "NFC Smart Business Card", price: "₹999" },
+        { icon: "📲", name: "WhatsApp Auto Lead Capture", price: "₹1,999" }
+      ]
+    }
+  ];
 
   const getTranslatedPlans = () => {
     return pricingPlans.map((plan) => {
@@ -74,229 +200,633 @@ export default function HomeView() {
 
   return (
     <PageWrapper>
-      <div className="font-sans text-brand-dark bg-white">
-        {/* BEGIN: Hero Section */}
-        <section className="pt-32 pb-20 relative overflow-hidden bg-white">
-          {/* Decorative subtle grid background */}
-          <div className="absolute inset-0 z-0 opacity-20" style={{ backgroundImage: "radial-gradient(#e5e7eb 1px, transparent 1px)", backgroundSize: "32px 32px" }}></div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-              {/* Text Content */}
-              <div className="max-w-2xl">
-                {/* Eyebrow Badge — matches original HTML */}
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-sm font-semibold mb-6">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                  {t.home_hero_eyebrow}
-                </div>
-
-                {/* Main Heading */}
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight mb-6">
-                  {t.home_hero_title_1}<br />
-                  <span className="text-gradient">{t.home_hero_title_gradient}</span>
-                </h1>
-
-                {/* Subtext Description */}
-                <p className="text-lg text-brand-gray mb-8 max-w-lg leading-relaxed">
-                  {t.home_hero_lead}
-                </p>
-
-                {/* CTA Buttons */}
-                <div className="flex flex-wrap gap-4">
-                  <button
-                    onClick={() => openWhatsApp()}
-                    className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full font-medium transition-colors flex items-center gap-2 cursor-pointer"
-                  >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-                    </svg>
-                    {t.btn_whatsapp_chat}
-                  </button>
-                  <Link
-                    href="/services"
-                    className="bg-gray-100 hover:bg-gray-200 text-brand-dark px-8 py-4 rounded-full font-medium transition-colors"
-                  >
-                    {t.nav_explore_services}
-                  </Link>
-                </div>
-              </div>
-
-              {/* Graphic */}
-              <div className="relative lg:ml-auto w-full max-w-lg">
-                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 relative z-10">
-                  <div className="flex items-center justify-between mb-8">
-                    <div className="text-xs font-semibold text-gray-400 tracking-wider uppercase">Setu - Your Bridge to Customers</div>
-                  </div>
-                  <div className="relative h-40 mb-6">
-                    <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 400 150">
-                      <path d="M20,120 Q200,20 380,120" fill="none" stroke="#e5e7eb" strokeDasharray="8 8" strokeWidth="4" />
-                      <path d="M20,120 Q200,20 380,120" fill="none" stroke="url(#gradient)" strokeWidth="4">
-                        <animate attributeName="stroke-dasharray" dur="3s" repeatCount="indefinite" values="0,1000;1000,0" />
-                      </path>
-                      <defs>
-                        <linearGradient id="gradient" x1="0%" x2="100%" y1="0%" y2="0%">
-                          <stop offset="0%" stopColor="#7265E3" />
-                          <stop offset="100%" stopColor="#20B2AA" />
-                        </linearGradient>
-                      </defs>
-                    </svg>
-                    <div className="absolute bottom-4 left-4 w-6 h-6 bg-brand-purple rounded-full border-4 border-white shadow-md flex items-center justify-center">
-                      <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
-                    </div>
-                    <div className="absolute bottom-4 right-4 w-6 h-6 bg-brand-teal rounded-full border-4 border-white shadow-md flex items-center justify-center">
-                      <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center text-sm font-medium">
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-                      </svg>
-                      {t.home_hero_stat_4}
-                    </div>
-                  </div>
-                  <div className="absolute -top-4 -right-4 bg-white px-4 py-2 rounded-full shadow-lg border border-gray-100 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="text-sm font-bold text-gray-800">{t.home_hero_stat_3}</span>
-                  </div>
-                </div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-r from-brand-purple/20 to-brand-teal/20 blur-3xl -z-10 rounded-full"></div>
-              </div>
+      <div className="font-sans text-primary bg-background">
+        {/* HERO SECTION */}
+        <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-background">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            {/* Top Rating Badge */}
+            <div className="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-full bg-paper border border-outline text-xs sm:text-sm font-medium text-secondary mb-8 shadow-z1">
+              <span className="bg-brand-dark text-white px-2 py-0.5 rounded-full text-[11px] font-semibold">#1 Platform</span>
+              <span>Digital Marketing & Smart Card Software</span>
+              <span className="text-disabled hidden sm:inline">•</span>
+              <span className="text-primary font-semibold hidden sm:flex items-center gap-1">
+                4.9 
+                <svg className="w-3.5 h-3.5 text-warning-main fill-current" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+              </span>
             </div>
 
-            {/* Stats Bar — below full grid, matches original HTML */}
-            <div className="mt-20 pt-10 border-t border-gray-100 grid grid-cols-2 md:grid-cols-4 gap-8">
-              <div>
-                <div className="text-4xl font-heading font-bold text-brand-purple mb-2">500+</div>
-                <div className="text-sm text-gray-500">{t.home_hero_stat_1}</div>
+            {/* Main Headline */}
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-primary max-w-4xl mx-auto leading-[1.1] mb-6">
+              Digital Business Card<br />
+              <span className="text-brand-main font-medium">The Original. The Best.</span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-lg sm:text-xl text-secondary max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+              Share your professional identity, products, contact links, and business details with one smart link — complete with automated WhatsApp & missed call customer connection.
+            </p>
+
+            {/* CTA Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+              <button
+                onClick={() => openWhatsApp()}
+                className="w-full sm:w-auto px-8 py-4 bg-brand-main hover:bg-brand-dark text-white font-semibold text-base rounded-xl shadow-z8 hover:shadow-z16 transition-all ease-out flex items-center justify-center gap-2 cursor-pointer"
+              >
+                Create Digital Business Card
+              </button>
+              <Link
+                href="/services"
+                className="w-full sm:w-auto px-8 py-4 bg-paper hover:bg-neutral text-primary font-semibold text-base rounded-xl transition-all border border-outline text-center"
+              >
+                {t.nav_explore_services}
+              </Link>
+            </div>
+
+            {/* Stateful 3D Coverflow Interactive Carousel */}
+            <div className="relative max-w-7xl mx-auto pt-6 pb-8 px-4 overflow-hidden">
+              
+              {/* Active Category Name Title Above Slider */}
+              <div className="text-center mb-6 transition-all duration-300">
+                <span className="inline-block px-3 py-1 rounded-full bg-brand-lighter text-brand-dark font-bold text-xs uppercase tracking-wider mb-2 border border-brand-light/40 shadow-xs">
+                  {carouselCards[activeCardIndex].category}
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+                  {carouselCards[activeCardIndex].title}
+                </h3>
               </div>
-              <div>
-                <div className="text-4xl font-heading font-bold text-brand-purple mb-2">98%</div>
-                <div className="text-sm text-gray-500">{t.home_hero_stat_2}</div>
+
+              {/* Coverflow Carousel Outer Stage */}
+              <div className="relative flex items-center justify-center min-h-[540px] py-4">
+                
+                {/* Left Carousel Circular Arrow Button */}
+                <button
+                  onClick={() => setActiveCardIndex((prev) => (prev > 0 ? prev - 1 : carouselCards.length - 1))}
+                  className="absolute left-2 sm:left-8 z-40 w-12 h-12 rounded-full bg-white text-emerald-600 shadow-xl border border-gray-100 flex items-center justify-center text-xl font-bold hover:scale-110 active:scale-95 transition-all cursor-pointer"
+                  aria-label="Previous Slide"
+                >
+                  &larr;
+                </button>
+
+                {/* Right Carousel Circular Arrow Button */}
+                <button
+                  onClick={() => setActiveCardIndex((prev) => (prev < carouselCards.length - 1 ? prev + 1 : 0))}
+                  className="absolute right-2 sm:right-8 z-40 w-12 h-12 rounded-full bg-white text-emerald-600 shadow-xl border border-gray-100 flex items-center justify-center text-xl font-bold hover:scale-110 active:scale-95 transition-all cursor-pointer"
+                  aria-label="Next Slide"
+                >
+                  &rarr;
+                </button>
+
+                {/* 3D Stack Deck Cards */}
+                <div className="relative w-full max-w-5xl h-[500px] flex items-center justify-center perspective-[1000px]">
+                  {carouselCards.map((card, idx) => {
+                    const N = carouselCards.length;
+                    // Calculate circular shortest distance offset
+                    let rawOffset = idx - activeCardIndex;
+                    let offset = ((rawOffset % N) + N) % N;
+                    if (offset > N / 2) {
+                      offset -= N;
+                    }
+
+                    const absOffset = Math.abs(offset);
+                    const isActive = offset === 0;
+
+                    // Compute 3D coverflow transforms based on shortest circular offset
+                    let transformStyle = "";
+                    let zIndex = 30 - absOffset * 5;
+                    let opacity = 1;
+
+                    if (isActive) {
+                      transformStyle = "translateX(0%) scale(1) translateZ(0px) rotateY(0deg)";
+                      opacity = 1;
+                    } else if (offset === -1) {
+                      transformStyle = "translateX(-65%) scale(0.85) translateZ(-60px) rotateY(12deg)";
+                      opacity = 0.85;
+                    } else if (offset === 1) {
+                      transformStyle = "translateX(65%) scale(0.85) translateZ(-60px) rotateY(-12deg)";
+                      opacity = 0.85;
+                    } else if (offset === -2) {
+                      transformStyle = "translateX(-115%) scale(0.7) translateZ(-120px) rotateY(20deg)";
+                      opacity = 0.6;
+                    } else if (offset === 2) {
+                      transformStyle = "translateX(115%) scale(0.7) translateZ(-120px) rotateY(-20deg)";
+                      opacity = 0.6;
+                    } else {
+                      transformStyle = `translateX(${offset * 75}%) scale(0.5) translateZ(-200px)`;
+                      opacity = 0;
+                    }
+
+                    return (
+                      <div
+                        key={card.id}
+                        onClick={() => setActiveCardIndex(idx)}
+                        style={{
+                          transform: transformStyle,
+                          zIndex: zIndex,
+                          opacity: opacity,
+                        }}
+                        className={`absolute w-[265px] sm:w-[285px] h-[490px] rounded-[36px] bg-white text-gray-950 transition-all duration-500 ease-out cursor-pointer select-none overflow-hidden ${
+                          isActive
+                            ? "shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] ring-4 ring-white"
+                            : "shadow-xl border border-gray-200/80 hover:opacity-100"
+                        }`}
+                      >
+                        {/* Mobile Screen Shell Frame */}
+                        <div className="w-full h-full relative overflow-hidden bg-white text-left">
+                          {/* Top Speaker Notch for Mobile Look */}
+                          <div className="absolute top-0 left-0 right-0 h-5 bg-white/80 backdrop-blur-xs z-40 flex justify-center items-center">
+                            <div className="w-12 h-2 rounded-full bg-gray-200"></div>
+                          </div>
+
+                          {card.layoutType === "cafe-artisan" ? (
+                            <CafeCardView isCenter={isActive} />
+                          ) : (
+                            <div className={`w-full flex flex-col space-y-4 pb-12 pt-6 ${isActive ? "animate-vertical-scroll" : ""}`}>
+                              {/* SOLAR ENERGY SELLER LAYOUT */}
+                              {card.layoutType === "solar-tech" && (
+                                <div className="space-y-3 bg-cyan-50/30 pb-4">
+                                  <header className="pt-6 pb-6 px-4 text-center bg-gradient-to-b from-cyan-950 via-teal-900 to-slate-950 text-white relative">
+                                    <div className="w-16 h-16 rounded-2xl bg-cyan-500 text-slate-950 mx-auto flex items-center justify-center text-3xl mb-2 shadow-lg border-2 border-white">
+                                      {card.avatar}
+                                    </div>
+                                    <span className="text-[8.5px] font-bold tracking-widest text-cyan-300 uppercase">SOLAR POWER SYSTEMS</span>
+                                    <h3 className="font-black text-base text-white tracking-tight mt-0.5">{card.title}</h3>
+                                    <p className="text-[9.5px] text-cyan-200">{card.tagline}</p>
+                                  </header>
+
+                                  <div className="px-4 grid grid-cols-2 gap-2 text-[10px]">
+                                    <button className="py-2.5 rounded-xl bg-cyan-600 text-white font-bold text-center shadow-xs">
+                                      ⚡ Free Solar Audit
+                                    </button>
+                                    <button className="py-2.5 rounded-xl bg-white text-cyan-900 border border-cyan-200 font-bold text-center">
+                                      💬 Solar WhatsApp
+                                    </button>
+                                  </div>
+
+                                  <div className="px-4">
+                                    <div className="p-3 bg-white rounded-2xl border border-cyan-100 shadow-2xs space-y-1">
+                                      <div className="flex items-center gap-2">
+                                        <div className="w-8 h-8 rounded-full bg-cyan-100 text-cyan-800 font-bold flex items-center justify-center text-xs">
+                                          SV
+                                        </div>
+                                        <div>
+                                          <h4 className="font-bold text-[11px] text-slate-900">{card.owner}</h4>
+                                          <p className="text-[8.5px] text-cyan-700 font-semibold">{card.role}</p>
+                                        </div>
+                                      </div>
+                                      <p className="text-[9px] text-slate-600 leading-snug">{card.about}</p>
+                                    </div>
+                                  </div>
+
+                                  <div className="px-4 grid grid-cols-2 gap-2 text-center text-[9.5px]">
+                                    <div className="p-2.5 rounded-xl bg-cyan-100/80 text-cyan-950 font-bold">
+                                      <span className="block text-base font-black text-cyan-700">{card.stat1}</span>
+                                      <span className="text-[8px] uppercase tracking-wider text-cyan-800">{card.stat1Label}</span>
+                                    </div>
+                                    <div className="p-2.5 rounded-xl bg-teal-100/80 text-teal-950 font-bold">
+                                      <span className="block text-base font-black text-teal-700">{card.stat2}</span>
+                                      <span className="text-[8px] uppercase tracking-wider text-teal-800">{card.stat2Label}</span>
+                                    </div>
+                                  </div>
+
+                                  <div className="px-4 space-y-1.5">
+                                    <h4 className="font-bold text-[11px] text-slate-900">Rooftop Packages</h4>
+                                    {card.services.map((s, idx) => (
+                                      <div key={idx} className="p-2.5 bg-white rounded-xl border border-cyan-100 flex items-center justify-between">
+                                        <div className="flex items-center gap-2.5">
+                                          <span className="text-2xl">{s.icon}</span>
+                                          <div>
+                                            <p className="font-bold text-[9.5px] text-slate-900 leading-tight">{s.name}</p>
+                                            <span className="text-[8px] text-slate-400">Govt Subsidy Eligible</span>
+                                          </div>
+                                        </div>
+                                        <span className="font-black text-cyan-700 text-[10px]">{s.price}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* BEAUTY PARLOUR LAYOUT */}
+                              {card.layoutType === "parlour-beauty" && (
+                                <div className="space-y-3 bg-pink-50/40 pb-4">
+                                  <header className="pt-6 pb-6 px-4 text-center bg-gradient-to-br from-rose-700 via-pink-600 to-rose-800 text-white relative rounded-b-3xl">
+                                    <div className="w-16 h-16 rounded-full bg-white text-rose-600 mx-auto flex items-center justify-center text-3xl mb-2 shadow-lg border-2 border-pink-200">
+                                      {card.avatar}
+                                    </div>
+                                    <span className="text-[8.5px] font-bold tracking-widest text-pink-200 uppercase">BEAUTY & SALON STUDIO</span>
+                                    <h3 className="font-serif text-base font-bold text-white tracking-wide mt-0.5">{card.title}</h3>
+                                    <p className="text-[9.5px] text-pink-100 italic">{card.tagline}</p>
+                                  </header>
+
+                                  <div className="px-4 grid grid-cols-2 gap-2 text-[10px]">
+                                    <button className="py-2.5 rounded-xl bg-rose-600 text-white font-bold text-center shadow-xs">
+                                      💄 Book Appointment
+                                    </button>
+                                    <button className="py-2.5 rounded-xl bg-white text-rose-800 border border-rose-200 font-bold text-center">
+                                      💬 Chat WhatsApp
+                                    </button>
+                                  </div>
+
+                                  <div className="px-4">
+                                    <div className="p-3 bg-white rounded-2xl border border-rose-100 shadow-2xs space-y-1">
+                                      <div className="flex items-center justify-between">
+                                        <h4 className="font-bold text-[11px] text-rose-950">{card.owner}</h4>
+                                        <span className="text-[8px] px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 font-bold">{card.role}</span>
+                                      </div>
+                                      <p className="text-[9px] text-rose-900/80 leading-snug">{card.about}</p>
+                                    </div>
+                                  </div>
+
+                                  <div className="px-4 grid grid-cols-2 gap-2 text-center text-[9.5px]">
+                                    <div className="p-2.5 rounded-xl bg-pink-100 text-rose-900 font-bold">
+                                      <span className="block text-base font-black text-rose-700">{card.stat1}</span>
+                                      <span className="text-[8px] uppercase text-rose-800">{card.stat1Label}</span>
+                                    </div>
+                                    <div className="p-2.5 rounded-xl bg-pink-100 text-rose-900 font-bold">
+                                      <span className="block text-base font-black text-rose-700">{card.stat2}</span>
+                                      <span className="text-[8px] uppercase text-rose-800">{card.stat2Label}</span>
+                                    </div>
+                                  </div>
+
+                                  <div className="px-4 space-y-1.5">
+                                    <h4 className="font-serif font-bold text-[11px] text-rose-950">Popular Beauty Services</h4>
+                                    {card.services.map((s, idx) => (
+                                      <div key={idx} className="p-2.5 bg-white rounded-xl border border-rose-100 flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                          <span className="text-xl">{s.icon}</span>
+                                          <span className="font-bold text-[9.5px] text-rose-950">{s.name}</span>
+                                        </div>
+                                        <span className="font-extrabold text-rose-600 text-[10px]">{s.price}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* TWO-WHEELER BROKER LAYOUT */}
+                              {card.layoutType === "two-wheeler-broker" && (
+                                <div className="space-y-3 bg-slate-900 text-white pb-4">
+                                  <header className="pt-6 pb-6 px-4 text-center bg-gradient-to-br from-red-900 via-slate-900 to-black text-white relative">
+                                    <div className="w-16 h-16 rounded-2xl bg-red-600 text-white mx-auto flex items-center justify-center text-3xl mb-2 shadow-lg border-2 border-red-500/50">
+                                      {card.avatar}
+                                    </div>
+                                    <span className="text-[8.5px] font-black tracking-widest text-red-400 uppercase">BIKE BROKER & AUTOMOTIVE</span>
+                                    <h3 className="font-black text-base text-white tracking-tight mt-0.5">{card.title}</h3>
+                                    <p className="text-[9.5px] text-slate-300">{card.tagline}</p>
+                                  </header>
+
+                                  <div className="px-4 grid grid-cols-2 gap-2 text-[10px]">
+                                    <button className="py-2.5 rounded-xl bg-red-600 text-white font-bold text-center shadow-xs">
+                                      🏍️ View Bike Inventory
+                                    </button>
+                                    <button className="py-2.5 rounded-xl bg-slate-800 text-red-300 border border-red-500/30 font-bold text-center">
+                                      💬 Instant Deal
+                                    </button>
+                                  </div>
+
+                                  <div className="px-4">
+                                    <div className="p-3 bg-slate-800/80 rounded-2xl border border-red-900/40 space-y-1">
+                                      <div className="flex justify-between items-center">
+                                        <h4 className="font-bold text-[11px] text-red-400">{card.owner}</h4>
+                                        <span className="text-[8px] px-2 py-0.5 rounded-md bg-red-950 text-red-200 border border-red-800">{card.role}</span>
+                                      </div>
+                                      <p className="text-[9px] text-slate-300 leading-snug">{card.about}</p>
+                                    </div>
+                                  </div>
+
+                                  <div className="px-4 grid grid-cols-2 gap-2 text-center text-[9.5px]">
+                                    <div className="p-2.5 rounded-xl bg-slate-800 border border-red-900/40">
+                                      <span className="block font-black text-red-500 text-base">{card.stat1}</span>
+                                      <span className="text-[8px] text-slate-400 font-bold uppercase">{card.stat1Label}</span>
+                                    </div>
+                                    <div className="p-2.5 rounded-xl bg-slate-800 border border-red-900/40">
+                                      <span className="block font-black text-red-500 text-base">{card.stat2}</span>
+                                      <span className="text-[8px] text-slate-400 font-bold uppercase">{card.stat2Label}</span>
+                                    </div>
+                                  </div>
+
+                                  <div className="px-4 space-y-1.5">
+                                    <h4 className="font-bold text-[11px] text-slate-200">Brokerage Services</h4>
+                                    {card.services.map((s, idx) => (
+                                      <div key={idx} className="p-2.5 bg-slate-800/80 rounded-xl border border-red-900/40 flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                          <span className="text-xl">{s.icon}</span>
+                                          <span className="font-bold text-[9.5px] text-slate-200">{s.name}</span>
+                                        </div>
+                                        <span className="font-extrabold text-red-400 text-[10px]">{s.price}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* PERSONAL PORTFOLIO LAYOUT */}
+                              {card.layoutType === "personal-portfolio" && (
+                                <div className="space-y-3 bg-purple-50/30 pb-4">
+                                  <header className="pt-6 pb-6 px-4 text-center bg-gradient-to-br from-purple-900 via-indigo-900 to-slate-950 text-white relative rounded-b-3xl">
+                                    <div className="w-16 h-16 rounded-full bg-indigo-600 text-white mx-auto flex items-center justify-center text-3xl mb-2 shadow-lg border-2 border-purple-300">
+                                      {card.avatar}
+                                    </div>
+                                    <span className="text-[8.5px] font-mono tracking-widest text-purple-300 uppercase">CREATOR & DESIGNER</span>
+                                    <h3 className="font-extrabold text-base text-white tracking-tight mt-0.5">{card.title}</h3>
+                                    <p className="text-[9.5px] text-purple-200">{card.tagline}</p>
+                                  </header>
+
+                                  <div className="px-4 grid grid-cols-2 gap-2 text-[10px]">
+                                    <button className="py-2.5 rounded-xl bg-purple-600 text-white font-bold text-center shadow-xs">
+                                      📁 View Portfolio
+                                    </button>
+                                    <button className="py-2.5 rounded-xl bg-white text-purple-900 border border-purple-200 font-bold text-center">
+                                      💬 Hire Me
+                                    </button>
+                                  </div>
+
+                                  <div className="px-4">
+                                    <div className="p-3 bg-white rounded-2xl border border-purple-100 shadow-2xs space-y-1">
+                                      <div className="flex justify-between items-center">
+                                        <h4 className="font-bold text-[11px] text-purple-950">{card.owner}</h4>
+                                        <span className="text-[8px] px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 font-bold">{card.role}</span>
+                                      </div>
+                                      <p className="text-[9px] text-slate-600 leading-snug">{card.about}</p>
+                                    </div>
+                                  </div>
+
+                                  <div className="px-4 grid grid-cols-2 gap-2 text-center text-[9.5px]">
+                                    <div className="p-2.5 rounded-xl bg-purple-100/70 text-purple-950 font-bold">
+                                      <span className="block text-base font-black text-purple-700">{card.stat1}</span>
+                                      <span className="text-[8px] uppercase text-purple-800">{card.stat1Label}</span>
+                                    </div>
+                                    <div className="p-2.5 rounded-xl bg-purple-100/70 text-purple-950 font-bold">
+                                      <span className="block text-base font-black text-purple-700">{card.stat2}</span>
+                                      <span className="text-[8px] uppercase text-purple-800">{card.stat2Label}</span>
+                                    </div>
+                                  </div>
+
+                                  <div className="px-4 space-y-1.5">
+                                    <h4 className="font-bold text-[11px] text-slate-900">Design Offerings</h4>
+                                    {card.services.map((s, idx) => (
+                                      <div key={idx} className="p-2.5 bg-white rounded-xl border border-purple-100 flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                          <span className="text-xl">{s.icon}</span>
+                                          <span className="font-bold text-[9.5px] text-slate-900">{s.name}</span>
+                                        </div>
+                                        <span className="font-extrabold text-purple-700 text-[10px]">{s.price}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* DEFAULT MARKETINGSETU SMART CARD LAYOUT */}
+                              {card.layoutType === "default-marketing-setu" && (
+                                <div className="space-y-3 bg-blue-50/30 pb-4">
+                                  <header className="pt-6 pb-6 px-4 text-center bg-gradient-to-b from-blue-900 via-indigo-900 to-slate-950 text-white relative">
+                                    <div className="w-16 h-16 rounded-full bg-brand-main text-white mx-auto flex items-center justify-center text-3xl mb-2 shadow-lg border-2 border-white">
+                                      {card.avatar}
+                                    </div>
+                                    <span className="text-[8.5px] font-bold tracking-widest text-brand-main bg-white px-2 py-0.5 rounded-full uppercase">OFFICIAL SMART CARD</span>
+                                    <h3 className="font-black text-base text-white tracking-tight mt-1">{card.title}</h3>
+                                    <p className="text-[9.5px] text-blue-200">{card.tagline}</p>
+                                  </header>
+
+                                  <div className="px-4 grid grid-cols-2 gap-2 text-[10px]">
+                                    <button className="py-2.5 rounded-xl bg-brand-main text-white font-bold text-center shadow-xs">
+                                      💳 Get NFC Card
+                                    </button>
+                                    <button className="py-2.5 rounded-xl bg-white text-brand-main border border-brand-main/20 font-bold text-center">
+                                      💬 Chat WhatsApp
+                                    </button>
+                                  </div>
+
+                                  <div className="px-4">
+                                    <div className="p-3 bg-white rounded-2xl border border-blue-100 shadow-2xs space-y-1">
+                                      <div className="flex items-center justify-between">
+                                        <h4 className="font-bold text-[11px] text-slate-900">{card.owner}</h4>
+                                        <span className="text-[8px] px-2 py-0.5 rounded-full bg-brand-lighter text-brand-main font-bold">{card.role}</span>
+                                      </div>
+                                      <p className="text-[9px] text-slate-600 leading-snug">{card.about}</p>
+                                    </div>
+                                  </div>
+
+                                  <div className="px-4 grid grid-cols-2 gap-2 text-center text-[9.5px]">
+                                    <div className="p-2.5 rounded-xl bg-blue-100/70 text-blue-950 font-bold">
+                                      <span className="block text-base font-black text-brand-main">{card.stat1}</span>
+                                      <span className="text-[8px] uppercase text-blue-900">{card.stat1Label}</span>
+                                    </div>
+                                    <div className="p-2.5 rounded-xl bg-blue-100/70 text-blue-950 font-bold">
+                                      <span className="block text-base font-black text-brand-main">{card.stat2}</span>
+                                      <span className="text-[8px] uppercase text-blue-900">{card.stat2Label}</span>
+                                    </div>
+                                  </div>
+
+                                  <div className="px-4 space-y-1.5">
+                                    <h4 className="font-bold text-[11px] text-slate-900">Platform Plans</h4>
+                                    {card.services.map((s, idx) => (
+                                      <div key={idx} className="p-2.5 bg-white rounded-xl border border-blue-100 flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                          <span className="text-xl">{s.icon}</span>
+                                          <span className="font-bold text-[9.5px] text-slate-900">{s.name}</span>
+                                        </div>
+                                        <span className="font-extrabold text-brand-main text-[10px]">{s.price}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-              <div>
-                <div className="text-4xl font-heading font-bold text-brand-purple mb-2">3x</div>
-                <div className="text-sm text-gray-500">{t.home_hero_stat_3}</div>
-              </div>
-              <div>
-                <div className="text-4xl font-heading font-bold text-brand-purple mb-2">24/7</div>
-                <div className="text-sm text-gray-500">{t.home_hero_stat_4}</div>
+
+              {/* Dots Pagination Below Carousel */}
+              <div className="flex justify-center items-center gap-2.5 mt-6">
+                {carouselCards.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveCardIndex(idx)}
+                    className={`h-3 rounded-full transition-all duration-300 cursor-pointer ${
+                      idx === activeCardIndex
+                        ? "w-8 bg-brand-main shadow-md"
+                        : "w-3 bg-gray-300 hover:bg-gray-400"
+                    }`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
               </div>
             </div>
           </div>
         </section>
-        {/* END: Hero Section */}
-        {/* BEGIN: Services Section */}
-        <section className="py-24 bg-brand-grayLight" id="services">
+
+
+        {/* HOW IT WORKS SECTION */}
+        <section className="py-24 bg-neutral/50 border-b border-outline">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-purpleLight text-brand-purple text-sm font-semibold mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-purple"></span>
-                {t.home_services_eyebrow}
-              </div>
-              <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6">{t.home_services_heading}</h2>
-              <p className="text-brand-gray text-lg">{t.home_services_subtext}</p>
+              <span className="text-xs font-bold uppercase tracking-wider text-secondary bg-paper border border-outline px-3 py-1 rounded-full inline-block mb-4">
+                HOW IT WORKS
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-primary mb-4">Get Your Digital Card in 3 Simple Steps</h2>
+              <p className="text-secondary text-base sm:text-lg">Set up your smart business card & automated customer connection in minutes.</p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Service 1: WhatsApp Marketing (Featured) */}
-              <div className="md:col-span-2 lg:col-span-2 bg-white rounded-3xl p-8 shadow-sm border border-gray-100 card-hover group relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-green-50 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
-                <div className="flex flex-col h-full justify-between">
+
+            <div className="grid md:grid-cols-3 gap-8 relative max-w-5xl mx-auto">
+              {/* Step 1 */}
+              <div className="group bg-paper rounded-3xl p-8 shadow-card relative z-10 flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                <div>
+                  <div className="w-12 h-12 rounded-2xl bg-brand-main text-white font-bold text-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    01
+                  </div>
+                  <h3 className="text-xl font-bold text-primary mb-2">Create Your Profile</h3>
+                  <p className="text-secondary text-sm leading-relaxed">Add your business name, photo, catalog, contact links, and social profiles.</p>
+                </div>
+                <div className="mt-8 pt-4 border-t border-outline text-xs font-semibold text-disabled uppercase tracking-wider">
+                  Step 1 • Profile Setup
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="group bg-paper rounded-3xl p-8 shadow-card relative z-10 flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                <div>
+                  <div className="w-12 h-12 rounded-2xl bg-brand-light text-white font-bold text-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    02
+                  </div>
+                  <h3 className="text-xl font-bold text-primary mb-2">Enable WhatsApp Automation</h3>
+                  <p className="text-secondary text-sm leading-relaxed">Connect missed-call SMS & auto-WhatsApp messaging add-ons for instant customer response.</p>
+                </div>
+                <div className="mt-8 pt-4 border-t border-outline text-xs font-semibold text-disabled uppercase tracking-wider">
+                  Step 2 • Add-on Features
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="group bg-paper rounded-3xl p-8 shadow-card relative z-10 flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                <div>
+                  <div className="w-12 h-12 rounded-2xl bg-success-main text-white font-bold text-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    03
+                  </div>
+                  <h3 className="text-xl font-bold text-primary mb-2">Share & Connect</h3>
+                  <p className="text-secondary text-sm leading-relaxed">Share your unique link or QR code with customers and track profile views.</p>
+                </div>
+                <div className="mt-8 pt-4 border-t border-outline text-xs font-semibold text-disabled uppercase tracking-wider">
+                  Step 3 • Live & Sharing
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SERVICES SECTION */}
+        <section className="py-24 bg-background" id="services">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="text-xs font-bold uppercase tracking-wider text-secondary bg-paper px-3 py-1 rounded-full inline-block mb-4 border border-outline">
+                CORE PRODUCTS & ADD-ONS
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-primary mb-4">Digital Business Cards & Custom Landing Pages</h2>
+              <p className="text-secondary text-base sm:text-lg">Our core digital identity solutions powered by automated WhatsApp and customer growth add-ons.</p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* PRIMARY FEATURE 1: Digital Business Card */}
+              <div className="group bg-gradient-to-br from-brand-dark to-brand-darker text-white rounded-3xl p-8 sm:p-10 shadow-z12 flex flex-col justify-between hover:shadow-z20 hover:-translate-y-1.5 transition-all duration-300">
+                <div>
+                  <span className="inline-block bg-brand-main text-white text-xs font-semibold px-3 py-1 rounded-full mb-6">MAIN PRODUCT</span>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">Smart Digital Business Card</h3>
+                  <p className="text-gray-200 text-base mb-8 leading-relaxed">
+                    A modern, mobile-friendly digital business card page featuring your contact details, owner profiles, products/services gallery, bio, location, and social links in one quick shareable link.
+                  </p>
+                </div>
+                <button onClick={() => openWhatsApp()} className="text-brand-light font-semibold inline-flex items-center gap-2 transition-all cursor-pointer">
+                  Get Your Digital Business Card <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
+                </button>
+              </div>
+
+              {/* PRIMARY FEATURE 2: WhatsApp Automation */}
+              <div className="group bg-paper rounded-3xl p-8 sm:p-10 flex flex-col justify-between shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                <div>
+                  <div className="w-12 h-12 rounded-2xl bg-success-lighter text-success-main flex items-center justify-center mb-6 font-bold text-lg group-hover:scale-110 transition-transform duration-300">
+                    💬
+                  </div>
+                  <span className="inline-block bg-success-lighter text-success-dark text-xs font-semibold px-3 py-1 rounded-full mb-4">MAIN PRODUCT</span>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-primary mb-4">{t.service_wa_title}</h3>
+                  <p className="text-secondary text-base mb-8 leading-relaxed">
+                    {t.service_wa_lead}
+                  </p>
+                </div>
+                <button onClick={() => openWhatsApp()} className="text-success-main font-semibold inline-flex items-center gap-2 transition-all cursor-pointer text-left">
+                  Get WhatsApp Automation <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
+                </button>
+              </div>
+            </div>
+
+            {/* SECONDARY ADD-ONS GRID */}
+            <div className="mt-12">
+              <div className="grid md:grid-cols-3 gap-8">
+                {/* SECONDARY FEATURE 1: Custom Landing Pages */}
+                <div className="group bg-paper rounded-3xl p-8 shadow-card flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
                   <div>
-                    <div className="mb-6 inline-block bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full w-max">{t.service_badge_popular}</div>
-                    <div className="w-14 h-14 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm rotate-6">
-                      <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-2xl font-heading font-bold mb-4">{t.service_wa_title}</h3>
-                    <p className="text-brand-gray mb-6 max-w-lg">{t.service_wa_lead}</p>
+                    <div className="w-12 h-12 bg-brand-lighter text-brand-main rounded-2xl flex items-center justify-center mb-6 font-bold group-hover:scale-110 transition-transform duration-300">LP</div>
+                    <span className="text-[10px] font-bold text-brand-dark bg-brand-lighter px-2 py-0.5 rounded-full uppercase tracking-wider">Growth Add-On</span>
+                    <h3 className="text-xl font-bold text-primary mt-2 mb-3">{t.service_lp_title}</h3>
+                    <p className="text-secondary text-sm mb-6">{t.service_lp_lead}</p>
                   </div>
-                  <div className="mt-auto">
-                    <Link className="text-brand-purple font-semibold inline-flex items-center gap-2 group-hover:gap-3 transition-all" href="/services#whatsapp-marketing">
-                      Learn more <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                    </Link>
-                  </div>
+                  <Link className="text-brand-main font-semibold text-sm inline-flex items-center gap-1 transition-all mt-auto" href="/services#landing-pages">
+                    View Details <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
+                  </Link>
                 </div>
-              </div>
-              {/* Service 2: Landing Pages */}
-              <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 card-hover flex flex-col justify-between">
-                <div>
-                  <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
+
+                {/* SECONDARY FEATURE 2: Missed Call Auto Text */}
+                <div className="group bg-paper rounded-3xl p-8 shadow-card flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                  <div>
+                    <div className="w-12 h-12 bg-info-lighter text-info-main rounded-2xl flex items-center justify-center mb-6 font-bold group-hover:scale-110 transition-transform duration-300">MC</div>
+                    <span className="text-[10px] font-bold text-info-dark bg-info-lighter px-2 py-0.5 rounded-full uppercase tracking-wider">Growth Add-On</span>
+                    <h3 className="text-xl font-bold text-primary mt-2 mb-3">{t.service_mc_title}</h3>
+                    <p className="text-secondary text-sm mb-6">{t.service_mc_lead}</p>
                   </div>
-                  <h3 className="text-xl font-heading font-bold mb-3">{t.service_lp_title}</h3>
-                  <p className="text-brand-gray text-sm mb-6 flex-grow">{t.service_lp_lead}</p>
+                  <Link className="text-info-main font-semibold text-sm inline-flex items-center gap-1 transition-all mt-auto" href="/services#missed-call">
+                    View Details <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
+                  </Link>
                 </div>
-                <Link className="text-brand-purple text-sm font-semibold inline-flex items-center gap-1 hover:gap-2 transition-all mt-auto" href="/services#landing-pages">View Details →</Link>
-              </div>
-              {/* Service 3: Missed Call Auto Text */}
-              <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 card-hover flex flex-col justify-between">
-                <div>
-                  <div className="w-12 h-12 bg-purple-100 text-brand-purple rounded-xl flex items-center justify-center mb-6">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
+
+                {/* SECONDARY FEATURE 3: Google Business Setup */}
+                <div className="group bg-paper rounded-3xl p-8 shadow-card flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                  <div>
+                    <div className="w-12 h-12 bg-error-lighter text-error-main rounded-2xl flex items-center justify-center mb-6 font-bold group-hover:scale-110 transition-transform duration-300">GB</div>
+                    <span className="text-[10px] font-bold text-error-dark bg-error-lighter px-2 py-0.5 rounded-full uppercase tracking-wider">Growth Add-On</span>
+                    <h3 className="text-xl font-bold text-primary mt-2 mb-3">{t.service_gb_title}</h3>
+                    <p className="text-secondary text-sm mb-6">{t.service_gb_lead}</p>
                   </div>
-                  <h3 className="text-xl font-heading font-bold mb-3">{t.service_mc_title}</h3>
-                  <p className="text-brand-gray text-sm mb-6 flex-grow">{t.service_mc_lead}</p>
+                  <Link className="text-error-main font-semibold text-sm inline-flex items-center gap-1 transition-all mt-auto" href="/services#google-business">
+                    View Details <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
+                  </Link>
                 </div>
-                <Link className="text-brand-purple text-sm font-semibold inline-flex items-center gap-1 hover:gap-2 transition-all mt-auto" href="/services#missed-call">View Details →</Link>
-              </div>
-              {/* Service 4: Auto WhatsApp Message */}
-              <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 card-hover flex flex-col justify-between">
-                <div>
-                  <div className="w-12 h-12 bg-teal-100 text-brand-teal rounded-xl flex items-center justify-center mb-6">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                  </div>
-                  <h3 className="text-xl font-heading font-bold mb-3">Auto WhatsApp Message</h3>
-                  <p className="text-brand-gray text-sm mb-6 flex-grow">Set up automated WhatsApp responses for common enquiries, booking confirmations, and follow-ups — so your business feels responsive 24 hours a day.</p>
-                </div>
-                <Link className="text-brand-purple text-sm font-semibold inline-flex items-center gap-1 hover:gap-2 transition-all mt-auto" href="/services">View Details →</Link>
-              </div>
-              {/* Service 5: Google Business Setup */}
-              <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 card-hover flex flex-col justify-between">
-                <div>
-                  <div className="w-12 h-12 bg-red-100 text-red-500 rounded-xl flex items-center justify-center mb-6">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-                      <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-                    </svg>
-                  </div>
-                  <h3 className="text-xl font-heading font-bold mb-3">{t.service_gb_title}</h3>
-                  <p className="text-brand-gray text-sm mb-6 flex-grow">{t.service_gb_lead}</p>
-                </div>
-                <Link className="text-brand-purple text-sm font-semibold inline-flex items-center gap-1 hover:gap-2 transition-all mt-auto" href="/services#google-business">View Details →</Link>
-              </div>
-              {/* Service 6: Social Media Ads */}
-              <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 card-hover flex flex-col justify-between">
-                <div>
-                  <div className="w-12 h-12 bg-pink-100 text-pink-500 rounded-xl flex items-center justify-center mb-6">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                  </div>
-                  <h3 className="text-xl font-heading font-bold mb-3">Social Media & Ad Posts</h3>
-                  <p className="text-brand-gray text-sm mb-6 flex-grow">Instagram and Facebook marketing with eye-catching graphic posts, festival creatives, and targeted ad campaigns that build real local audience growth.</p>
-                </div>
-                <Link className="text-brand-purple text-sm font-semibold inline-flex items-center gap-1 hover:gap-2 transition-all mt-auto" href="/services">View Details →</Link>
               </div>
             </div>
+
             <div className="text-center mt-12">
-              <Link className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-brand-purple hover:bg-opacity-90 shadow-lg shadow-brand-purple/30 transition-all" href="/services">
+              <Link className="inline-flex items-center justify-center px-8 py-3.5 bg-gray-900 hover:bg-gray-800 text-white font-medium rounded-xl shadow-z4 hover:shadow-z8 transition-all" href="/services">
                 {t.btn_see_all_services}
               </Link>
             </div>
           </div>
         </section>
-        {/* END: Services Section */}
 
-        {/* BEGIN: Pricing Section */}
-        <section className="py-24 bg-white relative" id="pricing">
+        {/* PRICING SECTION */}
+        <section className="py-24 bg-white relative border-t border-gray-100 overflow-hidden" id="pricing">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNlN2U1ZTQiLz48L3N2Zz4=')] opacity-50 z-0"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-purpleLight text-brand-purple text-sm font-semibold mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-purple"></span>
+              <span className="text-xs font-bold uppercase tracking-wider text-gray-500 bg-white border border-gray-200 px-3 py-1 rounded-full inline-block mb-4">
                 {t.home_pricing_eyebrow}
-              </div>
-              <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">{t.home_pricing_heading}</h2>
-              <p className="text-brand-gray text-lg">{t.home_pricing_subtext}</p>
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-950 mb-4">{t.home_pricing_heading}</h2>
+              <p className="text-gray-500 text-base sm:text-lg">{t.home_pricing_subtext}</p>
             </div>
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
               {getTranslatedPlans().map((plan, idx) => (
@@ -309,132 +839,96 @@ export default function HomeView() {
             </div>
           </div>
         </section>
-        {/* END: Pricing Section */}
 
-        {/* BEGIN: Why Choose Us */}
-        <section className="py-24 bg-gray-50">
+        {/* WHY CHOOSE US */}
+        <section className="py-24 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-purpleLight text-brand-purple text-sm font-semibold mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-purple"></span>
+              <span className="text-xs font-bold uppercase tracking-wider text-gray-500 bg-gray-100 px-3 py-1 rounded-full inline-block mb-4">
                 WHY MARKETINGSETU
-              </div>
-              <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">Results-driven. Reliable.<br />Affordable.</h2>
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-950 mb-4">Results-driven. Reliable.<br />Affordable.</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-x-12 gap-y-10 max-w-4xl mx-auto">
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                </div>
+              <div className="group flex gap-4 p-6 rounded-2xl bg-white shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                <div className="flex-shrink-0 w-12 h-12 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">⚡</div>
                 <div>
-                  <h4 className="text-lg font-bold font-heading mb-2">{t.why_us_f1_title}</h4>
-                  <p className="text-gray-600 text-sm">{t.why_us_f1_desc}</p>
+                  <h4 className="text-lg font-bold text-gray-950 mb-1">{t.why_us_f1_title}</h4>
+                  <p className="text-gray-500 text-sm leading-relaxed">{t.why_us_f1_desc}</p>
                 </div>
               </div>
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                </div>
+              <div className="group flex gap-4 p-6 rounded-2xl bg-white shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                <div className="flex-shrink-0 w-12 h-12 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">₹</div>
                 <div>
-                  <h4 className="text-lg font-bold font-heading mb-2">{t.why_us_f2_title}</h4>
-                  <p className="text-gray-600 text-sm">{t.why_us_f2_desc}</p>
+                  <h4 className="text-lg font-bold text-gray-950 mb-1">{t.why_us_f2_title}</h4>
+                  <p className="text-gray-500 text-sm leading-relaxed">{t.why_us_f2_desc}</p>
                 </div>
               </div>
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                </div>
+              <div className="group flex gap-4 p-6 rounded-2xl bg-white shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                <div className="flex-shrink-0 w-12 h-12 bg-blue-100 text-blue-700 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">✓</div>
                 <div>
-                  <h4 className="text-lg font-bold font-heading mb-2">{t.why_us_f3_title}</h4>
-                  <p className="text-gray-600 text-sm">{t.why_us_f3_desc}</p>
+                  <h4 className="text-lg font-bold text-gray-950 mb-1">{t.why_us_f3_title}</h4>
+                  <p className="text-gray-500 text-sm leading-relaxed">{t.why_us_f3_desc}</p>
                 </div>
               </div>
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" /></svg>
-                </div>
+              <div className="group flex gap-4 p-6 rounded-2xl bg-white shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                <div className="flex-shrink-0 w-12 h-12 bg-purple-100 text-purple-700 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">👥</div>
                 <div>
-                  <h4 className="text-lg font-bold font-heading mb-2">{t.why_us_f4_title}</h4>
-                  <p className="text-gray-600 text-sm">{t.why_us_f4_desc}</p>
+                  <h4 className="text-lg font-bold text-gray-950 mb-1">{t.why_us_f4_title}</h4>
+                  <p className="text-gray-500 text-sm leading-relaxed">{t.why_us_f4_desc}</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
-        {/* END: Why Choose Us */}
 
-        {/* BEGIN: CTA Section / Testimonials */}
-        <section className="py-24 bg-brand-grayLight" id="reviews">
+        {/* TESTIMONIALS */}
+        <section className="py-24 bg-gray-50/60 border-t border-gray-100" id="reviews">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-purpleLight text-brand-purple text-sm font-semibold mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-purple"></span>
+              <span className="text-xs font-bold uppercase tracking-wider text-gray-500 bg-white border border-gray-200 px-3 py-1 rounded-full inline-block mb-4">
                 TESTIMONIALS
-              </div>
-              <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">{t.home_testimonials_heading}</h2>
-              <p className="text-brand-gray text-lg">Real stories from small businesses across Maharashtra growing with MarketingSetu.</p>
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-950 mb-4">{t.home_testimonials_heading}</h2>
+              <p className="text-gray-500 text-base">Real stories from small businesses across Maharashtra growing with MarketingSetu.</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 card-hover flex flex-col justify-between">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="group bg-white p-8 rounded-3xl shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
                 <div>
-                  <div className="flex text-brand-purple mb-4">
-                    <span className="text-lg">★</span>
-                    <span className="text-lg">★</span>
-                    <span className="text-lg">★</span>
-                    <span className="text-lg">★</span>
-                    <span className="text-lg">★</span>
-                  </div>
-                  <p className="text-gray-700 italic mb-8 flex-grow">
-                    "{t.testi_1_text}"
-                  </p>
+                  <div className="flex text-amber-400 mb-4 text-base">★★★★★</div>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-6 font-normal">"{t.testi_1_text}"</p>
                 </div>
-                <div className="flex items-center gap-4 mt-auto">
-                  <div className="w-12 h-12 bg-brand-purpleLight text-brand-purple rounded-full flex items-center justify-center font-bold">RS</div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gray-100 text-gray-900 rounded-full flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform duration-300">RS</div>
                   <div>
-                    <h4 className="font-heading font-bold text-brand-dark">Rahul Sharma</h4>
-                    <p className="text-xs text-brand-gray">{t.testi_1_role}</p>
+                    <h4 className="font-bold text-gray-950 text-sm">Rahul Sharma</h4>
+                    <p className="text-xs text-gray-400">{t.testi_1_role}</p>
                   </div>
                 </div>
               </div>
-              <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 card-hover flex flex-col justify-between">
+              <div className="group bg-white p-8 rounded-3xl shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
                 <div>
-                  <div className="flex text-brand-purple mb-4">
-                    <span className="text-lg">★</span>
-                    <span className="text-lg">★</span>
-                    <span className="text-lg">★</span>
-                    <span className="text-lg">★</span>
-                    <span className="text-lg">★</span>
-                  </div>
-                  <p className="text-gray-700 italic mb-8 flex-grow">
-                    "{t.testi_2_text}"
-                  </p>
+                  <div className="flex text-amber-400 mb-4 text-base">★★★★★</div>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-6 font-normal">"{t.testi_2_text}"</p>
                 </div>
-                <div className="flex items-center gap-4 mt-auto">
-                  <div className="w-12 h-12 bg-brand-purpleLight text-brand-purple rounded-full flex items-center justify-center font-bold">PM</div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gray-100 text-gray-900 rounded-full flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform duration-300">PM</div>
                   <div>
-                    <h4 className="font-heading font-bold text-brand-dark">Priya Mehta</h4>
-                    <p className="text-xs text-brand-gray">{t.testi_2_role}</p>
+                    <h4 className="font-bold text-gray-950 text-sm">Priya Mehta</h4>
+                    <p className="text-xs text-gray-400">{t.testi_2_role}</p>
                   </div>
                 </div>
               </div>
-              <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 card-hover flex flex-col justify-between">
+              <div className="group bg-white p-8 rounded-3xl shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between">
                 <div>
-                  <div className="flex text-brand-purple mb-4">
-                    <span className="text-lg">★</span>
-                    <span className="text-lg">★</span>
-                    <span className="text-lg">★</span>
-                    <span className="text-lg">★</span>
-                    <span className="text-lg">★</span>
-                  </div>
-                  <p className="text-gray-700 italic mb-8 flex-grow">
-                    "{t.testi_3_text}"
-                  </p>
+                  <div className="flex text-amber-400 mb-4 text-base">★★★★★</div>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-6 font-normal">"{t.testi_3_text}"</p>
                 </div>
-                <div className="flex items-center gap-4 mt-auto">
-                  <div className="w-12 h-12 bg-brand-purpleLight text-brand-purple rounded-full flex items-center justify-center font-bold">AK</div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gray-100 text-gray-900 rounded-full flex items-center justify-center font-bold text-sm group-hover:scale-110 transition-transform duration-300">AK</div>
                   <div>
-                    <h4 className="font-heading font-bold text-brand-dark">Anil Kulkarni</h4>
-                    <p className="text-xs text-brand-gray">{t.testi_3_role}</p>
+                    <h4 className="font-bold text-gray-950 text-sm">Anil Kulkarni</h4>
+                    <p className="text-xs text-gray-400">{t.testi_3_role}</p>
                   </div>
                 </div>
               </div>
@@ -442,24 +936,23 @@ export default function HomeView() {
           </div>
         </section>
 
-        {/* BEGIN: CTA Section */}
+        {/* BOTTOM CTA BANNER */}
         <section className="py-20 bg-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-gradient-to-r from-brand-purple to-brand-teal rounded-3xl p-10 md:p-16 text-center text-white shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-white opacity-10 blur-2xl"></div>
-              <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 rounded-full bg-black opacity-10 blur-2xl"></div>
-              <div className="relative z-10">
-                <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">{t.home_cta_heading}</h2>
-                <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">{t.home_cta_description}</p>
-                <button onClick={() => openWhatsApp()} className="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg shadow-green-500/30 cursor-pointer">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
-                {t.btn_free_consultation}
-              </button>
+            <div className="bg-gray-950 rounded-3xl p-10 sm:p-16 text-center text-white shadow-z24 relative overflow-hidden">
+              <div className="relative z-10 max-w-2xl mx-auto">
+                <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">{t.home_cta_heading}</h2>
+                <p className="text-gray-400 text-base sm:text-lg mb-8 font-normal">{t.home_cta_description}</p>
+                <button
+                  onClick={() => openWhatsApp()}
+                  className="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-8 py-4 rounded-xl shadow-z12 hover:shadow-z20 transition-all cursor-pointer"
+                >
+                  {t.btn_free_consultation}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-      {/* END: CTA Section */}
+        </section>
       </div>
     </PageWrapper>
   );
