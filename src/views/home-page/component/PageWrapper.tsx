@@ -4,6 +4,7 @@ import { useThemeStore } from "@/store/themeStore";
 import { contactInfo, translations } from "@/views/home-page/data";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useWhatsApp } from "./useWhatsApp";
 
 interface PageWrapperProps {
@@ -14,6 +15,7 @@ export default function PageWrapper({ children }: PageWrapperProps) {
   const { language, setLanguage, theme, toggleTheme } = useThemeStore();
   const [mounted, setMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
@@ -59,15 +61,25 @@ export default function PageWrapper({ children }: PageWrapperProps) {
 
             {/* Desktop Navigation Links */}
             <div className="hidden md:flex items-center justify-center space-x-1 lg:space-x-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  className="text-gray-600 hover:text-gray-950 dark:text-gray-300 dark:hover:text-white px-3 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-gray-100/60 dark:hover:bg-gray-800/60"
-                  href={link.href}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive =
+                  link.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`px-3 py-2 text-sm font-medium transition-colors rounded-lg ${
+                      isActive
+                        ? "text-brand-main bg-brand-lighter/60 dark:bg-brand-main/15 dark:text-brand-main font-semibold"
+                        : "text-gray-600 hover:text-gray-950 dark:text-gray-300 dark:hover:text-white hover:bg-gray-100/60 dark:hover:bg-gray-800/60"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Header Right Actions */}
@@ -136,16 +148,26 @@ export default function PageWrapper({ children }: PageWrapperProps) {
         {/* Mobile Menu Collapse Drawer */}
         {isMobileMenuOpen && (
           <div className="md:hidden bg-white dark:bg-brand-dark border-b border-gray-100 dark:border-gray-800 px-4 pt-2 pb-6 space-y-3">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                className="block text-brand-gray hover:text-brand-purple dark:text-gray-300 dark:hover:text-white text-base font-semibold py-2"
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive =
+                link.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block text-base font-semibold py-2 px-3 rounded-lg transition-colors ${
+                    isActive
+                      ? "text-brand-main bg-brand-lighter/60 dark:bg-brand-main/15"
+                      : "text-brand-gray hover:text-brand-main dark:text-gray-300 dark:hover:text-white"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
             <div className="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
               {mounted && (
                 <select

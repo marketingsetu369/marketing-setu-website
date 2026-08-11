@@ -107,6 +107,24 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
     return url;
   };
 
+  const formatSocialLink = (url: string, platform: 'instagram' | 'facebook' | 'youtube' | 'twitter') => {
+    if (!url) return "";
+    const cleanUrl = url.trim();
+    if (cleanUrl.startsWith("http://") || cleanUrl.startsWith("https://")) {
+      return cleanUrl;
+    }
+    if (cleanUrl.includes(".") || cleanUrl.includes("/")) {
+      return `https://${cleanUrl}`;
+    }
+    const baseUrls = {
+      instagram: "https://instagram.com/",
+      facebook: "https://facebook.com/",
+      youtube: "https://youtube.com/",
+      twitter: "https://twitter.com/",
+    };
+    return `${baseUrls[platform]}${cleanUrl}`;
+  };
+
   const getYouTubeId = (url?: string) => {
     if (!url) return null;
     try {
@@ -212,13 +230,13 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
     const isFirst = index === 0;
     const isLast = index === activeKeys.length - 1;
     
-    let paddingClass = "py-12 px-6";
+    let paddingClass = "py-8 px-6";
     if (isFirst && isLast) {
-      paddingClass = "pt-12 pb-36 md:pb-16 px-6";
+      paddingClass = "pt-8 pb-8 md:pb-8 px-6";
     } else if (isFirst) {
-      paddingClass = "pt-12 pb-12 px-6";
+      paddingClass = "pt-8 pb-8 px-6";
     } else if (isLast) {
-      paddingClass = "pt-12 pb-36 md:pb-16 px-6";
+      paddingClass = "pt-8 pb-8 md:pb-8 px-6";
     }
     
     return `${bgClass} ${paddingClass}`;
@@ -287,18 +305,20 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                 </span>
               </div>
 
-              {/* Subtitle text */}
-              <p className="text-sm text-gray-600 font-normal mb-3">
-                {header.business_category || ""}
-              </p>
-              
-              {/* Tagline pill using theme background color */}
+              {/* Tagline below the business name */}
               {header.tagline && (
+                <p className="text-sm text-gray-600 font-normal mb-3">
+                  {header.tagline}
+                </p>
+              )}
+              
+              {/* Category in Chips (pill using theme background color) */}
+              {header.business_category && (
                 <span 
                   className="text-white text-[11px] font-medium px-4.5 py-1.5 rounded-full tracking-wide"
                   style={{ backgroundColor: PRIMARY_COLOR }}
                 >
-                  {header.tagline}
+                  {header.business_category}
                 </span>
               )}
 
@@ -308,12 +328,12 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                   <a 
                     href={`tel:${contact.phone}`} 
                     onClick={() => { if (slug) trackUniqueAction(slug, TrackAction.Call); }}
-                    className="flex flex-col items-center gap-1.5 group"
+                    className="flex flex-col items-center gap-2 group"
                   >
-                    <div className="w-11 h-11 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
-                      <HugeiconsIcon icon={CallIcon} size={16} />
+                    <div className="w-13 h-13 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
+                      <HugeiconsIcon icon={CallIcon} size={20} />
                     </div>
-                    <span className="text-[10px] font-semibold text-gray-950">Call</span>
+                    <span className="text-[12px] font-semibold text-gray-950">Call</span>
                   </a>
                 )}
                 
@@ -323,21 +343,21 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                     target="_blank" 
                     rel="noopener noreferrer" 
                     onClick={() => { if (slug) trackUniqueAction(slug, TrackAction.WhatsApp); }}
-                    className="flex flex-col items-center gap-1.5 group"
+                    className="flex flex-col items-center gap-2 group"
                   >
-                    <div className="w-11 h-11 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
-                      <HugeiconsIcon icon={WhatsappIcon} size={16} />
+                    <div className="w-13 h-13 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
+                      <HugeiconsIcon icon={WhatsappIcon} size={20} />
                     </div>
-                    <span className="text-[10px] font-semibold text-gray-950">WhatsApp</span>
+                    <span className="text-[12px] font-semibold text-gray-950">WhatsApp</span>
                   </a>
                 )}
 
                 {contact.email && (
-                  <a href={`mailto:${contact.email}`} className="flex flex-col items-center gap-1.5 group">
-                    <div className="w-11 h-11 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
-                      <HugeiconsIcon icon={Mail01Icon} size={16} />
+                  <a href={`mailto:${contact.email}`} className="flex flex-col items-center gap-2 group">
+                    <div className="w-13 h-13 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
+                      <HugeiconsIcon icon={Mail01Icon} size={20} />
                     </div>
-                    <span className="text-[10px] font-semibold text-gray-950">Email</span>
+                    <span className="text-[12px] font-semibold text-gray-950">Email</span>
                   </a>
                 )}
 
@@ -347,12 +367,12 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                     target="_blank" 
                     rel="noopener noreferrer" 
                     onClick={() => { if (slug) trackUniqueAction(slug, TrackAction.Directions); }}
-                    className="flex flex-col items-center gap-1.5 group"
+                    className="flex flex-col items-center gap-2 group"
                   >
-                    <div className="w-11 h-11 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
-                      <HugeiconsIcon icon={Location01Icon} size={16} />
+                    <div className="w-13 h-13 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
+                      <HugeiconsIcon icon={Location01Icon} size={20} />
                     </div>
-                    <span className="text-[10px] font-semibold text-gray-950">Location</span>
+                    <span className="text-[12px] font-semibold text-gray-950">Location</span>
                   </a>
                 )}
               </div>
@@ -443,7 +463,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
 
         {/* ── CONTENT SECTION: Scrollable Body Card ── */}
-        <div className="w-full md:w-[58%] flex flex-col overflow-y-auto md:h-full no-scrollbar bg-white pb-36 md:pb-20">
+        <div className="w-full md:w-[58%] flex flex-col overflow-y-auto md:h-full no-scrollbar bg-white pb-8 md:pb-8">
           
           {/* Stats Section */}
           {mainOwner && (
@@ -477,12 +497,11 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
               </div>
             </section>
           )}
-          
           {/* Products or Services Section */}
           {products.length > 0 && (
             <section className={`animate-fade-in-up animation-delay-100 ${getSectionStyle("products")}`}>
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight" style={{ fontFamily: FONT_HEADER }}>
+                <h2 className="text-[19px] font-bold text-gray-950 tracking-tight" style={{ fontFamily: FONT_HEADER }}>
                   Product or Services
                 </h2>
                 <span className="text-xs font-semibold hover:underline cursor-pointer" style={{ color: PRIMARY_COLOR }}>
@@ -499,39 +518,35 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                     key={idx}
                     className="w-56 flex-shrink-0 bg-white rounded-2xl overflow-hidden flex flex-col group cursor-pointer hover:-translate-y-1 transition-all duration-300"
                   >
-                      <div className="aspect-square relative bg-gray-100 rounded-t-2xl overflow-hidden">
-                        {(prod.image || prod.imageUrl) && (
-                          <img
-                            src={getImageUrl(prod.image || prod.imageUrl)}
-                            alt={prod.name || prod.title}
-                            className="w-full h-full object-cover"
-                          />
-                        )}
-                      </div>
+                    <div className="aspect-square relative bg-gray-100 rounded-t-2xl overflow-hidden">
+                      {(prod.image || prod.imageUrl) && (
+                        <img
+                          src={getImageUrl(prod.image || prod.imageUrl)}
+                          alt={prod.name || prod.title}
+                          className="w-full h-full object-cover"
+                        />
+                      )}
+                    </div>
                     <div className="p-3.5 flex-grow flex flex-col justify-between">
                       <div>
-                        <h3 className="font-semibold text-gray-900 text-xs tracking-tight line-clamp-1">
+                        <h3 className="font-semibold text-gray-950 text-sm tracking-tight line-clamp-1">
                           {prod.name || prod.title}
                         </h3>
                         {prod.description && (
-                          <p className="text-[10px] text-gray-500 line-clamp-2 mt-1 mb-2 font-medium leading-normal">
+                          <p className="text-xs text-gray-500 line-clamp-2 mt-1 mb-2 font-medium leading-normal">
                             {prod.description}
                           </p>
                         )}
-                        {prod.location && (
-                          <div className="flex items-center gap-0.5 text-gray-400 mt-1 mb-2">
-                            <HugeiconsIcon icon={Location01Icon} size={12} className="flex-shrink-0" />
-                            <span className="text-[9px] font-semibold line-clamp-1">{prod.location}</span>
-                          </div>
-                        )}
                       </div>
                       <div className="mt-auto">
-                        <div className="mb-3 flex items-center gap-0.5 text-gray-900">
-                          <HugeiconsIcon icon={RupeeIcon} size={12} className="flex-shrink-0" />
-                          <p className="text-xs font-semibold">
-                            {prod.price ? prod.price.replace(/[₹$]/g, "") : ""}
-                          </p>
-                        </div>
+                        {prod.showPrice !== false && prod.price && (
+                          <div className="mb-3 flex items-center gap-0.5 text-gray-950">
+                            <HugeiconsIcon icon={RupeeIcon} size={13} className="flex-shrink-0" />
+                            <p className="text-sm font-bold">
+                              {prod.price.toString().replace(/[₹$]/g, "")}
+                            </p>
+                          </div>
+                        )}
                         <button 
                           className="w-full bg-transparent hover:bg-gray-50 text-xs py-2 rounded-lg font-bold active:scale-95 transition-all border text-center"
                           style={{ borderColor: PRIMARY_COLOR, color: PRIMARY_COLOR }}
@@ -585,10 +600,10 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           {/* Testimonials (Happy Clients) Section */}
           {testimonials.length > 0 && (
             <section className="text-center flex flex-col items-center animate-fade-in-up animation-delay-300 w-full bg-gray-100 py-8 px-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-1.5" style={{ fontFamily: FONT_HEADER }}>
+              <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: FONT_HEADER }}>
                 What our happy clients say
               </h2>
-              <p className="text-sm text-gray-500 font-medium mb-16">
+              <p className="text-xs text-gray-500 font-semibold mb-14">
                 Honest reviews from our members
               </p>
 
@@ -664,7 +679,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
               
               <div className="grid grid-cols-4 gap-4 text-center">
                 {socialLinks.instagram && (
-                  <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
+                  <a href={formatSocialLink(socialLinks.instagram, 'instagram')} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
                     <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
                       <HugeiconsIcon icon={InstagramIcon} size={20} />
                     </div>
@@ -673,7 +688,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                 )}
 
                 {socialLinks.facebook && (
-                  <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
+                  <a href={formatSocialLink(socialLinks.facebook, 'facebook')} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
                     <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
                       <HugeiconsIcon icon={FacebookIcon} size={20} />
                     </div>
@@ -682,7 +697,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                 )}
 
                 {socialLinks.youtube && (
-                  <a href={socialLinks.youtube} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
+                  <a href={formatSocialLink(socialLinks.youtube, 'youtube')} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
                     <div className="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
                       <HugeiconsIcon icon={YoutubeIcon} size={20} />
                     </div>
@@ -691,7 +706,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                 )}
 
                 {socialLinks.twitter && (
-                  <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
+                  <a href={formatSocialLink(socialLinks.twitter, 'twitter')} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
                     <div className="w-12 h-12 rounded-full bg-black text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
                       <HugeiconsIcon icon={TwitterIcon} size={18} />
                     </div>
