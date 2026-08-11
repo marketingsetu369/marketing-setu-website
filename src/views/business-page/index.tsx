@@ -204,7 +204,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
   const showStats = !!mainOwner;
 
   const visibleStates = [
-    showStats,
+    false, // stats moved to left column
     showVideo,
     products.length > 0,
     testimonials.length > 0,
@@ -220,41 +220,34 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
     const index = activeKeys.indexOf(sectionKey);
     if (index === -1) return "bg-white py-12 px-6";
 
-    const productsIndex = activeKeys.indexOf("products");
-    const isLightGray = productsIndex !== -1 
-      ? Math.abs(index - productsIndex) % 2 === 0
-      : index % 2 !== 0;
-
-    const bgClass = isLightGray ? "bg-grey-100" : "bg-white";
+    const bgClass = ["products", "testimonials", "location"].includes(sectionKey)
+      ? "bg-[var(--color-grey-100)]"
+      : (sectionKey === "enquiry"
+          ? "bg-white"
+          : (activeKeys.indexOf("products") !== -1 
+              ? (Math.abs(index - activeKeys.indexOf("products")) % 2 === 0 ? "bg-[var(--color-grey-100)]" : "bg-white")
+              : (index % 2 !== 0 ? "bg-[var(--color-grey-100)]" : "bg-white")));
     
     const isFirst = index === 0;
     const isLast = index === activeKeys.length - 1;
     
-    let paddingClass = "py-8 px-6";
-    if (isFirst && isLast) {
-      paddingClass = "pt-8 pb-8 md:pb-8 px-6";
-    } else if (isFirst) {
-      paddingClass = "pt-8 pb-8 px-6";
-    } else if (isLast) {
-      paddingClass = "pt-8 pb-8 md:pb-8 px-6";
-    }
-    
+    const paddingClass = "py-10 px-6";
     return `${bgClass} ${paddingClass}`;
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center items-start md:items-center py-0 md:py-8" style={{ fontFamily: FONT_SANS }}>
-      {/* Container wrapper: responsive split-screen layout max-w-md on mobile, max-w-[1100px] on desktop */}
-      <div className="w-full md:max-w-[1100px] bg-white min-h-screen md:min-h-[820px] md:h-[820px] md:shadow-lg relative flex flex-col md:flex-row md:rounded-3xl overflow-hidden animate-fade-in-up">
+    <div className="min-h-screen bg-[var(--color-grey-100)] flex justify-center items-start md:items-center py-0 md:py-8" style={{ fontFamily: FONT_SANS }}>
+      {/* Container wrapper: responsive split-screen layout max-w-md on mobile, max-w-[1280px] on desktop */}
+      <div className="w-full md:max-w-[1280px] bg-[var(--color-grey-100)] min-h-screen md:min-h-[820px] md:h-[820px] relative flex flex-col md:flex-row overflow-hidden animate-fade-in-up">
         
         {/* ── LEFT COLUMN: Header & Profile Card ── */}
-        <div className="w-full md:w-[42%] bg-white flex flex-col justify-between border-r border-gray-100 relative md:pb-0">
+        <div className="w-full md:w-[35%] bg-[var(--color-grey-100)] flex flex-col justify-between relative md:pb-0">
           <div>
             {/* Soft top-to-bottom gradient background that fades from primary-tint to transparent/white */}
             <header 
-              className="pt-14 pb-[90px] px-6 text-center flex flex-col items-center relative"
+              className="pt-14 pb-10 px-6 text-center flex flex-col items-center relative rounded-bl-[48px] rounded-br-[48px]"
               style={{ 
-                background: `linear-gradient(to bottom, ${PRIMARY_COLOR}35 0%, ${PRIMARY_COLOR}15 50%, ${PRIMARY_COLOR}02 100%)`
+                background: `linear-gradient(to bottom, ${PRIMARY_COLOR}75 0%, ${PRIMARY_COLOR}40 60%, ${PRIMARY_COLOR}10 100%)`
               }}
             >
               {/* Share button on top right of the header */}
@@ -380,51 +373,68 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
             {/* Owner profile cards overlay */}
             {ownerList.length > 0 && (
-              <div className="px-6 -mt-[65px] relative z-10 space-y-4 animate-fade-in-up">
+              <div className="px-6 mt-6 pb-8 relative z-10 space-y-5 animate-fade-in-up">
                 {ownerList.map((owner: any, idx: number) => (
-                  <div key={idx} className="bg-white rounded-[32px] pt-8 px-8 pb-8">
-                    <div className="flex items-center gap-4.5">
-                      <div className="w-16 h-16 rounded-full overflow-hidden relative border border-gray-100 flex-shrink-0">
-                        {owner.avatar_url ? (
-                          <img
-                            src={getImageUrl(owner.avatar_url)}
-                            alt={owner.name}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div 
-                            className="w-full h-full rounded-full flex items-center justify-center"
-                            style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR }}
-                          >
-                            <HugeiconsIcon icon={UserIcon} size={20} />
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex-grow">
-                        <div className="flex items-center gap-1.5">
-                          <h3 className="font-semibold text-gray-950 text-lg" style={{ fontFamily: FONT_HEADER }}>
-                            {owner.name}
-                          </h3>
-                          <span className="text-[#2e7d32] flex items-center justify-center">
-                            <HugeiconsIcon icon={ShieldCheck} size={18} color="#2e7d32" />
-                          </span>
+                  <React.Fragment key={idx}>
+                    {/* Owner Info Card */}
+                    <div className="bg-white rounded-[24px] p-5 shadow-card">
+                      <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 rounded-full overflow-hidden relative border border-gray-100 flex-shrink-0">
+                          {owner.avatar_url ? (
+                            <img
+                              src={getImageUrl(owner.avatar_url)}
+                              alt={owner.name}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div 
+                              className="w-full h-full rounded-full flex items-center justify-center"
+                              style={{ backgroundColor: PRIMARY_LIGHT, color: PRIMARY_COLOR }}
+                            >
+                              <HugeiconsIcon icon={UserIcon} size={20} />
+                            </div>
+                          )}
                         </div>
-                        <p className="text-sm text-gray-400 font-medium mt-0.5">{owner.title}</p>
+                        <div className="flex-grow">
+                          <div className="flex items-center gap-1.5">
+                            <h3 className="font-bold text-gray-950 text-[17px]" style={{ fontFamily: FONT_HEADER }}>
+                              {owner.name}
+                            </h3>
+                            <span className="text-[#2e7d32] flex items-center justify-center">
+                              <HugeiconsIcon icon={ShieldCheck} size={18} color="#2e7d32" />
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-500 font-semibold mt-0.5">{owner.title}</p>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="border-t border-gray-100/80 my-6" />
-
-                    {/* About Biography */}
+                    {/* About Biography outside card */}
                     {owner.bio && (
-                      <div>
-                        <h2 className="text-xl font-semibold text-gray-950 mb-3" style={{ fontFamily: FONT_HEADER }}>About</h2>
-                        <p className="text-sm text-gray-500 leading-relaxed font-normal">
+                      <div className="px-2 pt-2 pb-4">
+                        <h2 className="text-[17px] font-bold text-gray-950 mb-2" style={{ fontFamily: FONT_HEADER }}>About</h2>
+                        <p className="text-[13px] text-gray-500 leading-relaxed font-semibold">
                           {owner.bio}
                         </p>
                       </div>
                     )}
-                  </div>
+
+                    {/* Stats Card */}
+                    <div className="bg-white rounded-[20px] py-4 px-3 shadow-card grid grid-cols-2 text-center items-center">
+                      <div>
+                        <p className="text-2xl font-semibold" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
+                          {owner.happy_customers_count || 140}+
+                        </p>
+                        <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mt-1">Happy Customers</p>
+                      </div>
+                      <div className="border-l border-gray-100 py-1">
+                        <p className="text-2xl font-semibold" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
+                          {owner.experience_years || 4}+
+                        </p>
+                        <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mt-1">Years Exp.</p>
+                      </div>
+                    </div>
+                  </React.Fragment>
                 ))}
               </div>
             )}
@@ -463,25 +473,9 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
 
         {/* ── CONTENT SECTION: Scrollable Body Card ── */}
-        <div className="w-full md:w-[58%] flex flex-col overflow-y-auto md:h-full no-scrollbar bg-white pb-8 md:pb-8">
+        <div className="w-full md:w-[65%] flex flex-col overflow-y-auto md:h-full no-scrollbar bg-white pb-8 md:pb-8 md:border-l-[10px] md:border-white">
           
-          {/* Stats Section */}
-          {mainOwner && (
-            <section className={`grid grid-cols-2 gap-4 text-center animate-fade-in-up ${getSectionStyle("stats")}`}>
-              <div>
-                <p className="text-2xl font-semibold" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
-                  {mainOwner.happy_customers_count || 140}+
-                </p>
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-1">Happy Customers</p>
-              </div>
-              <div className="border-l border-gray-100">
-                <p className="text-2xl font-semibold" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
-                  {mainOwner.experience_years || 4}+
-                </p>
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-1">Years Exp.</p>
-              </div>
-            </section>
-          )}
+
 
           {/* Standalone Video/Promo Section (Visible on both desktop & mobile) */}
           {showVideo && getYouTubeId(data?.youtube_url) && (
@@ -501,7 +495,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           {products.length > 0 && (
             <section className={`animate-fade-in-up animation-delay-100 ${getSectionStyle("products")}`}>
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-[19px] font-bold text-gray-950 tracking-tight" style={{ fontFamily: FONT_HEADER }}>
+                <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight" style={{ fontFamily: FONT_HEADER }}>
                   Product or Services
                 </h2>
                 <span className="text-xs font-semibold hover:underline cursor-pointer" style={{ color: PRIMARY_COLOR }}>
@@ -516,7 +510,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                 {products.map((prod: any, idx: number) => (
                   <div
                     key={idx}
-                    className="w-56 flex-shrink-0 bg-white rounded-2xl overflow-hidden flex flex-col group cursor-pointer hover:-translate-y-1 transition-all duration-300"
+                    className="w-56 flex-shrink-0 bg-white rounded-2xl shadow-card overflow-hidden flex flex-col group cursor-pointer hover:-translate-y-1 transition-all duration-300"
                   >
                     <div className="aspect-square relative bg-gray-100 rounded-t-2xl overflow-hidden">
                       {(prod.image || prod.imageUrl) && (
@@ -563,7 +557,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
           {/* Gallery Section */}
           {gallery.length > 0 && (
-            <section className="animate-fade-in-up animation-delay-200 bg-white py-12 px-6">
+            <section className="animate-fade-in-up animation-delay-200 bg-white py-10 px-6">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight" style={{ fontFamily: FONT_HEADER }}>Gallery</h2>
                 <span className="text-xs font-semibold hover:underline cursor-pointer" style={{ color: PRIMARY_COLOR }}>
@@ -599,18 +593,18 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
           {/* Testimonials (Happy Clients) Section */}
           {testimonials.length > 0 && (
-            <section className="text-center flex flex-col items-center animate-fade-in-up animation-delay-300 w-full bg-gray-100 py-8 px-6">
+            <section className={`text-center flex flex-col items-center animate-fade-in-up animation-delay-300 w-full ${getSectionStyle("testimonials")}`}>
               <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: FONT_HEADER }}>
                 What our happy clients say
               </h2>
-              <p className="text-xs text-gray-500 font-semibold mb-14">
+              <p className="text-xs text-gray-500 font-semibold mb-20">
                 Honest reviews from our members
               </p>
 
               {/* Testimonial Active Display Card */}
-              <div className="relative w-full max-w-md bg-white rounded-[32px] px-8 pb-10 pt-16 shadow-xs flex flex-col items-center mb-8">
+              <div className="relative w-full max-w-md bg-white rounded-[32px] px-8 pb-10 pt-16 shadow-card flex flex-col items-center mb-0">
                 {/* Overlapping Avatar Container */}
-                <div className="absolute -top-14 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden border border-gray-100/50 bg-white ring-8 ring-[var(--color-gray-100)] shadow-sm">
+                <div className="absolute -top-14 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden bg-white ring-8 ring-[var(--color-gray-100)] shadow-sm">
                   <img
                     src={getImageUrl(testimonials[activeTestimonial].avatar)}
                     alt={testimonials[activeTestimonial].name}
@@ -670,9 +664,125 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
             </section>
           )}
 
+          {/* Enquiry Form */}
+          <section className={`animate-fade-in-up animation-delay-500 ${getSectionStyle("enquiry")}`}>
+            <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-5" style={{ fontFamily: FONT_HEADER }}>
+              Send an Enquiry
+            </h2>
+            
+            <form onSubmit={handleEnquirySubmit} className="space-y-5">
+              <div>
+                <label htmlFor="clientName" className="block text-sm font-semibold text-gray-950 mb-2">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  id="clientName"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="Enter your name"
+                  className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="clientPhone" className="block text-sm font-semibold text-gray-950 mb-2">
+                  Mobile Number
+                </label>
+                <input
+                  type="tel"
+                  id="clientPhone"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  placeholder="Mobile Number"
+                  className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="clientMessage" className="block text-sm font-semibold text-gray-950 mb-2">
+                  Message
+                </label>
+                <textarea
+                  id="clientMessage"
+                  rows={4}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  placeholder=""
+                  className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all resize-none"
+                />
+              </div>
+
+              {submitStatus === "success" && (
+                <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs px-4 py-3 rounded-lg font-semibold animate-fade-in">
+                  Enquiry submitted successfully! We will contact you soon.
+                </div>
+              )}
+
+              {submitStatus === "error" && (
+                <div className="bg-red-50 border border-red-200 text-red-700 text-xs px-4 py-3 rounded-lg font-semibold animate-fade-in">
+                  {errorMessage}
+                </div>
+              )}
+
+              <div className="flex gap-4 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFormData({ name: "", phone: "", message: "" });
+                    setSubmitStatus("idle");
+                    setErrorMessage("");
+                  }}
+                  className="flex-1 bg-slate-50 hover:bg-slate-100 text-gray-950 py-3.5 rounded-lg font-bold text-sm active:scale-[0.98] transition-all cursor-pointer text-center"
+                >
+                  Reset
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex-1 text-white py-3.5 rounded-lg font-bold text-sm active:scale-[0.98] transition-all cursor-pointer"
+                  style={{ backgroundColor: PRIMARY_COLOR }}
+                >
+                  {isSubmitting ? "Submitting..." : "Submit"}
+                </button>
+              </div>
+            </form>
+          </section>
+
+          {/* Location Section */}
+          {contact.maps_link && (
+            <section className={`animate-fade-in-up ${getSectionStyle("location")}`}>
+              <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: FONT_HEADER }}>
+                Our Location
+              </h2>
+              <p className="text-xs text-gray-500 font-semibold mb-4 leading-relaxed">
+                {contact.address || "Find us on the map below for directions and visiting hours."}
+              </p>
+              <a 
+                href={contact.maps_link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block w-full h-44 rounded-2xl overflow-hidden relative border border-gray-100 group active:scale-[0.99] transition-all shadow-xs"
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&auto=format&fit=crop&q=60" 
+                  alt="Map Location" 
+                  className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500" 
+                />
+                <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
+                  <div className="bg-white/95 backdrop-blur-xs text-gray-800 text-[10px] font-black uppercase tracking-wider px-4 py-2.5 rounded-full shadow-md flex items-center gap-1.5 group-hover:bg-white transition-colors">
+                    <HugeiconsIcon icon={Location01Icon} size={12} style={{ color: PRIMARY_COLOR }} /> View on Google Maps
+                  </div>
+                </div>
+              </a>
+            </section>
+          )}
+
           {/* Social Links Section */}
           {(socialLinks.instagram || socialLinks.facebook || socialLinks.youtube || socialLinks.twitter) && (
-            <section className="animate-fade-in-up animation-delay-400 bg-white py-8 px-6">
+            <section className="animate-fade-in-up animation-delay-400 bg-white pt-10 pb-24 px-6">
               <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-4" style={{ fontFamily: FONT_HEADER }}>
                 Social Links
               </h2>
@@ -717,130 +827,12 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
             </section>
           )}
 
-          {/* Enquiry Form */}
-          <section className={`animate-fade-in-up animation-delay-500 ${getSectionStyle("enquiry")}`}>
-            <div className="bg-white rounded-3xl p-8">
-              <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-5" style={{ fontFamily: FONT_HEADER }}>
-                Send an Enquiry
-              </h2>
-              
-              <form onSubmit={handleEnquirySubmit} className="space-y-5">
-                <div>
-                  <label htmlFor="clientName" className="block text-sm font-semibold text-gray-950 mb-2">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    id="clientName"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Enter your name"
-                    className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all"
-                    required
-                  />
-                </div>
 
-                <div>
-                  <label htmlFor="clientPhone" className="block text-sm font-semibold text-gray-950 mb-2">
-                    Mobile Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="clientPhone"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="Mobile Number"
-                    className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="clientMessage" className="block text-sm font-semibold text-gray-950 mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="clientMessage"
-                    rows={4}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder=""
-                    className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all resize-none"
-                  />
-                </div>
-
-                {submitStatus === "success" && (
-                  <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs px-4 py-3 rounded-lg font-semibold animate-fade-in">
-                    Enquiry submitted successfully! We will contact you soon.
-                  </div>
-                )}
-
-                {submitStatus === "error" && (
-                  <div className="bg-red-50 border border-red-200 text-red-700 text-xs px-4 py-3 rounded-lg font-semibold animate-fade-in">
-                    {errorMessage}
-                  </div>
-                )}
-
-                <div className="flex gap-4 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setFormData({ name: "", phone: "", message: "" });
-                      setSubmitStatus("idle");
-                      setErrorMessage("");
-                    }}
-                    className="flex-1 bg-slate-50 hover:bg-slate-100 text-gray-950 py-3.5 rounded-lg font-bold text-sm active:scale-[0.98] transition-all cursor-pointer text-center"
-                  >
-                    Reset
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="flex-1 text-white py-3.5 rounded-lg font-bold text-sm active:scale-[0.98] transition-all cursor-pointer"
-                    style={{ backgroundColor: PRIMARY_COLOR }}
-                  >
-                    {isSubmitting ? "Submitting..." : "Submit"}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </section>
-
-          {/* Location Section */}
-          {contact.maps_link && (
-            <section className={`animate-fade-in-up ${getSectionStyle("location")}`}>
-              <div className="bg-white rounded-3xl p-5">
-                <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: FONT_HEADER }}>
-                  Our Location
-                </h2>
-                <p className="text-xs text-gray-500 font-semibold mb-4 leading-relaxed">
-                  {contact.address || "Find us on the map below for directions and visiting hours."}
-                </p>
-                <a 
-                  href={contact.maps_link} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="block w-full h-44 rounded-2xl overflow-hidden relative border border-gray-100 group active:scale-[0.99] transition-all shadow-xs"
-                >
-                  <img 
-                    src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&auto=format&fit=crop&q=60" 
-                    alt="Map Location" 
-                    className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500" 
-                  />
-                  <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
-                    <div className="bg-white/95 backdrop-blur-xs text-gray-800 text-[10px] font-black uppercase tracking-wider px-4 py-2.5 rounded-full shadow-md flex items-center gap-1.5 group-hover:bg-white transition-colors">
-                      <HugeiconsIcon icon={Location01Icon} size={12} style={{ color: PRIMARY_COLOR }} /> View on Google Maps
-                    </div>
-                  </div>
-                </a>
-              </div>
-            </section>
-          )}
 
       </div>
 
       {/* Floating CTA Actions (Fixed at absolute bottom of phone screen viewport, Z-50, hidden on desktop) */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] h-20 bg-white/95 backdrop-blur-md border-t border-gray-100 flex items-center justify-between px-6 pb-2 z-50 md:hidden">
+      <div className="fixed bottom-0 left-0 w-full h-20 bg-white/95 backdrop-blur-md border-t border-gray-100 flex items-center justify-between px-6 pb-2 z-50 md:hidden">
         <button 
           onClick={() => {
             setIsProductEnquiry(false);
