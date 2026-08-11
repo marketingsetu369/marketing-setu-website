@@ -420,18 +420,18 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                     )}
 
                     {/* Stats Card */}
-                    <div className="bg-white rounded-[20px] py-4 px-3 shadow-card grid grid-cols-2 text-center items-center">
+                    <div className="bg-white rounded-[16px] py-2.5 px-2 shadow-card grid grid-cols-2 text-center items-center">
                       <div>
-                        <p className="text-2xl font-semibold" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
+                        <p className="text-[20px] font-semibold leading-tight" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
                           {owner.happy_customers_count || 140}+
                         </p>
-                        <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mt-1">Happy Customers</p>
+                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mt-0.5">Happy Customers</p>
                       </div>
-                      <div className="border-l border-gray-100 py-1">
-                        <p className="text-2xl font-semibold" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
+                      <div className="border-l border-gray-100 py-0.5">
+                        <p className="text-[20px] font-semibold leading-tight" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
                           {owner.experience_years || 4}+
                         </p>
-                        <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mt-1">Years Exp.</p>
+                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mt-0.5">Years Exp.</p>
                       </div>
                     </div>
                   </React.Fragment>
