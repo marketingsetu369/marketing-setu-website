@@ -12,7 +12,13 @@ interface PageProps {
 
 const getImageUrl = (url?: string) => {
   if (!url) return "";
-  if (url.startsWith("http") && !url.includes("localhost") && !url.includes("10.0.2.2") && !url.includes("127.0.0.1")) {
+  if (
+    url.startsWith("http") &&
+    !url.includes("localhost") &&
+    !url.includes("10.0.2.2") &&
+    !url.includes("127.0.0.1") &&
+    !url.includes("187.127.128.193")
+  ) {
     return url;
   }
   const match = url.match(/\/uploads\/(.+)$/);

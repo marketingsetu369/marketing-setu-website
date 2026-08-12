@@ -3,8 +3,8 @@
 import { useThemeStore } from "@/store/themeStore";
 import { contactInfo, translations } from "@/views/home-page/data";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useWhatsApp } from "./useWhatsApp";
 
 interface PageWrapperProps {
@@ -53,10 +53,16 @@ export default function PageWrapper({ children }: PageWrapperProps) {
           <div className="flex h-18 sm:h-20 items-center justify-between">
             {/* Logo (Left side) */}
             <Link href="/" className="flex-shrink-0 flex items-center group">
-              <span className="font-heading font-extrabold text-xl text-gray-950 dark:text-white tracking-tight">
-                <span>Marketing</span>
-                <span className="text-blue-600">Setu</span>
-              </span>
+              <img
+                src="/logo-horizontal.svg"
+                alt="MarketingSetu Logo"
+                className="h-24 w-auto object-contain block dark:hidden"
+              />
+              {/* <img
+                src="/logo-horizontal.svg"
+                alt="MarketingSetu Logo"
+                className="h-10 w-auto object-contain hidden dark:block invert brightness-200"
+              /> */}
             </Link>
 
             {/* Desktop Navigation Links */}
@@ -212,9 +218,11 @@ export default function PageWrapper({ children }: PageWrapperProps) {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             <div className="md:col-span-1">
               <div className="flex items-center mb-4">
-                <span className="font-heading font-bold text-xl text-white">
-                  Marketing<span className="text-green-500">Setu</span>
-                </span>
+                <img
+                  src="/logo.svg"
+                  alt="MarketingSetu Logo"
+                  className="h-16 w-auto object-contain invert brightness-200"
+                />
               </div>
               <p className="text-sm leading-relaxed mb-6">
                 The bridge between your business and your customers — WhatsApp marketing, landing pages, and local growth tools for Bharat's small businesses.
