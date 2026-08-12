@@ -23,7 +23,7 @@ const getImageUrl = (url?: string) => {
   }
   const match = url.match(/\/uploads\/(.+)$/);
   if (match && match[1]) {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3005";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://187.127.128.193:3005";
     const cleanApiUrl = apiUrl.replace(/\/$/, "");
     return `${cleanApiUrl}/uploads/${match[1]}`;
   }
