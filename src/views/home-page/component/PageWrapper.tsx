@@ -46,9 +46,9 @@ export default function PageWrapper({ children }: PageWrapperProps) {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col font-sans text-brand-dark bg-white dark:bg-brand-dark dark:text-white transition-colors duration-300">
+    <div className="min-h-screen flex flex-col font-sans text-primary bg-background transition-colors duration-300">
       {/* BEGIN: Navigation - Glassmorphism floating header inspired by DigitalBusinessCard.com */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/70 dark:bg-brand-dark/70 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50 transition-colors duration-300">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-outline/50 transition-colors duration-300">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-18 sm:h-20 items-center justify-between">
             {/* Logo (Left side) */}
@@ -153,7 +153,7 @@ export default function PageWrapper({ children }: PageWrapperProps) {
 
         {/* Mobile Menu Collapse Drawer */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-white dark:bg-brand-dark border-b border-gray-100 dark:border-gray-800 px-4 pt-2 pb-6 space-y-3">
+          <div className="md:hidden bg-background border-b border-outline px-4 pt-2 pb-6 space-y-3">
             {navLinks.map((link) => {
               const isActive =
                 link.href === "/"

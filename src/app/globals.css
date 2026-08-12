@@ -122,6 +122,7 @@
 
 /* ─── Smooth theme switching — applied globally ─── */
 @layer base {
+
   *,
   *::before,
   *::after {
@@ -142,8 +143,10 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 html::-webkit-scrollbar,
@@ -159,7 +162,12 @@ body {
   font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-poppins), var(--font-inter), sans-serif;
 }
 
@@ -243,6 +251,7 @@ input[type=number] {
   width: 0 !important;
   height: 0 !important;
 }
+
 .no-scrollbar {
   -ms-overflow-style: none !important;
   scrollbar-width: none !important;
@@ -253,15 +262,19 @@ input[type=number] {
   0% {
     transform: translateY(0%);
   }
+
   45% {
     transform: translateY(calc(-100% + 460px));
   }
+
   50% {
     transform: translateY(calc(-100% + 460px));
   }
+
   95% {
     transform: translateY(0%);
   }
+
   100% {
     transform: translateY(0%);
   }

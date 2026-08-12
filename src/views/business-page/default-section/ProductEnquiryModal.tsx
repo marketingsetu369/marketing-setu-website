@@ -126,13 +126,14 @@ export default function ProductEnquiryModal({
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-950 mb-1.5">Message (optional)</label>
+              <label className="block text-sm font-semibold text-gray-950 mb-1.5">Message *</label>
               <ThemedTextarea
                 rows={3}
                 value={formData.message}
                 onChange={(e) => onChange({ ...formData, message: e.target.value })}
                 placeholder="Any specific questions or requirements..."
                 className="bg-gray-50 rounded-xl"
+                required
               />
             </div>
 

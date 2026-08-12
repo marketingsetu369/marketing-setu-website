@@ -70,14 +70,15 @@ export default function EnquiryFormSection({
 
         <div>
           <label htmlFor="clientMessage" className="block text-sm font-semibold text-gray-950 mb-2">
-            Message
+            Message *
           </label>
           <ThemedTextarea
             id="clientMessage"
             rows={4}
             value={formData.message}
             onChange={(e) => onChange({ ...formData, message: e.target.value })}
-            placeholder=""
+            placeholder="Enter your message"
+            required
           />
         </div>
 

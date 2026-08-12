@@ -29,7 +29,7 @@ export const pricingPlans: PricingPlan[] = [
         desc: "Instant automated reply & lead capture on missed calls or inquiries."
       },
       {
-        bold: "Default Smart Digital Card",
+        bold: "Smart Digital Business Card",
         desc: "Standard mobile-responsive digital business card template."
       },
       {
@@ -43,7 +43,7 @@ export const pricingPlans: PricingPlan[] = [
     ],
     compactFeatures: [
       { bold: "Automated Customer Messaging" },
-      { bold: "Default Smart Digital Card" },
+      { bold: "Smart Digital Business Card" },
       { bold: "Brand & Contact Details" },
       { bold: "Social & Owner Links" }
     ]
@@ -57,7 +57,7 @@ export const pricingPlans: PricingPlan[] = [
     price: "₹7,499",
     whatsappMessage: "Hi MarketingSetu! I'd like to get the Category Smart Card (₹7,499) plan.",
     features: [
-      { bold: "Everything in Default Digital Card" },
+      { bold: "Everything in Smart Digital Business Card" },
       {
         bold: "Category Special Generated Template",
         desc: "Customized layout for your business (Cafe, Beauty, Solar, Broker, etc.)."
@@ -72,7 +72,7 @@ export const pricingPlans: PricingPlan[] = [
       }
     ],
     compactFeatures: [
-      { bold: "Everything in Default Digital Card" },
+      { bold: "Everything in Smart Digital Business Card" },
       { bold: "Category Special Generated Template" },
       { bold: "Products & Services Showcase" },
       { bold: "Photo Gallery & Reviews" }
@@ -118,17 +118,17 @@ export interface CompareRow {
 }
 
 export const compareRows: CompareRow[] = [
-  { feature: "Automated Customer Messaging", plans: [true,  true,  true]  },
-  { feature: "Default Digital Card Template", plans: [true,  true,  true]  },
+  { feature: "Automated Customer Messaging", plans: [true, true, true] },
+  { feature: "Default Digital Card Template", plans: [true, true, true] },
   { feature: "Category Special Generated Template", plans: [false, true, true] },
-  { feature: "Products & Services Catalog",    plans: [false, true,  true]  },
-  { feature: "Photo Gallery & Reviews",       plans: [false, true,  true]  },
-  { feature: "Full Custom Single Page Website", plans: [false, false, true]  },
-  { feature: "Custom Domain & Hosting Setup",  plans: [false, false, true]  },
-  { feature: "Google Business & SEO Setup",    plans: [false, false, true]  },
+  { feature: "Products & Services Catalog", plans: [false, true, true] },
+  { feature: "Photo Gallery & Reviews", plans: [false, true, true] },
+  { feature: "Full Custom Single Page Website", plans: [false, false, true] },
+  { feature: "Custom Domain & Hosting Setup", plans: [false, false, true] },
+  { feature: "Google Business & SEO Setup", plans: [false, false, true] },
   {
     feature: "Price / Year",
-    plans:   [false, false, false],
-    label:   ["₹3,499", "₹7,499", "₹12,999"],
+    plans: [false, false, false],
+    label: ["₹3,499", "₹7,499", "₹12,999"],
   },
 ];

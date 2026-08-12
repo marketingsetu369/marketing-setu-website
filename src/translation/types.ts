@@ -135,6 +135,10 @@ export interface TranslationDictionary {
   service_mc_lead: string;
   service_gb_title: string;
   service_gb_lead: string;
+  service_ie_title: string;
+  service_ie_lead: string;
+  service_pc_title: string;
+  service_pc_lead: string;
   service_badge_popular: string;
   plan_quick_badge: string;
   plan_quick_name: string;

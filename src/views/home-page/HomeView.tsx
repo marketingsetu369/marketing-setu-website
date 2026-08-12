@@ -271,7 +271,7 @@ export default function HomeView() {
                 <span className="inline-block px-3 py-1 rounded-full bg-brand-lighter text-brand-dark font-bold text-xs uppercase tracking-wider mb-2 border border-brand-light/40 shadow-xs">
                   {carouselCards[activeCardIndex].category}
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-primary tracking-tight">
                   {carouselCards[activeCardIndex].title}
                 </h3>
               </div>
@@ -471,7 +471,7 @@ export default function HomeView() {
 
             <div className="grid md:grid-cols-2 gap-8">
               {/* PRIMARY FEATURE 1: Digital Business Card */}
-              <div className="group bg-gradient-to-br from-brand-dark to-brand-darker text-white rounded-3xl p-8 sm:p-10 shadow-z12 flex flex-col justify-between hover:shadow-z20 hover:-translate-y-1.5 transition-all duration-300">
+              <div className="group bg-grey-900 text-white rounded-3xl p-8 sm:p-10 shadow-z12 flex flex-col justify-between hover:shadow-z20 hover:-translate-y-1.5 transition-all duration-300">
                 <div>
                   <span className="inline-block bg-brand-main text-white text-xs font-semibold px-3 py-1 rounded-full mb-6">MAIN PRODUCT</span>
                   <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">Smart Digital Business Card</h3>
@@ -501,10 +501,10 @@ export default function HomeView() {
                 </button>
               </div>
             </div>
-
+ 
             {/* SECONDARY ADD-ONS GRID */}
             <div className="mt-12">
-              <div className="grid md:grid-cols-3 gap-8">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {/* SECONDARY FEATURE 1: Custom Landing Pages */}
                 <div className="group bg-paper rounded-3xl p-8 shadow-card flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
                   <div>
@@ -517,7 +517,7 @@ export default function HomeView() {
                     View Details <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
                   </Link>
                 </div>
-
+ 
                 {/* SECONDARY FEATURE 2: Missed Call Auto Text */}
                 <div className="group bg-paper rounded-3xl p-8 shadow-card flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
                   <div>
@@ -530,7 +530,7 @@ export default function HomeView() {
                     View Details <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
                   </Link>
                 </div>
-
+ 
                 {/* SECONDARY FEATURE 3: Google Business Setup */}
                 <div className="group bg-paper rounded-3xl p-8 shadow-card flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
                   <div>
@@ -543,9 +543,35 @@ export default function HomeView() {
                     View Details <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
                   </Link>
                 </div>
+
+                {/* SECONDARY FEATURE 4: Income & Expense Tracker */}
+                <div className="group bg-paper rounded-3xl p-8 shadow-card flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                  <div>
+                    <div className="w-12 h-12 bg-success-lighter text-success-main rounded-2xl flex items-center justify-center mb-6 font-bold group-hover:scale-110 transition-transform duration-300">IE</div>
+                    <span className="text-[10px] font-bold text-success-dark bg-success-lighter px-2 py-0.5 rounded-full uppercase tracking-wider">Growth Add-On</span>
+                    <h3 className="text-xl font-bold text-primary mt-2 mb-3">{t.service_ie_title}</h3>
+                    <p className="text-secondary text-sm mb-6">{t.service_ie_lead}</p>
+                  </div>
+                  <Link className="text-success-main font-semibold text-sm inline-flex items-center gap-1 transition-all mt-auto" href="/services#income-expense">
+                    View Details <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
+                  </Link>
+                </div>
+
+                {/* SECONDARY FEATURE 5: Digital Product Catalog */}
+                <div className="group bg-paper rounded-3xl p-8 shadow-card flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                  <div>
+                    <div className="w-12 h-12 bg-warning-lighter text-warning-main rounded-2xl flex items-center justify-center mb-6 font-bold group-hover:scale-110 transition-transform duration-300">PC</div>
+                    <span className="text-[10px] font-bold text-warning-dark bg-warning-lighter px-2 py-0.5 rounded-full uppercase tracking-wider">Growth Add-On</span>
+                    <h3 className="text-xl font-bold text-primary mt-2 mb-3">{t.service_pc_title}</h3>
+                    <p className="text-secondary text-sm mb-6">{t.service_pc_lead}</p>
+                  </div>
+                  <Link className="text-warning-main font-semibold text-sm inline-flex items-center gap-1 transition-all mt-auto" href="/services#catalog">
+                    View Details <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
+                  </Link>
+                </div>
               </div>
             </div>
-
+ 
             <div className="text-center mt-12">
               <Link className="inline-flex items-center justify-center px-8 py-3.5 bg-gray-900 hover:bg-gray-800 text-white font-medium rounded-xl shadow-z4 hover:shadow-z8 transition-all" href="/services">
                 {t.btn_see_all_services}
@@ -555,15 +581,15 @@ export default function HomeView() {
         </section>
 
         {/* PRICING SECTION */}
-        <section className="py-24 bg-white relative border-t border-gray-100 overflow-hidden" id="pricing">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNlN2U1ZTQiLz48L3N2Zz4=')] opacity-50 z-0"></div>
+        <section className="py-24 bg-background relative border-t border-outline overflow-hidden" id="pricing">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNlN2U1ZTQiLz48L3N2Zz4=')] opacity-30 dark:opacity-[0.07] z-0"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold uppercase tracking-wider text-gray-500 bg-white border border-gray-200 px-3 py-1 rounded-full inline-block mb-4">
+              <span className="text-xs font-bold uppercase tracking-wider text-secondary bg-background border border-outline px-3 py-1 rounded-full inline-block mb-4">
                 {t.home_pricing_eyebrow}
               </span>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-950 mb-4">{t.home_pricing_heading}</h2>
-              <p className="text-gray-500 text-base sm:text-lg">{t.home_pricing_subtext}</p>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-primary mb-4">{t.home_pricing_heading}</h2>
+              <p className="text-secondary text-base sm:text-lg">{t.home_pricing_subtext}</p>
             </div>
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
               {getTranslatedPlans().map((plan, idx) => (
@@ -578,41 +604,41 @@ export default function HomeView() {
         </section>
 
         {/* WHY CHOOSE US */}
-        <section className="py-24 bg-white">
+        <section className="py-24 bg-background">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold uppercase tracking-wider text-gray-500 bg-gray-100 px-3 py-1 rounded-full inline-block mb-4">
+              <span className="text-xs font-bold uppercase tracking-wider text-secondary bg-neutral px-3 py-1 rounded-full inline-block mb-4">
                 WHY MARKETINGSETU
               </span>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-950 mb-4">Results-driven. Reliable.<br />Affordable.</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-primary mb-4">Results-driven. Reliable.<br />Affordable.</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-x-12 gap-y-10 max-w-4xl mx-auto">
-              <div className="group flex gap-4 p-6 rounded-2xl bg-white shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                <div className="flex-shrink-0 w-12 h-12 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">⚡</div>
+              <div className="group flex gap-4 p-6 rounded-2xl bg-paper shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                <div className="flex-shrink-0 w-12 h-12 bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">⚡</div>
                 <div>
-                  <h4 className="text-lg font-bold text-gray-950 mb-1">{t.why_us_f1_title}</h4>
-                  <p className="text-gray-500 text-sm leading-relaxed">{t.why_us_f1_desc}</p>
+                  <h4 className="text-lg font-bold text-primary mb-1">{t.why_us_f1_title}</h4>
+                  <p className="text-secondary text-sm leading-relaxed">{t.why_us_f1_desc}</p>
                 </div>
               </div>
-              <div className="group flex gap-4 p-6 rounded-2xl bg-white shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                <div className="flex-shrink-0 w-12 h-12 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">₹</div>
+              <div className="group flex gap-4 p-6 rounded-2xl bg-paper shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                <div className="flex-shrink-0 w-12 h-12 bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">₹</div>
                 <div>
-                  <h4 className="text-lg font-bold text-gray-950 mb-1">{t.why_us_f2_title}</h4>
-                  <p className="text-gray-500 text-sm leading-relaxed">{t.why_us_f2_desc}</p>
+                  <h4 className="text-lg font-bold text-primary mb-1">{t.why_us_f2_title}</h4>
+                  <p className="text-secondary text-sm leading-relaxed">{t.why_us_f2_desc}</p>
                 </div>
               </div>
-              <div className="group flex gap-4 p-6 rounded-2xl bg-white shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                <div className="flex-shrink-0 w-12 h-12 bg-blue-100 text-blue-700 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">✓</div>
+              <div className="group flex gap-4 p-6 rounded-2xl bg-paper shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                <div className="flex-shrink-0 w-12 h-12 bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-400 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">✓</div>
                 <div>
-                  <h4 className="text-lg font-bold text-gray-950 mb-1">{t.why_us_f3_title}</h4>
-                  <p className="text-gray-500 text-sm leading-relaxed">{t.why_us_f3_desc}</p>
+                  <h4 className="text-lg font-bold text-primary mb-1">{t.why_us_f3_title}</h4>
+                  <p className="text-secondary text-sm leading-relaxed">{t.why_us_f3_desc}</p>
                 </div>
               </div>
-              <div className="group flex gap-4 p-6 rounded-2xl bg-white shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                <div className="flex-shrink-0 w-12 h-12 bg-purple-100 text-purple-700 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">👥</div>
+              <div className="group flex gap-4 p-6 rounded-2xl bg-paper shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
+                <div className="flex-shrink-0 w-12 h-12 bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-400 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">👥</div>
                 <div>
-                  <h4 className="text-lg font-bold text-gray-950 mb-1">{t.why_us_f4_title}</h4>
-                  <p className="text-gray-500 text-sm leading-relaxed">{t.why_us_f4_desc}</p>
+                  <h4 className="text-lg font-bold text-primary mb-1">{t.why_us_f4_title}</h4>
+                  <p className="text-secondary text-sm leading-relaxed">{t.why_us_f4_desc}</p>
                 </div>
               </div>
             </div>
@@ -620,14 +646,14 @@ export default function HomeView() {
         </section>
 
         {/* TESTIMONIALS */}
-        <section className="py-24 bg-gray-50/60 border-t border-gray-100" id="reviews">
+        <section className="py-24 bg-neutral/40 border-t border-outline" id="reviews">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold uppercase tracking-wider text-gray-500 bg-white border border-gray-200 px-3 py-1 rounded-full inline-block mb-4">
+              <span className="text-xs font-bold uppercase tracking-wider text-secondary bg-background border border-outline px-3 py-1 rounded-full inline-block mb-4">
                 TESTIMONIALS
               </span>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-950 mb-4">{t.home_testimonials_heading}</h2>
-              <p className="text-gray-500 text-base">Real stories from small businesses across Maharashtra growing with MarketingSetu.</p>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-primary mb-4">{t.home_testimonials_heading}</h2>
+              <p className="text-secondary text-base">Real stories from small businesses across Maharashtra growing with MarketingSetu.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {getTranslatedTestimonials().map((item, idx) => (
@@ -638,7 +664,7 @@ export default function HomeView() {
         </section>
 
         {/* BOTTOM CTA BANNER */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-background">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-gray-950 rounded-3xl p-10 sm:p-16 text-center text-white shadow-z24 relative overflow-hidden">
               <div className="relative z-10 max-w-2xl mx-auto">
