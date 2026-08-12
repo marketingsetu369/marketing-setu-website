@@ -1,6 +1,7 @@
 "use client";
 
 import { BusinessPageApi } from "@/api/repositories/businessPageApi";
+import { StarRating } from "@/components/library";
 import { TrackAction } from "@/enums";
 import { trackUniqueAction } from "@/utils/analytics";
 import {
@@ -24,11 +25,13 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import React, { useState } from "react";
+import snarkdown from "snarkdown";
 import { usePageTracking } from "./hooks/usePageTracking";
 
 // Fonts
 const FONT_HEADER = "var(--font-poppins)";
 const FONT_SANS = "var(--font-inter)";
+
 
 interface BusinessViewProps {
   data: any;
@@ -44,14 +47,19 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
   const [formData, setFormData] = useState({ name: "", phone: "", message: "" });
   const [isProductEnquiry, setIsProductEnquiry] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
   // Styling properties
   const PRIMARY_COLOR = data?.theme_color_hex || "#7265E3";
-  const PRIMARY_LIGHT = `${PRIMARY_COLOR}10`; // Approximate tinted background
+  const PRIMARY_LIGHT = `${PRIMARY_COLOR}10`;
   const PRIMARY_BORDER = `${PRIMARY_COLOR}25`;
+
+  // Theme-colored focus border — no Tailwind glow
+  const inputFocusStyle = { borderColor: PRIMARY_COLOR, outline: "none", boxShadow: "none" };
+  const inputBlurStyle  = { borderColor: "", outline: "none", boxShadow: "none" };
 
   const handleEnquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,9 +79,17 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
         phone: formData.phone.trim(),
         message: formData.message.trim(),
         isProduct: isProductEnquiry,
+        productName: selectedProduct?.name || selectedProduct?.title || undefined,
+        productPrice: selectedProduct?.price?.toString() || undefined,
+        productDescription: selectedProduct?.description || undefined,
       });
       setSubmitStatus("success");
       setFormData({ name: "", phone: "", message: "" });
+      // Auto-close modal after success
+      setTimeout(() => {
+        setSelectedProduct(null);
+        setSubmitStatus("idle");
+      }, 2000);
     } catch (err: any) {
       console.error(err);
       setErrorMessage(err?.response?.data?.message || err?.message || "Failed to submit enquiry. Please try again.");
@@ -241,13 +257,13 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
       <div className="w-full md:max-w-[1280px] bg-[var(--color-grey-100)] min-h-screen md:min-h-[820px] md:h-[820px] relative flex flex-col md:flex-row overflow-hidden animate-fade-in-up">
         
         {/* ── LEFT COLUMN: Header & Profile Card ── */}
-        <div className="w-full md:w-[35%] bg-[var(--color-grey-100)] flex flex-col justify-between relative md:pb-0">
+        <div className="w-full md:w-[35%] bg-[var(--color-grey-100)] flex flex-col justify-between relative md:pb-0 md:h-full md:overflow-y-auto no-scrollbar">
           <div>
             {/* Soft top-to-bottom gradient background that fades from primary-tint to transparent/white */}
             <header 
               className="pt-14 pb-10 px-6 text-center flex flex-col items-center relative rounded-bl-[48px] rounded-br-[48px]"
               style={{ 
-                background: `linear-gradient(to bottom, ${PRIMARY_COLOR}75 0%, ${PRIMARY_COLOR}40 60%, ${PRIMARY_COLOR}10 100%)`
+                background: `linear-gradient(to bottom, ${PRIMARY_COLOR}43 0%, ${PRIMARY_COLOR}23 60%, ${PRIMARY_COLOR}03 100%)`
               }}
             >
               {/* Share button on top right of the header */}
@@ -308,7 +324,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
               {/* Category in Chips (pill using theme background color) */}
               {header.business_category && (
                 <span 
-                  className="text-white text-[11px] font-medium px-4.5 py-1.5 rounded-full tracking-wide"
+                  className="text-white text-sm font-medium px-4.5 py-1.5 rounded-full tracking-wide"
                   style={{ backgroundColor: PRIMARY_COLOR }}
                 >
                   {header.business_category}
@@ -326,7 +342,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                     <div className="w-13 h-13 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
                       <HugeiconsIcon icon={CallIcon} size={20} />
                     </div>
-                    <span className="text-[12px] font-semibold text-gray-950">Call</span>
+                    <span className="text-xs font-semibold text-gray-950">Call</span>
                   </a>
                 )}
                 
@@ -341,7 +357,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                     <div className="w-13 h-13 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
                       <HugeiconsIcon icon={WhatsappIcon} size={20} />
                     </div>
-                    <span className="text-[12px] font-semibold text-gray-950">WhatsApp</span>
+                    <span className="text-xs font-semibold text-gray-950">WhatsApp</span>
                   </a>
                 )}
 
@@ -350,7 +366,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                     <div className="w-13 h-13 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
                       <HugeiconsIcon icon={Mail01Icon} size={20} />
                     </div>
-                    <span className="text-[12px] font-semibold text-gray-950">Email</span>
+                    <span className="text-xs font-semibold text-gray-950">Email</span>
                   </a>
                 )}
 
@@ -365,7 +381,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                     <div className="w-13 h-13 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
                       <HugeiconsIcon icon={Location01Icon} size={20} />
                     </div>
-                    <span className="text-[12px] font-semibold text-gray-950">Location</span>
+                    <span className="text-xs font-semibold text-gray-950">Location</span>
                   </a>
                 )}
               </div>
@@ -397,7 +413,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                         </div>
                         <div className="flex-grow">
                           <div className="flex items-center gap-1.5">
-                            <h3 className="font-bold text-gray-950 text-[17px]" style={{ fontFamily: FONT_HEADER }}>
+                            <h3 className="font-bold text-gray-950 text-lg" style={{ fontFamily: FONT_HEADER }}>
                               {owner.name}
                             </h3>
                             <span className="text-[#2e7d32] flex items-center justify-center">
@@ -412,26 +428,28 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                     {/* About Biography outside card */}
                     {owner.bio && (
                       <div className="px-2 pt-2 pb-4">
-                        <h2 className="text-[17px] font-bold text-gray-950 mb-2" style={{ fontFamily: FONT_HEADER }}>About</h2>
-                        <p className="text-[13px] text-gray-500 leading-relaxed font-semibold">
-                          {owner.bio}
-                        </p>
+                        <h2 className="text-lg font-bold text-gray-950 mb-2" style={{ fontFamily: FONT_HEADER }}>About</h2>
+                        <div 
+                          className="text-sm text-gray-600 leading-relaxed markdown-content font-normal"
+                          style={{ fontFamily: FONT_SANS }}
+                          dangerouslySetInnerHTML={{ __html: snarkdown(owner.bio) }}
+                        />
                       </div>
                     )}
 
                     {/* Stats Card */}
-                    <div className="bg-white rounded-[16px] py-2.5 px-2 shadow-card grid grid-cols-2 text-center items-center">
+                    <div className="bg-white rounded-[16px] py-5 px-2 grid grid-cols-2 text-center items-center">
                       <div>
-                        <p className="text-[20px] font-semibold leading-tight" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
+                        <p className="text-xl font-semibold leading-tight" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
                           {owner.happy_customers_count || 140}+
                         </p>
-                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mt-0.5">Happy Customers</p>
+                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mt-0.5">Happy Customers</p>
                       </div>
                       <div className="border-l border-gray-100 py-0.5">
-                        <p className="text-[20px] font-semibold leading-tight" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
+                        <p className="text-xl font-semibold leading-tight" style={{ color: PRIMARY_COLOR, fontFamily: FONT_HEADER }}>
                           {owner.experience_years || 4}+
                         </p>
-                        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wider mt-0.5">Years Exp.</p>
+                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mt-0.5">Years Exp.</p>
                       </div>
                     </div>
                   </React.Fragment>
@@ -495,8 +513,8 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           {products.length > 0 && (
             <section className={`animate-fade-in-up animation-delay-100 ${getSectionStyle("products")}`}>
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight" style={{ fontFamily: FONT_HEADER }}>
-                  Product or Services
+                <h2 className="text-xl font-semibold text-gray-950 tracking-tight" style={{ fontFamily: FONT_HEADER }}>
+                  Products & Services
                 </h2>
                 <span className="text-xs font-semibold hover:underline cursor-pointer" style={{ color: PRIMARY_COLOR }}>
                   See All
@@ -523,11 +541,11 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                     </div>
                     <div className="p-3.5 flex-grow flex flex-col justify-between">
                       <div>
-                        <h3 className="font-semibold text-gray-950 text-sm tracking-tight line-clamp-1">
+                        <h3 className="font-semibold text-gray-950 text-base tracking-tight line-clamp-1 capitalize">
                           {prod.name || prod.title}
                         </h3>
                         {prod.description && (
-                          <p className="text-xs text-gray-500 line-clamp-2 mt-1 mb-2 font-medium leading-normal">
+                          <p className="text-xs text-gray-500 line-clamp-2 mt-0.5 mb-2 font-medium leading-normal capitalize">
                             {prod.description}
                           </p>
                         )}
@@ -542,6 +560,13 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                           </div>
                         )}
                         <button 
+                          onClick={() => {
+                            setSelectedProduct(prod);
+                            setIsProductEnquiry(true);
+                            setSubmitStatus("idle");
+                            setErrorMessage("");
+                            setFormData({ name: "", phone: "", message: "" });
+                          }}
                           className="w-full bg-transparent hover:bg-gray-50 text-xs py-2 rounded-lg font-bold active:scale-95 transition-all border text-center"
                           style={{ borderColor: PRIMARY_COLOR, color: PRIMARY_COLOR }}
                         >
@@ -559,7 +584,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           {gallery.length > 0 && (
             <section className="animate-fade-in-up animation-delay-200 bg-white py-10 px-6">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight" style={{ fontFamily: FONT_HEADER }}>Gallery</h2>
+                <h2 className="text-lg font-semibold text-gray-950 tracking-tight" style={{ fontFamily: FONT_HEADER }}>Gallery</h2>
                 <span className="text-xs font-semibold hover:underline cursor-pointer" style={{ color: PRIMARY_COLOR }}>
                   See All
                 </span>
@@ -594,7 +619,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           {/* Testimonials (Happy Clients) Section */}
           {testimonials.length > 0 && (
             <section className={`text-center flex flex-col items-center animate-fade-in-up animation-delay-300 w-full ${getSectionStyle("testimonials")}`}>
-              <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: FONT_HEADER }}>
+              <h2 className="text-lg font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: FONT_HEADER }}>
                 What our happy clients say
               </h2>
               <p className="text-xs text-gray-500 font-semibold mb-20">
@@ -612,25 +637,8 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                   />
                 </div>
                 
-                {/* Yellow Hollow Stars */}
-                <div className="flex gap-1.5 mb-4 text-yellow-400">
-                  {Array.from({ length: 5 }).map((_, idx) => (
-                    <svg
-                      key={idx}
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.8"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M11.48 3.499c.307-.887 1.57-.887 1.877 0l1.819 5.257a1 1 0 00.95.69h5.53c.928 0 1.314 1.185.57 1.76l-4.473 3.39a1 1 0 00-.364 1.118l1.82 5.257c.307.887-.752 1.642-1.47 1.118l-4.47-3.39a1 1 0 00-1.178 0l-4.47 3.39c-.718.524-1.777-.23-1.47-1.118l1.82-5.257a1 1 0 00-.364-1.118L2.05 11.206C1.307 10.63 1.693 9.445 2.62 9.445h5.53a1 1 0 00.95-.69l1.819-5.257z"
-                      />
-                    </svg>
-                  ))}
-                </div>
+                {/* Dynamic Stars */}
+                <StarRating rating={Number(testimonials[activeTestimonial].rating) || 5} />
 
                 {/* Client Name */}
                 <h3 className="font-bold text-gray-900 text-lg mb-2" style={{ fontFamily: FONT_HEADER }}>
@@ -666,7 +674,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
           {/* Enquiry Form */}
           <section className={`animate-fade-in-up animation-delay-500 ${getSectionStyle("enquiry")}`}>
-            <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-5" style={{ fontFamily: FONT_HEADER }}>
+            <h2 className="text-lg font-semibold text-gray-950 tracking-tight mb-5" style={{ fontFamily: FONT_HEADER }}>
               Send an Enquiry
             </h2>
             
@@ -681,7 +689,9 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Enter your name"
-                  className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all"
+                  className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 transition-all"
+                  onFocus={(e) => Object.assign(e.target.style, inputFocusStyle)}
+                  onBlur={(e)  => Object.assign(e.target.style, inputBlurStyle)}
                   required
                 />
               </div>
@@ -696,7 +706,9 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   placeholder="Mobile Number"
-                  className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all"
+                  className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 transition-all"
+                  onFocus={(e) => Object.assign(e.target.style, inputFocusStyle)}
+                  onBlur={(e)  => Object.assign(e.target.style, inputBlurStyle)}
                   required
                 />
               </div>
@@ -711,7 +723,9 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder=""
-                  className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-hidden focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/25 transition-all resize-none"
+                  className="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 transition-all resize-none"
+                  onFocus={(e) => Object.assign(e.target.style, inputFocusStyle)}
+                  onBlur={(e)  => Object.assign(e.target.style, inputBlurStyle)}
                 />
               </div>
 
@@ -751,10 +765,58 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
             </form>
           </section>
 
+
+          {/* Social Links Section */}
+          {(socialLinks.instagram || socialLinks.facebook || socialLinks.youtube || socialLinks.twitter) && (
+            <section className="animate-fade-in-up bg-[var(--color-grey-100)] py-6 px-6">
+              <h2 className="text-lg font-semibold text-gray-950 tracking-tight mb-4" style={{ fontFamily: FONT_HEADER }}>
+                Social Links
+              </h2>
+              
+              <div className="grid grid-cols-4 gap-4 text-center">
+                {socialLinks.instagram && (
+                  <a href={formatSocialLink(socialLinks.instagram, 'instagram')} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
+                      <HugeiconsIcon icon={InstagramIcon} size={20} />
+                    </div>
+                    <span className="text-xs font-bold text-gray-500">Instagram</span>
+                  </a>
+                )}
+
+                {socialLinks.facebook && (
+                  <a href={formatSocialLink(socialLinks.facebook, 'facebook')} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
+                    <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
+                      <HugeiconsIcon icon={FacebookIcon} size={20} />
+                    </div>
+                    <span className="text-xs font-bold text-gray-500">Facebook</span>
+                  </a>
+                )}
+
+                {socialLinks.youtube && (
+                  <a href={formatSocialLink(socialLinks.youtube, 'youtube')} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
+                    <div className="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
+                      <HugeiconsIcon icon={YoutubeIcon} size={20} />
+                    </div>
+                    <span className="text-xs font-bold text-gray-500">Youtube</span>
+                  </a>
+                )}
+
+                {socialLinks.twitter && (
+                  <a href={formatSocialLink(socialLinks.twitter, 'twitter')} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
+                    <div className="w-12 h-12 rounded-full bg-black text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
+                      <HugeiconsIcon icon={TwitterIcon} size={18} />
+                    </div>
+                    <span className="text-xs font-bold text-gray-500">Twitter</span>
+                  </a>
+                )}
+              </div>
+            </section>
+          )}
+
           {/* Location Section */}
           {contact.maps_link && (
-            <section className={`animate-fade-in-up ${getSectionStyle("location")}`}>
-              <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: FONT_HEADER }}>
+            <section className="animate-fade-in-up bg-white pt-14 pb-24 px-6">
+              <h2 className="text-lg font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: FONT_HEADER }}>
                 Our Location
               </h2>
               <p className="text-xs text-gray-500 font-semibold mb-4 leading-relaxed">
@@ -772,58 +834,11 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                   className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500" 
                 />
                 <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
-                  <div className="bg-white/95 backdrop-blur-xs text-gray-800 text-[10px] font-black uppercase tracking-wider px-4 py-2.5 rounded-full shadow-md flex items-center gap-1.5 group-hover:bg-white transition-colors">
+                  <div className="bg-white/95 backdrop-blur-xs text-gray-800 text-xs font-black uppercase tracking-wider px-4 py-2.5 rounded-full shadow-md flex items-center gap-1.5 group-hover:bg-white transition-colors">
                     <HugeiconsIcon icon={Location01Icon} size={12} style={{ color: PRIMARY_COLOR }} /> View on Google Maps
                   </div>
                 </div>
               </a>
-            </section>
-          )}
-
-          {/* Social Links Section */}
-          {(socialLinks.instagram || socialLinks.facebook || socialLinks.youtube || socialLinks.twitter) && (
-            <section className="animate-fade-in-up animation-delay-400 bg-white pt-10 pb-24 px-6">
-              <h2 className="text-[17px] font-semibold text-gray-950 tracking-tight mb-4" style={{ fontFamily: FONT_HEADER }}>
-                Social Links
-              </h2>
-              
-              <div className="grid grid-cols-4 gap-4 text-center">
-                {socialLinks.instagram && (
-                  <a href={formatSocialLink(socialLinks.instagram, 'instagram')} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
-                      <HugeiconsIcon icon={InstagramIcon} size={20} />
-                    </div>
-                    <span className="text-[10px] font-bold text-gray-500">Instagram</span>
-                  </a>
-                )}
-
-                {socialLinks.facebook && (
-                  <a href={formatSocialLink(socialLinks.facebook, 'facebook')} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
-                    <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
-                      <HugeiconsIcon icon={FacebookIcon} size={20} />
-                    </div>
-                    <span className="text-[10px] font-bold text-gray-500">Facebook</span>
-                  </a>
-                )}
-
-                {socialLinks.youtube && (
-                  <a href={formatSocialLink(socialLinks.youtube, 'youtube')} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
-                    <div className="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
-                      <HugeiconsIcon icon={YoutubeIcon} size={20} />
-                    </div>
-                    <span className="text-[10px] font-bold text-gray-500">Youtube</span>
-                  </a>
-                )}
-
-                {socialLinks.twitter && (
-                  <a href={formatSocialLink(socialLinks.twitter, 'twitter')} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
-                    <div className="w-12 h-12 rounded-full bg-black text-white flex items-center justify-center shadow-md group-hover:scale-105 active:scale-95 transition-all">
-                      <HugeiconsIcon icon={TwitterIcon} size={18} />
-                    </div>
-                    <span className="text-[10px] font-bold text-gray-500">Twitter</span>
-                  </a>
-                )}
-              </div>
             </section>
           )}
 
@@ -902,6 +917,134 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           <p className="text-white/60 text-xs font-semibold mt-4">
             {activeImageIndex + 1} / {gallery.length}
           </p>
+        </div>
+      )}
+
+      {/* ── Product Enquiry Modal ── */}
+      {selectedProduct && (
+        <div
+          className="fixed inset-0 z-[9998] bg-black/60 backdrop-blur-sm flex items-end md:items-center justify-center p-0 md:p-4 animate-fade-in"
+          onClick={(e) => { if (e.target === e.currentTarget) setSelectedProduct(null); }}
+        >
+          <div className="w-full md:max-w-md bg-white rounded-t-[32px] md:rounded-[32px] overflow-hidden shadow-2xl animate-fade-in-up max-h-[92vh] flex flex-col">
+            
+            {/* Modal Header */}
+            <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-gray-100 flex-shrink-0">
+              <div>
+                <h3 className="text-base font-bold text-gray-950" style={{ fontFamily: FONT_HEADER }}>
+                  Product Enquiry
+                </h3>
+                <p className="text-xs text-gray-500 mt-0.5">Fill in your details and we'll get back to you</p>
+              </div>
+              <button
+                onClick={() => setSelectedProduct(null)}
+                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200 active:scale-95 transition-all cursor-pointer"
+              >
+                <HugeiconsIcon icon={Cancel01Icon} size={16} />
+              </button>
+            </div>
+
+            <div className="overflow-y-auto flex-1 px-6 py-5 space-y-4">
+              {/* Product Details Preview */}
+              <div
+                className="flex gap-3 p-3 rounded-2xl"
+                style={{ backgroundColor: `${PRIMARY_COLOR}08`, border: `1px solid ${PRIMARY_COLOR}20` }}
+              >
+                {(selectedProduct.image || selectedProduct.imageUrl) && (
+                  <img
+                    src={getImageUrl(selectedProduct.image || selectedProduct.imageUrl)}
+                    alt={selectedProduct.name || selectedProduct.title}
+                    className="w-16 h-16 rounded-xl object-cover flex-shrink-0"
+                  />
+                )}
+                <div className="min-w-0">
+                  <p className="text-sm font-bold text-gray-950 capitalize line-clamp-1">
+                    {selectedProduct.name || selectedProduct.title}
+                  </p>
+                  {selectedProduct.description && (
+                    <p className="text-xs text-gray-500 mt-0.5 line-clamp-2 capitalize">
+                      {selectedProduct.description}
+                    </p>
+                  )}
+                  {selectedProduct.price && (
+                    <div className="flex items-center gap-0.5 mt-1" style={{ color: PRIMARY_COLOR }}>
+                      <HugeiconsIcon icon={RupeeIcon} size={11} />
+                      <p className="text-sm font-bold">{selectedProduct.price.toString().replace(/[₹$]/g, "")}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Form Fields */}
+              <form id="product-enquiry-form" onSubmit={handleEnquirySubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-950 mb-1.5">Full Name *</label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="Enter your name"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 transition-all"
+                    onFocus={(e) => Object.assign(e.target.style, inputFocusStyle)}
+                    onBlur={(e)  => Object.assign(e.target.style, inputBlurStyle)}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-950 mb-1.5">Mobile Number *</label>
+                  <input
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    placeholder="Enter your mobile number"
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 transition-all"
+                    onFocus={(e) => Object.assign(e.target.style, inputFocusStyle)}
+                    onBlur={(e)  => Object.assign(e.target.style, inputBlurStyle)}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-950 mb-1.5">Message (optional)</label>
+                  <textarea
+                    rows={3}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    placeholder="Any specific questions or requirements..."
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 placeholder-gray-400 transition-all resize-none"
+                    onFocus={(e) => Object.assign(e.target.style, inputFocusStyle)}
+                    onBlur={(e)  => Object.assign(e.target.style, inputBlurStyle)}
+                  />
+                </div>
+
+                {submitStatus === "success" && (
+                  <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs px-4 py-3 rounded-xl font-semibold animate-fade-in">
+                    ✓ Enquiry sent successfully! We will contact you soon.
+                  </div>
+                )}
+
+                {submitStatus === "error" && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 text-xs px-4 py-3 rounded-xl font-semibold animate-fade-in">
+                    {errorMessage}
+                  </div>
+                )}
+              </form>
+            </div>
+
+            {/* Submit Button */}
+            <div className="px-6 pb-6 pt-4 border-t border-gray-100 flex-shrink-0">
+              <button
+                type="submit"
+                form="product-enquiry-form"
+                disabled={isSubmitting || submitStatus === "success"}
+                className="w-full text-white py-3.5 rounded-xl font-bold text-sm active:scale-[0.98] transition-all cursor-pointer disabled:opacity-60"
+                style={{ backgroundColor: PRIMARY_COLOR }}
+              >
+                {isSubmitting ? "Submitting..." : submitStatus === "success" ? "✓ Enquiry Sent!" : "Send Enquiry"}
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
