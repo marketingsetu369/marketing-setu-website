@@ -45,14 +45,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const businessName = data.header?.business_name || data.business_name || "";
-  const businessCategory = data.header?.business_category || data.business_category || "Business";
-  const locationAddress = data.contact?.maps_link || data.contact?.phone || data.location_address || "";
+  const businessName = data.header?.businessName || data.header?.business_name || data.business_name || "";
+  const tagline = data.header?.tagline || "";
+  
+  const title = tagline ? `${businessName} | ${tagline}` : businessName;
+  const description = data.about_us || data.header?.tagline || `Learn more about ${businessName}`;
 
-  const title = `${businessName} - ${businessCategory} in ${locationAddress}`;
-  const description = data.header?.tagline || data.about_us || `Learn more about ${businessName}`;
-
-  const logoUrl = getImageUrl(data.header?.logo_url || data.logo_url);
+  const logoUrl = getImageUrl(data.header?.logoUrl || data.header?.logo_url || data.logo_url);
 
   return {
     title,
