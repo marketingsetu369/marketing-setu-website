@@ -1,7 +1,7 @@
 "use client";
 
 import { useThemeStore } from "@/store/themeStore";
-import { PageWrapper, PricingCard, TestimonialCard, useWhatsApp } from "@/views/home-page/component";
+import { PageWrapper, PricingCard, TestimonialCard, InteractiveShowcase, useWhatsApp } from "@/views/home-page/component";
 import { pricingPlans, testimonialsData, translations } from "@/views/home-page/data";
 import CafeCardView from "@/views/home-page/hero-section/CafeCardView";
 import SolarCardView from "@/views/home-page/hero-section/SolarCardView";
@@ -459,9 +459,9 @@ export default function HomeView() {
         </section>
 
         {/* SERVICES SECTION */}
-        <section className="py-24 bg-background" id="services">
+        <section className="py-24 bg-background border-b border-outline overflow-hidden" id="services">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="text-center max-w-3xl mx-auto mb-12">
               <span className="text-xs font-bold uppercase tracking-wider text-secondary bg-paper px-3 py-1 rounded-full inline-block mb-4 border border-outline">
                 CORE PRODUCTS & ADD-ONS
               </span>
@@ -469,114 +469,7 @@ export default function HomeView() {
               <p className="text-secondary text-base sm:text-lg">Our core digital identity solutions powered by automated WhatsApp and customer growth add-ons.</p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* PRIMARY FEATURE 1: Digital Business Card */}
-              <div className="group bg-grey-900 text-white rounded-3xl p-8 sm:p-10 shadow-z12 flex flex-col justify-between hover:shadow-z20 hover:-translate-y-1.5 transition-all duration-300">
-                <div>
-                  <span className="inline-block bg-brand-main text-white text-xs font-semibold px-3 py-1 rounded-full mb-6">MAIN PRODUCT</span>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">Smart Digital Business Card</h3>
-                  <p className="text-gray-200 text-base mb-8 leading-relaxed">
-                    A modern, mobile-friendly digital business card page featuring your contact details, owner profiles, products/services gallery, bio, location, and social links in one quick shareable link.
-                  </p>
-                </div>
-                <button onClick={() => openWhatsApp()} className="text-brand-light font-semibold inline-flex items-center gap-2 transition-all cursor-pointer">
-                  Get Your Digital Business Card <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
-                </button>
-              </div>
-
-              {/* PRIMARY FEATURE 2: WhatsApp Automation */}
-              <div className="group bg-paper rounded-3xl p-8 sm:p-10 flex flex-col justify-between shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                <div>
-                  <div className="w-12 h-12 rounded-2xl bg-success-lighter text-success-main flex items-center justify-center mb-6 font-bold text-lg group-hover:scale-110 transition-transform duration-300">
-                    💬
-                  </div>
-                  <span className="inline-block bg-success-lighter text-success-dark text-xs font-semibold px-3 py-1 rounded-full mb-4">MAIN PRODUCT</span>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-primary mb-4">{t.service_wa_title}</h3>
-                  <p className="text-secondary text-base mb-8 leading-relaxed">
-                    {t.service_wa_lead}
-                  </p>
-                </div>
-                <button onClick={() => openWhatsApp()} className="text-success-main font-semibold inline-flex items-center gap-2 transition-all cursor-pointer text-left">
-                  Get WhatsApp Automation <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
-                </button>
-              </div>
-            </div>
- 
-            {/* SECONDARY ADD-ONS GRID */}
-            <div className="mt-12">
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {/* SECONDARY FEATURE 1: Custom Landing Pages */}
-                <div className="group bg-paper rounded-3xl p-8 shadow-card flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                  <div>
-                    <div className="w-12 h-12 bg-brand-lighter text-brand-main rounded-2xl flex items-center justify-center mb-6 font-bold group-hover:scale-110 transition-transform duration-300">LP</div>
-                    <span className="text-[10px] font-bold text-brand-dark bg-brand-lighter px-2 py-0.5 rounded-full uppercase tracking-wider">Growth Add-On</span>
-                    <h3 className="text-xl font-bold text-primary mt-2 mb-3">{t.service_lp_title}</h3>
-                    <p className="text-secondary text-sm mb-6">{t.service_lp_lead}</p>
-                  </div>
-                  <Link className="text-brand-main font-semibold text-sm inline-flex items-center gap-1 transition-all mt-auto" href="/services#landing-pages">
-                    View Details <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
-                  </Link>
-                </div>
- 
-                {/* SECONDARY FEATURE 2: Missed Call Auto Text */}
-                <div className="group bg-paper rounded-3xl p-8 shadow-card flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                  <div>
-                    <div className="w-12 h-12 bg-info-lighter text-info-main rounded-2xl flex items-center justify-center mb-6 font-bold group-hover:scale-110 transition-transform duration-300">MC</div>
-                    <span className="text-[10px] font-bold text-info-dark bg-info-lighter px-2 py-0.5 rounded-full uppercase tracking-wider">Growth Add-On</span>
-                    <h3 className="text-xl font-bold text-primary mt-2 mb-3">{t.service_mc_title}</h3>
-                    <p className="text-secondary text-sm mb-6">{t.service_mc_lead}</p>
-                  </div>
-                  <Link className="text-info-main font-semibold text-sm inline-flex items-center gap-1 transition-all mt-auto" href="/services#missed-call">
-                    View Details <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
-                  </Link>
-                </div>
- 
-                {/* SECONDARY FEATURE 3: Google Business Setup */}
-                <div className="group bg-paper rounded-3xl p-8 shadow-card flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                  <div>
-                    <div className="w-12 h-12 bg-error-lighter text-error-main rounded-2xl flex items-center justify-center mb-6 font-bold group-hover:scale-110 transition-transform duration-300">GB</div>
-                    <span className="text-[10px] font-bold text-error-dark bg-error-lighter px-2 py-0.5 rounded-full uppercase tracking-wider">Growth Add-On</span>
-                    <h3 className="text-xl font-bold text-primary mt-2 mb-3">{t.service_gb_title}</h3>
-                    <p className="text-secondary text-sm mb-6">{t.service_gb_lead}</p>
-                  </div>
-                  <Link className="text-error-main font-semibold text-sm inline-flex items-center gap-1 transition-all mt-auto" href="/services#google-business">
-                    View Details <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
-                  </Link>
-                </div>
-
-                {/* SECONDARY FEATURE 4: Income & Expense Tracker */}
-                <div className="group bg-paper rounded-3xl p-8 shadow-card flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                  <div>
-                    <div className="w-12 h-12 bg-success-lighter text-success-main rounded-2xl flex items-center justify-center mb-6 font-bold group-hover:scale-110 transition-transform duration-300">IE</div>
-                    <span className="text-[10px] font-bold text-success-dark bg-success-lighter px-2 py-0.5 rounded-full uppercase tracking-wider">Growth Add-On</span>
-                    <h3 className="text-xl font-bold text-primary mt-2 mb-3">{t.service_ie_title}</h3>
-                    <p className="text-secondary text-sm mb-6">{t.service_ie_lead}</p>
-                  </div>
-                  <Link className="text-success-main font-semibold text-sm inline-flex items-center gap-1 transition-all mt-auto" href="/services#income-expense">
-                    View Details <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
-                  </Link>
-                </div>
-
-                {/* SECONDARY FEATURE 5: Digital Product Catalog */}
-                <div className="group bg-paper rounded-3xl p-8 shadow-card flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                  <div>
-                    <div className="w-12 h-12 bg-warning-lighter text-warning-main rounded-2xl flex items-center justify-center mb-6 font-bold group-hover:scale-110 transition-transform duration-300">PC</div>
-                    <span className="text-[10px] font-bold text-warning-dark bg-warning-lighter px-2 py-0.5 rounded-full uppercase tracking-wider">Growth Add-On</span>
-                    <h3 className="text-xl font-bold text-primary mt-2 mb-3">{t.service_pc_title}</h3>
-                    <p className="text-secondary text-sm mb-6">{t.service_pc_lead}</p>
-                  </div>
-                  <Link className="text-warning-main font-semibold text-sm inline-flex items-center gap-1 transition-all mt-auto" href="/services#catalog">
-                    View Details <span className="group-hover:translate-x-1.5 transition-transform duration-300">&rarr;</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
- 
-            <div className="text-center mt-12">
-              <Link className="inline-flex items-center justify-center px-8 py-3.5 bg-gray-900 hover:bg-gray-800 text-white font-medium rounded-xl shadow-z4 hover:shadow-z8 transition-all" href="/services">
-                {t.btn_see_all_services}
-              </Link>
-            </div>
+            <InteractiveShowcase t={t} />
           </div>
         </section>
 

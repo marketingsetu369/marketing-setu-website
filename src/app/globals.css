@@ -283,3 +283,53 @@ input[type=number] {
 .animate-vertical-scroll {
   animation: verticalScrollLoop 15s ease-in-out infinite;
 }
+
+/* Services Showcase Orbital Animations */
+@keyframes orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes counter-orbit {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-orbit {
+  animation: orbit 60s linear infinite;
+}
+
+.animate-counter-orbit {
+  animation: counter-orbit 60s linear infinite;
+}
+
+.animate-orbit:hover,
+.animate-orbit:hover .animate-counter-orbit {
+  animation-play-state: paused;
+}
+
+@keyframes floatSlow1 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes floatSlow2 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+.animate-float-1 {
+  animation: floatSlow1 4s ease-in-out infinite;
+}
+
+.animate-float-2 {
+  animation: floatSlow2 5.5s ease-in-out infinite;
+}
