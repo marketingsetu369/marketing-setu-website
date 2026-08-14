@@ -1,0 +1,132 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    /* Keyframe definitions */
+    @keyframes drawBridge {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+    @keyframes scalePillarLeft {
+      0% {
+        transform: translateY(100px) scale(0.8);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+    @keyframes scalePillarRight {
+      0% {
+        transform: translateY(100px) scale(0.8);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+    @keyframes fadeInNode {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      70% {
+        transform: scale(1.2);
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    @keyframes gradientShift {
+      0% {
+        stop-color: #5B2DEE;
+      }
+      50% {
+        stop-color: #09C95B;
+      }
+      100% {
+        stop-color: #5B2DEE;
+      }
+    }
+    @keyframes gradientShiftRight {
+      0% {
+        stop-color: #09C95B;
+      }
+      50% {
+        stop-color: #5B2DEE;
+      }
+      100% {
+        stop-color: #09C95B;
+      }
+    }
+
+    /* Target class stylings */
+    .bg-card {
+      transform-origin: center;
+      transition: transform 0.5s ease;
+    }
+    .pillar-left {
+      transform-origin: 245px 510px;
+      animation: scalePillarLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      opacity: 0;
+    }
+    .pillar-right {
+      transform-origin: 778px 510px;
+      animation: scalePillarRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s forwards;
+      opacity: 0;
+    }
+    .node-left {
+      transform-origin: 442px 550px;
+      animation: fadeInNode 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s forwards;
+      opacity: 0;
+    }
+    .node-right {
+      transform-origin: 581px 550px;
+      animation: fadeInNode 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.65s forwards;
+      opacity: 0;
+    }
+    .bridge-line {
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      animation: drawBridge 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+    }
+    .stop-1 {
+      animation: gradientShift 6s infinite alternate;
+    }
+    .stop-2 {
+      animation: gradientShiftRight 6s infinite alternate;
+    }
+  </style>
+
+  <g clip-path="url(#clip0_1934_9206)">
+    <!-- Background Card -->
+    <path class="bg-card" d="M800 0H224C100.288 0 0 100.288 0 224V800C0 923.712 100.288 1024 224 1024H800C923.712 1024 1024 923.712 1024 800V224C1024 100.288 923.712 0 800 0Z" fill="white"/>
+    
+    <!-- Left Pillar -->
+    <path class="pillar-left" d="M240.186 315.918C255.607 303.949 274.093 302.617 289.796 308.078C303.585 312.874 314.513 322.414 322.457 332.639L438.435 458.854C443.134 463.969 445.963 470.138 446.962 476.521C441.846 473.541 435.847 471.826 429.432 471.826C410.704 471.826 395.523 486.441 395.522 504.471C395.522 506.703 395.755 508.883 396.198 510.989C393.406 509.336 390.805 507.254 388.496 504.741L279.86 386.516C279.835 387.704 279.82 388.957 279.82 390.275V685.562C279.82 704.29 264.638 719.472 245.91 719.473C227.182 719.473 212 704.29 212 685.562V390.275C212 379.17 212.638 366.159 215.989 353.695C219.433 340.886 226.276 326.743 239.918 316.126L239.917 316.125C239.944 316.104 239.972 316.084 239.998 316.063C240.06 316.015 240.122 315.965 240.185 315.917L240.186 315.918Z" fill="#5B2DEE"/>
+    
+    <!-- Right Pillar -->
+    <path class="pillar-right" d="M783.816 315.918C768.394 303.949 749.909 302.617 734.206 308.078C720.417 312.874 709.489 322.414 701.545 332.639L585.567 458.854C580.861 463.977 578.03 470.156 577.034 476.55C582.16 473.552 588.178 471.826 594.614 471.826C613.342 471.826 628.524 486.441 628.524 504.471C628.524 506.692 628.294 508.862 627.854 510.959C630.627 509.311 633.211 507.238 635.506 504.741L744.142 386.516C744.167 387.704 744.182 388.957 744.182 390.275V685.562C744.182 704.29 759.364 719.473 778.092 719.473C796.82 719.473 812.002 704.29 812.002 685.562V390.275C812.002 379.17 811.364 366.159 808.013 353.695C804.569 340.886 797.726 326.743 784.084 316.126L784.085 316.125C784.058 316.104 784.03 316.084 784.004 316.063C783.942 316.015 783.88 315.965 783.817 315.917L783.816 315.918Z" fill="#09C95B"/>
+    
+    <!-- Left Node -->
+    <path class="node-left" d="M442.935 502.474C457.807 502.474 469.863 514.531 469.863 529.403V579.27C469.863 587.265 466.378 594.445 460.845 599.376C456.458 594.763 450.711 591.966 444.42 591.966C437.51 591.966 431.257 595.339 426.741 600.788C420.221 595.873 416.006 588.064 416.006 579.27V529.403C416.006 514.531 428.062 502.474 442.935 502.474Z" fill="#5B2DEE"/>
+    
+    <!-- Right Node -->
+    <path class="node-right" d="M581.063 502.474C595.935 502.474 607.992 514.531 607.992 529.403V579.27C607.992 586.46 605.173 592.991 600.581 597.821C595.763 592.359 589.085 588.976 581.705 588.976C574.016 588.976 567.089 592.649 562.233 598.518C557.237 593.629 554.135 586.812 554.135 579.27V529.403C554.135 514.531 566.191 502.474 581.063 502.474Z" fill="#09C95B"/>
+    
+    <!-- Connector Bridge -->
+    <path class="bridge-line" d="M329.721 676.006C444.337 618.671 580.921 616.331 690.761 676.006" stroke="url(#paint0_linear_1934_9206)" stroke-width="49.8675" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <defs>
+    <linearGradient id="paint0_linear_1934_9206" x1="333.541" y1="647.954" x2="692.672" y2="647.954" gradientUnits="userSpaceOnUse">
+      <stop class="stop-1" offset="0" stop-color="#5B2DEE"/>
+      <stop offset="0.5" stop-color="#6240E8"/>
+      <stop class="stop-2" offset="1" stop-color="#09C95B"/>
+    </linearGradient>
+    <clipPath id="clip0_1934_9206">
+      <rect width="1024" height="1024" fill="white"/>
+    </clipPath>
+  </defs>
+</svg>
