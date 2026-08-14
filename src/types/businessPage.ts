@@ -54,6 +54,7 @@ export interface ProductCardItem {
   imageUrl?: string;
   buttonName?: string;
   showPrice?: boolean;
+  priceTiers?: { label: string; price: string }[];
 }
 
 export interface QuickActionItem {

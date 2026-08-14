@@ -55,10 +55,34 @@ export function useBusinessPageData(data: BusinessPageData | null): UseBusinessP
   const productsList: ProductCardItem[] = useMemo(() => {
     return (data?.products ?? []).map((p, idx) => {
       let formattedPrice = "Contact for pricing";
+      let priceTiers: { label: string; price: string }[] | undefined = undefined;
+
       if (p.price) {
         const trimmed = String(p.price).trim();
-        formattedPrice = /^\d+(\.\d+)?$/.test(trimmed) ? `₹${trimmed}` : trimmed;
+        if (trimmed.startsWith("[")) {
+          try {
+            const parsed = JSON.parse(trimmed);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              priceTiers = parsed.map((item: any) => ({
+                label: String(item.label || "").trim(),
+                price: String(item.price || "").trim(),
+              }));
+              
+              if (priceTiers.length > 1) {
+                formattedPrice = `From ₹${priceTiers[0].price}`;
+              } else if (priceTiers.length === 1) {
+                formattedPrice = `₹${priceTiers[0].price}`;
+              }
+            }
+          } catch (e) {
+            console.error("Failed to parse pricing tiers:", e);
+            formattedPrice = /^\d+(\.\d+)?$/.test(trimmed) ? `₹${trimmed}` : trimmed;
+          }
+        } else {
+          formattedPrice = /^\d+(\.\d+)?$/.test(trimmed) ? `₹${trimmed}` : trimmed;
+        }
       }
+
       const actionType = (p.buttonName ?? "").toLowerCase().includes("buy")
         ? ProductActionType.Buy
         : ProductActionType.Enquiry;
@@ -74,6 +98,7 @@ export function useBusinessPageData(data: BusinessPageData | null): UseBusinessP
         imageUrl:     p.imageUrl,
         buttonName:   p.buttonName ?? (actionType === ProductActionType.Buy ? "Buy Now" : "Enquiry"),
         showPrice:    p.showPrice,
+        priceTiers,
       };
     });
   }, [data?.products]);

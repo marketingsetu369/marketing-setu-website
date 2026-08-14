@@ -4,7 +4,7 @@ import { BusinessPageApi } from "@/api/repositories/businessPageApi";
 import { ArrowLeft02Icon, RupeeIcon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { BusinessPageProvider } from "../common/BusinessPageContext";
 import { getImageUrl } from "../common/utils";
 import ProductEnquiryModal from "../default-section/ProductEnquiryModal";
@@ -18,6 +18,7 @@ interface Product {
   price?: string | number;
   showPrice?: boolean;
   buttonName?: string;
+  priceTiers?: { label: string; price: string }[];
 }
  
 interface ProductsListViewProps {
@@ -27,7 +28,12 @@ interface ProductsListViewProps {
  
 export default function ProductsListView({ data, slug }: ProductsListViewProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [formData, setFormData] = useState({ name: "", phone: "", message: "" });
+  const [formData, setFormData] = useState<{
+    name: string;
+    phone: string;
+    message: string;
+    selectedPriceTier?: string;
+  }>({ name: "", phone: "", message: "", selectedPriceTier: "" });
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
@@ -36,7 +42,38 @@ export default function ProductsListView({ data, slug }: ProductsListViewProps) 
   const primaryColor = data?.theme_color_hex || "#7265E3";
   const businessName = data?.header?.business_name || data?.business_name || "";
   const logoUrl = data?.header?.logo_url || data?.logo_url || "";
-  const products: Product[] = Array.isArray(data?.products) ? data.products : [];
+ 
+  // Map raw product pricing json to tiers
+  const products: Product[] = useMemo(() => {
+    if (!data || !Array.isArray(data.products)) return [];
+    return data.products.map((p: any) => {
+      let priceTiers: { label: string; price: string }[] | undefined = undefined;
+      let displayPrice = p.price;
+      if (p.price && String(p.price).trim().startsWith("[")) {
+        try {
+          const parsed = JSON.parse(String(p.price).trim());
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            priceTiers = parsed.map((item: any) => ({
+              label: String(item.label || "").trim(),
+              price: String(item.price || "").trim(),
+            }));
+            if (priceTiers.length > 1) {
+              displayPrice = `From ${priceTiers[0].price}`;
+            } else if (priceTiers.length === 1) {
+              displayPrice = `${priceTiers[0].price}`;
+            }
+          }
+        } catch (_) {}
+      } else if (p.price) {
+        displayPrice = String(p.price).trim();
+      }
+      return {
+        ...p,
+        price: displayPrice,
+        priceTiers,
+      };
+    });
+  }, [data]);
  
   const filteredProducts = products.filter((prod) => {
     const name = (prod.name || prod.title || "").toLowerCase();
@@ -56,17 +93,24 @@ export default function ProductsListView({ data, slug }: ProductsListViewProps) 
     setSubmitStatus("idle");
     setErrorMessage("");
     try {
+      const selectedOptionText = formData.selectedPriceTier
+        ? `Option selected: ${formData.selectedPriceTier}`
+        : "";
+      const enquiryMsg = [formData.message.trim(), selectedOptionText]
+        .filter(Boolean)
+        .join("\n");
+
       await BusinessPageApi.submitEnquiry(slug, {
         name: formData.name.trim(),
         phone: formData.phone.trim(),
-        message: formData.message.trim(),
+        message: enquiryMsg,
         isProduct: true,
         productName: selectedProduct?.name || selectedProduct?.title || undefined,
         productPrice: selectedProduct?.price?.toString() || undefined,
         productDescription: selectedProduct?.description || undefined,
       });
       setSubmitStatus("success");
-      setFormData({ name: "", phone: "", message: "" });
+      setFormData({ name: "", phone: "", message: "", selectedPriceTier: "" });
       setTimeout(() => {
         setSelectedProduct(null);
         setSubmitStatus("idle");
@@ -82,11 +126,11 @@ export default function ProductsListView({ data, slug }: ProductsListViewProps) 
     }
   };
  
-  const openProductEnquiry = (prod: Product) => {
+  const openProductEnquiry = (prod: Product, preSelectedTier?: string) => {
     setSelectedProduct(prod);
     setSubmitStatus("idle");
     setErrorMessage("");
-    setFormData({ name: "", phone: "", message: "" });
+    setFormData({ name: "", phone: "", message: "", selectedPriceTier: preSelectedTier || "" });
   };
  
   return (
@@ -108,8 +152,8 @@ export default function ProductsListView({ data, slug }: ProductsListViewProps) 
                 className="w-8 h-8 rounded-full object-cover border border-gray-200"
               />
             )}
-            <div>
-              <h1 className="text-sm font-bold text-gray-950 tracking-tight leading-tight">
+            <div className="min-w-0">
+              <h1 className="text-sm font-bold text-gray-950 tracking-tight leading-tight truncate min-w-0">
                 {businessName}
               </h1>
               <p className="text-[10px] text-gray-500 font-medium">Products &amp; Services</p>
@@ -149,49 +193,12 @@ export default function ProductsListView({ data, slug }: ProductsListViewProps) 
           ) : (
             <div className="grid grid-cols-1 min-[600px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {filteredProducts.map((prod, idx) => (
-                <div
+                <ProductCard
                   key={idx}
-                  className="bg-white rounded-2xl shadow-card overflow-hidden flex flex-col group cursor-pointer hover:-translate-y-1 transition-all duration-300 border border-gray-100"
-                >
-                  <div className="aspect-square relative bg-gray-100 rounded-t-2xl overflow-hidden">
-                    {(prod.image || prod.imageUrl) && (
-                      <img
-                        src={getImageUrl(prod.image || prod.imageUrl)}
-                        alt={prod.name || prod.title}
-                        className="w-full h-full object-cover"
-                      />
-                    )}
-                  </div>
-                  <div className="p-3.5 flex-grow flex flex-col justify-between">
-                    <div>
-                      <h3 className="font-semibold text-gray-950 text-sm sm:text-base tracking-tight line-clamp-1 capitalize">
-                        {prod.name || prod.title}
-                      </h3>
-                      {prod.description && (
-                        <p className="text-[11px] sm:text-xs text-gray-500 line-clamp-2 mt-0.5 mb-2 font-medium leading-normal capitalize">
-                          {prod.description}
-                        </p>
-                      )}
-                    </div>
-                    <div className="mt-auto">
-                      {prod.showPrice !== false && prod.price && (
-                        <div className="mb-3 flex items-center gap-0.5 text-gray-950">
-                          <HugeiconsIcon icon={RupeeIcon} size={13} className="flex-shrink-0" />
-                          <p className="text-xs sm:text-sm font-bold">
-                            {prod.price.toString()}
-                          </p>
-                        </div>
-                      )}
-                      <button
-                        onClick={() => openProductEnquiry(prod)}
-                        className="w-full bg-transparent hover:bg-gray-50 text-[10px] sm:text-xs py-2 rounded-lg font-bold active:scale-95 transition-all border text-center"
-                        style={{ borderColor: primaryColor, color: primaryColor }}
-                      >
-                        {prod.buttonName || "Enquiry"}
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                  prod={prod}
+                  primaryColor={primaryColor}
+                  onEnquire={openProductEnquiry}
+                />
               ))}
             </div>
           )}
@@ -212,5 +219,101 @@ export default function ProductsListView({ data, slug }: ProductsListViewProps) 
         )}
       </div>
     </BusinessPageProvider>
+  );
+}
+
+function ProductCard({
+  prod,
+  primaryColor,
+  onEnquire,
+}: {
+  prod: Product;
+  primaryColor: string;
+  onEnquire: (product: Product, preSelectedTier?: string) => void;
+}) {
+  const hasMultiplePrices = prod.priceTiers && prod.priceTiers.length > 1;
+  const [selectedTierIdx, setSelectedTierIdx] = useState(0);
+
+  const displayPrice = hasMultiplePrices && prod.priceTiers
+    ? prod.priceTiers[selectedTierIdx].price
+    : prod.price;
+
+  const currentPreSelectedTierStr = hasMultiplePrices && prod.priceTiers
+    ? `${prod.priceTiers[selectedTierIdx].label} - ₹${prod.priceTiers[selectedTierIdx].price}`
+    : undefined;
+
+  return (
+    <div className="bg-white rounded-2xl shadow-card overflow-hidden flex flex-col group cursor-pointer hover:-translate-y-1 transition-all duration-300 border border-gray-100">
+      <div className="aspect-square relative bg-gray-100 rounded-t-2xl overflow-hidden">
+        {(prod.image || prod.imageUrl) && (
+          <img
+            src={getImageUrl(prod.image || prod.imageUrl)}
+            alt={prod.name || prod.title}
+            className="w-full h-full object-cover"
+          />
+        )}
+      </div>
+      <div className="p-3.5 flex-grow flex flex-col justify-between">
+        <div>
+          <h3 className="font-semibold text-gray-950 text-sm sm:text-base tracking-tight line-clamp-1 capitalize">
+            {prod.name || prod.title}
+          </h3>
+          {prod.description && (
+            <p className="text-[11px] sm:text-xs text-gray-500 line-clamp-2 mt-0.5 mb-2 font-medium leading-normal capitalize">
+              {prod.description}
+            </p>
+          )}
+        </div>
+        <div className="mt-auto">
+          <div className="mb-3 flex items-center justify-between gap-2 h-9">
+            {hasMultiplePrices && prod.priceTiers ? (
+              <>
+                <select
+                  value={selectedTierIdx}
+                  onChange={(e) => setSelectedTierIdx(Number(e.target.value))}
+                  onClick={(e) => e.stopPropagation()} // Prevent card navigation or click events
+                  className="bg-gray-50 border border-gray-200 rounded-lg px-2 py-1.5 text-xs font-semibold text-gray-800 focus:outline-none max-w-[55%]"
+                >
+                  {prod.priceTiers.map((tier, idx) => (
+                    <option key={idx} value={idx}>
+                      {tier.label}
+                    </option>
+                  ))}
+                </select>
+                {prod.showPrice !== false && displayPrice && (
+                  <div className="flex items-center gap-0.5 text-gray-950 flex-shrink-0">
+                    <HugeiconsIcon icon={RupeeIcon} size={13} className="flex-shrink-0" />
+                    <p className="text-xs sm:text-sm font-bold">
+                      {displayPrice.toString()}
+                    </p>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                {prod.showPrice !== false && displayPrice && (
+                  <div className="flex items-center gap-0.5 text-gray-950 flex-shrink-0">
+                    <HugeiconsIcon icon={RupeeIcon} size={13} className="flex-shrink-0" />
+                    <p className="text-xs sm:text-sm font-bold">
+                      {displayPrice.toString()}
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onEnquire(prod, currentPreSelectedTierStr);
+            }}
+            className="w-full bg-transparent hover:bg-gray-50 text-[10px] sm:text-xs py-2 rounded-lg font-bold active:scale-95 transition-all border text-center"
+            style={{ borderColor: primaryColor, color: primaryColor }}
+          >
+            {prod.buttonName || "Enquiry"}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

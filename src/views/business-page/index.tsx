@@ -32,7 +32,12 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
   // ── State ────────────────────────────────────────────────────────────────
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null);
-  const [formData, setFormData] = useState({ name: "", phone: "", message: "" });
+  const [formData, setFormData] = useState<{
+    name: string;
+    phone: string;
+    message: string;
+    selectedPriceTier?: string;
+  }>({ name: "", phone: "", message: "", selectedPriceTier: "" });
   const [isProductEnquiry, setIsProductEnquiry] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,9 +63,40 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
   };
 
   const ownerList = Array.isArray(data?.owner) ? data.owner : [];
-  const products = Array.isArray(data?.products) ? data.products : [];
   const gallery = Array.isArray(data?.gallery) ? data.gallery : [];
   const testimonials = Array.isArray(data?.testimonials) ? data.testimonials : [];
+
+  // Map raw product pricing json to displayable price
+  const products = React.useMemo(() => {
+    if (!data || !Array.isArray(data.products)) return [];
+    return data.products.map((p: any) => {
+      let priceTiers: { label: string; price: string }[] | undefined = undefined;
+      let displayPrice = p.price;
+      if (p.price && String(p.price).trim().startsWith("[")) {
+        try {
+          const parsed = JSON.parse(String(p.price).trim());
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            priceTiers = parsed.map((item: any) => ({
+              label: String(item.label || "").trim(),
+              price: String(item.price || "").trim(),
+            }));
+            if (priceTiers.length > 1) {
+              displayPrice = `From ${priceTiers[0].price}`;
+            } else if (priceTiers.length === 1) {
+              displayPrice = `${priceTiers[0].price}`;
+            }
+          }
+        } catch (_) {}
+      } else if (p.price) {
+        displayPrice = String(p.price).trim();
+      }
+      return {
+        ...p,
+        price: displayPrice,
+        priceTiers,
+      };
+    });
+  }, [data]);
 
   const socialLinks = {
     instagram: data?.social_links?.instagram || "",
@@ -95,17 +131,24 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
     setSubmitStatus("idle");
     setErrorMessage("");
     try {
+      const selectedOptionText = formData.selectedPriceTier
+        ? `Option selected: ${formData.selectedPriceTier}`
+        : "";
+      const enquiryMsg = [formData.message.trim(), selectedOptionText]
+        .filter(Boolean)
+        .join("\n");
+
       await BusinessPageApi.submitEnquiry(slug, {
         name: formData.name.trim(),
         phone: formData.phone.trim(),
-        message: formData.message.trim(),
+        message: enquiryMsg,
         isProduct: isProductEnquiry,
         productName: selectedProduct?.name || selectedProduct?.title || undefined,
         productPrice: selectedProduct?.price?.toString() || undefined,
         productDescription: selectedProduct?.description || undefined,
       });
       setSubmitStatus("success");
-      setFormData({ name: "", phone: "", message: "" });
+      setFormData({ name: "", phone: "", message: "", selectedPriceTier: "" });
       setTimeout(() => { setSelectedProduct(null); setSubmitStatus("idle"); }, 2000);
     } catch (err: any) {
       console.error(err);
@@ -122,12 +165,12 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
     if (el) { el.scrollIntoView({ behavior: "smooth" }); el.focus(); }
   };
 
-  const openProductEnquiry = (prod: any) => {
+  const openProductEnquiry = (prod: any, preSelectedTier?: string) => {
     setSelectedProduct(prod);
     setIsProductEnquiry(true);
     setSubmitStatus("idle");
     setErrorMessage("");
-    setFormData({ name: "", phone: "", message: "" });
+    setFormData({ name: "", phone: "", message: "", selectedPriceTier: preSelectedTier || "" });
   };
 
   // ── Render ───────────────────────────────────────────────────────────────
@@ -137,7 +180,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
         className="min-h-screen bg-[var(--color-grey-100)] flex justify-center items-start md:items-center py-0 md:py-8"
         style={{ fontFamily: "var(--font-inter)" }}
       >
-        <div className="w-full md:max-w-[1280px] bg-[var(--color-grey-100)] min-h-screen md:min-h-[820px] md:h-[820px] relative flex flex-col md:flex-row overflow-hidden animate-fade-in-up">
+        <div className="w-full md:max-w-[1280px] bg-[var(--color-grey-100)] min-h-screen md:min-h-[820px] md:h-[820px] relative flex flex-col md:flex-row md:overflow-hidden animate-fade-in-up">
 
           {/* ── LEFT COLUMN ── */}
           <div className="w-full md:w-[35%] bg-[var(--color-grey-100)] flex flex-col justify-between relative md:pb-0 md:h-full md:overflow-y-auto no-scrollbar">
@@ -149,7 +192,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           </div>
 
           {/* ── RIGHT COLUMN ── */}
-          <div className="w-full md:w-[65%] flex flex-col overflow-y-auto md:h-full no-scrollbar bg-white pb-8 md:pb-8 md:border-l-[10px] md:border-white">
+          <div className="w-full md:w-[65%] flex flex-col md:overflow-y-auto md:h-full no-scrollbar bg-white pb-8 md:pb-8 md:border-l-[10px] md:border-white">
             <VideoSection youtubeUrl={data?.youtube_url} sectionClass={section("video")} />
             <ProductsSection products={products} slug={slug} sectionClass={section("products")} onEnquire={openProductEnquiry} />
             <GallerySection gallery={gallery} onImageClick={setActiveImageIndex} />

@@ -14,12 +14,14 @@ interface Product {
   title?: string;
   description?: string;
   price?: string | number;
+  priceTiers?: { label: string; price: string }[];
 }
 
 interface FormData {
   name: string;
   phone: string;
   message: string;
+  selectedPriceTier?: string;
 }
 
 interface ProductEnquiryModalProps {
@@ -44,6 +46,18 @@ export default function ProductEnquiryModal({
   errorMessage,
 }: ProductEnquiryModalProps) {
   const { primaryColor, fontHeader } = useBusinessPageTheme();
+
+  // Set default price tier option if missing
+  React.useEffect(() => {
+    if (product.priceTiers && product.priceTiers.length > 1 && !formData.selectedPriceTier) {
+      onChange({
+        ...formData,
+        selectedPriceTier: `${product.priceTiers[0].label} - ₹${product.priceTiers[0].price}`,
+      });
+    }
+  }, [product.priceTiers, formData, onChange]);
+
+  const hasMultiplePrices = product.priceTiers && product.priceTiers.length > 1;
 
   return (
     <div
@@ -90,7 +104,7 @@ export default function ProductEnquiryModal({
                   {product.description}
                 </p>
               )}
-              {product.price && (
+              {product.price && !hasMultiplePrices && (
                 <div className="flex items-center gap-0.5 mt-1" style={{ color: primaryColor }}>
                   <HugeiconsIcon icon={RupeeIcon} size={11} />
                   <p className="text-sm font-bold">{product.price.toString().replace(/[₹$]/g, "")}</p>
@@ -101,6 +115,26 @@ export default function ProductEnquiryModal({
 
           {/* Form */}
           <form id="product-enquiry-form" onSubmit={onSubmit} className="space-y-4">
+            {hasMultiplePrices && (
+              <div>
+                <label className="block text-sm font-semibold text-gray-950 mb-1.5">Select Option *</label>
+                <select
+                  value={formData.selectedPriceTier || ""}
+                  onChange={(e) => onChange({ ...formData, selectedPriceTier: e.target.value })}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold text-gray-950 focus:outline-none focus:ring-1 focus:ring-gray-300 focus:border-gray-300"
+                  required
+                >
+                  {(product.priceTiers || []).map((tier, idx) => {
+                    const valueStr = `${tier.label} - ₹${tier.price}`;
+                    return (
+                      <option key={idx} value={valueStr}>
+                        {tier.label} (₹{tier.price})
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            )}
             <div>
               <label className="block text-sm font-semibold text-gray-950 mb-1.5">Full Name *</label>
               <ThemedInput

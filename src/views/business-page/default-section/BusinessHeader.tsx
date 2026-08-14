@@ -78,13 +78,12 @@ export default function BusinessHeader({ header, contact, slug }: BusinessHeader
         )}
       </div>
 
-      {/* Business Name + Verified Badge */}
-      <div className="flex items-center gap-1.5 justify-center mb-1">
-        <h1 className="text-xl font-semibold text-gray-900 tracking-tight" style={{ fontFamily: fontHeader }}>
+      <div className="flex items-center gap-1.5 justify-center mb-1 max-w-full px-4 flex-nowrap">
+        <h1 className="text-xl max-[400px]:text-base font-semibold text-gray-900 tracking-tight truncate min-w-0" style={{ fontFamily: fontHeader }}>
           {header.business_name || ""}
         </h1>
-        <span className="flex items-center justify-center" style={{ color: primaryColor }}>
-          <HugeiconsIcon icon={ShieldCheck} size={18} />
+        <span className="flex items-center justify-center flex-shrink-0">
+          <HugeiconsIcon icon={ShieldCheck} size={18} color={primaryColor} />
         </span>
       </div>
 

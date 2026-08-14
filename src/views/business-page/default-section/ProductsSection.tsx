@@ -2,7 +2,7 @@
 
 import { RupeeIcon, ArrowRight02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useBusinessPageTheme } from "../common/BusinessPageContext";
 import { getImageUrl } from "../common/utils";
 
@@ -15,13 +15,14 @@ interface Product {
   price?: string | number;
   showPrice?: boolean;
   buttonName?: string;
+  priceTiers?: { label: string; price: string }[];
 }
 
 interface ProductsSectionProps {
   products: Product[];
   slug: string;
   sectionClass: string;
-  onEnquire: (product: Product) => void;
+  onEnquire: (product: Product, preSelectedTier?: string) => void;
 }
 
 export default function ProductsSection({
@@ -66,49 +67,12 @@ export default function ProductsSection({
         className="flex gap-4 overflow-x-auto scrollbar-none scroll-smooth pb-2 -mx-6 px-6"
       >
         {displayProducts.map((prod, idx) => (
-          <div
+          <ProductCard
             key={idx}
-            className="w-56 flex-shrink-0 bg-white rounded-2xl shadow-card overflow-hidden flex flex-col group cursor-pointer hover:-translate-y-1 transition-all duration-300"
-          >
-            <div className="aspect-square relative bg-gray-100 rounded-t-2xl overflow-hidden">
-              {(prod.image || prod.imageUrl) && (
-                <img
-                  src={getImageUrl(prod.image || prod.imageUrl)}
-                  alt={prod.name || prod.title}
-                  className="w-full h-full object-cover"
-                />
-              )}
-            </div>
-            <div className="p-3.5 flex-grow flex flex-col justify-between">
-              <div>
-                <h3 className="font-semibold text-gray-950 text-base tracking-tight line-clamp-1 capitalize">
-                  {prod.name || prod.title}
-                </h3>
-                {prod.description && (
-                  <p className="text-xs text-gray-500 line-clamp-2 mt-0.5 mb-2 font-medium leading-normal capitalize">
-                    {prod.description}
-                  </p>
-                )}
-              </div>
-              <div className="mt-auto">
-                {prod.showPrice !== false && prod.price && (
-                  <div className="mb-3 flex items-center gap-0.5 text-gray-950">
-                    <HugeiconsIcon icon={RupeeIcon} size={13} className="flex-shrink-0" />
-                    <p className="text-sm font-bold">
-                      {prod.price.toString()}
-                    </p>
-                  </div>
-                )}
-                <button
-                  onClick={() => onEnquire(prod)}
-                  className="w-full bg-transparent hover:bg-gray-50 text-xs py-2 rounded-lg font-bold active:scale-95 transition-all border text-center"
-                  style={{ borderColor: primaryColor, color: primaryColor }}
-                >
-                  {prod.buttonName || "Enquiry"}
-                </button>
-              </div>
-            </div>
-          </div>
+            prod={prod}
+            primaryColor={primaryColor}
+            onEnquire={onEnquire}
+          />
         ))}
 
         {hasMore && (
@@ -125,5 +89,101 @@ export default function ProductsSection({
         )}
       </div>
     </section>
+  );
+}
+
+function ProductCard({
+  prod,
+  primaryColor,
+  onEnquire,
+}: {
+  prod: Product;
+  primaryColor: string;
+  onEnquire: (product: Product, preSelectedTier?: string) => void;
+}) {
+  const hasMultiplePrices = prod.priceTiers && prod.priceTiers.length > 1;
+  const [selectedTierIdx, setSelectedTierIdx] = useState(0);
+
+  const displayPrice = hasMultiplePrices && prod.priceTiers
+    ? prod.priceTiers[selectedTierIdx].price
+    : prod.price;
+
+  const currentPreSelectedTierStr = hasMultiplePrices && prod.priceTiers
+    ? `${prod.priceTiers[selectedTierIdx].label} - ₹${prod.priceTiers[selectedTierIdx].price}`
+    : undefined;
+
+  return (
+    <div className="w-56 flex-shrink-0 bg-white rounded-2xl shadow-card overflow-hidden flex flex-col group cursor-pointer hover:-translate-y-1 transition-all duration-300">
+      <div className="aspect-square relative bg-gray-100 rounded-t-2xl overflow-hidden">
+        {(prod.image || prod.imageUrl) && (
+          <img
+            src={getImageUrl(prod.image || prod.imageUrl)}
+            alt={prod.name || prod.title}
+            className="w-full h-full object-cover"
+          />
+        )}
+      </div>
+      <div className="p-3.5 flex-grow flex flex-col justify-between">
+        <div>
+          <h3 className="font-semibold text-gray-950 text-base tracking-tight line-clamp-1 capitalize">
+            {prod.name || prod.title}
+          </h3>
+          {prod.description && (
+            <p className="text-xs text-gray-500 line-clamp-2 mt-0.5 mb-2 font-medium leading-normal capitalize">
+              {prod.description}
+            </p>
+          )}
+        </div>
+        <div className="mt-auto">
+          <div className="mb-3 flex items-center justify-between gap-2 h-9">
+            {hasMultiplePrices && prod.priceTiers ? (
+              <>
+                <select
+                  value={selectedTierIdx}
+                  onChange={(e) => setSelectedTierIdx(Number(e.target.value))}
+                  onClick={(e) => e.stopPropagation()} // Prevent card navigation or click events
+                  className="bg-gray-50 border border-gray-200 rounded-lg px-2 py-1 text-xs font-semibold text-gray-800 focus:outline-none max-w-[55%]"
+                >
+                  {prod.priceTiers.map((tier, idx) => (
+                    <option key={idx} value={idx}>
+                      {tier.label}
+                    </option>
+                  ))}
+                </select>
+                {prod.showPrice !== false && displayPrice && (
+                  <div className="flex items-center gap-0.5 text-gray-950 flex-shrink-0">
+                    <HugeiconsIcon icon={RupeeIcon} size={13} className="flex-shrink-0" />
+                    <p className="text-sm font-bold">
+                      {displayPrice.toString()}
+                    </p>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                {prod.showPrice !== false && displayPrice && (
+                  <div className="flex items-center gap-0.5 text-gray-950 flex-shrink-0">
+                    <HugeiconsIcon icon={RupeeIcon} size={13} className="flex-shrink-0" />
+                    <p className="text-sm font-bold">
+                      {displayPrice.toString()}
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onEnquire(prod, currentPreSelectedTierStr);
+            }}
+            className="w-full bg-transparent hover:bg-gray-50 text-xs py-2 rounded-lg font-bold active:scale-95 transition-all border text-center"
+            style={{ borderColor: primaryColor, color: primaryColor }}
+          >
+            {prod.buttonName || "Enquiry"}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

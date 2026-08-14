@@ -48,12 +48,12 @@ export default function OwnerCard({ ownerList }: OwnerCardProps) {
                 )}
               </div>
               <div className="flex-grow">
-                <div className="flex items-center gap-1.5">
-                  <h3 className="font-bold text-gray-950 text-lg" style={{ fontFamily: fontHeader }}>
+                <div className="flex items-center gap-1.5 flex-nowrap max-w-full">
+                  <h3 className="font-bold text-gray-950 text-lg truncate min-w-0" style={{ fontFamily: fontHeader }}>
                     {owner.name}
                   </h3>
-                  <span className="text-[#2e7d32] flex items-center justify-center">
-                    <HugeiconsIcon icon={ShieldCheck} size={18} color="#2e7d32" />
+                  <span className="flex items-center justify-center flex-shrink-0">
+                    <HugeiconsIcon icon={ShieldCheck} size={18} color={primaryColor} />
                   </span>
                 </div>
                 <p className="text-xs text-gray-500 font-semibold mt-0.5">{owner.title}</p>
@@ -76,7 +76,7 @@ export default function OwnerCard({ ownerList }: OwnerCardProps) {
           )}
 
           {/* Stats */}
-          <div className="bg-white rounded-[16px] py-5 px-2 grid grid-cols-2 text-center items-center">
+          <div className="bg-white rounded-[16px] py-5 px-2 grid grid-cols-2 text-center items-center mt-3">
             <div>
               <p className="text-xl font-semibold leading-tight" style={{ color: primaryColor, fontFamily: fontHeader }}>
                 {owner.happy_customers_count || 140}+
