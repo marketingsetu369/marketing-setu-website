@@ -118,19 +118,27 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
         key={service.id}
         onClick={() => setActiveTab(service.id)}
         onMouseEnter={() => setActiveTab(service.id)}
-        className={`group flex flex-col items-center justify-center p-3 rounded-2xl bg-paper shadow-card hover:shadow-z12 hover:-translate-y-1 transition-all duration-300 border-0 text-center w-24 h-24 cursor-pointer relative z-10 ${
-          isSelected 
-            ? "ring-2 ring-brand-main/20 scale-105" 
-            : "hover:scale-[1.02]"
+        className={`group flex flex-col items-center justify-center bg-transparent border-0 shadow-none text-center w-24 h-24 cursor-pointer relative z-10 transition-all duration-300 ${
+          isSelected ? "scale-105" : "hover:scale-105"
         }`}
       >
         <div 
-          className="text-2xl mb-2 group-hover:scale-110 transition-transform duration-300 select-none"
-          style={{ color: service.accentColor }}
+          className={`w-14 h-14 rounded-[18px] flex items-center justify-center text-white mb-2 transition-all duration-300 select-none ${
+            isSelected 
+              ? "scale-110 ring-4 ring-offset-2 ring-offset-background" 
+              : "group-hover:scale-115"
+          }`}
+          style={{ 
+            backgroundColor: service.accentColor,
+            boxShadow: `0 10px 20px -6px ${service.accentColor}88`,
+            outlineColor: isSelected ? service.accentColor : 'transparent'
+          }}
         >
-          <HugeiconsIcon icon={service.icon} size={28} />
+          <HugeiconsIcon icon={service.icon} size={26} />
         </div>
-        <span className="block text-[11px] font-bold text-primary leading-tight group-hover:text-brand-main transition-colors truncate max-w-full px-0.5">
+        <span className={`block text-[10.5px] font-semibold transition-colors truncate max-w-full px-0.5 ${
+          isSelected ? "text-primary font-bold" : "text-secondary group-hover:text-primary"
+        }`}>
           {service.label}
         </span>
       </button>
@@ -188,7 +196,7 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
               <div className="flex-1 h-5 bg-[#4A3DAB] rounded flex items-center justify-center gap-0.5 text-white font-bold text-[5.5px]">
                 <HugeiconsIcon icon={WhatsappIcon} size={8} /> Message
               </div>
-              <div className="flex-1 h-5 bg-[#EEF2F6] border border-gray-200 rounded flex items-center justify-center gap-0.5 text-[#4A3DAB] font-bold text-[5.5px]">
+              <div className="flex-1 h-5 bg-[#EEF2F6] border border-slate-100 rounded flex items-center justify-center gap-0.5 text-[#4A3DAB] font-bold text-[5.5px]">
                 <HugeiconsIcon icon={ShoppingBag01Icon} size={8} /> Call Now
               </div>
             </div>
@@ -218,7 +226,7 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
             </div>
 
             {/* Bottom Type Bar */}
-            <div className="bg-white p-1.5 border-t border-gray-150 flex gap-1 items-center mb-1">
+            <div className="bg-white p-1.5 border-t border-slate-100 flex gap-1 items-center mb-1">
               <div className="flex-1 h-4.5 bg-[#F0F2F5] rounded-full px-2 py-0.5 text-[5px] text-gray-400 flex items-center">
                 Type message...
               </div>
@@ -258,13 +266,13 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
         return (
           <div className="w-full h-full bg-[#F1F3F4] select-none flex flex-col overflow-hidden text-left p-2 pt-8">
             {/* Google Search Bar Mock */}
-            <div className="bg-white border border-gray-200 rounded-full h-4.5 px-2 py-0.5 flex items-center gap-1.5 shadow-sm mb-3">
+            <div className="bg-white border border-slate-100 rounded-full h-4.5 px-2 py-0.5 flex items-center gap-1.5 shadow-sm mb-3">
               <span className="text-[6px] font-black text-blue-500 leading-none">G</span>
               <div className="text-[5px] text-gray-400 flex-1">marketing setu reviews</div>
             </div>
 
             {/* Google Map Listing Card */}
-            <div className="bg-white rounded-lg p-2 shadow-sm border border-gray-150 space-y-2">
+            <div className="bg-white rounded-lg p-2 shadow-sm border border-slate-100 space-y-2">
               <div className="text-[8.5px] font-bold text-gray-900 leading-tight">MarketingSetu Ltd</div>
               
               {/* Stars Review Row */}
@@ -312,18 +320,18 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
 
             {/* Income & Expense Summary Cards */}
             <div className="flex gap-1.5 mb-2.5">
-              <div className="bg-emerald-50 border border-emerald-100 rounded-lg p-1.5 flex-1 text-center">
+              <div className="bg-emerald-50 border border-emerald-500/10 rounded-lg p-1.5 flex-1 text-center">
                 <div className="text-[4px] text-emerald-600 font-bold uppercase">Cash In</div>
                 <div className="text-[7px] text-emerald-700 font-extrabold mt-0.5">₹42,800</div>
               </div>
-              <div className="bg-red-50 border border-red-100 rounded-lg p-1.5 flex-1 text-center">
+              <div className="bg-red-50 border border-red-500/10 rounded-lg p-1.5 flex-1 text-center">
                 <div className="text-[4px] text-red-600 font-bold uppercase">Cash Out</div>
                 <div className="text-[7px] text-red-700 font-extrabold mt-0.5">₹11,500</div>
               </div>
             </div>
 
             {/* Ledger Entries List */}
-            <div className="bg-white rounded-lg p-1.5 border border-gray-150 space-y-1 flex-1 mb-1">
+            <div className="bg-white rounded-lg p-1.5 border border-slate-100 space-y-1 flex-1 mb-1">
               <div className="text-[5px] text-gray-400 font-bold uppercase mb-1">Recent Transactions</div>
               
               <div className="flex justify-between items-center text-[5.5px] border-b border-gray-100 pb-0.5">
@@ -347,17 +355,17 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
           <div className="w-full h-full bg-white select-none flex flex-col overflow-hidden text-left p-2 pt-8">
             <div className="flex items-center justify-between border-b border-gray-100 pb-1 mb-2.5">
               <div className="text-[8px] font-black text-gray-900 leading-none">Artisan Bakery</div>
-              <div className="h-3 w-8 bg-gray-50 border border-gray-150 rounded flex items-center justify-center text-[4px] text-gray-500 font-bold">Search</div>
+              <div className="h-3 w-8 bg-gray-50 border border-slate-100 rounded flex items-center justify-center text-[4px] text-gray-500 font-bold">Search</div>
             </div>
 
             {/* Mini Products Grid */}
             <div className="grid grid-cols-2 gap-1.5">
-              <div className="bg-[#FAFBFD] border border-gray-150 rounded-lg p-1 text-center flex flex-col justify-between">
+              <div className="bg-[#FAFBFD] border border-slate-100 rounded-lg p-1 text-center flex flex-col justify-between">
                 <div className="h-10 w-full bg-gradient-to-tr from-orange-50 to-orange-100 rounded-sm mb-1" />
                 <div className="text-[5.5px] font-bold text-gray-800 truncate">Chocolate Croissant</div>
                 <div className="text-[5.5px] text-[#FF8F94] font-extrabold mt-0.5">₹140</div>
               </div>
-              <div className="bg-[#FAFBFD] border border-gray-150 rounded-lg p-1 text-center flex flex-col justify-between">
+              <div className="bg-[#FAFBFD] border border-slate-100 rounded-lg p-1 text-center flex flex-col justify-between">
                 <div className="h-10 w-full bg-gradient-to-tr from-amber-50 to-amber-100 rounded-sm mb-1" />
                 <div className="text-[5.5px] font-bold text-gray-800 truncate">Cold Brew Latte</div>
                 <div className="text-[5.5px] text-[#FF8F94] font-extrabold mt-0.5">₹190</div>
@@ -368,13 +376,15 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
 
       default:
         return (
-          <div className="w-full h-full bg-slate-900 select-none flex flex-col justify-center items-center text-center p-3 pt-8 text-white space-y-3">
-            <HugeiconsIcon icon={GridIcon} size={28} className="text-[#4A3DAB]" />
-            <div className="space-y-1">
-              <div className="text-[8.5px] font-bold">MarketingSetu Toolbox</div>
-              <div className="text-[5px] text-slate-400">Integrate digital identity products and automated companion services to skyrocket conversion.</div>
+          <div className="w-full h-full bg-[#FAFBFD] select-none flex flex-col justify-center items-center text-center p-3 pt-8 text-primary space-y-3">
+            <div className="w-11 h-11 rounded-2xl bg-[#EFEBFF] text-[#4A3DAB] flex items-center justify-center shadow-sm">
+              <HugeiconsIcon icon={GridIcon} size={22} />
             </div>
-            <div className="w-16 h-4 bg-[#4A3DAB] rounded flex items-center justify-center text-[5.5px] font-bold">
+            <div className="space-y-1">
+              <div className="text-[8.5px] font-bold text-primary">MarketingSetu Toolbox</div>
+              <div className="text-[5px] text-secondary">Integrate digital identity products and automated companion services to skyrocket conversion.</div>
+            </div>
+            <div className="w-16 h-4 bg-[#4A3DAB] text-white rounded flex items-center justify-center text-[5.5px] font-bold shadow-sm">
               Explore All
             </div>
           </div>
@@ -412,13 +422,13 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
       </div>
 
       {/* DYNAMIC SHOWCASE CONTAINER */}
-      <div className="flex items-center justify-center max-w-5xl mx-auto px-4 relative min-h-[440px]">
+      <div className="flex items-center justify-center max-w-5xl mx-auto px-4 relative min-h-[420px]">
         
-        {/* DESKTOP INTERACTIVE WRAPPER (Hidden on mobile) */}
-        <div className="hidden md:flex w-[760px] h-[420px] relative items-center justify-between z-10">
+        {/* RESPONSIVE INTERACTIVE WRAPPER (Centered mockup on mobile, full grid on desktop) */}
+        <div className="flex w-full md:w-[760px] h-[420px] relative items-center justify-center md:justify-between z-10">
           
-          {/* SVG Connection Lines & Pulsing Laser Dots */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
+          {/* SVG Connection Lines & Pulsing Laser Dots (Desktop only) */}
+          <svg className="hidden md:block absolute inset-0 w-full h-full pointer-events-none z-0">
             {/* Center target is exactly (380, 210) inside the 760x420 box */}
             {[
               { x: 48, y: 88 },   // Card 1 (Digital Card)
@@ -457,8 +467,8 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
             })}
           </svg>
 
-          {/* LEFT COLUMNS: Staggered Floating Cards */}
-          <div className="flex gap-5 z-10">
+          {/* LEFT COLUMNS: Staggered Floating Cards (Desktop only) */}
+          <div className="hidden md:flex gap-5 z-10">
             {/* Column 1 (Leftmost) */}
             <div className="flex flex-col gap-10 animate-float-1">
               {renderSquareCard(services[0])} {/* Digital Card */}
@@ -470,8 +480,8 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
             </div>
           </div>
 
-          {/* CENTER Smartphone Device Mockup Frame (White Layout, Soft Light Border, Full Mobile Size) */}
-          <div className="relative flex-shrink-0 w-[210px] h-[400px] bg-white rounded-[32px] shadow-[0_16px_40px_rgba(0,0,0,0.06)] border-[6px] border-slate-100 flex flex-col overflow-hidden z-20">
+          {/* CENTER Smartphone Device Mockup Frame (White Layout, Soft Light Border, Center aligned on mobile) */}
+          <div className="relative flex-shrink-0 w-[210px] h-[400px] bg-white rounded-[32px] shadow-[0_16px_40px_rgba(0,0,0,0.06)] border-[6px] border-slate-100 flex flex-col overflow-hidden z-20 mx-auto md:mx-0">
             {/* Speaker Notch (Soft light pill shape) */}
             <div className="absolute top-0 left-0 right-0 h-5 bg-white z-50 flex justify-center items-center">
               <div className="w-12 h-1.5 rounded-full bg-slate-100 flex items-center justify-center">
@@ -486,8 +496,8 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
 
           </div>
 
-          {/* RIGHT COLUMNS: Staggered Floating Cards */}
-          <div className="flex gap-5 z-10">
+          {/* RIGHT COLUMNS: Staggered Floating Cards (Desktop only) */}
+          <div className="hidden md:flex gap-5 z-10">
             {/* Column 3 (Inner Right) */}
             <div className="flex flex-col gap-6 pt-16 animate-float-2">
               {renderSquareCard(services[3])} {/* Google Biz */}

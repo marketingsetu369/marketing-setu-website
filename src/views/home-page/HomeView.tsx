@@ -1,15 +1,15 @@
 "use client";
 
 import { useThemeStore } from "@/store/themeStore";
-import { PageWrapper, PricingCard, TestimonialCard, InteractiveShowcase, useWhatsApp } from "@/views/home-page/component";
+import { TranslationDictionary } from "@/translation";
+import { InteractiveShowcase, PageWrapper, PricingCard, TestimonialCard, useWhatsApp } from "@/views/home-page/component";
 import { pricingPlans, testimonialsData, translations } from "@/views/home-page/data";
 import CafeCardView from "@/views/home-page/hero-section/CafeCardView";
-import SolarCardView from "@/views/home-page/hero-section/SolarCardView";
-import PortfolioCardView from "@/views/home-page/hero-section/PortfolioCardView";
 import MarketingSetuCardView from "@/views/home-page/hero-section/MarketingSetuCardView";
 import ParlourCardView from "@/views/home-page/hero-section/ParlourCardView";
+import PortfolioCardView from "@/views/home-page/hero-section/PortfolioCardView";
+import SolarCardView from "@/views/home-page/hero-section/SolarCardView";
 import TwoWheelerCardView from "@/views/home-page/hero-section/TwoWheelerCardView";
-import { TranslationDictionary } from "@/translation";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -237,7 +237,7 @@ export default function HomeView() {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-primary max-w-4xl mx-auto leading-[1.1] mb-6">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight text-primary max-w-4xl mx-auto leading-[1.1] mb-6">
               Digital Business Card<br />
               <span className="text-brand-main font-medium">The Original. The Best.</span>
             </h1>
@@ -268,10 +268,10 @@ export default function HomeView() {
               
               {/* Active Category Name Title Above Slider */}
               <div className="text-center mb-6 transition-all duration-300">
-                <span className="inline-block px-3 py-1 rounded-full bg-brand-lighter text-brand-dark font-bold text-xs uppercase tracking-wider mb-2 border border-brand-light/40 shadow-xs">
+                <span className="inline-block px-3 py-1 rounded-full bg-brand-lighter text-brand-dark font-semibold text-xs uppercase tracking-wider mb-2 border border-brand-light/40 shadow-xs">
                   {carouselCards[activeCardIndex].category}
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-primary tracking-tight">
+                <h3 className="text-2xl sm:text-3xl font-semibold text-primary tracking-tight">
                   {carouselCards[activeCardIndex].title}
                 </h3>
               </div>
@@ -282,7 +282,7 @@ export default function HomeView() {
                 {/* Left Carousel Circular Arrow Button */}
                 <button
                   onClick={() => setActiveCardIndex((prev) => (prev > 0 ? prev - 1 : carouselCards.length - 1))}
-                  className="absolute left-2 sm:left-8 z-40 w-12 h-12 rounded-full bg-white text-emerald-600 shadow-xl border border-gray-100 flex items-center justify-center text-xl font-bold hover:scale-110 active:scale-95 transition-all cursor-pointer"
+                  className="absolute left-2 sm:left-8 z-40 w-12 h-12 rounded-full bg-white text-emerald-600 shadow-xl border border-gray-100 flex items-center justify-center text-xl font-semibold hover:scale-110 active:scale-95 transition-all cursor-pointer"
                   aria-label="Previous Slide"
                 >
                   &larr;
@@ -291,7 +291,7 @@ export default function HomeView() {
                 {/* Right Carousel Circular Arrow Button */}
                 <button
                   onClick={() => setActiveCardIndex((prev) => (prev < carouselCards.length - 1 ? prev + 1 : 0))}
-                  className="absolute right-2 sm:right-8 z-40 w-12 h-12 rounded-full bg-white text-emerald-600 shadow-xl border border-gray-100 flex items-center justify-center text-xl font-bold hover:scale-110 active:scale-95 transition-all cursor-pointer"
+                  className="absolute right-2 sm:right-8 z-40 w-12 h-12 rounded-full bg-white text-emerald-600 shadow-xl border border-gray-100 flex items-center justify-center text-xl font-semibold hover:scale-110 active:scale-95 transition-all cursor-pointer"
                   aria-label="Next Slide"
                 >
                   &rarr;
@@ -401,71 +401,116 @@ export default function HomeView() {
         </section>
 
 
-        {/* HOW IT WORKS SECTION */}
-        <section className="py-24 bg-neutral/50 border-b border-outline">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold uppercase tracking-wider text-secondary bg-paper border border-outline px-3 py-1 rounded-full inline-block mb-4">
-                HOW IT WORKS
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-primary mb-4">Get Your Digital Card in 3 Simple Steps</h2>
-              <p className="text-secondary text-base sm:text-lg">Set up your smart business card & automated customer connection in minutes.</p>
+        {/* BRAND & STATISTICS SECTION (REPLACES HOW IT WORKS) */}
+        <section className="relative py-24 md:py-32 bg-gray-50 overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            {/* Background Decorative Waves relative to grid container */}
+            <div className="absolute inset-0 z-0 pointer-events-none opacity-40 select-none hidden lg:block">
+              <svg className="absolute left-[6%] top-[15%] w-[320px] h-[400px] text-[#5B3DF5]/10" viewBox="0 0 100 100" fill="none">
+                <path d="M-10,20 Q15,45 40,25 T90,40" stroke="currentColor" strokeWidth="0.8" fill="none" />
+              </svg>
+              <svg className="absolute right-[6%] top-[20%] w-[320px] h-[400px] text-[#10C85A]/10" viewBox="0 0 100 100" fill="none">
+                <path d="M110,20 Q85,45 60,25 T10,40" stroke="currentColor" strokeWidth="0.8" fill="none" />
+              </svg>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 relative max-w-5xl mx-auto">
-              {/* Step 1 */}
-              <div className="group bg-paper rounded-3xl p-8 shadow-card relative z-10 flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                <div>
-                  <div className="w-12 h-12 rounded-2xl bg-brand-main text-white font-bold text-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                    01
-                  </div>
-                  <h3 className="text-xl font-bold text-primary mb-2">Create Your Profile</h3>
-                  <p className="text-secondary text-sm leading-relaxed">Add your business name, photo, catalog, contact links, and social profiles.</p>
+            {/* Floating Badges relative to grid container */}
+            <div className="absolute left-[8%] top-[35%] hidden xl:flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#5B3DF5] to-[#7B61FF] text-white shadow-[0_20px_40px_rgba(91,61,245,0.25)] animate-[bounce_5s_infinite_alternate] z-10">
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+              </svg>
+            </div>
+
+            <div className="absolute right-[10%] top-[22%] hidden xl:flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#10C85A] to-[#2BE87C] text-white shadow-[0_20px_40px_rgba(16,200,90,0.25)] animate-[bounce_6s_infinite_alternate] z-10">
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+
+            <div className="absolute right-[8%] top-[60%] hidden xl:flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#7B61FF] to-[#9B85FF] text-white shadow-[0_20px_40px_rgba(123,97,255,0.25)] animate-[bounce_4s_infinite_alternate] z-10">
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+              </svg>
+            </div>
+
+            {/* Floating Leaves */}
+            <div className="absolute left-[12%] top-[15%] hidden md:block text-2xl animate-pulse select-none pointer-events-none">🍃</div>
+            <div className="absolute right-[14%] top-[80%] hidden md:block text-2xl animate-pulse select-none pointer-events-none">🍃</div>
+
+            <div className="relative z-10">
+            {/* Centered Brand Logo */}
+            <div className="flex justify-center mb-8">
+              <img
+                src="/logo-vertical.svg"
+                alt="MarketingSetu Logo"
+                className="h-20 w-auto object-contain"
+              />
+            </div>
+
+            {/* Smart Marketing Header */}
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-primary leading-tight mb-6">
+                Smart Marketing for<br />
+                <span className="text-[#5B3DF5]">Stronger</span> <span className="text-[#10C85A]">Businesses</span>
+              </h2>
+              <p className="text-secondary text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto font-normal">
+                All-in-one digital platform to build your brand, connect with customers, and grow faster in the digital world.
+              </p>
+            </div>
+
+            {/* Stats White Grid Box */}
+            <div className="bg-paper rounded-[24px] sm:rounded-[32px] p-5 md:p-6 lg:p-8 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0 shadow-card items-center relative z-10">
+              {/* Stat Column 1 */}
+              <div className="flex items-center gap-3 sm:gap-4 md:justify-center px-2 lg:px-4">
+                <div className="w-11 h-11 rounded-full bg-[#EFEBFF] flex items-center justify-center text-[#5B3DF5] flex-shrink-0">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
                 </div>
-                <div className="mt-8 pt-4 border-t border-outline text-xs font-semibold text-disabled uppercase tracking-wider">
-                  Step 1 • Profile Setup
+                <div>
+                  <h4 className="text-xl lg:text-2xl font-semibold text-primary leading-tight">25,000+</h4>
+                  <p className="text-[10px] lg:text-xs text-secondary font-medium tracking-wide mt-0.5">Businesses Trust us</p>
                 </div>
               </div>
 
-              {/* Step 2 */}
-              <div className="group bg-paper rounded-3xl p-8 shadow-card relative z-10 flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                <div>
-                  <div className="w-12 h-12 rounded-2xl bg-brand-light text-white font-bold text-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                    02
-                  </div>
-                  <h3 className="text-xl font-bold text-primary mb-2">Enable WhatsApp Automation</h3>
-                  <p className="text-secondary text-sm leading-relaxed">Connect missed-call SMS & auto-WhatsApp messaging add-ons for instant customer response.</p>
+              {/* Stat Column 2 */}
+              <div className="flex items-center gap-3 sm:gap-4 md:justify-center px-2 lg:px-4 py-4 md:py-0">
+                <div className="w-11 h-11 rounded-full bg-[#E5F9ED] flex items-center justify-center text-[#10C85A] flex-shrink-0">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  </svg>
                 </div>
-                <div className="mt-8 pt-4 border-t border-outline text-xs font-semibold text-disabled uppercase tracking-wider">
-                  Step 2 • Add-on Features
+                <div>
+                  <h4 className="text-xl lg:text-2xl font-semibold text-primary leading-tight">150,000+</h4>
+                  <p className="text-[10px] lg:text-xs text-secondary font-medium tracking-wide mt-0.5">Digital Profiles Created</p>
                 </div>
               </div>
 
-              {/* Step 3 */}
-              <div className="group bg-paper rounded-3xl p-8 shadow-card relative z-10 flex flex-col justify-between hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                <div>
-                  <div className="w-12 h-12 rounded-2xl bg-success-main text-white font-bold text-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                    03
-                  </div>
-                  <h3 className="text-xl font-bold text-primary mb-2">Share & Connect</h3>
-                  <p className="text-secondary text-sm leading-relaxed">Share your unique link or QR code with customers and track profile views.</p>
+              {/* Stat Column 3 */}
+              <div className="flex items-center gap-3 sm:gap-4 md:justify-center px-2 lg:px-4">
+                <div className="w-11 h-11 rounded-full bg-[#EFEBFF] flex items-center justify-center text-[#5B3DF5] flex-shrink-0">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
                 </div>
-                <div className="mt-8 pt-4 border-t border-outline text-xs font-semibold text-disabled uppercase tracking-wider">
-                  Step 3 • Live & Sharing
+                <div>
+                  <h4 className="text-xl lg:text-2xl font-semibold text-primary leading-tight">3M+</h4>
+                  <p className="text-[10px] lg:text-xs text-secondary font-medium tracking-wide mt-0.5">Leads Generated</p>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
         {/* SERVICES SECTION */}
-        <section className="py-24 bg-background border-b border-outline overflow-hidden" id="services">
+        <section className="py-24 bg-background overflow-hidden" id="services">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-12">
-              <span className="text-xs font-bold uppercase tracking-wider text-secondary bg-paper px-3 py-1 rounded-full inline-block mb-4 border border-outline">
+              <span className="text-xs font-semibold uppercase tracking-wider text-secondary bg-paper px-3 py-1 rounded-full inline-block mb-4 border border-outline">
                 CORE PRODUCTS & ADD-ONS
               </span>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-primary mb-4">Digital Business Cards & Custom Landing Pages</h2>
+              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-primary mb-4">Digital Business Cards & Custom Landing Pages</h2>
               <p className="text-secondary text-base sm:text-lg">Our core digital identity solutions powered by automated WhatsApp and customer growth add-ons.</p>
             </div>
 
@@ -474,14 +519,14 @@ export default function HomeView() {
         </section>
 
         {/* PRICING SECTION */}
-        <section className="py-24 bg-background relative border-t border-outline overflow-hidden" id="pricing">
+        <section className="py-24 bg-background relative overflow-hidden" id="pricing">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNlN2U1ZTQiLz48L3N2Zz4=')] opacity-30 dark:opacity-[0.07] z-0"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold uppercase tracking-wider text-secondary bg-background border border-outline px-3 py-1 rounded-full inline-block mb-4">
+              <span className="text-xs font-semibold uppercase tracking-wider text-secondary bg-background border border-outline px-3 py-1 rounded-full inline-block mb-4">
                 {t.home_pricing_eyebrow}
               </span>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-primary mb-4">{t.home_pricing_heading}</h2>
+              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-primary mb-4">{t.home_pricing_heading}</h2>
               <p className="text-secondary text-base sm:text-lg">{t.home_pricing_subtext}</p>
             </div>
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
@@ -500,37 +545,37 @@ export default function HomeView() {
         <section className="py-24 bg-background">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold uppercase tracking-wider text-secondary bg-neutral px-3 py-1 rounded-full inline-block mb-4">
+              <span className="text-xs font-semibold uppercase tracking-wider text-secondary bg-neutral px-3 py-1 rounded-full inline-block mb-4">
                 WHY MARKETINGSETU
               </span>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-primary mb-4">Results-driven. Reliable.<br />Affordable.</h2>
+              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-primary mb-4">Results-driven. Reliable.<br />Affordable.</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-x-12 gap-y-10 max-w-4xl mx-auto">
               <div className="group flex gap-4 p-6 rounded-2xl bg-paper shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                <div className="flex-shrink-0 w-12 h-12 bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">⚡</div>
+                <div className="flex-shrink-0 w-12 h-12 bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400 rounded-xl flex items-center justify-center font-semibold group-hover:scale-110 transition-transform duration-300">⚡</div>
                 <div>
-                  <h4 className="text-lg font-bold text-primary mb-1">{t.why_us_f1_title}</h4>
+                  <h4 className="text-lg font-semibold text-primary mb-1">{t.why_us_f1_title}</h4>
                   <p className="text-secondary text-sm leading-relaxed">{t.why_us_f1_desc}</p>
                 </div>
               </div>
               <div className="group flex gap-4 p-6 rounded-2xl bg-paper shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                <div className="flex-shrink-0 w-12 h-12 bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">₹</div>
+                <div className="flex-shrink-0 w-12 h-12 bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400 rounded-xl flex items-center justify-center font-semibold group-hover:scale-110 transition-transform duration-300">₹</div>
                 <div>
-                  <h4 className="text-lg font-bold text-primary mb-1">{t.why_us_f2_title}</h4>
+                  <h4 className="text-lg font-semibold text-primary mb-1">{t.why_us_f2_title}</h4>
                   <p className="text-secondary text-sm leading-relaxed">{t.why_us_f2_desc}</p>
                 </div>
               </div>
               <div className="group flex gap-4 p-6 rounded-2xl bg-paper shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                <div className="flex-shrink-0 w-12 h-12 bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-400 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">✓</div>
+                <div className="flex-shrink-0 w-12 h-12 bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-400 rounded-xl flex items-center justify-center font-semibold group-hover:scale-110 transition-transform duration-300">✓</div>
                 <div>
-                  <h4 className="text-lg font-bold text-primary mb-1">{t.why_us_f3_title}</h4>
+                  <h4 className="text-lg font-semibold text-primary mb-1">{t.why_us_f3_title}</h4>
                   <p className="text-secondary text-sm leading-relaxed">{t.why_us_f3_desc}</p>
                 </div>
               </div>
               <div className="group flex gap-4 p-6 rounded-2xl bg-paper shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                <div className="flex-shrink-0 w-12 h-12 bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-400 rounded-xl flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">👥</div>
+                <div className="flex-shrink-0 w-12 h-12 bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-400 rounded-xl flex items-center justify-center font-semibold group-hover:scale-110 transition-transform duration-300">👥</div>
                 <div>
-                  <h4 className="text-lg font-bold text-primary mb-1">{t.why_us_f4_title}</h4>
+                  <h4 className="text-lg font-semibold text-primary mb-1">{t.why_us_f4_title}</h4>
                   <p className="text-secondary text-sm leading-relaxed">{t.why_us_f4_desc}</p>
                 </div>
               </div>
@@ -539,13 +584,13 @@ export default function HomeView() {
         </section>
 
         {/* TESTIMONIALS */}
-        <section className="py-24 bg-neutral/40 border-t border-outline" id="reviews">
+        <section className="py-24 bg-gray-50" id="reviews">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-bold uppercase tracking-wider text-secondary bg-background border border-outline px-3 py-1 rounded-full inline-block mb-4">
+              <span className="text-xs font-semibold uppercase tracking-wider text-secondary bg-background border border-outline px-3 py-1 rounded-full inline-block mb-4">
                 TESTIMONIALS
               </span>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-primary mb-4">{t.home_testimonials_heading}</h2>
+              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-primary mb-4">{t.home_testimonials_heading}</h2>
               <p className="text-secondary text-base">Real stories from small businesses across Maharashtra growing with MarketingSetu.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -561,7 +606,7 @@ export default function HomeView() {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-gray-950 rounded-3xl p-10 sm:p-16 text-center text-white shadow-z24 relative overflow-hidden">
               <div className="relative z-10 max-w-2xl mx-auto">
-                <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">{t.home_cta_heading}</h2>
+                <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight mb-4">{t.home_cta_heading}</h2>
                 <p className="text-gray-400 text-base sm:text-lg mb-8 font-normal">{t.home_cta_description}</p>
                 <button
                   onClick={() => openWhatsApp()}
