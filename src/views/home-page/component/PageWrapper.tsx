@@ -219,7 +219,7 @@ export default function PageWrapper({ children }: PageWrapperProps) {
             <div className="md:col-span-1">
               <div className="flex items-center mb-4">
                 <img
-                  src="/logo.svg"
+                  src="/logo-vertical.svg"
                   alt="MarketingSetu Logo"
                   className="h-16 w-auto object-contain invert brightness-200"
                 />

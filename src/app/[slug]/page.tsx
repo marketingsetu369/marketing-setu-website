@@ -12,22 +12,35 @@ interface PageProps {
 
 const getImageUrl = (url?: string) => {
   if (!url) return "";
+  
+  // If it's a relative path starting with /uploads
+  if (url.startsWith("/uploads/")) {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://marketing-setu-website.vercel.app";
+    const cleanApiUrl = apiUrl.replace(/\/$/, "");
+    
+    // Always force HTTPS for OG images as social platforms require HTTPS
+    const secureApiUrl = cleanApiUrl.replace(/^http:\/\//, "https://");
+    return `${secureApiUrl}${url}`;
+  }
+
   if (
     url.startsWith("http") &&
     !url.includes("localhost") &&
     !url.includes("10.0.2.2") &&
-    !url.includes("127.0.0.1") &&
-    !url.includes("187.127.128.193")
+    !url.includes("127.0.0.1")
   ) {
-    return url;
+    // Force HTTPS for social platform preview scrapers
+    return url.replace(/^http:\/\//, "https://");
   }
+  
   const match = url.match(/\/uploads\/(.+)$/);
   if (match && match[1]) {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://187.127.128.193:3005";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://marketing-setu-website.vercel.app";
     const cleanApiUrl = apiUrl.replace(/\/$/, "");
-    return `${cleanApiUrl}/uploads/${match[1]}`;
+    const secureApiUrl = cleanApiUrl.replace(/^http:\/\//, "https://");
+    return `${secureApiUrl}/uploads/${match[1]}`;
   }
-  return url;
+  return "";
 };
 
 // Fetch helper for server context

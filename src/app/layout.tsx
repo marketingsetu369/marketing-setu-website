@@ -26,6 +26,10 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "MarketingSetu — WhatsApp Marketing & Digital Marketing Agency in Pune",
   description: "MarketingSetu is a Pune-based digital marketing agency helping Indian small businesses grow with WhatsApp marketing, auto SMS, landing pages and Google Business setup. Plans from ₹1,999/year.",
+  icons: {
+    icon: "/logo.svg",
+    apple: "/logo.svg",
+  },
 };
 
 export default function RootLayout({
