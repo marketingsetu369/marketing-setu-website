@@ -1,5 +1,6 @@
 import { BusinessPageApi } from "@/api/repositories/businessPageApi";
 import BusinessView from "@/views/business-page";
+import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -86,6 +87,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function Page({ params }: PageProps) {
   const resolvedParams = await params;
   const data = await getBusinessData(resolvedParams.slug);
+
+  if (!data) {
+    notFound();
+  }
 
   const businessName = data?.header?.business_name || data?.business_name || "";
   const businessDescription = data?.header?.tagline || data?.about_us || "";

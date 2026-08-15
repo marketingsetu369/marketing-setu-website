@@ -1,5 +1,6 @@
 import { BusinessPageApi } from "@/api/repositories/businessPageApi";
 import ProductsListView from "@/views/business-page/products-list";
+import { notFound } from "next/navigation";
 import { Metadata } from "next";
  
 export const dynamic = "force-dynamic";
@@ -63,6 +64,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function Page({ params }: PageProps) {
   const resolvedParams = await params;
   const data = await getBusinessData(resolvedParams.slug);
+ 
+  if (!data) {
+    notFound();
+  }
  
   return <ProductsListView data={data} slug={resolvedParams.slug} />;
 }
