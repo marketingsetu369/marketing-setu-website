@@ -180,7 +180,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
         className="min-h-screen bg-[var(--color-grey-100)] flex justify-center items-start md:items-center py-0 md:py-8"
         style={{ fontFamily: "var(--font-inter)" }}
       >
-        <div className="w-full md:max-w-[1280px] bg-[var(--color-grey-100)] min-h-screen md:min-h-[820px] md:h-[820px] relative flex flex-col md:flex-row md:overflow-hidden animate-fade-in-up">
+        <div className="w-full md:max-w-[1280px] bg-[var(--color-grey-100)] min-h-screen md:min-h-[820px] md:h-[820px] relative flex flex-col md:flex-row overflow-hidden animate-fade-in-up">
 
           {/* ── LEFT COLUMN ── */}
           <div className="w-full md:w-[35%] bg-[var(--color-grey-100)] flex flex-col justify-between relative md:pb-0 md:h-full md:overflow-y-auto no-scrollbar">
@@ -192,7 +192,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           </div>
 
           {/* ── RIGHT COLUMN ── */}
-          <div className="w-full md:w-[65%] flex flex-col md:overflow-y-auto md:h-full no-scrollbar bg-white pb-8 md:pb-8 md:border-l-[10px] md:border-white">
+          <div className="w-full md:w-[65%] flex flex-col overflow-y-auto md:h-full no-scrollbar bg-white pb-8 md:pb-8 md:border-l-[10px] md:border-white">
             <VideoSection youtubeUrl={data?.youtube_url} sectionClass={section("video")} />
             <ProductsSection products={products} slug={slug} sectionClass={section("products")} onEnquire={openProductEnquiry} />
             <GallerySection gallery={gallery} onImageClick={setActiveImageIndex} />

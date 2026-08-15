@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/uploads/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://187.127.128.193:3005'}/uploads/:path*`,
+        destination: `${process.env.NEXT_PUBLIC_API_URL || 'https://187.127.128.193:3005'}/uploads/:path*`,
       },
     ];
   },
