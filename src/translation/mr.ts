@@ -341,4 +341,5 @@ export const mr: TranslationDictionary = {
   bp_action_email: "ईमेल",
   bp_action_location: "ठिकाण",
   bp_gallery_heading: "गॅलरी",
+  bp_more: "अधिक",
 };

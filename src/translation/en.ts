@@ -338,4 +338,5 @@ export const en: TranslationDictionary = {
   bp_action_email: "Email",
   bp_action_location: "Location",
   bp_gallery_heading: "Gallery",
+  bp_more: "More",
 };

@@ -288,4 +288,5 @@ export interface TranslationDictionary {
   bp_action_email: string;
   bp_action_location: string;
   bp_gallery_heading: string;
+  bp_more: string;
 }

@@ -26,8 +26,8 @@ export default function GallerySection({ gallery, onImageClick }: GallerySection
       </div>
 
       <div className="columns-2 md:columns-3 gap-3 [column-fill:balance] space-y-3">
-        {gallery.slice(0, 7).map((item, idx) => {
-          const isLast = idx === 6 && gallery.length > 7;
+        {gallery.slice(0, 6).map((item, idx) => {
+          const isLast = idx === 5 && gallery.length > 6;
           return (
             <div
               key={idx}
@@ -36,12 +36,15 @@ export default function GallerySection({ gallery, onImageClick }: GallerySection
             >
               <img
                 src={getImageUrl(item.url)}
-                alt={`Gallery ${idx}`}
+                alt={`Gallery ${idx + 1}`}
                 className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500 rounded-2xl"
               />
               {isLast && (
-                <div className="absolute inset-0 bg-black/55 flex items-center justify-center text-white font-bold text-lg select-none animate-fade-in">
-                  +{(gallery.length - 6).toString().padStart(2, "0")}
+                <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex flex-col items-center justify-center text-white font-bold select-none animate-fade-in transition-all group-hover:bg-black/70">
+                  <span className="text-2xl tracking-tight">+{gallery.length - 5}</span>
+                  <span className="text-xs uppercase tracking-wider font-medium text-white/90 mt-0.5">
+                    {t("bp_more") || "More"}
+                  </span>
                 </div>
               )}
             </div>
