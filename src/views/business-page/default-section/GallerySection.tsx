@@ -13,7 +13,7 @@ interface GallerySectionProps {
 }
 
 export default function GallerySection({ gallery, onImageClick }: GallerySectionProps) {
-  const { primaryColor, fontHeader } = useBusinessPageTheme();
+  const { primaryColor, fontHeader, t } = useBusinessPageTheme();
 
   if (gallery.length === 0) return null;
 
@@ -21,7 +21,7 @@ export default function GallerySection({ gallery, onImageClick }: GallerySection
     <section className="animate-fade-in-up animation-delay-200 bg-white py-10 px-6">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold text-gray-950 tracking-tight" style={{ fontFamily: fontHeader }}>
-          Gallery
+          {t("bp_gallery_heading")}
         </h2>
       </div>
 

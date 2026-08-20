@@ -10,17 +10,17 @@ interface LocationSectionProps {
 }
 
 export default function LocationSection({ mapsLink, address }: LocationSectionProps) {
-  const { primaryColor, fontHeader } = useBusinessPageTheme();
+  const { primaryColor, fontHeader, t } = useBusinessPageTheme();
 
   if (!mapsLink) return null;
 
   return (
     <section className="animate-fade-in-up bg-white pt-14 pb-6 px-6">
       <h2 className="text-lg font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: fontHeader }}>
-        Our Location
+        {t("bp_location_heading")}
       </h2>
       <p className="text-xs text-gray-500 font-semibold mb-4 leading-relaxed">
-        {address || "Find us on the map below for directions and visiting hours."}
+        {address || t("bp_location_subtext")}
       </p>
 
       <a
@@ -37,7 +37,7 @@ export default function LocationSection({ mapsLink, address }: LocationSectionPr
         <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
           <div className="bg-white/95 backdrop-blur-xs text-gray-800 text-xs font-black uppercase tracking-wider px-4 py-2.5 rounded-full shadow-md flex items-center gap-1.5 group-hover:bg-white transition-colors">
             <HugeiconsIcon icon={Location01Icon} size={12} style={{ color: primaryColor }} />
-            View on Google Maps
+            {t("bp_view_on_maps")}
           </div>
         </div>
       </a>

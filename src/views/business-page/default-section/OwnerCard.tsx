@@ -20,7 +20,7 @@ interface OwnerCardProps {
 }
 
 export default function OwnerCard({ ownerList }: OwnerCardProps) {
-  const { primaryColor, primaryLight, fontHeader, fontSans } = useBusinessPageTheme();
+  const { primaryColor, primaryLight, fontHeader, fontSans, t } = useBusinessPageTheme();
 
   if (ownerList.length === 0) return null;
 
@@ -65,7 +65,7 @@ export default function OwnerCard({ ownerList }: OwnerCardProps) {
           {owner.bio && (
             <div className="px-2 pt-6 pb-4">
               <h2 className="text-lg font-bold text-gray-950 mb-2" style={{ fontFamily: fontHeader }}>
-                About
+                {t("bp_owner_about")}
               </h2>
               <div
                 className="text-sm text-gray-600 leading-relaxed markdown-content font-normal"
@@ -81,13 +81,13 @@ export default function OwnerCard({ ownerList }: OwnerCardProps) {
               <p className="text-xl font-semibold leading-tight" style={{ color: primaryColor, fontFamily: fontHeader }}>
                 {owner.happy_customers_count || 140}+
               </p>
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mt-0.5">Happy Customers</p>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mt-0.5">{t("bp_owner_happy_customers")}</p>
             </div>
             <div className="border-l border-gray-100 py-0.5">
               <p className="text-xl font-semibold leading-tight" style={{ color: primaryColor, fontFamily: fontHeader }}>
                 {owner.experience_years || 4}+
               </p>
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mt-0.5">Years Exp.</p>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mt-0.5">{t("bp_owner_years_exp")}</p>
             </div>
           </div>
         </div>

@@ -4,6 +4,8 @@ import { BusinessPageApi } from "@/api/repositories/businessPageApi";
 import React, { useState } from "react";
 import { BusinessPageProvider } from "./common/BusinessPageContext";
 import { getSectionStyle, getYouTubeId } from "./common/utils";
+import { translations } from "@/translation";
+import type { Language } from "@/translation";
 import {
   BusinessHeader,
   DesktopCta,
@@ -46,6 +48,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
   // ── Data defaults ────────────────────────────────────────────────────────
   const primaryColor = data?.theme_color_hex || "#7265E3";
+  const pageLanguage: string = data?.language || "en";
 
   const header = {
     business_name: data?.header?.business_name || "",
@@ -175,7 +178,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
   // ── Render ───────────────────────────────────────────────────────────────
   return (
-    <BusinessPageProvider primaryColor={primaryColor}>
+    <BusinessPageProvider primaryColor={primaryColor} language={pageLanguage}>
       <div
         className="min-h-screen bg-[var(--color-grey-100)] flex justify-center items-start md:items-center py-0 md:py-8"
         style={{ fontFamily: "var(--font-inter)" }}
@@ -224,12 +227,12 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-50 border border-gray-100 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900 hover:border-gray-200 transition-all shadow-xs"
               >
-                <span>Created with</span>
+                <span>{translations[(pageLanguage as Language) in translations ? (pageLanguage as Language) : "en"].bp_created_with ?? "Created with"}</span>
                 <span className="font-bold text-gray-950 tracking-tight">
                   Marketing<span style={{ color: primaryColor }}>Setu</span>
                 </span>
                 <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: primaryColor }} />
-                <span className="text-gray-400">Get your business page</span>
+                <span className="text-gray-400">{translations[(pageLanguage as Language) in translations ? (pageLanguage as Language) : "en"].bp_get_page ?? "Get your business page"}</span>
               </a>
             </div>
           </div>

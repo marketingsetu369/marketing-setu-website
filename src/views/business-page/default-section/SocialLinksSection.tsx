@@ -22,14 +22,14 @@ interface SocialLinksSectionProps {
 }
 
 export default function SocialLinksSection({ socialLinks }: SocialLinksSectionProps) {
-  const { fontHeader } = useBusinessPageTheme();
+  const { fontHeader, t } = useBusinessPageTheme();
   const hasAny = socialLinks.instagram || socialLinks.facebook || socialLinks.youtube || socialLinks.twitter;
   if (!hasAny) return null;
 
   return (
     <section className="animate-fade-in-up bg-[var(--color-grey-100)] py-6 px-6">
       <h2 className="text-lg font-semibold text-gray-950 tracking-tight mb-4" style={{ fontFamily: fontHeader }}>
-        Social Links
+        {t("bp_social_links")}
       </h2>
 
       <div className="grid grid-cols-4 gap-4 text-center">

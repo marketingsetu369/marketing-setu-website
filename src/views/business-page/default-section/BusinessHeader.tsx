@@ -32,7 +32,7 @@ interface BusinessHeaderProps {
 }
 
 export default function BusinessHeader({ header, contact, slug }: BusinessHeaderProps) {
-  const { primaryColor, primaryLight, primaryBorder, fontHeader } = useBusinessPageTheme();
+  const { primaryColor, primaryLight, primaryBorder, fontHeader, t } = useBusinessPageTheme();
 
   return (
     <header
@@ -113,7 +113,7 @@ export default function BusinessHeader({ header, contact, slug }: BusinessHeader
             <div className="w-13 h-13 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
               <HugeiconsIcon icon={CallIcon} size={20} />
             </div>
-            <span className="text-xs font-semibold text-gray-950">Call</span>
+            <span className="text-xs font-semibold text-gray-950">{t("bp_action_call")}</span>
           </a>
         )}
 
@@ -128,7 +128,7 @@ export default function BusinessHeader({ header, contact, slug }: BusinessHeader
             <div className="w-13 h-13 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
               <HugeiconsIcon icon={WhatsappIcon} size={20} />
             </div>
-            <span className="text-xs font-semibold text-gray-950">WhatsApp</span>
+            <span className="text-xs font-semibold text-gray-950">{t("bp_action_whatsapp")}</span>
           </a>
         )}
 
@@ -137,7 +137,7 @@ export default function BusinessHeader({ header, contact, slug }: BusinessHeader
             <div className="w-13 h-13 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
               <HugeiconsIcon icon={Mail01Icon} size={20} />
             </div>
-            <span className="text-xs font-semibold text-gray-950">Email</span>
+            <span className="text-xs font-semibold text-gray-950">{t("bp_action_email")}</span>
           </a>
         )}
 
@@ -152,7 +152,7 @@ export default function BusinessHeader({ header, contact, slug }: BusinessHeader
             <div className="w-13 h-13 rounded-full bg-white shadow-xs border border-gray-100 flex items-center justify-center text-gray-700 group-hover:bg-gray-50 transition-colors">
               <HugeiconsIcon icon={Location01Icon} size={20} />
             </div>
-            <span className="text-xs font-semibold text-gray-950">Location</span>
+            <span className="text-xs font-semibold text-gray-950">{t("bp_action_location")}</span>
           </a>
         )}
       </div>

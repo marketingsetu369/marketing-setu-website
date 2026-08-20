@@ -31,60 +31,60 @@ export default function EnquiryFormSection({
   errorMessage,
   sectionClass,
 }: EnquiryFormSectionProps) {
-  const { primaryColor, fontHeader } = useBusinessPageTheme();
+  const { primaryColor, fontHeader, t } = useBusinessPageTheme();
 
   return (
     <section className={`animate-fade-in-up animation-delay-500 ${sectionClass}`}>
       <h2 className="text-lg font-semibold text-gray-950 tracking-tight mb-5" style={{ fontFamily: fontHeader }}>
-        Send an Enquiry
+        {t("bp_enquiry_heading")}
       </h2>
 
       <form onSubmit={onSubmit} className="space-y-5">
         <div>
           <label htmlFor="clientName" className="block text-sm font-semibold text-gray-950 mb-2">
-            Full Name
+            {t("bp_full_name")}
           </label>
           <ThemedInput
             type="text"
             id="clientName"
             value={formData.name}
             onChange={(e) => onChange({ ...formData, name: e.target.value })}
-            placeholder="Enter your name"
+            placeholder={t("bp_name_placeholder")}
             required
           />
         </div>
 
         <div>
           <label htmlFor="clientPhone" className="block text-sm font-semibold text-gray-950 mb-2">
-            Mobile Number
+            {t("bp_mobile_number")}
           </label>
           <ThemedInput
             type="tel"
             id="clientPhone"
             value={formData.phone}
             onChange={(e) => onChange({ ...formData, phone: e.target.value })}
-            placeholder="Mobile Number"
+            placeholder={t("bp_mobile_placeholder")}
             required
           />
         </div>
 
         <div>
           <label htmlFor="clientMessage" className="block text-sm font-semibold text-gray-950 mb-2">
-            Message *
+            {t("bp_message")}
           </label>
           <ThemedTextarea
             id="clientMessage"
             rows={4}
             value={formData.message}
             onChange={(e) => onChange({ ...formData, message: e.target.value })}
-            placeholder="Enter your message"
+            placeholder={t("bp_message_placeholder")}
             required
           />
         </div>
 
         {submitStatus === "success" && (
           <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs px-4 py-3 rounded-lg font-semibold animate-fade-in">
-            Enquiry submitted successfully! We will contact you soon.
+            {t("bp_enquiry_success")}
           </div>
         )}
         {submitStatus === "error" && (
@@ -99,7 +99,7 @@ export default function EnquiryFormSection({
             onClick={onReset}
             className="flex-1 bg-slate-50 hover:bg-slate-100 text-gray-950 py-3.5 rounded-lg font-bold text-sm active:scale-[0.98] transition-all cursor-pointer text-center"
           >
-            Reset
+            {t("bp_reset")}
           </button>
           <button
             type="submit"
@@ -107,7 +107,7 @@ export default function EnquiryFormSection({
             className="flex-1 text-white py-3.5 rounded-lg font-bold text-sm active:scale-[0.98] transition-all cursor-pointer"
             style={{ backgroundColor: primaryColor }}
           >
-            {isSubmitting ? "Submitting..." : "Submit"}
+            {isSubmitting ? t("bp_submitting") : t("bp_submit")}
           </button>
         </div>
       </form>

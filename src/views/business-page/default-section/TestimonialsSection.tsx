@@ -28,7 +28,7 @@ export default function TestimonialsSection({
   onNext,
   sectionClass,
 }: TestimonialsSectionProps) {
-  const { primaryColor, fontHeader } = useBusinessPageTheme();
+  const { primaryColor, fontHeader, t } = useBusinessPageTheme();
   const active = testimonials[activeIndex];
 
   if (testimonials.length === 0 || !active) return null;
@@ -36,10 +36,10 @@ export default function TestimonialsSection({
   return (
     <section className={`text-center flex flex-col items-center animate-fade-in-up animation-delay-300 w-full ${sectionClass}`}>
       <h2 className="text-lg font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: fontHeader }}>
-        What our happy clients say
+        {t("bp_testimonials_heading")}
       </h2>
       <p className="text-xs text-gray-500 font-semibold mb-20">
-        Honest reviews from our members
+        {t("bp_testimonials_subtext")}
       </p>
 
       {/* Active card */}

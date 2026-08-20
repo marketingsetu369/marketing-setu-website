@@ -45,7 +45,7 @@ export default function ProductEnquiryModal({
   submitStatus,
   errorMessage,
 }: ProductEnquiryModalProps) {
-  const { primaryColor, fontHeader } = useBusinessPageTheme();
+  const { primaryColor, fontHeader, t } = useBusinessPageTheme();
 
   // Set default price tier option if missing
   React.useEffect(() => {
@@ -70,9 +70,9 @@ export default function ProductEnquiryModal({
         <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-gray-100 flex-shrink-0">
           <div>
             <h3 className="text-base font-bold text-gray-950" style={{ fontFamily: fontHeader }}>
-              Product Enquiry
+              {t("bp_product_enquiry_title")}
             </h3>
-            <p className="text-xs text-gray-500 mt-0.5">Fill in your details and we&apos;ll get back to you</p>
+            <p className="text-xs text-gray-500 mt-0.5">{t("bp_product_enquiry_subtitle")}</p>
           </div>
           <button
             onClick={onClose}
@@ -117,7 +117,7 @@ export default function ProductEnquiryModal({
           <form id="product-enquiry-form" onSubmit={onSubmit} className="space-y-4">
             {hasMultiplePrices && (
               <div>
-                <label className="block text-sm font-semibold text-gray-950 mb-1.5">Select Option *</label>
+                <label className="block text-sm font-semibold text-gray-950 mb-1.5">{t("bp_select_option")}</label>
                 <select
                   value={formData.selectedPriceTier || ""}
                   onChange={(e) => onChange({ ...formData, selectedPriceTier: e.target.value })}
@@ -136,36 +136,36 @@ export default function ProductEnquiryModal({
               </div>
             )}
             <div>
-              <label className="block text-sm font-semibold text-gray-950 mb-1.5">Full Name *</label>
+              <label className="block text-sm font-semibold text-gray-950 mb-1.5">{t("bp_full_name_modal")}</label>
               <ThemedInput
                 type="text"
                 value={formData.name}
                 onChange={(e) => onChange({ ...formData, name: e.target.value })}
-                placeholder="Enter your name"
+                placeholder={t("bp_name_placeholder")}
                 className="bg-gray-50 rounded-xl"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-950 mb-1.5">Mobile Number *</label>
+              <label className="block text-sm font-semibold text-gray-950 mb-1.5">{t("bp_mobile_modal")}</label>
               <ThemedInput
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => onChange({ ...formData, phone: e.target.value })}
-                placeholder="Enter your mobile number"
+                placeholder={t("bp_mobile_modal_placeholder")}
                 className="bg-gray-50 rounded-xl"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-950 mb-1.5">Message *</label>
+              <label className="block text-sm font-semibold text-gray-950 mb-1.5">{t("bp_message_modal")}</label>
               <ThemedTextarea
                 rows={3}
                 value={formData.message}
                 onChange={(e) => onChange({ ...formData, message: e.target.value })}
-                placeholder="Any specific questions or requirements..."
+                placeholder={t("bp_message_modal_placeholder")}
                 className="bg-gray-50 rounded-xl"
                 required
               />
@@ -173,7 +173,7 @@ export default function ProductEnquiryModal({
 
             {submitStatus === "success" && (
               <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs px-4 py-3 rounded-xl font-semibold animate-fade-in">
-                ✓ Enquiry sent successfully! We will contact you soon.
+                {t("bp_enquiry_success")}
               </div>
             )}
             {submitStatus === "error" && (
@@ -193,7 +193,7 @@ export default function ProductEnquiryModal({
             className="w-full text-white py-3.5 rounded-xl font-bold text-sm active:scale-[0.98] transition-all cursor-pointer disabled:opacity-60"
             style={{ backgroundColor: primaryColor }}
           >
-            {isSubmitting ? "Submitting..." : submitStatus === "success" ? "✓ Enquiry Sent!" : "Send Enquiry"}
+            {isSubmitting ? t("bp_submitting") : submitStatus === "success" ? t("bp_enquiry_sent") : t("bp_send_enquiry")}
           </button>
         </div>
       </div>

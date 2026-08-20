@@ -31,7 +31,7 @@ export default function ProductsSection({
   sectionClass,
   onEnquire,
 }: ProductsSectionProps) {
-  const { primaryColor, fontHeader } = useBusinessPageTheme();
+  const { primaryColor, fontHeader, t } = useBusinessPageTheme();
   const containerRef = useRef<HTMLDivElement>(null);
 
   if (products.length === 0) return null;
@@ -49,7 +49,7 @@ export default function ProductsSection({
     <section className={`animate-fade-in-up animation-delay-100 ${sectionClass}`}>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold text-gray-950 tracking-tight" style={{ fontFamily: fontHeader }}>
-          Products &amp; Services
+          {t("bp_products_heading")}
         </h2>
         {hasMore && (
           <span
@@ -57,7 +57,7 @@ export default function ProductsSection({
             className="text-xs font-semibold hover:underline cursor-pointer"
             style={{ color: primaryColor }}
           >
-            See All
+            {t("bp_see_all")}
           </span>
         )}
       </div>
@@ -83,8 +83,8 @@ export default function ProductsSection({
             <div className="w-12 h-12 rounded-full bg-white shadow-xs flex items-center justify-center text-gray-500 group-hover:scale-110 transition-transform mb-3">
               <HugeiconsIcon icon={ArrowRight02Icon} size={20} style={{ color: primaryColor }} />
             </div>
-            <span className="font-bold text-sm text-gray-950">View All</span>
-            <span className="text-xs text-gray-400 mt-1">+{products.length - 5} More Products</span>
+            <span className="font-bold text-sm text-gray-950">{t("bp_view_all")}</span>
+            <span className="text-xs text-gray-400 mt-1">+{products.length - 5} {t("bp_more_products")}</span>
           </div>
         )}
       </div>
