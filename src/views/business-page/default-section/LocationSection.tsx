@@ -74,7 +74,7 @@ export default function LocationSection({ mapsLink, address, businessName }: Loc
     }
 
     if (searchQuery) {
-      embedSrc = `https://maps.google.com/maps?q=${encodeURIComponent(searchQuery)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+      embedSrc = `https://maps.google.com/maps?q=${encodeURIComponent(searchQuery)}&t=m&z=15&output=embed&iwloc=B`;
     }
   }
 
@@ -94,7 +94,7 @@ export default function LocationSection({ mapsLink, address, businessName }: Loc
         {address || t("bp_location_subtext")}
       </p>
 
-      <div className="w-full h-52 rounded-2xl overflow-hidden relative border border-gray-100 shadow-xs bg-gray-50 group">
+      <div className="w-full h-60 rounded-2xl overflow-hidden relative border border-gray-100 shadow-xs bg-gray-50 group">
         <iframe
           title="Business Location Map"
           src={embedSrc}
