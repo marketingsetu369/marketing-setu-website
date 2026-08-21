@@ -7,23 +7,83 @@ import { useBusinessPageTheme } from "../common/BusinessPageContext";
 interface LocationSectionProps {
   mapsLink?: string;
   address?: string;
+  businessName?: string;
 }
 
-export default function LocationSection({ mapsLink, address }: LocationSectionProps) {
+export default function LocationSection({ mapsLink, address, businessName }: LocationSectionProps) {
   const { primaryColor, fontHeader, t } = useBusinessPageTheme();
 
-  if (!mapsLink && !address) return null;
+  const rawLink = mapsLink?.trim() || "";
+  const cleanAddress = address?.trim() || "";
+  const cleanName = businessName?.trim() || "";
 
-  // Determine destination URL when user clicks "View on Maps"
-  const directMapsUrl =
-    mapsLink?.trim() ||
-    (address?.trim() ? `https://maps.google.com/?q=${encodeURIComponent(address.trim())}` : "");
+  if (!rawLink && !cleanAddress) return null;
 
-  // Determine iframe embed source
-  const embedQuery = address?.trim() || mapsLink?.trim() || "";
-  const embedSrc = mapsLink?.startsWith("https://www.google.com/maps/embed")
-    ? mapsLink
-    : `https://maps.google.com/maps?q=${encodeURIComponent(embedQuery)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+  let embedSrc = "";
+  let directMapsUrl = rawLink;
+
+  // 1. If user pasted raw iframe HTML (e.g., <iframe src="https://www.google.com/maps/embed?..."></iframe>)
+  if (rawLink.includes("<iframe") && rawLink.includes("src=")) {
+    const match = rawLink.match(/src=["']([^"']+)["']/i);
+    if (match && match[1]) {
+      embedSrc = match[1];
+    }
+  }
+
+  // 2. If it's already an embed URL
+  if (!embedSrc && rawLink.startsWith("https://www.google.com/maps/embed")) {
+    embedSrc = rawLink;
+  }
+
+  // 3. If not an embed URL yet, extract coordinates or place query to show pinpoint marker
+  if (!embedSrc) {
+    let searchQuery = "";
+
+    // Extract @lat,lng coordinates
+    const coordsMatch = rawLink.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+    // Extract place name from /place/Place+Name/
+    const placeMatch = rawLink.match(/\/maps\/place\/([^/@?]+)/);
+
+    if (coordsMatch && coordsMatch[1] && coordsMatch[2]) {
+      searchQuery = `${coordsMatch[1]},${coordsMatch[2]}`;
+    } else if (placeMatch && placeMatch[1]) {
+      searchQuery = decodeURIComponent(placeMatch[1].replace(/\+/g, " "));
+    } else if (rawLink.includes("?q=") || rawLink.includes("&q=") || rawLink.includes("query=")) {
+      try {
+        const url = new URL(rawLink);
+        const q = url.searchParams.get("q") || url.searchParams.get("query") || url.searchParams.get("daddr");
+        if (q && !q.startsWith("http")) {
+          searchQuery = q;
+        }
+      } catch {
+        // ignore parse error
+      }
+    }
+
+    // If query could not be extracted (e.g. short link maps.app.goo.gl), fall back to business name & address
+    if (!searchQuery) {
+      if (cleanName && cleanAddress) {
+        searchQuery = `${cleanName}, ${cleanAddress}`;
+      } else if (cleanAddress) {
+        searchQuery = cleanAddress;
+      } else if (cleanName) {
+        searchQuery = cleanName;
+      } else if (rawLink && !rawLink.startsWith("http")) {
+        searchQuery = rawLink;
+      }
+    }
+
+    if (searchQuery) {
+      embedSrc = `https://maps.google.com/maps?q=${encodeURIComponent(searchQuery)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+    }
+  }
+
+  if (!directMapsUrl) {
+    const query = cleanAddress || cleanName || "";
+    directMapsUrl = query ? `https://maps.google.com/?q=${encodeURIComponent(query)}` : "";
+  }
+
+  if (!embedSrc) return null;
 
   return (
     <section className="animate-fade-in-up bg-white pt-14 pb-6 px-6">

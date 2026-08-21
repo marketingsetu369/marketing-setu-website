@@ -217,7 +217,11 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
               sectionClass={section("enquiry")}
             />
             <SocialLinksSection socialLinks={socialLinks} />
-            <LocationSection mapsLink={contact.maps_link} address={contact.address} />
+            <LocationSection
+              mapsLink={contact.maps_link}
+              address={contact.address}
+              businessName={header.business_name}
+            />
 
             {/* ── MarketingSetu Advertisement Link ── */}
             <div className="pt-6 border-t border-gray-100 text-center pb-16">
