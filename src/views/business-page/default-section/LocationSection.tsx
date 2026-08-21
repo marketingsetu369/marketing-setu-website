@@ -31,26 +31,33 @@ export default function LocationSection({ mapsLink, address, businessName }: Loc
   }
 
   // 2. If it's already an embed URL
-  if (!embedSrc && rawLink.startsWith("https://www.google.com/maps/embed")) {
+  if (!embedSrc && rawLink.includes("google.com/maps/embed")) {
     embedSrc = rawLink;
   }
 
-  // 3. If not an embed URL yet, extract coordinates or place query to show pinpoint marker
-  if (!embedSrc) {
+  // 3. Extract direct place name, coordinates, or query from standard Google Maps URLs
+  if (!embedSrc && rawLink) {
     let searchQuery = "";
 
-    // Extract @lat,lng coordinates
-    const coordsMatch = rawLink.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
-    // Extract place name from /place/Place+Name/
-    const placeMatch = rawLink.match(/\/maps\/place\/([^/@?]+)/);
+    // A. Check for !3d<lat>!4d<lng> or @<lat>,<lng> coordinates in URL
+    const dataCoordsMatch = rawLink.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/);
+    const atCoordsMatch = rawLink.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+    const llMatch = rawLink.match(/[?&]ll=(-?\d+\.\d+),(-?\d+\.\d+)/);
 
-    if (coordsMatch && coordsMatch[1] && coordsMatch[2]) {
-      searchQuery = `${coordsMatch[1]},${coordsMatch[2]}`;
+    // B. Place path: /maps/place/<Place+Name> or /place/<Place+Name>
+    const placeMatch = rawLink.match(/\/place\/([^/@?#]+)/);
+
+    if (dataCoordsMatch && dataCoordsMatch[1] && dataCoordsMatch[2]) {
+      searchQuery = `${dataCoordsMatch[1]},${dataCoordsMatch[2]}`;
     } else if (placeMatch && placeMatch[1]) {
       searchQuery = decodeURIComponent(placeMatch[1].replace(/\+/g, " "));
-    } else if (rawLink.includes("?q=") || rawLink.includes("&q=") || rawLink.includes("query=")) {
+    } else if (atCoordsMatch && atCoordsMatch[1] && atCoordsMatch[2]) {
+      searchQuery = `${atCoordsMatch[1]},${atCoordsMatch[2]}`;
+    } else if (llMatch && llMatch[1] && llMatch[2]) {
+      searchQuery = `${llMatch[1]},${llMatch[2]}`;
+    } else if (rawLink.includes("?q=") || rawLink.includes("&q=") || rawLink.includes("query=") || rawLink.includes("daddr=")) {
       try {
-        const url = new URL(rawLink);
+        const url = new URL(rawLink.startsWith("http") ? rawLink : `https://${rawLink}`);
         const q = url.searchParams.get("q") || url.searchParams.get("query") || url.searchParams.get("daddr");
         if (q && !q.startsWith("http")) {
           searchQuery = q;
@@ -60,21 +67,26 @@ export default function LocationSection({ mapsLink, address, businessName }: Loc
       }
     }
 
-    // If query could not be extracted (e.g. short link maps.app.goo.gl), fall back to business name & address
-    if (!searchQuery) {
-      if (cleanName && cleanAddress) {
-        searchQuery = `${cleanName}, ${cleanAddress}`;
-      } else if (cleanAddress) {
-        searchQuery = cleanAddress;
-      } else if (cleanName) {
-        searchQuery = cleanName;
-      } else if (rawLink && !rawLink.startsWith("http")) {
-        searchQuery = rawLink;
-      }
-    }
-
     if (searchQuery) {
       embedSrc = `https://maps.google.com/maps?q=${encodeURIComponent(searchQuery)}&t=m&z=15&output=embed&iwloc=B`;
+    }
+  }
+
+  // 4. Fallback if short link (e.g., maps.app.goo.gl, goo.gl/maps) or query couldn't be parsed from link
+  if (!embedSrc) {
+    let fallbackQuery = "";
+    if (cleanName && cleanAddress) {
+      fallbackQuery = `${cleanName}, ${cleanAddress}`;
+    } else if (cleanAddress) {
+      fallbackQuery = cleanAddress;
+    } else if (cleanName) {
+      fallbackQuery = cleanName;
+    } else if (rawLink && !rawLink.startsWith("http")) {
+      fallbackQuery = rawLink;
+    }
+
+    if (fallbackQuery) {
+      embedSrc = `https://maps.google.com/maps?q=${encodeURIComponent(fallbackQuery)}&t=m&z=15&output=embed&iwloc=B`;
     }
   }
 
