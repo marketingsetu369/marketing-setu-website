@@ -1,0 +1,62 @@
+name: Production Website Deployment
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Build & Deploy Website to Production VPS
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clean Production Web deploy directory
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST_PROD || secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER_PROD || secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_PROD || secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          script: |
+            mkdir -p /root/marketingsetu-web
+            cd /root/marketingsetu-web
+            echo "🛑 Stopping existing web container..."
+            docker compose down || true
+            echo "🧹 Cleaning old files..."
+            find . -mindepth 1 -not -name '.env*' -delete || true
+
+      - name: Sync fresh web code to Production VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST_PROD || secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER_PROD || secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_PROD || secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          source: ".,!node_modules,!.next,!.git,!.github"
+          target: "/root/marketingsetu-web"
+          rm: false
+
+      - name: Build and launch fresh Web container on Production
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST_PROD || secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER_PROD || secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_PROD || secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          script: |
+            cd /root/marketingsetu-web
+            
+            echo "🚀 Rebuilding Web Docker image from scratch on Production..."
+            docker compose build --no-cache
+
+            echo "🚀 Starting Web container..."
+            docker compose up -d --force-recreate --wait --wait-timeout 60
+
+            echo "🧹 Cleaning up old/unused images..."
+            docker image prune -f
+
+            echo "📊 Current Web status:"
+            docker ps --filter "name=marketingsetu-web" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+
+            echo "✅ Website Deployment completed successfully!"

@@ -1,0 +1,26 @@
+# MarketingSetu — AI, Digital Marketing & Growth Platform
+
+> MarketingSetu is an all-in-one digital marketing, WhatsApp engagement, and digital presence platform for local businesses, enterprises, and retailers in India.
+
+## Key Offerings & Services
+- **WhatsApp Marketing & Automation**: Instant auto-replies, lead engagement, catalog sharing, template messaging.
+- **Custom Business Landing Pages**: Instant mobile-first digital identity for small and medium businesses (SMBs).
+- **Google Business Profile & Local SEO**: Local citation, map ranking, and discovery optimization.
+- **Auto Call & SMS Follow-ups**: Automated enquiry capture and instant response sequences.
+- **Analytics & Customer Dashboard**: Real-time traffic, contact leads, and click metrics.
+
+## Service Regions (GEO)
+- Headquarters: Pune, Maharashtra, India
+- Coverage: Pan-India (Maharashtra, Karnataka, Gujarat, Delhi NCR, and across India)
+
+## Pricing Plans
+- Starter / Lite Plans starting at ₹1,999/year
+- Growth & Custom Enterprise Plans
+
+## Official URLs
+- Website: https://marketingsetu.com
+- Services: https://marketingsetu.com/services
+- Pricing: https://marketingsetu.com/pricing
+- About: https://marketingsetu.com/about
+- Contact: https://marketingsetu.com/contact
+- Sitemaps: https://marketingsetu.com/sitemap.xml

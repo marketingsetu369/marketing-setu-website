@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: "standalone",
   reactCompiler: true,
   images: {
     remotePatterns: [
@@ -16,14 +16,15 @@ const nextConfig: NextConfig = {
     ],
   },
   async rewrites() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.marketingsetu.com';
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3005'}/api/:path*`,
+        destination: `${apiUrl}/api/:path*`,
       },
       {
         source: '/uploads/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL || 'https://187.127.128.193:3005'}/uploads/:path*`,
+        destination: `${apiUrl}/uploads/:path*`,
       },
     ];
   },

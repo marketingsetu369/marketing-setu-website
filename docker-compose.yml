@@ -1,0 +1,13 @@
+services:
+  marketingsetu-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: marketingsetu-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - NEXT_PUBLIC_API_URL=https://api.marketingsetu.com

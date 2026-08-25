@@ -110,8 +110,11 @@ export default async function Page({ params }: PageProps) {
     "address": {
       "@type": "PostalAddress",
       "streetAddress": streetAddress,
+      "addressCountry": "IN",
     },
     "image": logo,
+    "priceRange": "₹₹",
+    "areaServed": "IN"
   } : null;
 
   return (
