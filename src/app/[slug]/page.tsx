@@ -1,7 +1,7 @@
 import { BusinessPageApi } from "@/api/repositories/businessPageApi";
 import BusinessView from "@/views/business-page";
-import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +16,7 @@ const getImageUrl = (url?: string) => {
   
   // If it's a relative path starting with /uploads
   if (url.startsWith("/uploads/")) {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://api.marketingsetu.com";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
     const cleanApiUrl = apiUrl.replace(/\/$/, "");
     
     // Always force HTTPS for OG images as social platforms require HTTPS
