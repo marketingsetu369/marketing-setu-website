@@ -238,13 +238,13 @@ export default function HomeView() {
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight text-primary max-w-4xl mx-auto leading-[1.1] mb-6">
-              Digital Business Card<br />
-              <span className="text-brand-main font-medium">The Original. The Best.</span>
+              All-in-One Digital Marketing Platform <br />
+              <span className="text-brand-main font-medium">for Small Businesses</span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-lg sm:text-xl text-secondary max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
-              Share your professional identity, products, contact links, and business details with one smart link — complete with automated WhatsApp & missed call customer connection.
+              Build your digital presence, connect with customers, manage your marketing, and grow your business — all from one simple platform.
             </p>
 
             {/* CTA Action Buttons */}

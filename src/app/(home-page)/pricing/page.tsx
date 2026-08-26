@@ -34,47 +34,68 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Product",
-  "name": "MarketingSetu Business Growth Subscription",
-  "description":
-    "Automated WhatsApp customer follow-up, digital business pages, and local SEO ranking platform for businesses in Satara, Sangli, Kolhapur, Pune, Maharashtra and India.",
-  "brand": {
-    "@type": "Brand",
-    "name": "MarketingSetu",
-  },
-  "offers": {
-    "@type": "AggregateOffer",
-    "priceCurrency": "INR",
-    "lowPrice": "3499",
-    "highPrice": "12999",
-    "offerCount": "3",
-    "offers": [
-      {
-        "@type": "Offer",
-        "name": "Quick Connect",
-        "price": "3499",
-        "priceCurrency": "INR",
-        "availability": "https://schema.org/InStock",
-        "description": "Digital Business Card, Auto SMS on Missed Call, Custom Landing Page.",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://marketingsetu.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Pricing",
+          "item": "https://marketingsetu.com/pricing"
+        }
+      ]
+    },
+    {
+      "@type": "Product",
+      "name": "MarketingSetu Business Growth Subscription",
+      "description":
+        "Automated WhatsApp customer follow-up, digital business pages, and local SEO ranking platform for businesses in Satara, Sangli, Kolhapur, Pune, Maharashtra and India.",
+      "brand": {
+        "@type": "Brand",
+        "name": "MarketingSetu",
       },
-      {
-        "@type": "Offer",
-        "name": "Smart Connect",
-        "price": "5499",
+      "offers": {
+        "@type": "AggregateOffer",
         "priceCurrency": "INR",
-        "availability": "https://schema.org/InStock",
-        "description": "Auto WhatsApp on Missed Call, Custom Landing Page, Festival Social Posts.",
-      },
-      {
-        "@type": "Offer",
-        "name": "Power Connect",
-        "price": "12999",
-        "priceCurrency": "INR",
-        "availability": "https://schema.org/InStock",
-        "description": "Full-suite Marketing, Multi-User Dashboard, Advanced Analytics & Dedicated Support.",
-      },
-    ],
-  },
+        "lowPrice": "3499",
+        "highPrice": "12999",
+        "offerCount": "3",
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "Quick Connect",
+            "price": "3499",
+            "priceCurrency": "INR",
+            "availability": "https://schema.org/InStock",
+            "description": "Digital Business Card, Auto SMS on Missed Call, Custom Landing Page."
+          },
+          {
+            "@type": "Offer",
+            "name": "Smart Connect",
+            "price": "5499",
+            "priceCurrency": "INR",
+            "availability": "https://schema.org/InStock",
+            "description": "Auto WhatsApp on Missed Call, Custom Landing Page, Festival Social Posts."
+          },
+          {
+            "@type": "Offer",
+            "name": "Power Connect",
+            "price": "12999",
+            "priceCurrency": "INR",
+            "availability": "https://schema.org/InStock",
+            "description": "Full-suite Marketing, Multi-User Dashboard, Advanced Analytics & Dedicated Support."
+          }
+        ]
+      }
+    }
+  ]
 };
 
 export default function Page() {
