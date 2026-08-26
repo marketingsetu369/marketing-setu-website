@@ -16,7 +16,7 @@ const getImageUrl = (url?: string) => {
   
   // If it's a relative path starting with /uploads
   if (url.startsWith("/uploads/")) {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://marketing-setu-website.vercel.app";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://api.marketingsetu.com";
     const cleanApiUrl = apiUrl.replace(/\/$/, "");
     
     // Always force HTTPS for OG images as social platforms require HTTPS
