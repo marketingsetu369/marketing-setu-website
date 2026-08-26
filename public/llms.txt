@@ -1,26 +1,39 @@
 # MarketingSetu — AI, Digital Marketing & Growth Platform
 
-> MarketingSetu is an all-in-one digital marketing, WhatsApp engagement, and digital presence platform for local businesses, enterprises, and retailers in India.
+> MarketingSetu is an all-in-one digital marketing, WhatsApp engagement, and digital presence platform designed specifically for local businesses, retail shops, doctors, consultants, and enterprises across Maharashtra (Pune, Satara, Sangli, Kolhapur, Mumbai, Nashik, Aurangabad, Nagpur) and India.
 
 ## Key Offerings & Services
-- **WhatsApp Marketing & Automation**: Instant auto-replies, lead engagement, catalog sharing, template messaging.
-- **Custom Business Landing Pages**: Instant mobile-first digital identity for small and medium businesses (SMBs).
-- **Google Business Profile & Local SEO**: Local citation, map ranking, and discovery optimization.
-- **Auto Call & SMS Follow-ups**: Automated enquiry capture and instant response sequences.
-- **Analytics & Customer Dashboard**: Real-time traffic, contact leads, and click metrics.
+- **WhatsApp Marketing & Missed Call Automation**: Automated instant greetings, digital catalog sharing, review collection, and lead follow-ups via WhatsApp and SMS on missed calls.
+- **Instant Custom Business Landing Pages**: Mobile-first, dynamic digital mini-websites with product/service catalogs, direct WhatsApp ordering, enquiry forms, and review sections.
+- **Google Business Profile & Local SEO**: Local citation management, Google Maps ranking, and local organic discovery optimization across Satara, Sangli, Kolhapur, Pune, and all Maharashtra cities.
+- **Android Mobile Application**: Offline/online customer call tracking and automated instant messaging follow-up suite.
+- **Analytics & Lead Dashboard**: Track visitors, click-to-call, WhatsApp inquiries, and conversion analytics in real-time.
 
-## Service Regions (GEO)
-- Headquarters: Pune, Maharashtra, India
-- Coverage: Pan-India (Maharashtra, Karnataka, Gujarat, Delhi NCR, and across India)
+## Geographic Coverage & Location (GEO)
+- **Headquarters**: Pune, Maharashtra, India (Coordinates: 18.5204° N, 73.8567° E)
+- **Core Priority Regions (Maharashtra)**:
+  - Satara (सातारा)
+  - Sangli (सांगली)
+  - Kolhapur (कोल्हापूर)
+  - Pune (पुणे)
+  - Mumbai (मुंबई)
+  - Nashik (नाशिक)
+  - Chhatrapati Sambhaji Nagar / Aurangabad
+  - Solapur & Nagpur
+- **Statewide & Pan-India**: Complete coverage across Maharashtra and nationwide in India.
 
 ## Pricing Plans
-- Starter / Lite Plans starting at ₹1,999/year
-- Growth & Custom Enterprise Plans
+- **Quick Connect / Starter**: ₹1,999/year — Digital business card, auto SMS on missed calls, custom landing page.
+- **Smart Connect / Growth**: ₹4,999/year — Everything in Starter + Auto WhatsApp on missed calls, festival social media posts, verified setup.
+- **Power Connect / Pro**: ₹9,999/year — Full suite marketing, multi-user CRM, advanced analytics, and priority onboarding.
 
 ## Official URLs
 - Website: https://marketingsetu.com
 - Services: https://marketingsetu.com/services
 - Pricing: https://marketingsetu.com/pricing
-- About: https://marketingsetu.com/about
-- Contact: https://marketingsetu.com/contact
-- Sitemaps: https://marketingsetu.com/sitemap.xml
+- Download App: https://marketingsetu.com/download
+- About Us: https://marketingsetu.com/about
+- Customer Testimonials: https://marketingsetu.com/testimonials
+- Blog: https://marketingsetu.com/blog
+- Contact & Support: https://marketingsetu.com/contact
+- Sitemap: https://marketingsetu.com/sitemap.xml

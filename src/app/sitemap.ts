@@ -5,59 +5,65 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   // Core static marketing pages
-  const staticPages = [
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}`,
       lastModified: now,
-      changeFrequency: "weekly" as const,
+      changeFrequency: "weekly",
       priority: 1.0,
     },
     {
       url: `${baseUrl}/services`,
       lastModified: now,
-      changeFrequency: "weekly" as const,
+      changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/pricing`,
       lastModified: now,
-      changeFrequency: "weekly" as const,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/download`,
+      lastModified: now,
+      changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/about`,
       lastModified: now,
-      changeFrequency: "monthly" as const,
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/blog`,
       lastModified: now,
-      changeFrequency: "daily" as const,
+      changeFrequency: "daily",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/testimonials`,
       lastModified: now,
-      changeFrequency: "monthly" as const,
+      changeFrequency: "monthly",
       priority: 0.7,
     },
     {
       url: `${baseUrl}/contact`,
       lastModified: now,
-      changeFrequency: "monthly" as const,
+      changeFrequency: "monthly",
       priority: 0.7,
     },
     {
       url: `${baseUrl}/privacy-policy`,
       lastModified: now,
-      changeFrequency: "yearly" as const,
+      changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${baseUrl}/terms`,
       lastModified: now,
-      changeFrequency: "yearly" as const,
+      changeFrequency: "yearly",
       priority: 0.3,
     },
   ];

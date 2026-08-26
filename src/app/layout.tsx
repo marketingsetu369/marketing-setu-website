@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins, Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Poppins } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 
@@ -28,20 +28,26 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://marketingsetu.com";
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "MarketingSetu — Digital Marketing, WhatsApp Automation & Business Pages",
+    default: "MarketingSetu — Digital Marketing, WhatsApp Automation & Business Pages in Maharashtra",
     template: "%s | MarketingSetu",
   },
   description:
-    "MarketingSetu helps Indian local businesses grow with WhatsApp marketing automation, custom business landing pages, Google Business setup, and local SEO. Plans from ₹1,999/year.",
+    "MarketingSetu helps local businesses across Pune, Satara, Sangli, Kolhapur, and all over Maharashtra grow with WhatsApp marketing automation, custom business landing pages, Google Business setup, and local SEO. Plans from ₹1,999/year.",
   keywords: [
-    "Digital Marketing Agency Pune",
-    "WhatsApp Marketing India",
-    "Local SEO Pune",
+    "Digital Marketing Agency Maharashtra",
+    "WhatsApp Marketing Pune",
+    "Digital Marketing Satara",
+    "Digital Marketing Sangli",
+    "Digital Marketing Kolhapur",
+    "Local SEO Maharashtra",
+    "Local SEO Kolhapur",
+    "Local SEO Satara",
+    "Local SEO Sangli",
     "Business Landing Page Maker",
     "Auto SMS Followup",
     "Google Business Profile Setup",
     "MarketingSetu",
-    "Small Business Marketing India",
+    "Small Business Marketing Maharashtra",
   ],
   authors: [{ name: "MarketingSetu Team", url: baseUrl }],
   creator: "MarketingSetu",
@@ -59,9 +65,9 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: baseUrl,
     siteName: "MarketingSetu",
-    title: "MarketingSetu — WhatsApp Marketing & Local SEO Agency in Pune",
+    title: "MarketingSetu — WhatsApp Marketing & Local SEO Agency in Maharashtra",
     description:
-      "Empower your local business with automated WhatsApp marketing, instant digital business pages, and Google local SEO ranking.",
+      "Empower your local business in Pune, Satara, Sangli, Kolhapur & across Maharashtra with automated WhatsApp marketing, instant digital business pages, and Google local SEO ranking.",
     images: [
       {
         url: "/og-image.png",
@@ -73,9 +79,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MarketingSetu — WhatsApp Marketing & Local SEO Agency",
+    title: "MarketingSetu — WhatsApp Marketing & Local SEO Agency in Maharashtra",
     description:
-      "Automated WhatsApp marketing, instant digital business pages, and Google local SEO ranking for Indian businesses.",
+      "Automated WhatsApp marketing, instant digital business pages, and Google local SEO ranking for businesses in Pune, Satara, Sangli, Kolhapur & Maharashtra.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -95,7 +101,7 @@ export const metadata: Metadata = {
   },
   other: {
     "geo.region": "IN-MH",
-    "geo.placename": "Pune",
+    "geo.placename": "Pune, Satara, Sangli, Kolhapur, Maharashtra, India",
     "geo.position": "18.5204;73.8567",
     "ICBM": "18.5204, 73.8567",
   },
@@ -110,7 +116,7 @@ const jsonLdOrg = {
       "name": "MarketingSetu",
       "url": "https://marketingsetu.com",
       "logo": "https://marketingsetu.com/logo.svg",
-      "description": "Digital Marketing, WhatsApp Automation and Local SEO platform for Indian businesses.",
+      "description": "Digital Marketing, WhatsApp Automation and Local SEO platform for businesses in Pune, Satara, Sangli, Kolhapur, Maharashtra and India.",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Pune",
@@ -121,8 +127,15 @@ const jsonLdOrg = {
         "@type": "ContactPoint",
         "telephone": "+91-9876543210",
         "contactType": "customer service",
-        "areaServed": "IN",
-        "availableLanguage": ["English", "Hindi", "Marathi"]
+        "areaServed": [
+          "Maharashtra",
+          "Pune",
+          "Satara",
+          "Sangli",
+          "Kolhapur",
+          "IN"
+        ],
+        "availableLanguage": ["English", "Marathi", "Hindi"]
       }
     },
     {
@@ -133,6 +146,14 @@ const jsonLdOrg = {
       "url": "https://marketingsetu.com",
       "telephone": "+91-9876543210",
       "priceRange": "₹₹",
+      "areaServed": [
+        { "@type": "City", "name": "Pune" },
+        { "@type": "City", "name": "Satara" },
+        { "@type": "City", "name": "Sangli" },
+        { "@type": "City", "name": "Kolhapur" },
+        { "@type": "AdministrativeArea", "name": "Maharashtra" },
+        { "@type": "Country", "name": "India" }
+      ],
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Pune",
@@ -159,6 +180,32 @@ const jsonLdOrg = {
         "opens": "09:00",
         "closes": "19:00"
       }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://marketingsetu.com/#website",
+      "url": "https://marketingsetu.com",
+      "name": "MarketingSetu",
+      "description": "WhatsApp Marketing, Custom Business Pages & Local SEO Automation for Indian Businesses",
+      "publisher": {
+        "@id": "https://marketingsetu.com/#organization"
+      },
+      "inLanguage": ["en-IN", "hi-IN", "mr-IN"]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://marketingsetu.com/#application",
+      "name": "MarketingSetu",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Android, Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "3499",
+        "priceCurrency": "INR",
+        "priceValidUntil": "2027-12-31",
+        "availability": "https://schema.org/InStock"
+      },
+      "description": "Automated WhatsApp marketing, digital business cards, instant landing pages, and lead tracking software."
     }
   ]
 };

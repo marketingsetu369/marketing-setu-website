@@ -1,6 +1,7 @@
-const BASE_URL = typeof window !== "undefined"
-  ? "/api/v1"
-  : `${process.env.NEXT_PUBLIC_API_URL || "http://187.127.128.193:3005"}/api/v1`;
+const BASE_URL =
+  typeof window !== "undefined"
+    ? "/api/v1"
+    : `${process.env.NEXT_PUBLIC_API_URL || "https://api.marketingsetu.com"}/api/v1`;
 
 const fetchClient = {
   request: async <T>(path: string, options: RequestInit = {}): Promise<T> => {
@@ -20,7 +21,8 @@ const fetchClient = {
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(
-          errorData.message || `API Error: ${response.status} ${response.statusText}`
+          errorData.message ||
+            `API Error: ${response.status} ${response.statusText}`,
         );
       }
 
