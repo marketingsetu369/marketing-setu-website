@@ -226,7 +226,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
             {/* ── MarketingSetu Advertisement Link ── */}
             <div className="pt-6 border-t border-gray-100 text-center pb-16">
               <a
-                href="https://marketingsetu.com"
+                href="https://www.marketingsetu.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-50 border border-gray-100 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-900 hover:border-gray-200 transition-all shadow-xs"
@@ -236,7 +236,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
                   Marketing<span style={{ color: primaryColor }}>Setu</span>
                 </span>
                 <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: primaryColor }} />
-                <span className="text-gray-400">{translations[(pageLanguage as Language) in translations ? (pageLanguage as Language) : "en"].bp_get_page ?? "Get your business page"}</span>
+                <span className="font-medium text-gray-600 hover:underline">www.marketingsetu.com</span>
               </a>
             </div>
           </div>
