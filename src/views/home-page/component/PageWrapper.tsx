@@ -54,15 +54,10 @@ export default function PageWrapper({ children }: PageWrapperProps) {
             {/* Logo (Left side) */}
             <Link href="/" className="flex-shrink-0 flex items-center group">
               <img
-                src="/logo-horizontal.svg"
+                src="/logo.svg"
                 alt="MarketingSetu Logo"
-                className="h-24 w-auto object-contain block dark:hidden"
+                className="h-10 sm:h-12 w-auto object-contain"
               />
-              {/* <img
-                src="/logo-horizontal.svg"
-                alt="MarketingSetu Logo"
-                className="h-10 w-auto object-contain hidden dark:block invert brightness-200"
-              /> */}
             </Link>
 
             {/* Desktop Navigation Links */}
@@ -230,9 +225,9 @@ export default function PageWrapper({ children }: PageWrapperProps) {
             <div className="md:col-span-1">
               <div className="flex items-center mb-4">
                 <img
-                  src="/logo-vertical.svg"
+                  src="/logo.svg"
                   alt="MarketingSetu Logo"
-                  className="h-16 w-auto object-contain invert brightness-200"
+                  className="h-10 sm:h-12 w-auto object-contain"
                 />
               </div>
               <p className="text-sm leading-relaxed mb-6">
