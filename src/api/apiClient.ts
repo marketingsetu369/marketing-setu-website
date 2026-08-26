@@ -1,14 +1,19 @@
-const BASE_URL =
-  typeof window !== "undefined"
-    ? "/api/v1"
-    : `${process.env.NEXT_PUBLIC_API_URL || "https://api.marketingsetu.com"}/api/v1`;
+const API_ORIGIN =
+  process.env.NEXT_PUBLIC_API_URL || "https://api.marketingsetu.com";
+const BASE_URL = `${API_ORIGIN.replace(/\/$/, "")}/api/v1`;
 
 const fetchClient = {
   request: async <T>(path: string, options: RequestInit = {}): Promise<T> => {
     const url = `${BASE_URL}${path}`;
-    const headers = {
+    let token: string | null = null;
+    if (typeof window !== "undefined") {
+      token = localStorage.getItem("marketingsetu_user_token");
+    }
+
+    const headers: Record<string, string> = {
       "Content-Type": "application/json",
-      ...options.headers,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(options.headers as Record<string, string>),
     };
 
     try {

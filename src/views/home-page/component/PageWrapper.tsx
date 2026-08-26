@@ -109,10 +109,21 @@ export default function PageWrapper({ children }: PageWrapperProps) {
                 </button>
               )}
 
+              {/* Portal Login Button */}
+              <Link
+                href="/login"
+                className="bg-paper hover:bg-neutral border border-outline text-primary px-3.5 py-2 rounded-xl text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5"
+              >
+                <svg className="w-3.5 h-3.5 text-brand-main" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                Merchant Login
+              </Link>
+
               {/* Download App Action Button */}
               <Link
                 href="/download"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-2.5 rounded-xl text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-2 rounded-xl text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5"
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -123,7 +134,7 @@ export default function PageWrapper({ children }: PageWrapperProps) {
               {/* Primary Action Button */}
               <button
                 onClick={() => handleWhatsAppChat()}
-                className="bg-gray-950 hover:bg-gray-800 text-white px-4 py-2.5 rounded-xl text-xs font-semibold shadow-sm transition-all cursor-pointer flex items-center gap-2"
+                className="bg-gray-950 hover:bg-gray-800 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-sm transition-all cursor-pointer flex items-center gap-2"
               >
                 Get Started
               </button>
