@@ -184,12 +184,6 @@ export interface TranslationDictionary {
   testi_2_role: string;
   testi_3_text: string;
   testi_3_role: string;
-  testi_4_text: string;
-  testi_4_role: string;
-  testi_5_text: string;
-  testi_5_role: string;
-  testi_6_text: string;
-  testi_6_role: string;
   about_val_1_title: string;
   about_val_1_desc: string;
   about_val_2_title: string;

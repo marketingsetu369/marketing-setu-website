@@ -294,7 +294,7 @@ export default function HomeView() {
                   className="absolute right-2 sm:right-8 z-40 w-12 h-12 rounded-full bg-white text-emerald-600 shadow-xl border border-gray-100 flex items-center justify-center text-xl font-semibold hover:scale-110 active:scale-95 transition-all cursor-pointer"
                   aria-label="Next Slide"
                 >
-                  &rarr;
+                  <span>&rarr;</span>
                 </button>
 
                 {/* 3D Stack Deck Cards */}

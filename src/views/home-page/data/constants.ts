@@ -19,7 +19,7 @@ export const navLinks = [
 export const contactInfo = {
   phone:    "+91 99999 99999",
   waRaw:    WA_NUMBER,
-  email:    "hello@marketingsetu.com",
+  email:    "support@marketingsetu.com",
   location: "Pune, Maharashtra, India",
   hours:    "Mon – Sat, 9am – 7pm IST",
 } as const;

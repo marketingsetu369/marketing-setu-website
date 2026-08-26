@@ -22,7 +22,7 @@ export default function PrivacyPolicyView() {
         <h3>Cookies</h3>
         <p>This site may use minimal local storage to remember your display preferences, such as dark mode. No third-party advertising cookies are used.</p>
         <h3>Contact us</h3>
-        <p>For any privacy questions, email us at hello@marketingsetu.com.</p>
+        <p>For any privacy questions, email us at support@marketingsetu.com.</p>
       </ProseSection>
     </PageWrapper>
   );

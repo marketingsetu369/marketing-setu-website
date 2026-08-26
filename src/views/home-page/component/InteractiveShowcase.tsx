@@ -531,7 +531,8 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
               href={activeService.actionLink}
               className="inline-flex items-center gap-1.5 px-6 py-3 border border-outline hover:border-brand-main/50 rounded-xl text-xs font-semibold text-primary bg-paper hover:bg-neutral shadow-sm hover:shadow transition-all"
             >
-              {activeService.actionLabel} &rarr;
+              <span>{activeService.actionLabel}</span>
+              <span>&rarr;</span>
             </Link>
           ) : (
             <button
@@ -539,7 +540,8 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
               className="inline-flex items-center gap-1.5 px-6 py-3 rounded-xl text-xs font-bold text-white shadow-z4 hover:shadow-z8 hover:-translate-y-0.5 transition-all cursor-pointer"
               style={{ backgroundColor: activeService.accentColor }}
             >
-              {activeService.actionLabel} &rarr;
+              <span>{activeService.actionLabel}</span>
+              <span>&rarr;</span>
             </button>
           )}
         </div>

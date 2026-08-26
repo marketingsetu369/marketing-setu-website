@@ -6,7 +6,7 @@ export const servicesData: ServiceBlockItem[] = [
     icon: "🪪",
     badge: "Main Product",
     title: "Smart Digital Business Card",
-    lead: "Your professional Digital Business Card — shareable via WhatsApp, QR code, Instagram, and Google in one tap. Show your services, photos, contact details, and a direct enquiry button. Live in 48 hours.",
+    lead: "Your professional Digital Business Card — shareable via WhatsApp, QR code, Instagram, and Google in one tap. Show your services, photos, contact details, and a direct enquiry button. Live in 15 min.",
     features: [
       "Custom logo, name, category & WhatsApp link",
       "Tap-to-call, WhatsApp, email & location buttons",

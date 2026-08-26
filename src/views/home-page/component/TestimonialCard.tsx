@@ -6,6 +6,7 @@ export interface Testimonial {
   initials: string;
   name: string;
   role: string;
+  image?: string;
 }
 
 interface TestimonialCardProps {
@@ -31,9 +32,17 @@ export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
 
       {/* Author footer */}
       <div className="flex items-center gap-3 pt-6 mt-6 border-t border-outline">
-        <div className="w-10 h-10 bg-brand-lighter text-brand-dark dark:bg-brand-dark dark:text-brand-lighter rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
-          {testimonial.initials}
-        </div>
+        {testimonial.image ? (
+          <img
+            src={testimonial.image}
+            alt={testimonial.name}
+            className="w-11 h-11 rounded-full object-cover border border-outline flex-shrink-0"
+          />
+        ) : (
+          <div className="w-10 h-10 bg-brand-lighter text-brand-dark dark:bg-brand-dark dark:text-brand-lighter rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+            {testimonial.initials}
+          </div>
+        )}
         <div>
           <h4 className="text-sm font-bold text-primary leading-tight">{testimonial.name}</h4>
           <span className="text-xs text-disabled">{testimonial.role}</span>

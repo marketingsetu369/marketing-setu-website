@@ -22,7 +22,7 @@ export default function TermsView() {
         <h3>Limitation of liability</h3>
         <p>MarketingSetu is not liable for indirect or consequential losses arising from the use of our services, to the fullest extent permitted by law.</p>
         <h3>Contact</h3>
-        <p>Questions about these terms can be sent to hello@marketingsetu.com.</p>
+        <p>Questions about these terms can be sent to support@marketingsetu.com.</p>
       </ProseSection>
     </PageWrapper>
   );
