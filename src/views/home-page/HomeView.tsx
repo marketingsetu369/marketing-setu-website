@@ -229,9 +229,9 @@ export default function HomeView() {
               <span>Digital Marketing & Smart Card Software</span>
               <span className="text-disabled hidden sm:inline">•</span>
               <span className="text-primary font-semibold hidden sm:flex items-center gap-1">
-                4.9 
+                4.9
                 <svg className="w-3.5 h-3.5 text-warning-main fill-current" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
               </span>
             </div>
@@ -265,7 +265,7 @@ export default function HomeView() {
 
             {/* Stateful 3D Coverflow Interactive Carousel */}
             <div className="relative max-w-7xl mx-auto pt-6 pb-8 px-4 overflow-hidden">
-              
+
               {/* Active Category Name Title Above Slider */}
               <div className="text-center mb-6 transition-all duration-300">
                 <span className="inline-block px-3 py-1 rounded-full bg-brand-lighter text-brand-dark font-semibold text-xs uppercase tracking-wider mb-2 border border-brand-light/40 shadow-xs">
@@ -278,7 +278,7 @@ export default function HomeView() {
 
               {/* Coverflow Carousel Outer Stage */}
               <div className="relative flex items-center justify-center min-h-[540px] py-4">
-                
+
                 {/* Left Carousel Circular Arrow Button */}
                 <button
                   onClick={() => setActiveCardIndex((prev) => (prev > 0 ? prev - 1 : carouselCards.length - 1))}
@@ -345,11 +345,10 @@ export default function HomeView() {
                           zIndex: zIndex,
                           opacity: opacity,
                         }}
-                        className={`absolute w-[265px] sm:w-[285px] h-[490px] rounded-[36px] bg-white text-gray-950 transition-all duration-500 ease-out cursor-pointer select-none overflow-hidden ${
-                          isActive
-                            ? "shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] ring-4 ring-white"
-                            : "shadow-xl border border-gray-200/80 hover:opacity-100"
-                        }`}
+                        className={`absolute w-[265px] sm:w-[285px] h-[490px] rounded-[36px] bg-white text-gray-950 transition-all duration-500 ease-out cursor-pointer select-none overflow-hidden ${isActive
+                          ? "shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] ring-4 ring-white"
+                          : "shadow-xl border border-gray-200/80 hover:opacity-100"
+                          }`}
                       >
                         {/* Mobile Screen Shell Frame */}
                         <div className="w-full h-full relative overflow-hidden bg-white text-left">
@@ -387,11 +386,10 @@ export default function HomeView() {
                   <button
                     key={idx}
                     onClick={() => setActiveCardIndex(idx)}
-                    className={`h-3 rounded-full transition-all duration-300 cursor-pointer ${
-                      idx === activeCardIndex
-                        ? "w-8 bg-brand-main shadow-md"
-                        : "w-3 bg-gray-300 hover:bg-gray-400"
-                    }`}
+                    className={`h-3 rounded-full transition-all duration-300 cursor-pointer ${idx === activeCardIndex
+                      ? "w-8 bg-brand-main shadow-md"
+                      : "w-3 bg-gray-300 hover:bg-gray-400"
+                      }`}
                     aria-label={`Go to slide ${idx + 1}`}
                   />
                 ))}
@@ -438,70 +436,70 @@ export default function HomeView() {
             <div className="absolute right-[14%] top-[80%] hidden md:block text-2xl animate-pulse select-none pointer-events-none">🍃</div>
 
             <div className="relative z-10">
-            {/* Centered Brand Logo */}
-            <div className="flex justify-center mb-8">
-              <img
-                src="/logo-vertical.svg"
-                alt="MarketingSetu Logo"
-                className="h-20 w-auto object-contain"
-              />
-            </div>
-
-            {/* Smart Marketing Header */}
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-primary leading-tight mb-6">
-                Smart Marketing for<br />
-                <span className="text-[#5B3DF5]">Stronger</span> <span className="text-[#10C85A]">Businesses</span>
-              </h2>
-              <p className="text-secondary text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto font-normal">
-                All-in-one digital platform to build your brand, connect with customers, and grow faster in the digital world.
-              </p>
-            </div>
-
-            {/* Stats White Grid Box */}
-            <div className="bg-paper rounded-[24px] sm:rounded-[32px] p-5 md:p-6 lg:p-8 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0 shadow-card items-center relative z-10">
-              {/* Stat Column 1 */}
-              <div className="flex items-center gap-3 sm:gap-4 md:justify-center px-2 lg:px-4">
-                <div className="w-11 h-11 rounded-full bg-[#EFEBFF] flex items-center justify-center text-[#5B3DF5] flex-shrink-0">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 className="text-xl lg:text-2xl font-semibold text-primary leading-tight">25,000+</h4>
-                  <p className="text-[10px] lg:text-xs text-secondary font-medium tracking-wide mt-0.5">Businesses Trust us</p>
-                </div>
+              {/* Centered Brand Logo */}
+              <div className="flex justify-center mb-8">
+                <img
+                  src="/logo-vertical.svg"
+                  alt="MarketingSetu Logo"
+                  className="h-20 w-auto object-contain"
+                />
               </div>
 
-              {/* Stat Column 2 */}
-              <div className="flex items-center gap-3 sm:gap-4 md:justify-center px-2 lg:px-4 py-4 md:py-0">
-                <div className="w-11 h-11 rounded-full bg-[#E5F9ED] flex items-center justify-center text-[#10C85A] flex-shrink-0">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 className="text-xl lg:text-2xl font-semibold text-primary leading-tight">150,000+</h4>
-                  <p className="text-[10px] lg:text-xs text-secondary font-medium tracking-wide mt-0.5">Digital Profiles Created</p>
-                </div>
+              {/* Smart Marketing Header */}
+              <div className="text-center max-w-3xl mx-auto mb-16">
+                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-primary leading-tight mb-6">
+                  Smart Marketing for<br />
+                  <span className="text-[#5B3DF5]">Stronger</span> <span className="text-[#10C85A]">Businesses</span>
+                </h2>
+                <p className="text-secondary text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto font-normal">
+                  All-in-one digital platform to build your brand, connect with customers, and grow faster in the digital world.
+                </p>
               </div>
 
-              {/* Stat Column 3 */}
-              <div className="flex items-center gap-3 sm:gap-4 md:justify-center px-2 lg:px-4">
-                <div className="w-11 h-11 rounded-full bg-[#EFEBFF] flex items-center justify-center text-[#5B3DF5] flex-shrink-0">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+              {/* Stats White Grid Box */}
+              <div className="bg-paper rounded-[24px] sm:rounded-[32px] p-5 md:p-6 lg:p-8 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0 shadow-card items-center relative z-10">
+                {/* Stat Column 1 */}
+                <div className="flex items-center gap-3 sm:gap-4 md:justify-center px-2 lg:px-4">
+                  <div className="w-11 h-11 rounded-full bg-[#EFEBFF] flex items-center justify-center text-[#5B3DF5] flex-shrink-0">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="text-xl lg:text-2xl font-semibold text-primary leading-tight">25,000+</h4>
+                    <p className="text-[10px] lg:text-xs text-secondary font-medium tracking-wide mt-0.5">Businesses Trust us</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-xl lg:text-2xl font-semibold text-primary leading-tight">3M+</h4>
-                  <p className="text-[10px] lg:text-xs text-secondary font-medium tracking-wide mt-0.5">Leads Generated</p>
+
+                {/* Stat Column 2 */}
+                <div className="flex items-center gap-3 sm:gap-4 md:justify-center px-2 lg:px-4 py-4 md:py-0">
+                  <div className="w-11 h-11 rounded-full bg-[#E5F9ED] flex items-center justify-center text-[#10C85A] flex-shrink-0">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="text-xl lg:text-2xl font-semibold text-primary leading-tight">150,000+</h4>
+                    <p className="text-[10px] lg:text-xs text-secondary font-medium tracking-wide mt-0.5">Digital Profiles Created</p>
+                  </div>
+                </div>
+
+                {/* Stat Column 3 */}
+                <div className="flex items-center gap-3 sm:gap-4 md:justify-center px-2 lg:px-4">
+                  <div className="w-11 h-11 rounded-full bg-[#EFEBFF] flex items-center justify-center text-[#5B3DF5] flex-shrink-0">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="text-xl lg:text-2xl font-semibold text-primary leading-tight">3M+</h4>
+                    <p className="text-[10px] lg:text-xs text-secondary font-medium tracking-wide mt-0.5">Leads Generated</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
         {/* SERVICES SECTION */}
         <section className="py-24 bg-background overflow-hidden" id="services">
