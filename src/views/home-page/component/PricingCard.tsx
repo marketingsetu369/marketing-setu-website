@@ -32,7 +32,7 @@ export default function PricingCard({
       {/* Top Badge (Hostinger Style) */}
       {plan.badge && (
         <div
-          className={`absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider shadow-z4 whitespace-nowrap flex items-center gap-1.5 ${
+          className={`absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider shadow-z4 whitespace-nowrap flex items-center gap-1.5 ${
             isFeatured
               ? "bg-gradient-to-r from-[#5B3DF5] to-[#10C85A] text-white"
               : "bg-brand-dark text-white dark:bg-brand-lighter dark:text-brand-darker"

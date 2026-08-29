@@ -519,7 +519,7 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
         <div className="inline-block px-3 py-1 rounded-full text-[10px] font-bold tracking-wider text-white uppercase mb-3" style={{ backgroundColor: activeService.accentColor }}>
           {activeService.category}
         </div>
-        <h3 className="text-2xl sm:text-3xl font-extrabold text-primary mb-3 leading-tight transition-colors">
+        <h3 className="text-2xl sm:text-3xl font-semibold text-primary mb-3 leading-tight transition-colors">
           {activeService.title}
         </h3>
         <p className="text-secondary text-sm sm:text-base leading-relaxed max-w-xl mx-auto mb-6">
