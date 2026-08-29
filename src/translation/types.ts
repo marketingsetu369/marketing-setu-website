@@ -283,4 +283,30 @@ export interface TranslationDictionary {
   bp_action_location: string;
   bp_gallery_heading: string;
   bp_more: string;
+  // Showcase Grid Localization
+  showcase_filter_all: string;
+  showcase_filter_main: string;
+  showcase_filter_growth: string;
+  showcase_card_digital_title: string;
+  showcase_card_digital_desc: string;
+  showcase_bullet_digital_1: string;
+  showcase_bullet_digital_2: string;
+  showcase_bullet_digital_3: string;
+  showcase_bullet_wa_1: string;
+  showcase_bullet_wa_2: string;
+  showcase_bullet_wa_3: string;
+  showcase_bullet_lp_1: string;
+  showcase_bullet_lp_2: string;
+  showcase_bullet_lp_3: string;
+  showcase_bullet_gb_1: string;
+  showcase_bullet_gb_2: string;
+  showcase_bullet_gb_3: string;
+  showcase_bullet_ie_1: string;
+  showcase_bullet_ie_2: string;
+  showcase_bullet_ie_3: string;
+  showcase_bullet_pc_1: string;
+  showcase_bullet_pc_2: string;
+  showcase_bullet_pc_3: string;
+  showcase_btn_digital: string;
+  showcase_btn_wa: string;
 }
