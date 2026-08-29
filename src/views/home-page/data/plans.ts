@@ -27,9 +27,9 @@ export function getPricingPlans(t: TranslationDictionary): PricingPlan[] {
       badge: t.plan_quick_badge || "🌿 Essential · Standard Card",
       name: t.plan_quick_name || "Default Digital Card",
       description: t.plan_quick_desc || "Standard digital card template with automated customer messaging.",
-      price: t.plan_quick_price || "₹3,499",
-      originalPrice: "₹6,999",
-      monthlyPrice: "₹349",
+      price: t.plan_quick_price || "₹4,999",
+      originalPrice: "₹9,999",
+      monthlyPrice: "₹499",
       discountBadge: "50% OFF",
       whatsappMessage: `Hi MarketingSetu! I'd like to get the ${t.plan_quick_name || "Default Digital Card"} plan.`,
       features: [
@@ -63,9 +63,9 @@ export function getPricingPlans(t: TranslationDictionary): PricingPlan[] {
       featured: true,
       name: t.plan_smart_name || "Category Smart Card",
       description: t.plan_smart_desc || "Industry-tailored template designed for your specific business category.",
-      price: t.plan_smart_price || "₹7,499",
-      originalPrice: "₹14,999",
-      monthlyPrice: "₹749",
+      price: t.plan_smart_price || "₹9,999",
+      originalPrice: "₹19,999",
+      monthlyPrice: "₹999",
       discountBadge: "MOST POPULAR",
       whatsappMessage: `Hi MarketingSetu! I'd like to get the ${t.plan_smart_name || "Category Smart Card"} plan.`,
       features: [
@@ -95,10 +95,10 @@ export function getPricingPlans(t: TranslationDictionary): PricingPlan[] {
       badge: t.plan_power_badge || "👑 Bespoke · Single Page Site",
       name: t.plan_power_name || "Custom 1-Page Website",
       description: t.plan_power_desc || "Fully custom single-page brand website with custom domain setup.",
-      price: t.plan_power_price || "₹12,999",
-      originalPrice: "₹24,999",
-      monthlyPrice: "₹1,299",
-      discountBadge: "48% OFF",
+      price: t.plan_power_price || "₹14,999",
+      originalPrice: "₹29,999",
+      monthlyPrice: "₹1,499",
+      discountBadge: "50% OFF",
       whatsappMessage: `Hi MarketingSetu! I'd like to get the ${t.plan_power_name || "Custom 1-Page Website"} plan.`,
       features: [
         { bold: t.plan_feat_everything_growth || "Everything in Category Smart Card" },
@@ -147,6 +147,6 @@ export const compareRows: CompareRow[] = [
   {
     feature: "Price / Year",
     plans: [false, false, false],
-    label: ["₹3,499", "₹7,499", "₹12,999"],
+    label: ["₹4,999", "₹9,999", "₹14,999"],
   },
 ];
