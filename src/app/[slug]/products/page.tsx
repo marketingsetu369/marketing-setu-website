@@ -1,5 +1,6 @@
 import { BusinessPageApi } from "@/api/repositories/businessPageApi";
 import ProductsListView from "@/views/business-page/products-list";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export const revalidate = 60;
