@@ -166,13 +166,13 @@ export const hi: TranslationDictionary = {
 
   // Dynamic Plan Details
   plan_quick_name: "स्मार्ट डिजिटल बिजनेस कार्ड",
-  plan_quick_price: "₹४,९९९",
+  plan_quick_price: "₹3,499",
   plan_quick_desc: "छोटे और नए व्यवसायों के लिए",
   plan_smart_name: "कैटेगरी स्मार्ट कार्ड",
-  plan_smart_price: "₹९,९९९",
+  plan_smart_price: "₹7,999",
   plan_smart_desc: "बढ़ते हुए स्थानीय आउटलेट्स के लिए",
   plan_power_name: "प्रो",
-  plan_power_price: "₹१४,९९९",
+  plan_power_price: "₹11,999",
   plan_power_desc: "कम्पलीट ऑटोमेशन और लीड मैनेजमेंट",
 
   plan_feat_landing_page: "१ लैंडिंग पेज",

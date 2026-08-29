@@ -167,13 +167,13 @@ export const mr: TranslationDictionary = {
 
   // Dynamic Plan Details
   plan_quick_name: "स्टार्टर",
-  plan_quick_price: "₹४,९९९",
+  plan_quick_price: "₹३,४९९",
   plan_quick_desc: "छोट्या आणि नवीन व्यवसायांसाठी",
   plan_smart_name: "ग्रोथ",
-  plan_smart_price: "₹९,९९९",
+  plan_smart_price: "₹७,९९९",
   plan_smart_desc: "वाढणाऱ्या स्थानिक दुकानांसाठी",
   plan_power_name: "प्रो",
-  plan_power_price: "₹१४,९९९",
+  plan_power_price: "₹११,९९९",
   plan_power_desc: "पूर्ण ऑटोमेशन आणि लीड मॅनेजमेंट",
 
   plan_feat_landing_page: "१ लँडिंग पेज",
