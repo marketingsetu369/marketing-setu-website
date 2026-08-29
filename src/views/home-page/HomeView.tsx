@@ -326,115 +326,12 @@ export default function HomeView() {
           </div>
         </section>
 
-
-        {/* BRAND & STATISTICS SECTION (REPLACES HOW IT WORKS) */}
-        <section className="relative py-24 md:py-32 bg-gray-50 overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            {/* Background Decorative Waves relative to grid container */}
-            <div className="absolute inset-0 z-0 pointer-events-none opacity-40 select-none hidden lg:block">
-              <svg className="absolute left-[6%] top-[15%] w-[320px] h-[400px] text-[#5B3DF5]/10" viewBox="0 0 100 100" fill="none">
-                <path d="M-10,20 Q15,45 40,25 T90,40" stroke="currentColor" strokeWidth="0.8" fill="none" />
-              </svg>
-              <svg className="absolute right-[6%] top-[20%] w-[320px] h-[400px] text-[#10C85A]/10" viewBox="0 0 100 100" fill="none">
-                <path d="M110,20 Q85,45 60,25 T10,40" stroke="currentColor" strokeWidth="0.8" fill="none" />
-              </svg>
-            </div>
-
-            {/* Floating Badges relative to grid container */}
-            <div className="absolute left-[8%] top-[35%] hidden xl:flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#5B3DF5] to-[#7B61FF] text-white shadow-[0_20px_40px_rgba(91,61,245,0.25)] animate-[bounce_5s_infinite_alternate] z-10">
-              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
-              </svg>
-            </div>
-
-            <div className="absolute right-[10%] top-[22%] hidden xl:flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#10C85A] to-[#2BE87C] text-white shadow-[0_20px_40px_rgba(16,200,90,0.25)] animate-[bounce_6s_infinite_alternate] z-10">
-              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-            </div>
-
-            <div className="absolute right-[8%] top-[60%] hidden xl:flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#7B61FF] to-[#9B85FF] text-white shadow-[0_20px_40px_rgba(123,97,255,0.25)] animate-[bounce_4s_infinite_alternate] z-10">
-              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
-              </svg>
-            </div>
-
-            {/* Floating Leaves */}
-            <div className="absolute left-[12%] top-[15%] hidden md:block text-2xl animate-pulse select-none pointer-events-none">🍃</div>
-            <div className="absolute right-[14%] top-[80%] hidden md:block text-2xl animate-pulse select-none pointer-events-none">🍃</div>
-
-            <div className="relative z-10">
-              {/* Centered Brand Logo */}
-              <div className="flex justify-center mb-8">
-                <img
-                  src="/logo-vertical.svg"
-                  alt="MarketingSetu Logo"
-                  className="h-20 w-auto object-contain"
-                />
-              </div>
-
-              {/* Smart Marketing Header */}
-              <div className="text-center max-w-3xl mx-auto mb-16">
-                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-primary leading-tight mb-6">
-                  Smart Marketing for<br />
-                  <span className="text-[#5B3DF5]">Stronger</span> <span className="text-[#10C85A]">Businesses</span>
-                </h2>
-                <p className="text-secondary text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto font-normal">
-                  All-in-one digital platform to build your brand, connect with customers, and grow faster in the digital world.
-                </p>
-              </div>
-
-              {/* Stats White Grid Box */}
-              <div className="bg-paper rounded-[24px] sm:rounded-[32px] p-5 md:p-6 lg:p-8 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0 shadow-card items-center relative z-10">
-                {/* Stat Column 1 */}
-                <div className="flex items-center gap-3 sm:gap-4 md:justify-center px-2 lg:px-4">
-                  <div className="w-11 h-11 rounded-full bg-[#EFEBFF] flex items-center justify-center text-[#5B3DF5] flex-shrink-0">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="text-xl lg:text-2xl font-semibold text-primary leading-tight">25,000+</h4>
-                    <p className="text-[10px] lg:text-xs text-secondary font-medium tracking-wide mt-0.5">Businesses Trust us</p>
-                  </div>
-                </div>
-
-                {/* Stat Column 2 */}
-                <div className="flex items-center gap-3 sm:gap-4 md:justify-center px-2 lg:px-4 py-4 md:py-0">
-                  <div className="w-11 h-11 rounded-full bg-[#E5F9ED] flex items-center justify-center text-[#10C85A] flex-shrink-0">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="text-xl lg:text-2xl font-semibold text-primary leading-tight">150,000+</h4>
-                    <p className="text-[10px] lg:text-xs text-secondary font-medium tracking-wide mt-0.5">Digital Profiles Created</p>
-                  </div>
-                </div>
-
-                {/* Stat Column 3 */}
-                <div className="flex items-center gap-3 sm:gap-4 md:justify-center px-2 lg:px-4">
-                  <div className="w-11 h-11 rounded-full bg-[#EFEBFF] flex items-center justify-center text-[#5B3DF5] flex-shrink-0">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="text-xl lg:text-2xl font-semibold text-primary leading-tight">3M+</h4>
-                    <p className="text-[10px] lg:text-xs text-secondary font-medium tracking-wide mt-0.5">Leads Generated</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* SERVICES SECTION */}
-        <section className="py-24 bg-background overflow-hidden" id="services">
+        <section className="py-24 bg-gray-50 dark:bg-gray-900/50 border-y border-outline/60 overflow-hidden" id="services">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Center Aligned Header (Matching Other Sections) */}
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-semibold uppercase tracking-wider text-secondary bg-background border border-outline px-3 py-1 rounded-full inline-block mb-4">
+              <span className="text-xs font-semibold uppercase tracking-wider text-secondary bg-paper border border-outline px-3 py-1 rounded-full inline-block mb-4">
                 CORE PRODUCTS & ADD-ONS
               </span>
               <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-primary mb-4">
