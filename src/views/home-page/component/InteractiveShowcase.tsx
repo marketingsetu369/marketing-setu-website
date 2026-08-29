@@ -28,7 +28,7 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
       id: "digital-card",
       badge: "MAIN PRODUCT",
       title: t.service_block_card_title || "Smart Digital Business Card",
-      description: t.service_block_card_lead || "Standard mobile-responsive digital card template with contact details, social links, and automated customer messaging.",
+      description: t.service_block_card_lead || "Standard mobile-responsive digital card with contact details and automated messaging.",
       icon: SmartphoneNfcIcon,
       accentColor: "#7265E3",
       bullets: ["Contact & Profile Links", "WhatsApp Tap-to-Connect", "Instant Shareable QR Link"],
@@ -39,7 +39,7 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
       id: "whatsapp-automation",
       badge: "GROWTH ADD-ON",
       title: t.service_wa_title || "WhatsApp Automation",
-      description: t.service_wa_lead || "Reach customers where they spend hours a day. Send bulk promotions, festival offers, and order updates directly to WhatsApp.",
+      description: t.service_wa_lead || "Send bulk promotions, festival offers, and automated updates directly on WhatsApp.",
       icon: WhatsappIcon,
       accentColor: "#10C85A",
       bullets: ["Automated Inquiry Reply", "Lead Capture System", "Campaign Broadcast Engine"],
@@ -50,7 +50,7 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
       id: "landing-page",
       badge: "MAIN PRODUCT",
       title: t.service_lp_title || "Landing Page Design",
-      description: t.service_lp_lead || "A single-purpose page built around one campaign goal — bookings, enquiries, or sign-ups. Mobile-first and built to convert.",
+      description: t.service_lp_lead || "High-converting single-page brand site designed for bookings and customer enquiries.",
       icon: WebValidationIcon,
       accentColor: "#1890FF",
       bullets: ["1 Custom Landing Page", "Custom Domain Connection", "Mobile & SEO Optimized"],
@@ -61,7 +61,7 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
       id: "google-business",
       badge: "GROWTH ADD-ON",
       title: t.service_gb_title || "Google Business Setup",
-      description: t.service_gb_lead || "Get found by customers searching for your services in your local area. We optimize your Google Business profile to rank higher on maps.",
+      description: t.service_gb_lead || "Optimize your Google Business profile to rank higher in local search and maps.",
       icon: MapsLocation01Icon,
       accentColor: "#FF4842",
       bullets: ["Google Maps Ranking", "Profile Optimization", "Customer Reviews Setup"],
@@ -72,7 +72,7 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
       id: "income-tracker",
       badge: "GROWTH ADD-ON",
       title: t.service_ie_title || "Income & Expense Tracker",
-      description: t.service_ie_lead || "Manage your daily business cash flows, sales receipts, and operating expenses with simple ledger sheets and visual reports.",
+      description: t.service_ie_lead || "Track daily business cash flows, sales receipts, and operating expenses easily.",
       icon: MoneyBag01Icon,
       accentColor: "#FFC107",
       bullets: ["Daily Ledger Sheets", "Cash Flow Reports", "Profitability Analytics"],
@@ -83,7 +83,7 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
       id: "product-catalog",
       badge: "GROWTH ADD-ON",
       title: t.service_pc_title || "Digital Product Catalog",
-      description: t.service_pc_lead || "Showcase your complete collection of products and services on a premium, search-enabled web page with direct WhatsApp ordering.",
+      description: t.service_pc_lead || "Showcase products and services online with instant WhatsApp inquiry and ordering.",
       icon: ShoppingBag01Icon,
       accentColor: "#FF8F94",
       bullets: ["Unlimited Items Showcase", "Direct WhatsApp Orders", "Photo Gallery & Pricing"],
@@ -120,8 +120,8 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
                 {service.title}
               </h3>
 
-              {/* Subtitle / Description */}
-              <p className="text-secondary text-sm leading-relaxed mb-6">
+              {/* Subtitle / Description (Concise 2-liner) */}
+              <p className="text-secondary text-sm leading-relaxed mb-6 line-clamp-2 min-h-[40px]">
                 {service.description}
               </p>
 
