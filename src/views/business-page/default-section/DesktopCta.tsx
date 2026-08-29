@@ -16,7 +16,7 @@ export default function DesktopCta({ phone, slug, onMessageClick }: DesktopCtaPr
   const { primaryColor, primaryLight, primaryBorder, t } = useBusinessPageTheme();
 
   return (
-    <div className="hidden md:flex gap-4 px-6 mt-6">
+    <div className="hidden md:flex gap-3 px-6 py-4 sticky bottom-0 bg-[var(--color-grey-100)]/95 backdrop-blur-md border-t border-gray-200/60 z-30 shadow-md">
       <button
         onClick={onMessageClick}
         className="flex-1 text-white py-3.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer shadow-sm"

@@ -308,6 +308,8 @@ export const en: TranslationDictionary = {
   bp_enquiry_success: "Enquiry submitted successfully! We will contact you soon.",
   bp_message_btn: "Message",
   bp_call_btn: "Call Now",
+  bp_read_more: "Read More",
+  bp_read_less: "Read Less",
   bp_product_enquiry_title: "Product Enquiry",
   bp_product_enquiry_subtitle: "Fill in your details and we'll get back to you",
   bp_select_option: "Select Option *",

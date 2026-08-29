@@ -258,6 +258,8 @@ export interface TranslationDictionary {
   bp_enquiry_success: string;
   bp_message_btn: string;
   bp_call_btn: string;
+  bp_read_more: string;
+  bp_read_less: string;
   bp_product_enquiry_title: string;
   bp_product_enquiry_subtitle: string;
   bp_select_option: string;

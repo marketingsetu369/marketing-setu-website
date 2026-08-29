@@ -16,7 +16,7 @@ export default function FloatingCta({ phone, slug, onMessageClick }: FloatingCta
   const { primaryColor, primaryLight, primaryBorder, t } = useBusinessPageTheme();
 
   return (
-    <div className="fixed bottom-0 left-0 w-full h-20 bg-white/95 backdrop-blur-md border-t border-gray-100 flex items-center justify-between px-6 pb-2 z-50 md:hidden">
+    <div className="fixed bottom-0 left-0 right-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-100 flex items-center justify-between px-6 py-3.5 z-50 shadow-lg md:hidden">
       <button
         onClick={onMessageClick}
         className="w-[48%] text-white py-3 rounded-lg font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-all cursor-pointer"

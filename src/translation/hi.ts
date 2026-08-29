@@ -311,6 +311,8 @@ export const hi: TranslationDictionary = {
   bp_enquiry_success: "जांच सफलतापूर्वक जमा हुई! हम जल्द ही आपसे संपर्क करेंगे।",
   bp_message_btn: "संदेश",
   bp_call_btn: "अभी कॉल करें",
+  bp_read_more: "और पढ़ें",
+  bp_read_less: "कम दिखाएं",
   bp_product_enquiry_title: "उत्पाद जांच",
   bp_product_enquiry_subtitle: "अपना विवरण भरें और हम आपसे वापस संपर्क करेंगे",
   bp_select_option: "विकल्प चुनें *",

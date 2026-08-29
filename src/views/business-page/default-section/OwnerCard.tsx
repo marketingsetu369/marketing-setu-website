@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState } from "react";
 import { ShieldCheck, UserIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import snarkdown from "snarkdown";
@@ -21,6 +22,7 @@ interface OwnerCardProps {
 
 export default function OwnerCard({ ownerList }: OwnerCardProps) {
   const { primaryColor, primaryLight, fontHeader, fontSans, t } = useBusinessPageTheme();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   if (ownerList.length === 0) return null;
 
@@ -68,10 +70,20 @@ export default function OwnerCard({ ownerList }: OwnerCardProps) {
                 {t("bp_owner_about")}
               </h2>
               <div
-                className="text-sm text-gray-600 leading-relaxed markdown-content font-normal"
+                className={`text-sm text-gray-600 leading-relaxed markdown-content font-normal transition-all ${
+                  !isExpanded ? "line-clamp-2" : ""
+                }`}
                 style={{ fontFamily: fontSans }}
                 dangerouslySetInnerHTML={{ __html: snarkdown(owner.bio) }}
               />
+              <button
+                type="button"
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="mt-2 text-xs font-semibold hover:underline flex items-center gap-1 cursor-pointer transition-colors"
+                style={{ color: primaryColor }}
+              >
+                {isExpanded ? t("bp_read_less") || "Read Less" : t("bp_read_more") || "Read More"}
+              </button>
             </div>
           )}
 

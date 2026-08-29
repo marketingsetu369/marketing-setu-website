@@ -311,6 +311,8 @@ export const mr: TranslationDictionary = {
   bp_enquiry_success: "चौकशी यशस्वीरित्या सबमिट झाली! आम्ही लवकरच तुमच्याशी संपर्क करू.",
   bp_message_btn: "संदेश",
   bp_call_btn: "आत्ता कॉल करा",
+  bp_read_more: "अधिक वाचा",
+  bp_read_less: "कमी दाखवा",
   bp_product_enquiry_title: "उत्पाद चौकशी",
   bp_product_enquiry_subtitle: "आपले तपशील भरा आणि आम्ही तुम्हाला परत संपर्क करू",
   bp_select_option: "पर्याय निवडा *",
