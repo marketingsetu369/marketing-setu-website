@@ -7,7 +7,6 @@ interface PricingCardProps {
   onSelect?: (message: string) => void;
   href?: string;
   isCompact?: boolean;
-  isMonthly?: boolean;
 }
 
 export default function PricingCard({
@@ -15,13 +14,12 @@ export default function PricingCard({
   onSelect,
   href,
   isCompact = false,
-  isMonthly = false,
 }: PricingCardProps) {
   const displayFeatures = isCompact && plan.compactFeatures ? plan.compactFeatures : plan.features;
   const isFeatured = plan.featured;
 
-  const currentPrice = isMonthly && plan.monthlyPrice ? plan.monthlyPrice : plan.price;
-  const periodLabel = isMonthly ? "/month" : "/year";
+  const currentPrice = plan.price;
+  const periodLabel = "/year";
 
   return (
     <div
@@ -58,7 +56,7 @@ export default function PricingCard({
 
         {/* Hostinger Price Lockup (Clean theme, no block background fill) */}
         <div className="mb-8 pb-6 border-b border-outline/60">
-          {plan.originalPrice && !isMonthly && (
+          {plan.originalPrice && (
             <div className="flex items-center gap-2 mb-1">
               <span className="text-sm font-medium line-through text-disabled">
                 {plan.originalPrice}
@@ -79,7 +77,7 @@ export default function PricingCard({
             </span>
           </div>
           <p className="text-[11px] mt-1 font-medium text-secondary">
-            {isMonthly ? "Billed monthly • Cancel anytime" : "Billed annually • Zero setup fees"}
+            Billed annually • Zero setup fees
           </p>
         </div>
 

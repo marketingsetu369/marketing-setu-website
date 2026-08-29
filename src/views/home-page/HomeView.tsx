@@ -18,7 +18,6 @@ export default function HomeView() {
   const { language } = useThemeStore();
   const t = translations[language] || translations.en;
   const [activeCardIndex, setActiveCardIndex] = useState(5);
-  const [isMonthly, setIsMonthly] = useState(false);
 
   const carouselCards = [
     {
@@ -459,35 +458,6 @@ export default function HomeView() {
               <p className="text-secondary text-base sm:text-lg max-w-2xl mx-auto font-normal leading-relaxed">
                 {t.home_pricing_subheading || t.home_pricing_subtext}
               </p>
-
-              {/* Hostinger Billing Interval Toggle Pill */}
-              <div className="mt-8 inline-flex items-center gap-3 p-1.5 rounded-full bg-paper border border-outline shadow-z2">
-                <button
-                  type="button"
-                  onClick={() => setIsMonthly(false)}
-                  className={`px-5 py-2 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-                    !isMonthly
-                      ? "bg-primary text-background shadow-z4"
-                      : "text-secondary hover:text-primary"
-                  }`}
-                >
-                  <span>{t.pricing_billing_yearly}</span>
-                  <span className="bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider font-extrabold">
-                    {t.pricing_save_badge}
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsMonthly(true)}
-                  className={`px-5 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                    isMonthly
-                      ? "bg-primary text-background shadow-z4"
-                      : "text-secondary hover:text-primary"
-                  }`}
-                >
-                  {t.pricing_billing_monthly}
-                </button>
-              </div>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
@@ -496,7 +466,6 @@ export default function HomeView() {
                   key={idx}
                   plan={plan}
                   href="/pricing"
-                  isMonthly={isMonthly}
                 />
               ))}
             </div>
