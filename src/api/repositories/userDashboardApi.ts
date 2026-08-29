@@ -90,12 +90,13 @@ export const UserDashboardApi = {
   },
 
   // Enquiries
-  getEnquiries: async (params?: { page?: number; limit?: number }) => {
+  getEnquiries: async (params?: { page?: number; limit?: number; type?: "product" | "general" }) => {
     const query = new URLSearchParams();
     if (params?.page) query.append("page", params.page.toString());
     if (params?.limit) query.append("limit", params.limit.toString());
+    if (params?.type) query.append("type", params.type);
     const qs = query.toString() ? `?${query.toString()}` : "";
-    return fetchClient.get<{ statusCode: number; data: { enquiries: EnquiryItem[]; total: number } }>(
+    return fetchClient.get<{ statusCode: number; data: EnquiryItem[] | { enquiries: EnquiryItem[]; total: number } }>(
       `/user/enquiries${qs}`
     );
   },
