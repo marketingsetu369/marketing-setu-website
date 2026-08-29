@@ -448,14 +448,14 @@ export default function HomeView() {
         <section className="py-24 bg-background relative overflow-hidden" id="pricing">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNlN2U1ZTQiLz48L3N2Zz4=')] opacity-30 dark:opacity-[0.07] z-0"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center max-w-3xl mx-auto mb-14">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#5B3DF5] bg-[#5B3DF5]/10 border border-[#5B3DF5]/20 px-3.5 py-1 rounded-full inline-block mb-4">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="text-xs font-semibold uppercase tracking-wider text-secondary bg-background border border-outline px-3 py-1 rounded-full inline-block mb-4">
                 {t.home_pricing_eyebrow}
               </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-primary mb-4 leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-primary mb-4">
                 {t.home_pricing_heading}
               </h2>
-              <p className="text-secondary text-base sm:text-lg max-w-2xl mx-auto font-normal leading-relaxed">
+              <p className="text-secondary text-base sm:text-lg">
                 {t.home_pricing_subheading || t.home_pricing_subtext}
               </p>
             </div>
