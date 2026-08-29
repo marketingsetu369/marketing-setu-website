@@ -116,7 +116,7 @@ export default function InteractiveShowcase({ t }: InteractiveShowcaseProps) {
               </div>
 
               {/* Title */}
-              <h3 className="text-xl font-bold text-primary mb-3 leading-tight group-hover:text-[#5B3DF5] transition-colors">
+              <h3 className="text-xl font-semibold text-primary mb-3 leading-tight group-hover:text-[#5B3DF5] transition-colors">
                 {service.title}
               </h3>
 

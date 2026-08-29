@@ -78,7 +78,7 @@ export default function ServiceBlock({ service }: ServiceBlockProps) {
               )}
             </div>
 
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-primary tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-primary tracking-tight leading-tight">
               {service.title}
             </h2>
 

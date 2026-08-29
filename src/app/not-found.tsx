@@ -21,7 +21,7 @@ export default function NotFound() {
           </svg>
         </div>
 
-        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight mb-2">
+        <h1 className="text-4xl font-semibold text-gray-900 tracking-tight mb-2">
           Page Not Found
         </h1>
         <p className="text-gray-500 text-sm leading-relaxed mb-8">

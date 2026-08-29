@@ -64,7 +64,7 @@ export default function LoginPage() {
             <span className="w-2 h-2 rounded-full bg-success-main animate-pulse" />
             Business Web Portal
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight text-white">
+          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight leading-tight text-white">
             Manage your digital presence & leads effortlessly.
           </h1>
           <p className="text-grey-400 text-sm sm:text-base leading-relaxed">
@@ -96,7 +96,7 @@ export default function LoginPage() {
               <img src="/logo.svg" alt="MarketingSetu" className="h-8 w-auto" />
               <span className="font-bold text-lg text-primary">MarketingSetu</span>
             </Link>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-primary">
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-primary">
               Sign in to Portal
             </h2>
             <p className="text-secondary text-sm">

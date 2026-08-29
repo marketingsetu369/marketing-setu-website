@@ -77,7 +77,7 @@ export default function ContactForm() {
   return (
     <div className="space-y-8">
       <div className="space-y-2">
-        <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-primary">
+        <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-primary">
           {t.contact_form_title}
         </h3>
         <p className="text-secondary text-sm">

@@ -31,7 +31,7 @@ export default function PricingCard({
       {/* Top Badge (Hostinger Style) */}
       {plan.badge && (
         <div
-          className={`absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider shadow-z4 whitespace-nowrap flex items-center gap-1.5 ${isFeatured
+          className={`absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider shadow-z4 whitespace-nowrap flex items-center gap-1.5 ${isFeatured
               ? "bg-gradient-to-r from-[#5B3DF5] to-[#10C85A] text-white"
               : "bg-brand-dark text-white dark:bg-brand-lighter dark:text-brand-darker"
             }`}
@@ -44,7 +44,7 @@ export default function PricingCard({
       <div>
         {/* Title & Description */}
         <div className="mb-6">
-          <h3 className="text-2xl font-bold tracking-tight text-primary mb-2">
+          <h3 className="text-2xl font-semibold tracking-tight text-primary mb-2">
             {plan.name}
           </h3>
           <p className="text-xs sm:text-sm leading-relaxed text-secondary">
@@ -60,14 +60,14 @@ export default function PricingCard({
                 {plan.originalPrice}
               </span>
               {plan.discountBadge && (
-                <span className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                <span className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wider">
                   {plan.discountBadge}
                 </span>
               )}
             </div>
           )}
           <div className="flex items-baseline gap-1">
-            <span className="text-4xl sm:text-5xl font-extrabold tracking-tight text-primary">
+            <span className="text-4xl sm:text-5xl font-semibold tracking-tight text-primary">
               {currentPrice}
             </span>
             <span className="text-xs font-semibold text-disabled">

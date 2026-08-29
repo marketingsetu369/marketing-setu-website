@@ -24,7 +24,7 @@ export default function PageHero({
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Headline */}
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-primary tracking-tight leading-[1.15] mb-5 max-w-4xl">
+        <h1 className="text-3xl sm:text-5xl font-semibold text-primary tracking-tight leading-[1.15] mb-5 max-w-4xl">
           {title}
         </h1>
 

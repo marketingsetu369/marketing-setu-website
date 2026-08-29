@@ -30,7 +30,7 @@ export default function IndustryLandingView({ info }: IndustryLandingViewProps) 
               <span className="text-xs font-semibold uppercase tracking-wider text-secondary bg-background border border-outline px-3 py-1 rounded-full inline-block mb-3">
                 KEY ADVANTAGES
               </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-primary tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-semibold text-primary tracking-tight">
                 Why {info.industryName} Choose Marketing Setu
               </h2>
             </div>
@@ -45,7 +45,7 @@ export default function IndustryLandingView({ info }: IndustryLandingViewProps) 
                     ✓
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-primary mb-1">
+                    <h3 className="text-lg font-semibold text-primary mb-1">
                       {benefit}
                     </h3>
                     <p className="text-secondary text-sm leading-relaxed">
@@ -62,7 +62,7 @@ export default function IndustryLandingView({ info }: IndustryLandingViewProps) 
         <section className="py-16 bg-background text-center">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-brand-lighter/60 border border-brand-light/40 rounded-3xl p-10 shadow-sm">
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-brand-dark mb-4">
+              <h3 className="text-2xl sm:text-3xl font-semibold text-brand-dark mb-4">
                 Ready to Grow Your {info.industryName} Business?
               </h3>
               <p className="text-secondary text-base max-w-xl mx-auto mb-8">
@@ -83,7 +83,7 @@ export default function IndustryLandingView({ info }: IndustryLandingViewProps) 
           <section className="py-20 bg-paper">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-12">
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-primary">
+                <h2 className="text-2xl sm:text-3xl font-semibold text-primary">
                   Frequently Asked Questions
                 </h2>
               </div>

@@ -31,7 +31,7 @@ export default function DownloadView() {
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           Official Mobile Application
         </div>
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-4 leading-tight">
+        <h1 className="text-3xl sm:text-5xl font-semibold text-gray-900 dark:text-white tracking-tight mb-4 leading-tight">
           Download <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">MarketingSetu</span> App
         </h1>
         <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base leading-relaxed">

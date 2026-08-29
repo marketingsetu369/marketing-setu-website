@@ -37,7 +37,7 @@ export default function CtaBand({
                 Join 500+ Businesses
               </span>
 
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight max-w-lg">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white tracking-tight leading-tight max-w-lg">
                 {heading}
               </h2>
               <p className="text-white/60 text-sm sm:text-base mt-4 max-w-md leading-relaxed font-normal">
