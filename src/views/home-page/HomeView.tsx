@@ -432,21 +432,17 @@ export default function HomeView() {
         {/* SERVICES SECTION */}
         <section className="py-24 bg-background overflow-hidden" id="services">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Split 2-Column Header (Matching Reference Image) */}
-            <div className="grid md:grid-cols-2 gap-8 items-start justify-between mb-12 md:mb-16">
-              <div>
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#5B3DF5] bg-[#5B3DF5]/10 border border-[#5B3DF5]/20 px-3.5 py-1.5 rounded-full inline-block mb-4">
-                  Features
-                </span>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-primary leading-tight max-w-lg">
-                  Digital Business Cards & Custom Landing Pages
-                </h2>
-              </div>
-              <div className="md:pt-8 md:text-left">
-                <p className="text-secondary text-base sm:text-lg leading-relaxed max-w-xl">
-                  Our core digital identity solutions powered by automated WhatsApp messaging and customer growth add-ons to elevate your brand presence.
-                </p>
-              </div>
+            {/* Center Aligned Header (Matching Other Sections) */}
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="text-xs font-semibold uppercase tracking-wider text-secondary bg-background border border-outline px-3 py-1 rounded-full inline-block mb-4">
+                CORE PRODUCTS & ADD-ONS
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-primary mb-4">
+                Digital Business Cards & Custom Landing Pages
+              </h2>
+              <p className="text-secondary text-base sm:text-lg">
+                Our core digital identity solutions powered by automated WhatsApp messaging and customer growth add-ons.
+              </p>
             </div>
 
             <InteractiveShowcase t={t} />
