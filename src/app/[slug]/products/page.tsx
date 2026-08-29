@@ -1,10 +1,8 @@
 import { BusinessPageApi } from "@/api/repositories/businessPageApi";
 import ProductsListView from "@/views/business-page/products-list";
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
+export const revalidate = 60;
 interface PageProps {
   params: Promise<{
     slug: string;
