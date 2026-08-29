@@ -28,53 +28,34 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://marketingsetu.com";
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "Marketing Setu – Digital Marketing Platform for Small Businesses",
-    template: "%s | Marketing Setu",
+    default: "MarketingSetu – #1 Digital Business Card & WhatsApp Automation Platform India",
+    template: "%s | MarketingSetu",
   },
   description:
-    "Marketing Setu helps small businesses grow online with digital business cards, WhatsApp automation, landing pages, social media tools, Google Business management, and income & expense tracking.",
+    "MarketingSetu helps small businesses grow online with smart digital business cards, WhatsApp marketing automation, custom landing pages, Google Business map SEO, and daily cash flow ledger app in Pune, Satara, Maharashtra & India.",
   keywords: [
-    "digital marketing platform",
-    "digital marketing for small businesses",
-    "small business marketing platform",
-    "all in one marketing platform",
-    "business marketing software",
-    "digital business card",
-    "digital visiting card",
+    "marketing setu",
+    "marketingsetu",
     "digital business card India",
-    "NFC business card",
-    "WhatsApp marketing for business",
-    "WhatsApp automation for business",
-    "landing page builder",
-    "social media management for small business",
-    "Google Business Profile management",
-    "local business marketing",
-    "business promotion platform",
-    "small business marketing software",
-    "business income expense tracker",
-    "online business promotion",
-    "business growth platform",
-    "digital marketing platform India",
-    "digital marketing for small business India",
-    "business promotion platform India",
-    "small business marketing India",
-    "NFC visiting card India",
-    "WhatsApp marketing India",
-    "social media marketing India",
-    "local business marketing India",
+    "digital visiting card app Pune",
+    "NFC business card Pune Satara",
+    "WhatsApp marketing automation software India",
+    "WhatsApp auto reply bot",
+    "custom landing page builder Pune",
+    "Google Business Profile local map SEO",
+    "small business digital marketing Maharashtra",
+    "business income expense ledger app",
     "online business promotion India",
-    "marketing software India",
-    "small business software India",
     "Pune",
-    "Viman Nagar",
+    "Hinjawadi",
     "Satara",
     "Sangli",
     "Kolhapur",
     "Maharashtra",
   ],
-  authors: [{ name: "Marketing Setu Team", url: baseUrl }],
-  creator: "Marketing Setu",
-  publisher: "Marketing Setu",
+  authors: [{ name: "MarketingSetu Team", url: baseUrl }],
+  creator: "MarketingSetu",
+  publisher: "MarketingSetu",
   formatDetection: {
     email: false,
     address: false,
@@ -82,29 +63,35 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "/",
+    languages: {
+      "en-IN": "/",
+      "hi-IN": "/?lang=hi",
+      "mr-IN": "/?lang=mr",
+      "x-default": "/",
+    },
   },
   openGraph: {
     type: "website",
     locale: "en_IN",
     url: baseUrl,
-    siteName: "Marketing Setu",
-    title: "Marketing Setu – Digital Marketing Platform for Small Businesses",
+    siteName: "MarketingSetu",
+    title: "MarketingSetu – #1 Digital Business Card & WhatsApp Automation Platform India",
     description:
-      "Marketing Setu helps small businesses grow online with digital business cards, WhatsApp automation, landing pages, social media tools, Google Business management, and income & expense tracking.",
+      "MarketingSetu helps small businesses grow online with smart digital business cards, WhatsApp marketing automation, custom landing pages, Google Business map SEO, and daily cash flow ledger app.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Marketing Setu Digital Growth Platform",
+        alt: "MarketingSetu Digital Growth Platform",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Marketing Setu – Digital Marketing Platform for Small Businesses",
+    title: "MarketingSetu – #1 Digital Business Card & WhatsApp Automation Platform India",
     description:
-      "Marketing Setu helps small businesses grow online with digital business cards, WhatsApp automation, landing pages, social media tools, Google Business management, and income & expense tracking.",
+      "MarketingSetu helps small businesses grow online with smart digital business cards, WhatsApp marketing automation, custom landing pages, Google Business map SEO, and daily cash flow ledger app.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -124,9 +111,9 @@ export const metadata: Metadata = {
   },
   other: {
     "geo.region": "IN-MH",
-    "geo.placename": "Viman Nagar, Pune, Satara, Sangli, Kolhapur, Maharashtra, India",
-    "geo.position": "18.5011;73.7508",
-    "ICBM": "18.5011, 73.7508",
+    "geo.placename": "Hinjawadi, Pune, Satara, Sangli, Kolhapur, Maharashtra, India",
+    "geo.position": "18.5912;73.7389",
+    "ICBM": "18.5912, 73.7389",
   },
 };
 
@@ -236,51 +223,32 @@ const jsonLdOrg = {
       "inLanguage": ["en-IN", "hi-IN", "mr-IN"]
     },
     {
-      "@type": "ItemList",
-      "@id": "https://marketingsetu.com/#sitelinks",
-      "name": "MarketingSetu Navigation",
-      "itemListElement": [
+      "@type": "FAQPage",
+      "@id": "https://marketingsetu.com/#faq",
+      "mainEntity": [
         {
-          "@type": "SiteNavigationElement",
-          "position": 1,
-          "name": "Pricing",
-          "description": "Affordable plans starting at ₹3,499/year for businesses across Maharashtra.",
-          "url": "https://marketingsetu.com/pricing"
+          "@type": "Question",
+          "name": "What is MarketingSetu?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MarketingSetu is an all-in-one digital growth platform for small businesses that provides Smart Digital Business Cards, WhatsApp Auto Messaging, Custom Landing Pages, Google Map SEO, and Income Expense Ledger software."
+          }
         },
         {
-          "@type": "SiteNavigationElement",
-          "position": 2,
-          "name": "About Us",
-          "description": "Serving thousands of businesses across industries in Maharashtra.",
-          "url": "https://marketingsetu.com/about"
+          "@type": "Question",
+          "name": "How does MarketingSetu Digital Business Card work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MarketingSetu creates a mobile-friendly digital business profile page with 1-tap contact saving, WhatsApp direct messages, photo gallery, products showcase, and Google map location directions in 15 minutes."
+          }
         },
         {
-          "@type": "SiteNavigationElement",
-          "position": 3,
-          "name": "Services",
-          "description": "WhatsApp automation, custom digital cards, and Google local SEO.",
-          "url": "https://marketingsetu.com/services"
-        },
-        {
-          "@type": "SiteNavigationElement",
-          "position": 4,
-          "name": "Contact",
-          "description": "Let's talk about your business needs. Reach out to our team.",
-          "url": "https://marketingsetu.com/contact"
-        },
-        {
-          "@type": "SiteNavigationElement",
-          "position": 5,
-          "name": "Application",
-          "description": "Powerful marketing tools for modern business. Download our Android app.",
-          "url": "https://marketingsetu.com/download"
-        },
-        {
-          "@type": "SiteNavigationElement",
-          "position": 6,
-          "name": "Reviews",
-          "description": "Read real customer stories and reviews from local business owners.",
-          "url": "https://marketingsetu.com/testimonials"
+          "@type": "Question",
+          "name": "Can I use WhatsApp Auto Reply for missed customer calls?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! MarketingSetu automatically sends personalized WhatsApp messages and digital catalog links whenever a customer calls your business line."
+          }
         }
       ]
     },
