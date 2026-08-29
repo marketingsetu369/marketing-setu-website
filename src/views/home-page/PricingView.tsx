@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useThemeStore } from "@/store/themeStore";
 import {
   BridgeDivider,
@@ -17,6 +18,7 @@ export default function PricingView() {
   const { openWhatsApp } = useWhatsApp();
   const { language } = useThemeStore();
   const t = translations[language] || translations.en;
+  const [isMonthly, setIsMonthly] = useState(false);
 
   const getTranslatedFaqs = () => getPricingFaqs(t);
   const getTranslatedPlans = () => getPricingPlans(t);
@@ -27,18 +29,50 @@ export default function PricingView() {
       <PageHero
         breadcrumbLabel={t.pricing_hero_breadcrumb}
         eyebrow={t.pricing_hero_eyebrow}
-        title={t.pricing_hero_title}
-        lead={t.pricing_hero_lead}
+        title={t.home_pricing_heading}
+        lead={t.home_pricing_subheading || t.pricing_hero_lead}
       />
 
       {/* PLANS GRID */}
       <section className="py-16 md:py-24 bg-background border-b border-outline">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Hostinger Billing Interval Toggle Pill */}
+          <div className="flex justify-center mb-12">
+            <div className="inline-flex items-center gap-3 p-1.5 rounded-full bg-paper border border-outline shadow-z2">
+              <button
+                type="button"
+                onClick={() => setIsMonthly(false)}
+                className={`px-5 py-2 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  !isMonthly
+                    ? "bg-primary text-background shadow-z4"
+                    : "text-secondary hover:text-primary"
+                }`}
+              >
+                <span>{t.pricing_billing_yearly}</span>
+                <span className="bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider font-extrabold">
+                  {t.pricing_save_badge}
+                </span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsMonthly(true)}
+                className={`px-5 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                  isMonthly
+                    ? "bg-primary text-background shadow-z4"
+                    : "text-secondary hover:text-primary"
+                }`}
+              >
+                {t.pricing_billing_monthly}
+              </button>
+            </div>
+          </div>
+
           <div className="grid md:grid-cols-3 gap-8 items-stretch">
             {getTranslatedPlans().map((plan, idx) => (
               <PricingCard
                 key={idx}
                 plan={plan}
+                isMonthly={isMonthly}
                 onSelect={(msg) => openWhatsApp(msg)}
               />
             ))}

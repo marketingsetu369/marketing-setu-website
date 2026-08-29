@@ -323,4 +323,10 @@ export interface TranslationDictionary {
   service_block_gallery_lead: string;
   service_block_reviews_title: string;
   service_block_reviews_lead: string;
+
+  // Hostinger Pricing Section Keys
+  home_pricing_subheading: string;
+  pricing_billing_yearly: string;
+  pricing_billing_monthly: string;
+  pricing_save_badge: string;
 }

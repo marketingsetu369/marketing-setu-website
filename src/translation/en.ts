@@ -44,8 +44,8 @@ export const en: TranslationDictionary = {
   home_services_subtext: "Powerful, practical tools to reach your customers wherever they already are: WhatsApp, Google, and their phone.",
 
   home_pricing_eyebrow: "Pricing Plans",
-  home_pricing_heading: "Simple plans. Big results.",
-  home_pricing_subtext: "Pick the plan that fits your business — no hidden charges, no confusion.",
+  home_pricing_heading: "No matter where you're starting, there's a plan for it",
+  home_pricing_subtext: "Select the right digital growth plan for your business — scale, upgrade, or switch anytime with zero setup fees.",
 
   home_why_eyebrow: "Why MarketingSetu",
   home_why_heading: "Results-driven. Reliable. Affordable.",
@@ -374,4 +374,10 @@ export const en: TranslationDictionary = {
   service_block_gallery_lead: "Build trust instantly. Upload photos of your shop, work, food, or projects directly on your Digital Card so customers see the real you before they even call.",
   service_block_reviews_title: "Customer Reviews & Testimonials",
   service_block_reviews_lead: "Let happy customers do the selling for you. Collect and display authentic reviews and ratings on your Digital Card to convert new visitors into buyers.",
+
+  // Hostinger Pricing Section Keys
+  home_pricing_subheading: "Select the right digital growth plan for your business — scale, upgrade, or switch anytime with zero setup fees.",
+  pricing_billing_yearly: "Yearly Plan",
+  pricing_billing_monthly: "Monthly Plan",
+  pricing_save_badge: "SAVE 50%",
 };

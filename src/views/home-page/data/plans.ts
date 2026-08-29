@@ -12,6 +12,9 @@ export interface PricingPlan {
   name: string;
   description: string;
   price: string;
+  originalPrice?: string;
+  monthlyPrice?: string;
+  discountBadge?: string;
   features: PlanFeature[];
   compactFeatures?: PlanFeature[];
   whatsappMessage: string;
@@ -25,6 +28,9 @@ export function getPricingPlans(t: TranslationDictionary): PricingPlan[] {
       name: t.plan_quick_name || "Default Digital Card",
       description: t.plan_quick_desc || "Standard digital card template with automated customer messaging.",
       price: t.plan_quick_price || "₹3,499",
+      originalPrice: "₹6,999",
+      monthlyPrice: "₹349",
+      discountBadge: "50% OFF",
       whatsappMessage: `Hi MarketingSetu! I'd like to get the ${t.plan_quick_name || "Default Digital Card"} plan.`,
       features: [
         {
@@ -58,6 +64,9 @@ export function getPricingPlans(t: TranslationDictionary): PricingPlan[] {
       name: t.plan_smart_name || "Category Smart Card",
       description: t.plan_smart_desc || "Industry-tailored template designed for your specific business category.",
       price: t.plan_smart_price || "₹7,499",
+      originalPrice: "₹14,999",
+      monthlyPrice: "₹749",
+      discountBadge: "MOST POPULAR",
       whatsappMessage: `Hi MarketingSetu! I'd like to get the ${t.plan_smart_name || "Category Smart Card"} plan.`,
       features: [
         { bold: t.plan_feat_everything_starter || "Everything in Smart Digital Business Card" },
@@ -87,6 +96,9 @@ export function getPricingPlans(t: TranslationDictionary): PricingPlan[] {
       name: t.plan_power_name || "Custom 1-Page Website",
       description: t.plan_power_desc || "Fully custom single-page brand website with custom domain setup.",
       price: t.plan_power_price || "₹12,999",
+      originalPrice: "₹24,999",
+      monthlyPrice: "₹1,299",
+      discountBadge: "48% OFF",
       whatsappMessage: `Hi MarketingSetu! I'd like to get the ${t.plan_power_name || "Custom 1-Page Website"} plan.`,
       features: [
         { bold: t.plan_feat_everything_growth || "Everything in Category Smart Card" },

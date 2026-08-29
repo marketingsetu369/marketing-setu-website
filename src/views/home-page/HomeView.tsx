@@ -18,6 +18,7 @@ export default function HomeView() {
   const { language } = useThemeStore();
   const t = translations[language] || translations.en;
   const [activeCardIndex, setActiveCardIndex] = useState(5);
+  const [isMonthly, setIsMonthly] = useState(false);
 
   const carouselCards = [
     {
@@ -448,19 +449,54 @@ export default function HomeView() {
         <section className="py-24 bg-background relative overflow-hidden" id="pricing">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNlN2U1ZTQiLz48L3N2Zz4=')] opacity-30 dark:opacity-[0.07] z-0"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-xs font-semibold uppercase tracking-wider text-secondary bg-background border border-outline px-3 py-1 rounded-full inline-block mb-4">
+            <div className="text-center max-w-3xl mx-auto mb-14">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#5B3DF5] bg-[#5B3DF5]/10 border border-[#5B3DF5]/20 px-3.5 py-1 rounded-full inline-block mb-4">
                 {t.home_pricing_eyebrow}
               </span>
-              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-primary mb-4">{t.home_pricing_heading}</h2>
-              <p className="text-secondary text-base sm:text-lg">{t.home_pricing_subtext}</p>
+              <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-primary mb-4 leading-tight">
+                {t.home_pricing_heading}
+              </h2>
+              <p className="text-secondary text-base sm:text-lg max-w-2xl mx-auto font-normal leading-relaxed">
+                {t.home_pricing_subheading || t.home_pricing_subtext}
+              </p>
+
+              {/* Hostinger Billing Interval Toggle Pill */}
+              <div className="mt-8 inline-flex items-center gap-3 p-1.5 rounded-full bg-paper border border-outline shadow-z2">
+                <button
+                  type="button"
+                  onClick={() => setIsMonthly(false)}
+                  className={`px-5 py-2 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                    !isMonthly
+                      ? "bg-primary text-background shadow-z4"
+                      : "text-secondary hover:text-primary"
+                  }`}
+                >
+                  <span>{t.pricing_billing_yearly}</span>
+                  <span className="bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider font-extrabold">
+                    {t.pricing_save_badge}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsMonthly(true)}
+                  className={`px-5 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                    isMonthly
+                      ? "bg-primary text-background shadow-z4"
+                      : "text-secondary hover:text-primary"
+                  }`}
+                >
+                  {t.pricing_billing_monthly}
+                </button>
+              </div>
             </div>
+
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
               {getTranslatedPlans().map((plan, idx) => (
                 <PricingCard
                   key={idx}
                   plan={plan}
                   href="/pricing"
+                  isMonthly={isMonthly}
                 />
               ))}
             </div>

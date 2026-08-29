@@ -44,8 +44,8 @@ export const hi: TranslationDictionary = {
   home_services_subtext: "अपने ग्राहकों तक आसानी से पहुंचने के तरीके: व्हाट्सएप, गूगल और सीधे फोन कॉल के माध्यम से।",
 
   home_pricing_eyebrow: "कीमत और प्लान्स",
-  home_pricing_heading: "आसान प्लान्स। बेहतरीन परिणाम।",
-  home_pricing_subtext: "अपने व्यवसाय के अनुकूल प्लान चुनें — कोई छुपा हुआ शुल्क नहीं।",
+  home_pricing_heading: "आप चाहे कहीं से भी शुरुआत कर रहे हों, आपके लिए सही प्लान मौजूद है",
+  home_pricing_subtext: "अपने व्यवसाय के लिए सही डिजिटल ग्रोथ प्लान चुनें — शून्य सेटअप शुल्क के साथ कभी भी अपग्रेड या बदलें।",
 
   home_why_eyebrow: "मार्केटिंगसेतु क्यों चुनें",
   home_why_heading: "परिणाम-उन्मुख। विश्वसनीय। किफायती।",
@@ -377,4 +377,10 @@ export const hi: TranslationDictionary = {
   service_block_gallery_lead: "ग्राहकों का विश्वास तुरंत हासिल करें। अपनी दुकान, काम, भोजन या प्रोजेक्ट्स की तस्वीरें सीधे अपने डिजिटल कार्ड पर अपलोड करें।",
   service_block_reviews_title: "ग्राहक समीक्षाएं और प्रतिक्रिया",
   service_block_reviews_lead: "संतुष्ट ग्राहकों को अपने लिए बिक्री करने दें। नए आगंतुकों को खरीदार बनाने के लिए अपने डिजिटल कार्ड पर प्रामाणिक समीक्षाएं और रेटिंग एकत्र करें और दिखाएं।",
+
+  // Hostinger Pricing Section Keys
+  home_pricing_subheading: "अपने व्यवसाय के लिए सही डिजिटल ग्रोथ प्लान चुनें — शून्य सेटअप शुल्क के साथ कभी भी अपग्रेड या बदलें।",
+  pricing_billing_yearly: "वार्षिक प्लान",
+  pricing_billing_monthly: "मासिक प्लान",
+  pricing_save_badge: "50% बचत",
 };
