@@ -56,13 +56,19 @@ export interface BusinessPageData {
 }
 
 export interface AnalyticsData {
-  totalViews: number;
-  totalCalls: number;
-  totalWhatsApp: number;
-  totalDirections: number;
-  totalShares: number;
-  recentViews: Array<{ date: string; count: number }>;
+  views?: number;
+  callClicks?: number;
+  whatsappClicks?: number;
+  directionsClicks?: number;
+  copyLinkClicks?: number;
+  totalViews?: number;
+  totalCalls?: number;
+  totalWhatsApp?: number;
+  totalDirections?: number;
+  totalShares?: number;
+  recentViews?: Array<{ date: string; count: number }>;
 }
+
 
 export interface EnquiryItem {
   id: string;

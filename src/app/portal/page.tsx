@@ -70,7 +70,7 @@ export default function OverviewPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1">
           <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white tracking-tight">
-            Welcome back, {user?.firstName || "Renuka"} ✨
+            Welcome back, {user?.firstName || "there"} ✨
           </h1>
           <p className="text-sm text-[#6B7280] dark:text-slate-400 font-normal max-w-2xl leading-relaxed">
             Track your real-time customer traffic, monitor incoming WhatsApp leads, and manage your digital storefront from one intuitive dashboard.
@@ -125,7 +125,7 @@ export default function OverviewPage() {
                 Total Page Views
               </span>
               <div className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight mt-0.5">
-                {loading ? "..." : analytics?.totalViews ?? 0}
+                {loading ? "..." : (analytics?.views ?? analytics?.totalViews ?? 0)}
               </div>
             </div>
             <div className="w-11 h-11 rounded-2xl bg-[#EEEBFF] text-[#5850EC] flex items-center justify-center shrink-0">
@@ -148,7 +148,7 @@ export default function OverviewPage() {
                 WhatsApp Clicks
               </span>
               <div className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight mt-0.5">
-                {loading ? "..." : analytics?.totalWhatsApp ?? 0}
+                {loading ? "..." : (analytics?.whatsappClicks ?? analytics?.totalWhatsApp ?? 0)}
               </div>
             </div>
             <div className="w-11 h-11 rounded-2xl bg-[#E6FAF5] text-[#059669] flex items-center justify-center shrink-0">
@@ -170,7 +170,7 @@ export default function OverviewPage() {
                 Call Inquiries
               </span>
               <div className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight mt-0.5">
-                {loading ? "..." : analytics?.totalCalls ?? 0}
+                {loading ? "..." : (analytics?.callClicks ?? analytics?.totalCalls ?? 0)}
               </div>
             </div>
             <div className="w-11 h-11 rounded-2xl bg-[#FFFBEB] text-[#D97706] flex items-center justify-center shrink-0">
@@ -192,7 +192,7 @@ export default function OverviewPage() {
                 Map Directions
               </span>
               <div className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight mt-0.5">
-                {loading ? "..." : analytics?.totalDirections ?? 0}
+                {loading ? "..." : (analytics?.directionsClicks ?? analytics?.totalDirections ?? 0)}
               </div>
             </div>
             <div className="w-11 h-11 rounded-2xl bg-[#FFF1F2] text-[#E11D48] flex items-center justify-center shrink-0">
@@ -207,6 +207,7 @@ export default function OverviewPage() {
           </div>
         </div>
       </div>
+
 
       {/* 3. Quick Launchpad Actions (Border removed, shadow added) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">

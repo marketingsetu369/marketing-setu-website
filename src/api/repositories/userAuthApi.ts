@@ -1,20 +1,33 @@
 import fetchClient from "../apiClient";
 
+export interface UserProfile {
+  id: string;
+  phone: string;
+  firstName: string;
+  lastName: string;
+  email?: string | null;
+  plan?: string | null;
+  planExpiresAt?: string | null;
+  isActive: boolean;
+  accessKey?: string | null;
+  role?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  usage?: {
+    dailyMessagesCount?: number;
+    dailyLimit?: number;
+    contactsCount?: number;
+    contactsLimit?: number;
+    templatesCount?: number;
+    templatesLimit?: number;
+  };
+}
+
 export interface LoginResponse {
   statusCode: number;
   message: string;
   data: {
-    user: {
-      id: string;
-      phone: string;
-      firstName: string;
-      lastName: string;
-      email?: string | null;
-      plan?: string | null;
-      planExpiresAt?: string | null;
-      isActive: boolean;
-      accessKey?: string | null;
-    };
+    user: UserProfile;
     role: string;
     token: string;
   };
@@ -30,10 +43,14 @@ export const UserAuthApi = {
   },
 
   getProfile: async () => {
-    return fetchClient.get<{ statusCode: number; message: string; data: any }>("/user/profile");
+    return fetchClient.get<{ statusCode: number; message: string; data: UserProfile }>("/user/me");
   },
 
   updateProfile: async (data: { firstName?: string; lastName?: string; email?: string }) => {
-    return fetchClient.post<{ statusCode: number; message: string; data: any }>("/user/profile", data);
+    return fetchClient.put<{ statusCode: number; message: string; data: UserProfile }>("/user/profile", data);
+  },
+
+  logout: async () => {
+    return fetchClient.post<{ statusCode: number; message: string }>("/user/logout", {});
   },
 };

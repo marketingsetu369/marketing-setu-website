@@ -5,40 +5,39 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-interface PortalLayoutProps {
+export default function PortalLayout({
+  children,
+}: {
   children: React.ReactNode;
-}
-
-export default function PortalLayout({ children }: PortalLayoutProps) {
-  const router = useRouter();
+}) {
   const pathname = usePathname();
-  const { user, isAuthenticated, isLoading, initFromStorage, logout } = useAuthStore();
+  const router = useRouter();
+  const { user, isAuthenticated, isLoading, logout, initFromStorage } = useAuthStore();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   useEffect(() => {
     initFromStorage();
   }, [initFromStorage]);
 
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      router.push("/login");
-    }
-  }, [isLoading, isAuthenticated, router]);
-
+  // If loading authentication state, show a clean skeleton
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#F8F9FD] dark:bg-slate-950 flex flex-col items-center justify-center space-y-4 font-sans">
-        <div className="relative w-12 h-12">
-          <div className="w-12 h-12 border-3 border-[#6C5CE7]/20 border-t-[#6C5CE7] rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-[#F8F9FD] dark:bg-[#0B0F19]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 border-3 border-[#6C5CE7] border-t-transparent rounded-full animate-spin" />
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+            Loading portal...
+          </p>
         </div>
-        <p className="text-xs font-semibold text-[#667085] tracking-wider uppercase">
-          Loading Dashboard...
-        </p>
       </div>
     );
   }
 
+  // If unauthenticated, redirect to login
   if (!isAuthenticated) {
+    if (typeof window !== "undefined") {
+      router.push("/login");
+    }
     return null;
   }
 
@@ -69,7 +68,7 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
       href: "/portal/enquiries",
       icon: (
         <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-          <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
         </svg>
       ),
     },
@@ -88,6 +87,15 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
       icon: (
         <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
           <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+        </svg>
+      ),
+    },
+    {
+      label: "Profile & Settings",
+      href: "/portal/profile",
+      icon: (
+        <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
         </svg>
       ),
     },
@@ -137,20 +145,26 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
 
         {/* Sidebar Bottom */}
         <div className="pt-4 border-t border-dashed border-[#DCDFE6] dark:border-slate-800 space-y-3">
-          {/* User Profile Pill */}
-          <div className="flex items-center gap-3 px-2 py-1">
-            <div className="w-9 h-9 rounded-full bg-[#6C5CE7]/10 dark:bg-[#6C5CE7]/30 text-[#6C5CE7] dark:text-[#A29BFE] flex items-center justify-center font-semibold text-xs shrink-0">
+          {/* User Profile Link Pill */}
+          <Link
+            href="/portal/profile"
+            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/80 dark:hover:bg-slate-800/60 transition-colors group cursor-pointer"
+          >
+            <div className="w-9 h-9 rounded-full bg-[#6C5CE7]/10 dark:bg-[#6C5CE7]/30 text-[#6C5CE7] dark:text-[#A29BFE] flex items-center justify-center font-semibold text-xs shrink-0 group-hover:scale-105 transition-transform">
               {initials.toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-sm text-[#101828] dark:text-white truncate leading-tight">
+              <p className="font-semibold text-sm text-[#101828] dark:text-white truncate leading-tight group-hover:text-[#6C5CE7] transition-colors">
                 {user?.firstName} {user?.lastName}
               </p>
               <p className="text-xs text-[#667085] truncate capitalize leading-tight mt-0.5">
-                {user?.plan ? `${user.plan} Plan` : "Active"}
+                {user?.plan ? `${user.plan} Plan` : "View Profile"}
               </p>
             </div>
-          </div>
+            <svg className="w-4 h-4 text-slate-400 group-hover:text-[#6C5CE7] group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
 
           {/* Logout Button */}
           <button
@@ -159,7 +173,7 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
               logout();
               router.push("/login");
             }}
-            className="w-full flex items-center gap-2.5 px-4 py-3 rounded-[12px] text-sm font-semibold bg-[#FEE4E2]/70 hover:bg-[#FEE4E2] text-[#D92D20] dark:bg-rose-950/30 dark:hover:bg-rose-950/50 dark:text-rose-400 transition-colors"
+            className="w-full flex items-center gap-2.5 px-4 py-3 rounded-[12px] text-sm font-semibold bg-[#FEE4E2]/70 hover:bg-[#FEE4E2] text-[#D92D20] dark:bg-rose-950/30 dark:hover:bg-rose-950/50 dark:text-rose-400 transition-colors cursor-pointer"
           >
             <svg className="w-4.5 h-4.5 text-[#D92D20] dark:text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -177,7 +191,7 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
         <button
           type="button"
           onClick={() => setMobileNavOpen(true)}
-          className="p-2 rounded-xl border border-dashed border-[#DCDFE6] dark:border-slate-800 text-[#344054] dark:text-slate-300 hover:bg-white flex items-center gap-2 text-xs font-semibold"
+          className="p-2 rounded-xl border border-dashed border-[#DCDFE6] dark:border-slate-800 text-[#344054] dark:text-slate-300 hover:bg-white flex items-center gap-2 text-xs font-semibold cursor-pointer"
         >
           <span>Menu</span>
           <svg className="w-5 h-5 text-[#6C5CE7]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -202,7 +216,7 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
                 <button
                   type="button"
                   onClick={() => setMobileNavOpen(false)}
-                  className="p-1.5 rounded-lg border border-[#DCDFE6] text-[#667085]"
+                  className="p-1.5 rounded-lg border border-[#DCDFE6] text-[#667085] cursor-pointer"
                 >
                   ✕
                 </button>
@@ -240,7 +254,7 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
                   logout();
                   router.push("/login");
                 }}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-[12px] text-sm font-semibold bg-[#FEE4E2] text-[#D92D20]"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-[12px] text-sm font-semibold bg-[#FEE4E2] text-[#D92D20] cursor-pointer"
               >
                 <span>Logout</span>
               </button>
