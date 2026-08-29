@@ -1,17 +1,76 @@
-/** Returns a usable image src: proxies local uploads through /uploads/, passes absolute external URLs as-is */
-export function getImageUrl(url?: string): string {
-  if (!url) return "";
-  const match = url.match(/\/uploads\/(.+)$/);
-  if (match && match[1]) return `/uploads/${match[1]}`;
-  if (
-    url.startsWith("http") &&
-    !url.includes("localhost") &&
-    !url.includes("10.0.2.2") &&
-    !url.includes("127.0.0.1")
-  ) {
-    return url;
+/** Returns a usable image src: ensures backend /uploads/ paths, objects, or string URLs resolve cleanly */
+export function getImageUrl(input?: any): string {
+  if (!input) return "";
+
+  // If an object was passed, extract the URL string
+  let rawUrl = "";
+  if (typeof input === "string") {
+    rawUrl = input;
+  } else if (typeof input === "object") {
+    rawUrl =
+      input.url ||
+      input.imageUrl ||
+      input.image_url ||
+      input.secure_url ||
+      input.src ||
+      input.path ||
+      input.uri ||
+      input.image ||
+      input.avatar ||
+      input.photo ||
+      input.filename ||
+      "";
   }
-  return url;
+
+  if (!rawUrl || typeof rawUrl !== "string") return "";
+
+  const trimmed = rawUrl.trim();
+  if (!trimmed || trimmed === "[object Object]") return "";
+
+  const apiUrl = (
+    process.env.NEXT_PUBLIC_API_URL || "https://api.marketingsetu.com"
+  ).replace(/\/$/, "");
+
+  // If it's a relative path starting with /uploads
+  if (trimmed.startsWith("/uploads/")) {
+    return `${apiUrl}${trimmed}`;
+  }
+
+  // If it contains /uploads/ (from localhost, emulator 10.0.2.2, 127.0.0.1, or prod)
+  const match = trimmed.match(/\/uploads\/(.+)$/);
+  if (match && match[1]) {
+    if (
+      trimmed.includes("localhost") ||
+      trimmed.includes("10.0.2.2") ||
+      trimmed.includes("127.0.0.1") ||
+      trimmed.startsWith("/")
+    ) {
+      return `${apiUrl}/uploads/${match[1]}`;
+    }
+    return trimmed;
+  }
+
+  // External HTTP/HTTPS URLs (e.g. S3, Cloudinary, etc.)
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    if (
+      trimmed.includes("localhost") ||
+      trimmed.includes("10.0.2.2") ||
+      trimmed.includes("127.0.0.1")
+    ) {
+      const uMatch = trimmed.match(/\/uploads\/(.+)$/);
+      if (uMatch && uMatch[1]) {
+        return `${apiUrl}/uploads/${uMatch[1]}`;
+      }
+    }
+    return trimmed.replace(/^http:\/\//, "https://");
+  }
+
+  // If it's a bare filename or relative path (e.g. "174000-image.jpg" or "user/photo.jpg")
+  if (!trimmed.startsWith("http") && !trimmed.startsWith("/")) {
+    return `${apiUrl}/uploads/${trimmed}`;
+  }
+
+  return trimmed;
 }
 
 /** Ensures a social handle / partial URL becomes a full https:// URL */
@@ -69,48 +128,33 @@ export function getYouTubeId(url?: string): string | null {
         if (id.length === 11) return id;
       }
     }
-    const urlObj = new URL(cleanUrl);
-    const v = urlObj.searchParams.get("v");
-    if (v && v.length === 11) return v;
+    if (cleanUrl.length === 11 && !cleanUrl.includes("/")) {
+      return cleanUrl;
+    }
   } catch {
-    const regExp =
-      /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    if (match && match[2] && match[2].length === 11) return match[2];
+    return null;
   }
   return null;
 }
 
-/** Returns a Tailwind bg + padding class for each visible section key */
-export function getSectionStyle(
-  sectionKey: string,
-  visibleStates: boolean[]
-): string {
-  const keys = [
-    "stats",
-    "video",
-    "products",
-    "testimonials",
-    "gallery",
-    "social",
-    "enquiry",
-    "location",
-  ];
-  const activeKeys = keys.filter((_, idx) => visibleStates[idx]);
-  const index = activeKeys.indexOf(sectionKey);
-  if (index === -1) return "bg-white py-12 px-6";
+/** Formats date into readable string */
+export function formatDate(dateString?: string): string {
+  if (!dateString) return "";
+  try {
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return "";
+    return d.toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  } catch {
+    return "";
+  }
+}
 
-  const bgClass = ["products", "testimonials", "location"].includes(sectionKey)
-    ? "bg-[var(--color-grey-100)]"
-    : sectionKey === "enquiry"
-    ? "bg-white"
-    : activeKeys.indexOf("products") !== -1
-    ? Math.abs(index - activeKeys.indexOf("products")) % 2 === 0
-      ? "bg-[var(--color-grey-100)]"
-      : "bg-white"
-    : index % 2 !== 0
-    ? "bg-[var(--color-grey-100)]"
-    : "bg-white";
-
-  return `${bgClass} py-10 px-6`;
+/** Section background styles helper */
+export function getSectionStyle(sectionKey: string, _visibleStates?: boolean[]): string {
+  const isAlt = ["products", "testimonials", "location"].includes(sectionKey);
+  return isAlt ? "bg-[#F8F9FD] dark:bg-slate-900/40 py-10 px-6" : "bg-white dark:bg-slate-900 py-10 px-6";
 }

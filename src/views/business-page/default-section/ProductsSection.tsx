@@ -1,6 +1,6 @@
 "use client";
 
-import { RupeeIcon, ArrowRight02Icon } from "@hugeicons/core-free-icons";
+import { ArrowRight02Icon, RupeeIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRef, useState } from "react";
 import { useBusinessPageTheme } from "../common/BusinessPageContext";

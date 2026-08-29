@@ -27,9 +27,13 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center space-y-4">
-        <div className="w-10 h-10 border-4 border-brand-main border-t-transparent rounded-full animate-spin" />
-        <p className="text-sm font-semibold text-secondary">Loading Merchant Portal...</p>
+      <div className="min-h-screen bg-[#F8F9FD] dark:bg-slate-950 flex flex-col items-center justify-center space-y-4 font-sans">
+        <div className="relative w-12 h-12">
+          <div className="w-12 h-12 border-3 border-[#6C5CE7]/20 border-t-[#6C5CE7] rounded-full animate-spin" />
+        </div>
+        <p className="text-xs font-semibold text-[#667085] tracking-wider uppercase">
+          Loading Dashboard...
+        </p>
       </div>
     );
   }
@@ -38,13 +42,16 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
     return null;
   }
 
-  const navItems = [
+  const managementNav = [
     {
-      label: "Overview",
+      label: "Dashboard",
       href: "/portal",
       icon: (
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        <svg className="w-5.5 h-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="4" width="18" height="16" rx="4" />
+          <path d="M7 16a5 5 0 0 1 10 0" />
+          <path d="M12 11v3" />
+          <circle cx="8" cy="8" r="0.75" fill="currentColor" />
         </svg>
       ),
     },
@@ -52,17 +59,26 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
       label: "Business Page",
       href: "/portal/business-page",
       icon: (
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M4 6h16M4 10h16M4 14h16M4 18h16" />
         </svg>
       ),
     },
     {
-      label: "Customer Inquiries",
+      label: "Customer Leads",
       href: "/portal/enquiries",
       icon: (
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+        <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      ),
+    },
+    {
+      label: "Transactions",
+      href: "/portal/transactions",
+      icon: (
+        <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M9 14l6-6m-6 0h6v6M12 21a9 9 0 100-18 9 9 0 000 18z" />
         </svg>
       ),
     },
@@ -70,180 +86,146 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
       label: "Plan & Billing",
       href: "/portal/billing",
       icon: (
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+        <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
         </svg>
       ),
     },
   ];
 
+  const initials = (user?.firstName?.[0] || "U") + (user?.lastName?.[0] || "");
+
   return (
-    <div className="min-h-screen bg-background text-primary flex flex-col min-[991px]:flex-row">
+    <div className="min-h-screen bg-[#F8F9FD] dark:bg-[#0B0F19] text-[#101828] dark:text-slate-100 flex flex-col min-[991px]:flex-row font-sans antialiased">
       {/* Sidebar - Desktop (>= 991px) */}
-      <aside className="hidden min-[991px]:flex min-[991px]:w-64 flex-col justify-between border-r border-outline bg-paper p-5 sticky top-0 h-screen flex-shrink-0">
+      <aside className="hidden min-[991px]:flex min-[991px]:w-64 flex-col justify-between border-r border-dashed border-[#DCDFE6] dark:border-slate-800 bg-[#F8F9FD] dark:bg-[#0B0F19] px-4 py-6 sticky top-0 h-screen flex-shrink-0 z-20">
         <div className="space-y-6">
-          {/* Brand Header */}
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2.5">
-              <img src="/logo.svg" alt="MarketingSetu" className="h-8 w-auto" />
-              <div>
-                <span className="font-extrabold text-base tracking-tight text-primary block leading-none">
-                  MarketingSetu
-                </span>
-                <span className="text-[10px] font-bold text-brand-main uppercase tracking-wider block mt-0.5">
-                  Merchant Hub
-                </span>
-              </div>
+          {/* Top Logo */}
+          <div className="px-2 pt-1 pb-1">
+            <Link href="/portal" className="inline-block">
+              <img src="/logo.svg" alt="MarketingSetu" className="h-16 sm:h-17 w-auto object-contain" />
             </Link>
           </div>
 
-          {/* User Brief Card */}
-          <div className="p-3.5 rounded-xl border border-outline bg-neutral">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-brand-lighter text-brand-main flex items-center justify-center font-bold text-sm uppercase">
-                {user?.firstName?.[0] || "U"}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="font-bold text-sm text-primary truncate">
-                  {user?.firstName} {user?.lastName}
-                </p>
-                <p className="text-xs text-secondary truncate font-medium">{user?.phone}</p>
-              </div>
-            </div>
-            {user?.plan && (
-              <div className="mt-2.5 pt-2 border-t border-outline flex items-center justify-between text-[11px]">
-                <span className="text-secondary font-medium">Active Tier</span>
-                <span className="font-bold uppercase text-brand-main px-2 py-0.5 rounded-md bg-brand-lighter/80">
-                  {user?.plan}
-                </span>
-              </div>
-            )}
-          </div>
-
           {/* Navigation Links */}
-          <nav className="space-y-1">
-            {navItems.map((item) => {
+          <nav className="space-y-2">
+            {managementNav.map((item) => {
               const active = pathname === item.href;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                  className={`relative flex items-center gap-3.5 px-4 py-3 rounded-[12px] text-[15px] font-semibold transition-all duration-150 overflow-hidden ${
                     active
-                      ? "bg-brand-main text-white shadow-sm"
-                      : "text-secondary hover:text-primary hover:bg-neutral"
+                      ? "bg-[#6C5CE7]/[0.08] text-[#6C5CE7] dark:bg-[#6C5CE7]/20 dark:text-[#A29BFE]"
+                      : "text-[#667085] dark:text-slate-400 hover:text-[#344054] dark:hover:text-white hover:bg-white/70 dark:hover:bg-slate-800/60 font-medium"
                   }`}
                 >
-                  <span className={active ? "text-white" : "text-secondary"}>{item.icon}</span>
-                  <span>{item.label}</span>
+                  {/* Left Indicator bar */}
+                  {active && (
+                    <span className="absolute left-0 top-3 bottom-3 w-[5px] bg-[#6C5CE7] rounded-r-md" />
+                  )}
+                  <span className={`shrink-0 ${active ? "text-[#6C5CE7] dark:text-[#A29BFE]" : "text-[#98A2B3]"}`}>
+                    {item.icon}
+                  </span>
+                  <span className="tracking-tight">{item.label}</span>
                 </Link>
               );
             })}
           </nav>
         </div>
 
-        {/* Sidebar Footer */}
-        <div className="pt-4 border-t border-outline space-y-2">
-          <Link
-            href="/"
-            target="_blank"
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-secondary hover:text-primary border border-outline hover:bg-neutral transition-colors"
-          >
-            <span>Visit Website</span>
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-          </Link>
+        {/* Sidebar Bottom */}
+        <div className="pt-4 border-t border-dashed border-[#DCDFE6] dark:border-slate-800 space-y-3">
+          {/* User Profile Pill */}
+          <div className="flex items-center gap-3 px-2 py-1">
+            <div className="w-9 h-9 rounded-full bg-[#6C5CE7]/10 dark:bg-[#6C5CE7]/30 text-[#6C5CE7] dark:text-[#A29BFE] flex items-center justify-center font-semibold text-xs shrink-0">
+              {initials.toUpperCase()}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-sm text-[#101828] dark:text-white truncate leading-tight">
+                {user?.firstName} {user?.lastName}
+              </p>
+              <p className="text-xs text-[#667085] truncate capitalize leading-tight mt-0.5">
+                {user?.plan ? `${user.plan} Plan` : "Active"}
+              </p>
+            </div>
+          </div>
+
+          {/* Logout Button */}
           <button
             type="button"
             onClick={() => {
               logout();
               router.push("/login");
             }}
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-error-main hover:bg-error-lighter/20 border border-error-light/30 transition-colors"
+            className="w-full flex items-center gap-2.5 px-4 py-3 rounded-[12px] text-sm font-semibold bg-[#FEE4E2]/70 hover:bg-[#FEE4E2] text-[#D92D20] dark:bg-rose-950/30 dark:hover:bg-rose-950/50 dark:text-rose-400 transition-colors"
           >
-            <span>Sign Out</span>
+            <svg className="w-4.5 h-4.5 text-[#D92D20] dark:text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            <span>Logout</span>
           </button>
         </div>
       </aside>
 
-      {/* Top Header for Mobile/Tablet (< 991px) */}
-      <header className="min-[991px]:hidden flex items-center justify-between px-4 py-3.5 border-b border-outline bg-paper sticky top-0 z-30">
-        <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.svg" alt="MarketingSetu" className="h-7 w-auto" />
-          <span className="font-bold text-sm text-primary">MarketingSetu</span>
+      {/* Mobile Header (< 991px) */}
+      <header className="min-[991px]:hidden flex items-center justify-between px-4 py-3.5 border-b border-dashed border-[#DCDFE6] dark:border-slate-800 bg-[#F8F9FD] dark:bg-slate-900 sticky top-0 z-30 shadow-xs">
+        <Link href="/portal" className="inline-block">
+          <img src="/logo.svg" alt="MarketingSetu" className="h-11 w-auto object-contain" />
         </Link>
         <button
           type="button"
           onClick={() => setMobileNavOpen(true)}
-          className="p-2 rounded-xl border border-outline text-primary hover:bg-neutral flex items-center gap-2 text-xs font-semibold"
-          aria-label="Open Navigation"
+          className="p-2 rounded-xl border border-dashed border-[#DCDFE6] dark:border-slate-800 text-[#344054] dark:text-slate-300 hover:bg-white flex items-center gap-2 text-xs font-semibold"
         >
           <span>Menu</span>
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-5 h-5 text-[#6C5CE7]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
           </svg>
         </button>
       </header>
 
-      {/* Collapsible Mobile/Tablet Drawer & Overlay (< 991px) */}
+      {/* Mobile Drawer */}
       {mobileNavOpen && (
         <div className="min-[991px]:hidden fixed inset-0 z-50 flex">
-          {/* Backdrop overlay */}
           <div
-            className="fixed inset-0 bg-black/50 transition-opacity"
+            className="fixed inset-0 bg-slate-950/50 backdrop-blur-xs"
             onClick={() => setMobileNavOpen(false)}
           />
-
-          {/* Slide-out Sidebar Drawer */}
-          <div className="relative flex-1 flex flex-col max-w-xs w-full bg-paper border-r border-outline p-5 z-10 justify-between h-full shadow-2xl animate-fade-in-right">
+          <div className="relative flex-1 flex flex-col max-w-xs w-full bg-[#F8F9FD] dark:bg-slate-900 border-r border-dashed border-[#DCDFE6] dark:border-slate-800 p-5 z-10 justify-between h-full shadow-2xl">
             <div className="space-y-6">
-              {/* Drawer Header */}
-              <div className="flex items-center justify-between border-b border-outline pb-4">
-                <Link href="/" className="flex items-center gap-2">
-                  <img src="/logo.svg" alt="MarketingSetu" className="h-7 w-auto" />
-                  <span className="font-bold text-sm text-primary">MarketingSetu</span>
+              <div className="flex items-center justify-between border-b border-dashed border-[#DCDFE6] pb-4">
+                <Link href="/portal" className="inline-block">
+                  <img src="/logo.svg" alt="MarketingSetu" className="h-11 w-auto" />
                 </Link>
                 <button
                   type="button"
                   onClick={() => setMobileNavOpen(false)}
-                  className="p-1.5 rounded-lg border border-outline text-secondary hover:text-primary"
+                  className="p-1.5 rounded-lg border border-[#DCDFE6] text-[#667085]"
                 >
                   ✕
                 </button>
               </div>
 
-              {/* User Brief Card in Drawer */}
-              <div className="p-3 rounded-xl border border-outline bg-neutral">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-brand-lighter text-brand-main flex items-center justify-center font-bold text-xs uppercase">
-                    {user?.firstName?.[0] || "U"}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-bold text-xs text-primary truncate">
-                      {user?.firstName} {user?.lastName}
-                    </p>
-                    <p className="text-[11px] text-secondary truncate">{user?.phone}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Drawer Navigation Links */}
-              <nav className="space-y-1">
-                {navItems.map((item) => {
+              <nav className="space-y-2">
+                {managementNav.map((item) => {
                   const active = pathname === item.href;
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
                       onClick={() => setMobileNavOpen(false)}
-                      className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                      className={`relative flex items-center gap-3.5 px-4 py-3 rounded-[12px] text-[15px] font-semibold ${
                         active
-                          ? "bg-brand-main text-white shadow-sm"
-                          : "text-secondary hover:text-primary hover:bg-neutral"
+                          ? "bg-[#6C5CE7]/[0.08] text-[#6C5CE7]"
+                          : "text-[#667085] hover:bg-white"
                       }`}
                     >
-                      <span className={active ? "text-white" : "text-secondary"}>{item.icon}</span>
+                      {active && (
+                        <span className="absolute left-0 top-3 bottom-3 w-[5px] bg-[#6C5CE7] rounded-r-md" />
+                      )}
+                      <span className={active ? "text-[#6C5CE7]" : "text-[#98A2B3]"}>{item.icon}</span>
                       <span>{item.label}</span>
                     </Link>
                   );
@@ -251,37 +233,28 @@ export default function PortalLayout({ children }: PortalLayoutProps) {
               </nav>
             </div>
 
-            {/* Drawer Footer */}
-            <div className="pt-4 border-t border-outline space-y-2">
-              <Link
-                href="/"
-                target="_blank"
-                className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-secondary hover:text-primary border border-outline hover:bg-neutral transition-colors"
-              >
-                <span>Visit Website</span>
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </Link>
+            <div className="pt-4 border-t border-dashed border-[#DCDFE6] space-y-2">
               <button
                 type="button"
                 onClick={() => {
                   logout();
                   router.push("/login");
                 }}
-                className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-error-main hover:bg-error-lighter/20 border border-error-light/30 transition-colors"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-[12px] text-sm font-semibold bg-[#FEE4E2] text-[#D92D20]"
               >
-                <span>Sign Out</span>
+                <span>Logout</span>
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Main Content Viewport */}
-      <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
-        {children}
-      </main>
+      {/* Main Viewport Container */}
+      <div className="flex-1 flex flex-col min-w-0">
+        <main className="flex-1 overflow-y-auto p-5 sm:p-7 lg:p-9 max-w-[1400px] w-full mx-auto">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

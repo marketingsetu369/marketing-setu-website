@@ -48,6 +48,20 @@ const fetchClient = {
       body: JSON.stringify(data),
     }),
 
+  put: <T>(path: string, data: any, options: RequestInit = {}) =>
+    fetchClient.request<T>(path, {
+      ...options,
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
+
+  patch: <T>(path: string, data: any, options: RequestInit = {}) =>
+    fetchClient.request<T>(path, {
+      ...options,
+      method: "PATCH",
+      body: JSON.stringify(data),
+    }),
+
   delete: <T>(path: string, options: RequestInit = {}) =>
     fetchClient.request<T>(path, { ...options, method: "DELETE" }),
 };

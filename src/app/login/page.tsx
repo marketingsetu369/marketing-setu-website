@@ -62,7 +62,7 @@ export default function LoginPage() {
         <div className="relative z-10 space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-brand-light">
             <span className="w-2 h-2 rounded-full bg-success-main animate-pulse" />
-            Merchant Web Portal
+            Business Web Portal
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight text-white">
             Manage your digital presence & leads effortlessly.
@@ -97,7 +97,7 @@ export default function LoginPage() {
               <span className="font-bold text-lg text-primary">MarketingSetu</span>
             </Link>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-primary">
-              Sign in to Merchant Portal
+              Sign in to Portal
             </h2>
             <p className="text-secondary text-sm">
               Enter your registered mobile number and password to access your dashboard.

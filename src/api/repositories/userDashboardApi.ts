@@ -35,6 +35,8 @@ export interface BusinessPageData {
     description?: string;
     price?: number;
     price_unit?: string;
+    image?: string;
+    imageUrl?: string;
     images?: string[];
     is_active?: boolean;
   }>;
@@ -42,9 +44,11 @@ export interface BusinessPageData {
   testimonials?: Array<{
     id?: string;
     author_name: string;
+    name?: string;
     rating: number;
     content: string;
     avatar_url?: string;
+    avatar?: string;
   }>;
   social_links?: Record<string, string>;
   created_at?: string;
@@ -70,6 +74,26 @@ export interface EnquiryItem {
   productPrice?: string;
   isRead: boolean;
   createdAt: string;
+}
+
+export interface UserTransactionItem {
+  id: string;
+  userId?: string;
+  type: "income" | "expense";
+  amount: number;
+  title: string;
+  category?: string;
+  paymentMode?: string;
+  description?: string;
+  date: string;
+  createdAt?: string;
+}
+
+export interface UserTransactionsSummary {
+  transactions: UserTransactionItem[];
+  totalExpenses: number;
+  totalIncome: number;
+  netBalance: number;
 }
 
 export const UserDashboardApi = {
@@ -109,13 +133,55 @@ export const UserDashboardApi = {
     return fetchClient.delete<{ statusCode: number; message: string }>(`/user/enquiries/${id}`);
   },
 
-  // Transactions
-  getTransactions: async (params?: { page?: number; limit?: number }) => {
+  // User Transactions
+  getTransactions: async (params?: { fromDate?: string; toDate?: string; type?: "income" | "expense" }) => {
     const query = new URLSearchParams();
-    if (params?.page) query.append("page", params.page.toString());
-    if (params?.limit) query.append("limit", params.limit.toString());
+    if (params?.fromDate) query.append("fromDate", params.fromDate);
+    if (params?.toDate) query.append("toDate", params.toDate);
+    if (params?.type) query.append("type", params.type);
     const qs = query.toString() ? `?${query.toString()}` : "";
-    return fetchClient.get<{ statusCode: number; data: any }>(`/user/transactions${qs}`);
+    return fetchClient.get<{ statusCode: number; data: UserTransactionsSummary }>(`/user/transactions${qs}`);
+  },
+
+  getTransactionCategories: async () => {
+    return fetchClient.get<{ statusCode: number; data: string[] }>("/user/transactions/categories");
+  },
+
+  createTransaction: async (data: {
+    type: "income" | "expense";
+    amount: number;
+    title: string;
+    category?: string;
+    paymentMode?: string;
+    description?: string;
+    date?: string;
+  }) => {
+    return fetchClient.post<{ statusCode: number; message: string; data: UserTransactionItem }>(
+      "/user/transactions",
+      data
+    );
+  },
+
+  updateTransaction: async (
+    id: string,
+    data: Partial<{
+      type: "income" | "expense";
+      amount: number;
+      title: string;
+      category?: string;
+      paymentMode?: string;
+      description?: string;
+      date?: string;
+    }>
+  ) => {
+    return fetchClient.put<{ statusCode: number; message: string; data: UserTransactionItem }>(
+      `/user/transactions/${id}`,
+      data
+    );
+  },
+
+  deleteTransaction: async (id: string) => {
+    return fetchClient.delete<{ statusCode: number; message: string }>(`/user/transactions/${id}`);
   },
 
   // Media upload helper
