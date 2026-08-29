@@ -11,82 +11,15 @@ import {
   PricingCard,
   useWhatsApp,
 } from "@/views/home-page/component";
-import { pricingPlans, translations } from "@/views/home-page/data";
+import { getPricingFaqs, getPricingPlans, translations } from "@/views/home-page/data";
 
 export default function PricingView() {
   const { openWhatsApp } = useWhatsApp();
   const { language } = useThemeStore();
   const t = translations[language] || translations.en;
 
-  const getTranslatedFaqs = () => {
-    return [
-      { question: t.faq_pricing_q1, answer: t.faq_pricing_a1 },
-      { question: t.faq_pricing_q2, answer: t.faq_pricing_a2 },
-      { question: t.faq_pricing_q3, answer: t.faq_pricing_a3 },
-    ];
-  };
-
-  const getTranslatedPlans = () => {
-    return pricingPlans.map((plan) => {
-      let badge = plan.badge;
-      let name = plan.name;
-      let price = plan.price;
-      let description = plan.description;
-
-      if (plan.id === "quick-connect") {
-        badge = t.plan_quick_badge;
-        name = t.plan_quick_name;
-        price = t.plan_quick_price;
-        description = t.plan_quick_desc;
-      } else if (plan.id === "smart-connect") {
-        badge = t.plan_smart_badge;
-        name = t.plan_smart_name;
-        price = t.plan_smart_price;
-        description = t.plan_smart_desc;
-      } else if (plan.id === "power-connect") {
-        badge = t.plan_power_badge;
-        name = t.plan_power_name;
-        price = t.plan_power_price;
-        description = t.plan_power_desc;
-      }
-
-      const featureMapping: Record<string, { bold: string; desc?: string }> = {
-        "Digital Business Card": { bold: t.plan_feat_digital_card },
-        "Auto SMS on Missed Call": { bold: t.plan_feat_auto_sms },
-        "Auto WhatsApp on Missed Call": { bold: t.plan_feat_auto_wa },
-        "Custom Landing Page": { bold: t.plan_feat_landing_page },
-        "Festival Social Media Posts": { bold: t.plan_feat_festivals },
-        "Everything in Starter": { bold: t.plan_feat_everything_starter },
-        "Everything in Growth": { bold: t.plan_feat_everything_growth },
-        "Everything in Smart Connect": { bold: t.plan_feat_everything_growth },
-        "Custom Landing Page + Domain": { bold: t.plan_feat_domain },
-        "Google Business Setup": { bold: t.plan_feat_google },
-      };
-
-      const translateFeatures = (featuresList: typeof plan.features) => {
-        return featuresList.map((f) => {
-          const mapped = featureMapping[f.bold];
-          if (mapped) {
-            return {
-              bold: mapped.bold,
-              desc: f.desc ? t.plan_feat_desc_included : undefined,
-            };
-          }
-          return f;
-        });
-      };
-
-      return {
-        ...plan,
-        badge,
-        name,
-        price,
-        description,
-        features: translateFeatures(plan.features),
-        compactFeatures: plan.compactFeatures ? translateFeatures(plan.compactFeatures) : undefined,
-      };
-    });
-  };
+  const getTranslatedFaqs = () => getPricingFaqs(t);
+  const getTranslatedPlans = () => getPricingPlans(t);
 
   return (
     <PageWrapper>

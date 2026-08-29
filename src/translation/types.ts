@@ -309,4 +309,18 @@ export interface TranslationDictionary {
   showcase_bullet_pc_3: string;
   showcase_btn_digital: string;
   showcase_btn_wa: string;
+
+  // Service Block Page Keys
+  service_block_card_title: string;
+  service_block_card_lead: string;
+  service_block_wa_title: string;
+  service_block_wa_lead: string;
+  service_block_log_title: string;
+  service_block_log_lead: string;
+  service_block_catalog_title: string;
+  service_block_catalog_lead: string;
+  service_block_gallery_title: string;
+  service_block_gallery_lead: string;
+  service_block_reviews_title: string;
+  service_block_reviews_lead: string;
 }

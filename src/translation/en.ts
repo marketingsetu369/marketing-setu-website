@@ -360,4 +360,18 @@ export const en: TranslationDictionary = {
   showcase_bullet_pc_3: "Direct 1-Tap WhatsApp Shopping Checkout",
   showcase_btn_digital: "Get Digital Business Card",
   showcase_btn_wa: "Get WhatsApp Automation",
+
+  // Service Block Page Keys
+  service_block_card_title: "Smart Digital Business Card",
+  service_block_card_lead: "Your professional Digital Business Card — shareable via WhatsApp, QR code, Instagram, and Google in one tap. Show your services, photos, contact details, and a direct enquiry button. Live in 15 min.",
+  service_block_wa_title: "WhatsApp Auto Messaging",
+  service_block_wa_lead: "Never miss a customer again. Our WhatsApp Auto Messaging add-on sends instant replies to every enquiry and missed call — 24/7, automatically, even while you sleep.",
+  service_block_log_title: "Log Income & Expense",
+  service_block_log_lead: "Track every sale, payment, and expense directly from your phone. Simple daily ledger built for small business owners — no accountant needed, no complicated software.",
+  service_block_catalog_title: "Products & Services Catalog",
+  service_block_catalog_lead: "Showcase all your products and services on your Digital Card with photos, descriptions, prices, and a direct WhatsApp enquiry button — your online shop without any app or website.",
+  service_block_gallery_title: "Photo Gallery Showcase",
+  service_block_gallery_lead: "Build trust instantly. Upload photos of your shop, work, food, or projects directly on your Digital Card so customers see the real you before they even call.",
+  service_block_reviews_title: "Customer Reviews & Testimonials",
+  service_block_reviews_lead: "Let happy customers do the selling for you. Collect and display authentic reviews and ratings on your Digital Card to convert new visitors into buyers.",
 };

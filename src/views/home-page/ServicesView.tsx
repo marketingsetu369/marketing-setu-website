@@ -7,12 +7,13 @@ import {
   PageWrapper,
   ServiceBlock,
 } from "@/views/home-page/component";
-import { servicesData, translations } from "@/views/home-page/data";
+import { getServicesData, translations } from "@/views/home-page/data";
 import { useThemeStore } from "@/store/themeStore";
 
 export default function ServicesView() {
   const { language } = useThemeStore();
   const t = translations[language] || translations.en;
+  const services = getServicesData(t);
 
   return (
     <PageWrapper>
@@ -25,7 +26,7 @@ export default function ServicesView() {
       />
 
       {/* SERVICE BLOCKS */}
-      {servicesData.map((service, idx) => (
+      {services.map((service, idx) => (
         <ServiceBlock key={service.id} service={service} />
       ))}
 

@@ -10,7 +10,7 @@ import {
   ContactForm,
   useWhatsApp,
 } from "@/views/home-page/component";
-import { translations, contactInfo } from "@/views/home-page/data";
+import { getContactFaqs, translations, contactInfo } from "@/views/home-page/data";
 import { AppButton } from "@/components/library";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
@@ -25,13 +25,7 @@ export default function ContactView() {
   const { openWhatsApp } = useWhatsApp();
   const t = translations[language] || translations.en;
 
-  const getTranslatedFaqs = () => {
-    return [
-      { question: t.faq_contact_q1, answer: t.faq_contact_a1 },
-      { question: t.faq_contact_q2, answer: t.faq_contact_a2 },
-      { question: t.faq_contact_q3, answer: t.faq_contact_a3 },
-    ];
-  };
+  const getTranslatedFaqs = () => getContactFaqs(t);
 
   return (
     <PageWrapper>
