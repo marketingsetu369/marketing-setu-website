@@ -100,10 +100,10 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
   }, [data]);
 
   const socialLinks = {
-    instagram: data?.social_links?.instagram || "",
-    facebook: data?.social_links?.facebook || "",
-    youtube: data?.social_links?.youtube || "",
-    twitter: data?.social_links?.twitter || "",
+    instagram: data?.social_links?.instagram || (data as any)?.socialLinks?.instagram || "",
+    facebook: data?.social_links?.facebook || (data as any)?.socialLinks?.facebook || "",
+    youtube: data?.social_links?.youtube || (data as any)?.socialLinks?.youtube || "",
+    twitter: data?.social_links?.twitter || (data as any)?.socialLinks?.twitter || (data?.social_links as any)?.x || "",
   };
 
   // ── Section visibility ───────────────────────────────────────────────────

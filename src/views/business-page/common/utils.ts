@@ -17,21 +17,27 @@ export function getImageUrl(url?: string): string {
 /** Ensures a social handle / partial URL becomes a full https:// URL */
 export function formatSocialLink(
   url: string,
-  platform: "instagram" | "facebook" | "youtube" | "twitter"
+  platform: "instagram" | "facebook" | "youtube" | "twitter" | "x"
 ): string {
   if (!url) return "";
-  const cleanUrl = url.trim();
-  if (cleanUrl.startsWith("http://") || cleanUrl.startsWith("https://"))
+  let cleanUrl = url.trim();
+  if (cleanUrl.startsWith("@")) {
+    cleanUrl = cleanUrl.substring(1);
+  }
+  if (cleanUrl.startsWith("http://") || cleanUrl.startsWith("https://")) {
     return cleanUrl;
-  if (cleanUrl.includes(".") || cleanUrl.includes("/"))
+  }
+  if (cleanUrl.includes(".") || cleanUrl.includes("/")) {
     return `https://${cleanUrl}`;
-  const baseUrls = {
+  }
+  const baseUrls: Record<string, string> = {
     instagram: "https://instagram.com/",
     facebook: "https://facebook.com/",
     youtube: "https://youtube.com/",
     twitter: "https://twitter.com/",
+    x: "https://x.com/",
   };
-  return `${baseUrls[platform]}${cleanUrl}`;
+  return `${baseUrls[platform] || "https://"}${cleanUrl}`;
 }
 
 /** Extracts an 11-character YouTube video ID from any supported URL format */
