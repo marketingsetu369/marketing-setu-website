@@ -3,7 +3,7 @@ import BusinessView from "@/views/business-page";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 interface PageProps {
   params: Promise<{

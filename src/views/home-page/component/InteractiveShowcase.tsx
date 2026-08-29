@@ -1,24 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
-import Link from "next/link";
 import { TranslationDictionary } from "@/translation";
-import { useWhatsApp } from "./useWhatsApp";
-import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  SmartphoneNfcIcon,
-  WhatsappIcon,
-  WebValidationIcon,
-  MapsLocation01Icon,
-  MoneyBag01Icon,
-  ShoppingBag01Icon,
-  GridIcon,
-  StarIcon,
-  CallIcon,
-  CompassIcon,
-  GlobalIcon,
-  SentIcon,
+    CallIcon,
+    CompassIcon,
+    GlobalIcon,
+    GridIcon,
+    MapsLocation01Icon,
+    MoneyBag01Icon,
+    SentIcon,
+    ShoppingBag01Icon,
+    SmartphoneNfcIcon,
+    StarIcon,
+    WebValidationIcon,
+    WhatsappIcon,
 } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import Link from "next/link";
+import { useState } from "react";
+import { useWhatsApp } from "./useWhatsApp";
 
 interface InteractiveShowcaseProps {
   t: TranslationDictionary;

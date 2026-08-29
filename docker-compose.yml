@@ -11,3 +11,10 @@ services:
       - NODE_ENV=production
       - PORT=3000
       - NEXT_PUBLIC_API_URL=https://api.marketingsetu.com
+      - NODE_OPTIONS=--max-old-space-size=384
+    deploy:
+      resources:
+        limits:
+          memory: 400M
+        reservations:
+          memory: 150M
