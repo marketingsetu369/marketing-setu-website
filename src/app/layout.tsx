@@ -290,7 +290,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrg) }}
         />
       </head>
-      <body>
+      <body className="bg-background text-primary antialiased selection:bg-brand-main selection:text-white min-h-screen">
         {children}
         <Toaster position="bottom-right" expand={false} richColors />
       </body>

@@ -36,7 +36,6 @@ export default function PageWrapper({ children }: PageWrapperProps) {
   const t = translations[language] || translations.en;
 
   const navLinks = [
-    { label: t.nav_home, href: "/" },
     { label: t.nav_services, href: "/services" },
     { label: t.nav_pricing, href: "/pricing" },
     { label: t.nav_about, href: "/about" },
@@ -47,31 +46,29 @@ export default function PageWrapper({ children }: PageWrapperProps) {
 
   return (
     <div className="min-h-screen flex flex-col font-sans text-primary bg-background transition-colors duration-300">
-      {/* BEGIN: Navigation - Glassmorphism floating header inspired by DigitalBusinessCard.com */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl border-b border-outline/50 transition-colors duration-300">
+      {/* BEGIN: Navigation - Glassmorphism floating header */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-outline/40 transition-colors duration-300">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-18 sm:h-20 items-center justify-between">
+          <div className="flex h-18 sm:h-20 items-center justify-between gap-4">
             {/* Logo (Left side) */}
             <Link href="/" className="flex-shrink-0 flex items-center group">
               <img
                 src="/logo.svg"
                 alt="MarketingSetu Logo"
-                className="h-10 sm:h-12 w-auto object-contain"
+                className="h-12 sm:h-14 lg:h-16 w-auto object-contain transition-transform group-hover:scale-105"
               />
             </Link>
 
+
             {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center justify-center space-x-1 lg:space-x-2">
+            <div className="hidden lg:flex items-center justify-center space-x-1 xl:space-x-2">
               {navLinks.map((link) => {
-                const isActive =
-                  link.href === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(link.href);
+                const isActive = pathname.startsWith(link.href);
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`px-3 py-2 text-sm font-medium transition-colors rounded-lg ${
+                    className={`px-3 py-2 text-sm font-medium transition-colors rounded-xl ${
                       isActive
                         ? "text-brand-main bg-brand-lighter/60 dark:bg-brand-main/15 dark:text-brand-main font-semibold"
                         : "text-gray-600 hover:text-gray-950 dark:text-gray-300 dark:hover:text-white hover:bg-gray-100/60 dark:hover:bg-gray-800/60"
@@ -84,13 +81,13 @@ export default function PageWrapper({ children }: PageWrapperProps) {
             </div>
 
             {/* Header Right Actions */}
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-2.5">
               {/* Language Switcher Pill */}
               {mounted && (
                 <select
                   value={language}
                   onChange={(e) => setLanguage(e.target.value as "en" | "mr" | "hi")}
-                  className="bg-gray-100/80 dark:bg-gray-800/80 border border-gray-200/60 dark:border-gray-700/60 text-gray-800 dark:text-gray-200 text-xs font-semibold rounded-lg px-3 py-2 focus:ring-0 focus:outline-none cursor-pointer"
+                  className="bg-gray-100/80 dark:bg-gray-800/80 border border-gray-200/60 dark:border-gray-700/60 text-gray-800 dark:text-gray-200 text-xs font-semibold rounded-xl px-2.5 py-2 focus:ring-0 focus:outline-none cursor-pointer hover:bg-gray-200/80 dark:hover:bg-gray-700/80 transition-colors"
                 >
                   <option value="en" className="dark:bg-brand-dark">EN</option>
                   <option value="mr" className="dark:bg-brand-dark">मराठी</option>
@@ -102,7 +99,7 @@ export default function PageWrapper({ children }: PageWrapperProps) {
               {mounted && (
                 <button
                   onClick={toggleTheme}
-                  className="p-2 rounded-lg bg-gray-100/80 dark:bg-gray-800/80 hover:bg-gray-200/80 dark:hover:bg-gray-700/80 text-gray-600 dark:text-gray-300 transition-colors cursor-pointer text-xs font-semibold"
+                  className="p-2 rounded-xl bg-gray-100/80 dark:bg-gray-800/80 hover:bg-gray-200/80 dark:hover:bg-gray-700/80 text-gray-600 dark:text-gray-300 transition-colors cursor-pointer text-xs font-semibold"
                   aria-label="Toggle theme"
                 >
                   {theme === "dark" ? "☀️" : "🌙"}
@@ -112,7 +109,7 @@ export default function PageWrapper({ children }: PageWrapperProps) {
               {/* Portal Login Button */}
               <Link
                 href="/login"
-                className="bg-paper hover:bg-neutral border border-outline text-primary px-3.5 py-2 rounded-xl text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5"
+                className="bg-paper hover:bg-neutral border border-outline text-primary px-3.5 py-2 rounded-xl text-xs font-semibold shadow-xs transition-all flex items-center gap-1.5"
               >
                 <svg className="w-3.5 h-3.5 text-brand-main" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -123,21 +120,13 @@ export default function PageWrapper({ children }: PageWrapperProps) {
               {/* Download App Action Button */}
               <Link
                 href="/download"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-2 rounded-xl text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5"
+                className="bg-brand-main hover:bg-brand-dark text-white px-3.5 py-2 rounded-xl text-xs font-semibold shadow-xs hover:shadow-sm transition-all flex items-center gap-1.5"
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
                 Download App
               </Link>
-
-              {/* Primary Action Button */}
-              <button
-                onClick={() => handleWhatsAppChat()}
-                className="bg-gray-950 hover:bg-gray-800 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-sm transition-all cursor-pointer flex items-center gap-2"
-              >
-                Get Started
-              </button>
             </div>
 
             {/* Mobile Actions & Menu Toggle */}
@@ -238,9 +227,10 @@ export default function PageWrapper({ children }: PageWrapperProps) {
                 <img
                   src="/logo.svg"
                   alt="MarketingSetu Logo"
-                  className="h-10 sm:h-12 w-auto object-contain"
+                  className="h-12 sm:h-14 w-auto object-contain"
                 />
               </div>
+
               <p className="text-sm leading-relaxed mb-6">
                 The bridge between your business and your customers — WhatsApp marketing, landing pages, and local growth tools for Bharat's small businesses.
               </p>

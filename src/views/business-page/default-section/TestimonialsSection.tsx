@@ -59,7 +59,7 @@ export default function TestimonialsSection({
           {active.name}
         </h3>
 
-        <p className="text-gray-600 text-sm leading-relaxed text-center italic max-w-sm">
+        <p className="text-gray-600 text-sm leading-relaxed text-center font-normal max-w-sm">
           &ldquo;{active.comment}&rdquo;
         </p>
       </div>

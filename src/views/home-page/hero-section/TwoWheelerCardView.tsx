@@ -184,7 +184,7 @@ export default function TwoWheelerCardView({ isCenter = true }: { isCenter?: boo
                 <div className="flex gap-0.5">
                   {[...Array(5)].map((_, i) => <HugeiconsIcon key={i} icon={StarIcon} size={10} className="text-[#d43f00]" />)}
                 </div>
-                <p className="text-[8.5px] text-[#1b1c1c] italic leading-snug">&ldquo;{text}&rdquo;</p>
+                <p className="text-[8.5px] text-[#1b1c1c] font-normal leading-snug">&ldquo;{text}&rdquo;</p>
                 <span className="text-[7.5px] font-bold text-[#444748] uppercase">— {name}</span>
               </div>
             ))}

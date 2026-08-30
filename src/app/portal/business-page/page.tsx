@@ -1,9 +1,13 @@
 "use client";
 
 import { BusinessPageData, UserDashboardApi } from "@/api/repositories/userDashboardApi";
+import { AppButton, AppCard, AppInput, AppSelect, AppTextArea } from "@/library/ui";
+
+
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
+
 
 /** Resolves any image URL, object, or local/prod upload path into a usable https URL */
 function resolveImgUrl(input: any): string {
@@ -392,23 +396,23 @@ export default function BusinessPageEditor() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-16">
       {/* Top Banner Card */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 shadow-[0_4px_20px_rgba(0,0,0,0.03)] space-y-6">
+      <AppCard elevation="md" className="!p-6 sm:!p-8 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-slate-800 overflow-hidden flex-shrink-0 flex items-center justify-center shadow-xs">
+            <div className="w-16 h-16 rounded-2xl bg-neutral border border-outline overflow-hidden flex-shrink-0 flex items-center justify-center shadow-z1">
               {logoUrl ? (
                 <img src={resolveImgUrl(logoUrl)} alt={businessName} className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full bg-[#EEEAFF] text-[#6C5CE7] flex items-center justify-center font-bold text-xl">
+                <div className="w-full h-full bg-brand-lighter text-brand-main flex items-center justify-center font-bold text-xl">
                   {businessName ? businessName[0].toUpperCase() : "M"}
                 </div>
               )}
             </div>
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+              <h1 className="text-xl sm:text-2xl font-bold text-primary">
                 {businessName || "Your Business Profile"}
               </h1>
-              <p className="text-xs text-slate-500 font-medium mt-0.5">
+              <p className="text-xs text-secondary font-medium mt-0.5">
                 {category ? `${category} • ` : ""}
                 {liveSlug ? `marketingsetu.com/${liveSlug}` : "Set up your slug link below"}
               </p>
@@ -417,45 +421,44 @@ export default function BusinessPageEditor() {
 
           <div className="flex items-center gap-3">
             {liveSlug && (
-              <Link
-                href={`/${liveSlug}`}
-                target="_blank"
-                className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-semibold hover:border-slate-300 transition-colors shadow-xs"
-              >
-                View Live Page ↗
+              <Link href={`/${liveSlug}`} target="_blank">
+                <AppButton variant="outline" size="md">
+                  View Live Page ↗
+                </AppButton>
               </Link>
             )}
-            <button
+            <AppButton
               type="button"
               onClick={handleSave}
               disabled={saving}
-              className="px-5 py-2.5 rounded-xl bg-[#6C5CE7] hover:bg-[#5850EC] text-white text-xs font-bold shadow-xs transition-all disabled:opacity-50"
+              variant="primary"
+              size="md"
             >
               {saving ? "Saving Changes..." : "Save Business Page"}
-            </button>
+            </AppButton>
           </div>
         </div>
 
         {/* Profile Completion Bar */}
-        <div className="space-y-2 pt-2 border-t border-dashed border-[#DCDFE6] dark:border-slate-800">
+        <div className="space-y-2 pt-2 border-t border-outline">
           <div className="flex justify-between text-xs font-semibold">
-            <span className="text-slate-500">Profile Completion ({completedSteps}/{stepsList.length} Sections)</span>
-            <span className="text-[#6C5CE7]">{completionPercent}%</span>
+            <span className="text-secondary">Profile Completion ({completedSteps}/{stepsList.length} Sections)</span>
+            <span className="text-brand-main font-bold">{completionPercent}%</span>
           </div>
-          <div className="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+          <div className="w-full h-2.5 bg-neutral rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-[#6C5CE7] to-emerald-500 transition-all duration-500 rounded-full"
+              className="h-full bg-gradient-to-r from-brand-main to-success-main transition-all duration-500 rounded-full"
               style={{ width: `${completionPercent}%` }}
             />
           </div>
         </div>
-      </div>
+      </AppCard>
 
       {/* Main Grid: Left Step Navigator + Right Editor Form */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Step Navigator */}
         <div className="lg:col-span-4 space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 px-2 mb-3">
+          <p className="text-xs font-semibold uppercase tracking-wider text-disabled px-2 mb-3">
             Configuration Sections
           </p>
           <div className="space-y-2">
@@ -466,35 +469,35 @@ export default function BusinessPageEditor() {
                   key={step.id}
                   type="button"
                   onClick={() => setActiveTab(step.id as any)}
-                  className={`w-full text-left p-4 rounded-2xl transition-all duration-200 flex items-center justify-between gap-3 ${
+                  className={`w-full text-left p-4 rounded-2xl transition-all duration-200 flex items-center justify-between gap-3 cursor-pointer ${
                     active
-                      ? "bg-[#6C5CE7] text-white shadow-md shadow-[#6C5CE7]/20"
-                      : "bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:bg-slate-50"
+                      ? "bg-brand-main text-white shadow-z8"
+                      : "bg-paper text-primary shadow-z1 hover:bg-neutral"
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <div
                       className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0 ${
                         active
-                          ? "bg-white text-[#6C5CE7]"
+                          ? "bg-paper text-brand-main shadow-2xs"
                           : step.filled
-                          ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
-                          : "bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400"
+                          ? "bg-success-lighter text-success-main dark:bg-success-darker/60"
+                          : "bg-neutral text-disabled"
                       }`}
                     >
                       {step.filled ? "✓" : idx + 1}
                     </div>
                     <div className="truncate">
-                      <p className={`font-semibold text-sm truncate ${active ? "text-white" : "text-slate-900 dark:text-white"}`}>
+                      <p className={`font-semibold text-sm truncate ${active ? "text-white" : "text-primary"}`}>
                         {step.title}
                         {step.count !== null && <span className="opacity-80 ml-1.5 text-xs">({step.count})</span>}
                       </p>
-                      <p className={`text-[11px] truncate mt-0.5 ${active ? "text-white/80" : "text-slate-500 font-medium"}`}>
+                      <p className={`text-[11px] truncate mt-0.5 ${active ? "text-white/80" : "text-secondary font-medium"}`}>
                         {step.sub}
                       </p>
                     </div>
                   </div>
-                  <span className={`text-xs ${active ? "text-white" : "text-slate-400"}`}>&rarr;</span>
+                  <span className={`text-xs ${active ? "text-white" : "text-disabled"}`}>&rarr;</span>
                 </button>
               );
             })}
@@ -502,8 +505,9 @@ export default function BusinessPageEditor() {
         </div>
 
         {/* Right Editor Panel */}
-        <div className="lg:col-span-8 p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 shadow-[0_4px_20px_rgba(0,0,0,0.03)] space-y-6">
+        <AppCard elevation="md" className="lg:col-span-8 !p-6 sm:!p-8 space-y-6">
           {/* STEP 1: HEADER & BRANDING */}
+
           {activeTab === "header" && (
             <div className="space-y-6">
               <div>
@@ -551,52 +555,39 @@ export default function BusinessPageEditor() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Business Name <span className="text-rose-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={businessName}
-                    onChange={(e) => setBusinessName(e.target.value)}
-                    placeholder="e.g. Royal Bakers & Sweets"
-                    className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-semibold outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Business Category <span className="text-rose-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    placeholder="e.g. Bakery, Cafe, Consultant"
-                    className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-semibold outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  Tagline / Punchline
-                </label>
-                <input
+                <AppInput
+                  label="Business Name *"
                   type="text"
-                  value={tagline}
-                  onChange={(e) => setTagline(e.target.value)}
-                  placeholder="e.g. Freshly Baked with 100% Love & Purity in Pune"
-                  className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-medium outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
+                  value={businessName}
+                  onChange={(e) => setBusinessName(e.target.value)}
+                  placeholder="e.g. Royal Bakers & Sweets"
+                  required
+                />
+
+                <AppInput
+                  label="Business Category *"
+                  type="text"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  placeholder="e.g. Bakery, Cafe, Consultant"
+                  required
                 />
               </div>
 
+              <AppInput
+                label="Tagline / Punchline"
+                type="text"
+                value={tagline}
+                onChange={(e) => setTagline(e.target.value)}
+                placeholder="e.g. Freshly Baked with 100% Love & Purity in Pune"
+              />
+
               <div className="space-y-1.5">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  Website URL Slug <span className="text-rose-500">*</span>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-secondary">
+                  Website URL Slug <span className="text-error-main">*</span>
                 </label>
-                <div className="flex items-center rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 overflow-hidden">
-                  <span className="px-3.5 py-2.5 bg-slate-100 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 text-xs text-slate-500 font-semibold">
+                <div className="flex items-center rounded-lg border border-outline bg-neutral overflow-hidden focus-within:border-brand-main focus-within:ring-1 focus-within:ring-brand-main transition-all">
+                  <span className="px-3.5 py-2.5 bg-neutral border-r border-outline text-xs text-secondary font-semibold select-none">
                     marketingsetu.com/
                   </span>
                   <input
@@ -604,27 +595,22 @@ export default function BusinessPageEditor() {
                     value={slug}
                     onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-_]/g, ""))}
                     placeholder="royal-bakers"
-                    className="w-full px-3 py-2.5 bg-transparent text-slate-900 dark:text-white text-sm font-semibold outline-none"
+                    className="w-full px-3 py-2.5 bg-transparent text-primary text-sm font-semibold outline-none"
                   />
                 </div>
               </div>
 
-              <div className="space-y-1.5">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  YouTube Video Showcase Link (Optional)
-                </label>
-                <input
-                  type="url"
-                  value={youtubeUrl}
-                  onChange={(e) => setYoutubeUrl(e.target.value)}
-                  placeholder="https://youtube.com/watch?v=..."
-                  className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-medium outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
-                />
-              </div>
+              <AppInput
+                label="YouTube Video Showcase Link (Optional)"
+                type="url"
+                value={youtubeUrl}
+                onChange={(e) => setYoutubeUrl(e.target.value)}
+                placeholder="https://youtube.com/watch?v=..."
+              />
 
               {/* Theme Color Selector */}
               <div className="space-y-2 pt-2">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-secondary">
                   Page Theme Color Accent
                 </label>
                 <div className="flex flex-wrap items-center gap-3">
@@ -633,8 +619,8 @@ export default function BusinessPageEditor() {
                       key={hex}
                       type="button"
                       onClick={() => setThemeColorHex(hex)}
-                      className={`w-9 h-9 rounded-full transition-transform ${
-                        themeColorHex === hex ? "scale-110 ring-3 ring-offset-2 ring-[#6C5CE7]" : "hover:scale-105"
+                      className={`w-9 h-9 rounded-full transition-transform cursor-pointer ${
+                        themeColorHex === hex ? "scale-110 ring-3 ring-offset-2 ring-brand-main" : "hover:scale-105"
                       }`}
                       style={{ backgroundColor: hex }}
                     />
@@ -644,7 +630,7 @@ export default function BusinessPageEditor() {
 
               {/* Page Language Selector */}
               <div className="space-y-2 pt-2">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-secondary">
                   Business Page Language
                 </label>
                 <div className="flex items-center gap-3">
@@ -657,10 +643,10 @@ export default function BusinessPageEditor() {
                       key={lang.code}
                       type="button"
                       onClick={() => setPageLanguage(lang.code)}
-                      className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                      className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                         pageLanguage === lang.code
-                          ? "bg-[#6C5CE7] text-white shadow-xs"
-                          : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:text-slate-900"
+                          ? "bg-brand-main text-white shadow-z4"
+                          : "bg-neutral text-secondary border border-outline hover:text-primary"
                       }`}
                     >
                       {lang.label}
@@ -675,76 +661,51 @@ export default function BusinessPageEditor() {
           {activeTab === "contact" && (
             <div className="space-y-6">
               <div>
-                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Contact & Location Information</h2>
-                <p className="text-xs text-slate-500 font-medium">Provide contact channels and exact store/office location.</p>
+                <h2 className="text-lg font-semibold text-primary">Contact & Location Information</h2>
+                <p className="text-xs text-secondary font-medium">Provide contact channels and exact store/office location.</p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Calling Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="e.g. 9876543210"
-                    className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-semibold outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
-                  />
-                </div>
+                <AppInput
+                  label="Calling Phone Number"
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="e.g. 9876543210"
+                />
 
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    WhatsApp Chat Number
-                  </label>
-                  <input
-                    type="tel"
-                    value={whatsapp}
-                    onChange={(e) => setWhatsapp(e.target.value)}
-                    placeholder="e.g. 9876543210"
-                    className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-semibold outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  Business Email Address
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="contact@mybusiness.com"
-                  className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-medium outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
+                <AppInput
+                  label="WhatsApp Chat Number"
+                  type="tel"
+                  value={whatsapp}
+                  onChange={(e) => setWhatsapp(e.target.value)}
+                  placeholder="e.g. 9876543210"
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  Physical Store / Office Address
-                </label>
-                <textarea
-                  rows={3}
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  placeholder="Shop No. 4, MG Road, Pune, Maharashtra"
-                  className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-medium outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7] resize-y"
-                />
-              </div>
+              <AppInput
+                label="Business Email Address"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="contact@mybusiness.com"
+              />
 
-              <div className="space-y-1.5">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  Google Maps Link / Share URL
-                </label>
-                <input
-                  type="url"
-                  value={mapsLink}
-                  onChange={(e) => setMapsLink(e.target.value)}
-                  placeholder="https://maps.app.goo.gl/..."
-                  className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-medium outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
-                />
-              </div>
+              <AppTextArea
+                label="Physical Store / Office Address"
+                rows={3}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Shop No. 4, MG Road, Pune, Maharashtra"
+              />
+
+              <AppInput
+                label="Google Maps Link / Share URL"
+                type="url"
+                value={mapsLink}
+                onChange={(e) => setMapsLink(e.target.value)}
+                placeholder="https://maps.app.goo.gl/..."
+              />
             </div>
           )}
 
@@ -752,30 +713,30 @@ export default function BusinessPageEditor() {
           {activeTab === "owner" && (
             <div className="space-y-6">
               <div>
-                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Owner / Founder Profile</h2>
-                <p className="text-xs text-slate-500 font-medium">Introduce the face behind your business with trust badges.</p>
+                <h2 className="text-lg font-semibold text-primary">Owner / Founder Profile</h2>
+                <p className="text-xs text-secondary font-medium">Introduce the face behind your business with trust badges.</p>
               </div>
 
               {/* Owner Avatar */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-secondary">
                   Owner Photo / Avatar
                 </label>
-                <div className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-850">
-                  <div className="w-16 h-16 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 overflow-hidden flex-shrink-0 flex items-center justify-center shadow-xs">
+                <div className="flex items-center gap-4 p-4 rounded-xl bg-neutral border border-outline">
+                  <div className="w-16 h-16 rounded-full border border-outline bg-paper overflow-hidden flex-shrink-0 flex items-center justify-center shadow-z4">
                     {ownerAvatarUrl ? (
                       <img src={resolveImgUrl(ownerAvatarUrl)} alt="Owner" className="w-full h-full object-cover" />
                     ) : (
-                      <span className="text-xs font-semibold text-slate-400">Photo</span>
+                      <span className="text-xs font-semibold text-disabled">Photo</span>
                     )}
                   </div>
                   <div className="flex-1 space-y-2">
-                    <label className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-[#6C5CE7] text-xs font-semibold text-slate-800 dark:text-slate-200 cursor-pointer transition-colors shadow-xs">
+                    <label className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-paper border border-outline hover:border-brand-main text-xs font-semibold text-primary cursor-pointer transition-colors shadow-z1">
                       {uploadingOwnerAvatar ? (
                         <span>Uploading...</span>
                       ) : (
                         <>
-                          <svg className="w-4 h-4 text-[#6C5CE7]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="w-4 h-4 text-brand-main" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                           </svg>
                           <span>Upload Owner Avatar</span>
@@ -790,79 +751,54 @@ export default function BusinessPageEditor() {
                         }}
                       />
                     </label>
-                    <p className="text-[11px] text-slate-400 font-medium">Clear portrait photo recommended</p>
+                    <p className="text-[11px] text-disabled font-medium">Clear portrait photo recommended</p>
                   </div>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    value={ownerName}
-                    onChange={(e) => setOwnerName(e.target.value)}
-                    placeholder="e.g. Ramesh Patil"
-                    className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-semibold outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
-                  />
-                </div>
+                <AppInput
+                  label="Full Name"
+                  type="text"
+                  value={ownerName}
+                  onChange={(e) => setOwnerName(e.target.value)}
+                  placeholder="e.g. Ramesh Patil"
+                />
 
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Designation / Title
-                  </label>
-                  <input
-                    type="text"
-                    value={ownerTitle}
-                    onChange={(e) => setOwnerTitle(e.target.value)}
-                    placeholder="e.g. Founder & Master Baker"
-                    className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-semibold outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
-                  />
-                </div>
+                <AppInput
+                  label="Designation / Title"
+                  type="text"
+                  value={ownerTitle}
+                  onChange={(e) => setOwnerTitle(e.target.value)}
+                  placeholder="e.g. Founder & Master Baker"
+                />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Happy Customers Count
-                  </label>
-                  <input
-                    type="number"
-                    value={happyCustomersCount ?? ""}
-                    onChange={(e) => setHappyCustomersCount(e.target.value ? Number(e.target.value) : undefined)}
-                    placeholder="e.g. 5000"
-                    className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-semibold outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
-                  />
-                </div>
+                <AppInput
+                  label="Happy Customers Count"
+                  type="number"
+                  value={happyCustomersCount ?? ""}
+                  onChange={(e) => setHappyCustomersCount(e.target.value ? Number(e.target.value) : undefined)}
+                  placeholder="e.g. 5000"
+                />
 
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Years of Experience
-                  </label>
-                  <input
-                    type="number"
-                    value={experienceYears ?? ""}
-                    onChange={(e) => setExperienceYears(e.target.value ? Number(e.target.value) : undefined)}
-                    placeholder="e.g. 12"
-                    className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-semibold outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  Owner Bio & Vision
-                </label>
-                <textarea
-                  rows={3}
-                  value={ownerBio}
-                  onChange={(e) => setOwnerBio(e.target.value)}
-                  placeholder="Share a short bio, experience, and commitment to your clients..."
-                  className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-medium outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7] resize-y"
+                <AppInput
+                  label="Years of Experience"
+                  type="number"
+                  value={experienceYears ?? ""}
+                  onChange={(e) => setExperienceYears(e.target.value ? Number(e.target.value) : undefined)}
+                  placeholder="e.g. 12"
                 />
               </div>
+
+              <AppTextArea
+                label="Owner Bio & Vision"
+                rows={3}
+                value={ownerBio}
+                onChange={(e) => setOwnerBio(e.target.value)}
+                placeholder="Share a short bio, experience, and commitment to your clients..."
+              />
             </div>
           )}
 
@@ -870,62 +806,42 @@ export default function BusinessPageEditor() {
           {activeTab === "social" && (
             <div className="space-y-6">
               <div>
-                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Social Media Profiles</h2>
-                <p className="text-xs text-slate-500 font-medium">Connect your active social channels to gain followers.</p>
+                <h2 className="text-lg font-semibold text-primary">Social Media Profiles</h2>
+                <p className="text-xs text-secondary font-medium">Connect your active social channels to gain followers.</p>
               </div>
 
               <div className="space-y-4">
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Instagram Profile Link
-                  </label>
-                  <input
-                    type="url"
-                    value={instagram}
-                    onChange={(e) => setInstagram(e.target.value)}
-                    placeholder="https://instagram.com/your_handle"
-                    className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-medium outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
-                  />
-                </div>
+                <AppInput
+                  label="Instagram Profile Link"
+                  type="url"
+                  value={instagram}
+                  onChange={(e) => setInstagram(e.target.value)}
+                  placeholder="https://instagram.com/your_handle"
+                />
 
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Facebook Page Link
-                  </label>
-                  <input
-                    type="url"
-                    value={facebook}
-                    onChange={(e) => setFacebook(e.target.value)}
-                    placeholder="https://facebook.com/your_page"
-                    className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-medium outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
-                  />
-                </div>
+                <AppInput
+                  label="Facebook Page Link"
+                  type="url"
+                  value={facebook}
+                  onChange={(e) => setFacebook(e.target.value)}
+                  placeholder="https://facebook.com/your_page"
+                />
 
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    YouTube Channel Link
-                  </label>
-                  <input
-                    type="url"
-                    value={youtubeSocial}
-                    onChange={(e) => setYoutubeSocial(e.target.value)}
-                    placeholder="https://youtube.com/@channel"
-                    className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-medium outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
-                  />
-                </div>
+                <AppInput
+                  label="YouTube Channel Link"
+                  type="url"
+                  value={youtubeSocial}
+                  onChange={(e) => setYoutubeSocial(e.target.value)}
+                  placeholder="https://youtube.com/@channel"
+                />
 
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Twitter / X Profile Link
-                  </label>
-                  <input
-                    type="url"
-                    value={twitter}
-                    onChange={(e) => setTwitter(e.target.value)}
-                    placeholder="https://x.com/your_handle"
-                    className="w-full px-4 py-2.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm font-medium outline-none focus:ring-2 focus:ring-[#6C5CE7]/20 focus:border-[#6C5CE7]"
-                  />
-                </div>
+                <AppInput
+                  label="Twitter / X Profile Link"
+                  type="url"
+                  value={twitter}
+                  onChange={(e) => setTwitter(e.target.value)}
+                  placeholder="https://x.com/your_handle"
+                />
               </div>
             </div>
           )}
@@ -935,36 +851,37 @@ export default function BusinessPageEditor() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Products & Services Catalog</h2>
-                  <p className="text-xs text-slate-500 font-medium">Showcase items with direct inquiry capabilities and photos.</p>
+                  <h2 className="text-lg font-semibold text-primary">Products & Services Catalog</h2>
+                  <p className="text-xs text-secondary font-medium">Showcase items with direct inquiry capabilities and photos.</p>
                 </div>
-                <button
+                <AppButton
                   type="button"
+                  size="sm"
+                  variant="primary"
                   onClick={() =>
                     setProducts([
                       ...products,
                       { name: "New Product / Service", price: 0, price_unit: "unit", description: "", image: "", imageUrl: "", images: [] },
                     ])
                   }
-                  className="px-4 py-2 rounded-xl bg-[#6C5CE7] hover:bg-[#5850EC] text-white font-semibold text-xs shadow-xs transition-all"
                 >
                   + Add Product
-                </button>
+                </AppButton>
               </div>
 
               <div className="space-y-4">
                 {products.map((item, index) => {
                   const productImg = resolveImgUrl(item.image || item.imageUrl || item.images?.[0]);
                   return (
-                    <div key={index} className="p-5 rounded-2xl bg-slate-50/70 dark:bg-slate-850 space-y-4 shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+                    <div key={index} className="p-5 rounded-xl bg-neutral border border-outline space-y-4 shadow-z1">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-disabled">
                           Item #{index + 1}
                         </span>
                         <button
                           type="button"
                           onClick={() => setProducts(products.filter((_, i) => i !== index))}
-                          className="text-xs font-semibold text-rose-500 hover:text-rose-600"
+                          className="text-xs font-semibold text-error-main hover:text-error-dark cursor-pointer"
                         >
                           Delete Item
                         </button>
@@ -972,11 +889,11 @@ export default function BusinessPageEditor() {
 
                       {/* Product Photo Upload + Fields */}
                       <div className="flex flex-col sm:flex-row gap-4 items-start">
-                        <div className="w-24 h-24 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 overflow-hidden flex-shrink-0 relative group flex items-center justify-center">
+                        <div className="w-24 h-24 rounded-xl bg-paper border border-outline overflow-hidden flex-shrink-0 relative group flex items-center justify-center">
                           {productImg ? (
                             <img src={productImg} alt={item.name} className="w-full h-full object-cover" />
                           ) : (
-                            <span className="text-[11px] text-slate-400 font-semibold text-center px-1">No Image</span>
+                            <span className="text-[11px] text-disabled font-semibold text-center px-1">No Image</span>
                           )}
                           <label className="absolute inset-0 bg-black/50 text-white text-[10px] font-semibold flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer text-center p-1">
                             {uploadingProductIdx === index ? "..." : "Change"}
@@ -994,7 +911,7 @@ export default function BusinessPageEditor() {
                         <div className="flex-1 w-full space-y-3">
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             <div className="sm:col-span-2">
-                              <input
+                              <AppInput
                                 type="text"
                                 value={item.name}
                                 onChange={(e) => {
@@ -1003,11 +920,10 @@ export default function BusinessPageEditor() {
                                   setProducts(updated);
                                 }}
                                 placeholder="Item Name"
-                                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm font-semibold outline-none focus:border-[#6C5CE7]"
                               />
                             </div>
                             <div>
-                              <input
+                              <AppInput
                                 type="number"
                                 value={item.price ?? ""}
                                 onChange={(e) => {
@@ -1016,12 +932,11 @@ export default function BusinessPageEditor() {
                                   setProducts(updated);
                                 }}
                                 placeholder="Price (₹)"
-                                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm font-semibold outline-none focus:border-[#6C5CE7]"
                               />
                             </div>
                           </div>
 
-                          <textarea
+                          <AppTextArea
                             rows={2}
                             value={item.description || ""}
                             onChange={(e) => {
@@ -1030,7 +945,6 @@ export default function BusinessPageEditor() {
                               setProducts(updated);
                             }}
                             placeholder="Product details, specs, or warranty info..."
-                            className="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs outline-none focus:border-[#6C5CE7] resize-none font-normal"
                           />
                         </div>
                       </div>
@@ -1039,7 +953,7 @@ export default function BusinessPageEditor() {
                 })}
 
                 {products.length === 0 && (
-                  <div className="py-16 text-center text-slate-400 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl font-medium">
+                  <div className="py-16 text-center text-disabled border-2 border-dashed border-outline rounded-2xl font-medium">
                     No products added yet. Click &quot;+ Add Product&quot; to begin.
                   </div>
                 )}
@@ -1052,10 +966,10 @@ export default function BusinessPageEditor() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Photo Gallery Showcase</h2>
-                  <p className="text-xs text-slate-500 font-medium">Upload storefront, team, and work portfolio pictures.</p>
+                  <h2 className="text-lg font-semibold text-primary">Photo Gallery Showcase</h2>
+                  <p className="text-xs text-secondary font-medium">Upload storefront, team, and work portfolio pictures.</p>
                 </div>
-                <label className="px-4 py-2 rounded-xl bg-[#6C5CE7] hover:bg-[#5850EC] text-white font-semibold text-xs shadow-xs transition-all cursor-pointer inline-flex items-center gap-2">
+                <label className="px-4 py-2 rounded-lg bg-brand-main hover:bg-brand-dark text-white font-semibold text-xs shadow-z4 transition-all cursor-pointer inline-flex items-center gap-2">
                   {uploadingGallery ? "Uploading..." : "+ Upload Image"}
                   <input
                     type="file"
@@ -1072,18 +986,18 @@ export default function BusinessPageEditor() {
                 {gallery.map((url, index) => {
                   const resolved = resolveImgUrl(url);
                   return (
-                    <div key={index} className="aspect-square rounded-2xl overflow-hidden relative group bg-slate-100 dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                    <div key={index} className="aspect-square rounded-xl overflow-hidden relative group bg-neutral border border-outline shadow-z1">
                       {resolved ? (
                         <img src={resolved} alt={`Gallery ${index}`} className="w-full h-full object-cover" />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-xs text-slate-400">
+                        <div className="w-full h-full flex items-center justify-center text-xs text-disabled">
                           Photo {index + 1}
                         </div>
                       )}
                       <button
                         type="button"
                         onClick={() => setGallery(gallery.filter((_, i) => i !== index))}
-                        className="absolute top-2 right-2 p-1.5 rounded-full bg-black/70 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity hover:bg-rose-600"
+                        className="absolute top-2 right-2 p-1.5 rounded-full bg-black/70 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity hover:bg-error-main cursor-pointer"
                         title="Delete"
                       >
                         ✕
@@ -1093,7 +1007,7 @@ export default function BusinessPageEditor() {
                 })}
 
                 {gallery.length === 0 && (
-                  <div className="col-span-full py-16 text-center text-slate-400 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl font-medium">
+                  <div className="col-span-full py-16 text-center text-disabled border-2 border-dashed border-outline rounded-2xl font-medium">
                     No gallery images added yet. Click &quot;+ Upload Image&quot; to showcase your business.
                   </div>
                 )}
@@ -1106,36 +1020,37 @@ export default function BusinessPageEditor() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Customer Reviews & Testimonials</h2>
-                  <p className="text-xs text-slate-500 font-medium">Highlight positive customer experiences and ratings.</p>
+                  <h2 className="text-lg font-semibold text-primary">Customer Reviews & Testimonials</h2>
+                  <p className="text-xs text-secondary font-medium">Highlight positive customer experiences and ratings.</p>
                 </div>
-                <button
+                <AppButton
                   type="button"
+                  size="sm"
+                  variant="primary"
                   onClick={() =>
                     setTestimonials([
                       ...testimonials,
                       { author_name: "Customer Name", rating: 5, content: "Outstanding service and quality!", avatar_url: "", avatar: "" },
                     ])
                   }
-                  className="px-4 py-2 rounded-xl bg-[#6C5CE7] hover:bg-[#5850EC] text-white font-semibold text-xs shadow-xs transition-all"
                 >
                   + Add Review
-                </button>
+                </AppButton>
               </div>
 
               <div className="space-y-4">
                 {testimonials.map((t, index) => {
                   const avatarSrc = resolveImgUrl(t.avatar_url || t.avatar || t.photo || t.image);
                   return (
-                    <div key={index} className="p-5 rounded-2xl bg-slate-50/70 dark:bg-slate-850 space-y-3 shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+                    <div key={index} className="p-5 rounded-xl bg-neutral border border-outline space-y-3 shadow-z1">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-disabled">
                           Review #{index + 1}
                         </span>
                         <button
                           type="button"
                           onClick={() => setTestimonials(testimonials.filter((_, i) => i !== index))}
-                          className="text-xs font-semibold text-rose-500 hover:text-rose-600"
+                          className="text-xs font-semibold text-error-main hover:text-error-dark cursor-pointer"
                         >
                           Delete
                         </button>
@@ -1143,11 +1058,11 @@ export default function BusinessPageEditor() {
 
                       <div className="flex flex-col sm:flex-row gap-4 items-start">
                         {/* Testimonial Avatar */}
-                        <div className="w-14 h-14 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 overflow-hidden flex-shrink-0 relative group flex items-center justify-center">
+                        <div className="w-14 h-14 rounded-full bg-paper border border-outline overflow-hidden flex-shrink-0 relative group flex items-center justify-center">
                           {avatarSrc ? (
                             <img src={avatarSrc} alt={t.author_name} className="w-full h-full object-cover" />
                           ) : (
-                            <div className="w-full h-full bg-[#EEEAFF] text-[#6C5CE7] flex items-center justify-center font-bold text-sm">
+                            <div className="w-full h-full bg-brand-lighter text-brand-main flex items-center justify-center font-bold text-sm">
                               {t.author_name ? t.author_name.slice(0, 2).toUpperCase() : "CU"}
                             </div>
                           )}
@@ -1167,7 +1082,7 @@ export default function BusinessPageEditor() {
                         <div className="flex-1 w-full space-y-3">
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             <div className="sm:col-span-2">
-                              <input
+                              <AppInput
                                 type="text"
                                 value={t.author_name}
                                 onChange={(e) => {
@@ -1177,29 +1092,27 @@ export default function BusinessPageEditor() {
                                   setTestimonials(updated);
                                 }}
                                 placeholder="Client Name"
-                                className="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm font-semibold outline-none focus:border-[#6C5CE7]"
                               />
                             </div>
                             <div>
-                              <select
+                              <AppSelect
                                 value={t.rating}
                                 onChange={(e) => {
                                   const updated = [...testimonials];
                                   updated[index].rating = Number(e.target.value);
                                   setTestimonials(updated);
                                 }}
-                                className="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm font-semibold outline-none focus:border-[#6C5CE7]"
                               >
                                 <option value={5}>⭐⭐⭐⭐⭐ (5/5)</option>
                                 <option value={4}>⭐⭐⭐⭐ (4/5)</option>
                                 <option value={3}>⭐⭐⭐ (3/5)</option>
                                 <option value={2}>⭐⭐ (2/5)</option>
                                 <option value={1}>⭐ (1/5)</option>
-                              </select>
+                              </AppSelect>
                             </div>
                           </div>
 
-                          <textarea
+                          <AppTextArea
                             rows={3}
                             value={t.content}
                             onChange={(e) => {
@@ -1208,7 +1121,6 @@ export default function BusinessPageEditor() {
                               setTestimonials(updated);
                             }}
                             placeholder="What did the client love about your business?..."
-                            className="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-xs outline-none focus:border-[#6C5CE7] resize-none font-normal"
                           />
                         </div>
                       </div>
@@ -1217,15 +1129,35 @@ export default function BusinessPageEditor() {
                 })}
 
                 {testimonials.length === 0 && (
-                  <div className="py-16 text-center text-slate-400 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl font-medium">
+                  <div className="py-16 text-center text-disabled border-2 border-dashed border-outline rounded-2xl font-medium">
                     No customer reviews added yet. Click &quot;+ Add Review&quot; to build credibility.
                   </div>
                 )}
               </div>
             </div>
           )}
-        </div>
+
+          {/* Bottom Action Footer */}
+          <div className="pt-6 border-t border-outline flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-xs text-secondary">
+              Remember to save your changes to publish them instantly to your live page.
+            </p>
+            <div className="flex items-center gap-3 w-full sm:w-auto">
+              <AppButton
+                type="button"
+                onClick={handleSave}
+                disabled={saving}
+                variant="primary"
+                size="md"
+                className="w-full sm:w-auto"
+              >
+                {saving ? "Saving Changes..." : "Save Business Page"}
+              </AppButton>
+            </div>
+          </div>
+        </AppCard>
       </div>
     </div>
   );
 }
+

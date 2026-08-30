@@ -20,7 +20,7 @@ export function AppSelect({
       {label && (
         <label
           htmlFor={id}
-          className="block text-xs font-semibold uppercase tracking-wider text-secondary"
+          className="block text-xs font-semibold text-secondary"
         >
           {label}
         </label>
@@ -28,7 +28,7 @@ export function AppSelect({
       <select
         id={id}
         {...props}
-        className={`w-full px-3.5 py-2.5 rounded-xl border bg-neutral text-primary text-sm font-medium outline-none transition-all focus:border-brand-main focus:ring-1 focus:ring-brand-main ${
+        className={`w-full px-3.5 py-2.5 rounded-lg border bg-transparent text-primary text-sm font-medium outline-none transition-all focus:border-brand-main focus:ring-1 focus:ring-brand-main ${
           error ? "border-error-main" : "border-outline"
         } ${className}`}
       >

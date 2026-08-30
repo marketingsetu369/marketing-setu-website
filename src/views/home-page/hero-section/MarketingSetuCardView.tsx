@@ -163,7 +163,7 @@ export default function MarketingSetuCardView({ isCenter = true }: { isCenter?: 
                   {[...Array(5)].map((_, i) => <HugeiconsIcon key={i} icon={StarIcon} size={11} />)}
                 </div>
                 <h4 className="font-bold text-[10.5px] mb-1">{t.name}</h4>
-                <p className="text-[#6B7280] text-[8.5px] italic leading-relaxed">&ldquo;{t.text}&rdquo;</p>
+                <p className="text-[#6B7280] text-[8.5px] font-normal leading-relaxed">&ldquo;{t.text}&rdquo;</p>
               </div>
               <div className="flex justify-center gap-3 mt-4">
                 <button className="w-8 h-8 rounded-full bg-white text-[#6B7280] shadow-xs flex items-center justify-center">

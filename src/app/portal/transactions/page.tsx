@@ -5,8 +5,37 @@ import {
   UserTransactionItem,
   UserTransactionsSummary,
 } from "@/api/repositories/userDashboardApi";
+import {
+  AppButton,
+  AppDatePicker,
+  AppInput,
+  AppModal,
+  AppSelect,
+  AppTextArea,
+} from "@/library/ui";
+import {
+  PortalBadge,
+  PortalCard,
+  PortalEmptyState,
+  PortalPageHeader,
+  PortalStatCard,
+} from "@/components/portal";
+import {
+  Add01Icon,
+  ArrowDown01Icon,
+  ArrowUp01Icon,
+  Coins01Icon,
+  Delete02Icon,
+  Download01Icon,
+  FilterIcon,
+  Search01Icon,
+  TaskEdit02Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
+
+
 
 export default function UserTransactionsPage() {
   const [data, setData] = useState<UserTransactionsSummary>({
@@ -284,112 +313,59 @@ export default function UserTransactionsPage() {
   return (
     <div className="space-y-6 pb-16">
       {/* 1. Header & Quick Actions */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="space-y-1">
-          <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white tracking-tight">
-            Transactions & Bookkeeping 💸
-          </h1>
-          <p className="text-sm text-[#667085] dark:text-slate-400 font-normal max-w-2xl leading-relaxed">
-            Record customer earnings, sales revenue, and business expenses with instant reporting.
-          </p>
-        </div>
+      <PortalPageHeader
+        title="Transactions & Bookkeeping 💸"
+        description="Record customer earnings, sales revenue, and business expenses with instant reporting."
+        actions={
+          <div className="flex items-center gap-3">
+            <AppButton
+              type="button"
+              onClick={handleExportCSV}
+              variant="outline"
+              size="md"
+            >
+              <HugeiconsIcon icon={Download01Icon} size={16} />
+              <span>Export CSV</span>
+            </AppButton>
 
-        <div className="flex items-center gap-3 shrink-0 self-start md:self-auto">
-          <button
-            type="button"
-            onClick={handleExportCSV}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-[#F8F9FD] text-slate-700 dark:text-slate-200 text-xs font-semibold shadow-[0_2px_8px_rgba(0,0,0,0.03)] transition-colors cursor-pointer"
-          >
-            <svg className="w-4 h-4 text-[#667085]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-            <span>Export CSV</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={openAddModal}
-            className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-xl bg-[#6C5CE7] hover:bg-[#5850EC] text-white text-xs font-bold shadow-xs transition-all cursor-pointer"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
-            </svg>
-            <span>Record Transaction</span>
-          </button>
-        </div>
-      </div>
+            <AppButton
+              type="button"
+              onClick={openAddModal}
+              variant="primary"
+              size="md"
+            >
+              <HugeiconsIcon icon={Add01Icon} size={16} />
+              <span>Record Transaction</span>
+            </AppButton>
+          </div>
+        }
+      />
 
       {/* 2. Top Summary KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        {/* Net Balance */}
-        <div className="rounded-2xl bg-white dark:bg-slate-900 p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col justify-between h-[132px]">
-          <div className="flex items-start justify-between">
-            <div>
-              <span className="text-[11px] font-semibold tracking-wider text-[#9CA3AF] uppercase">
-                Net Cash Balance
-              </span>
-              <div
-                className={`text-3xl font-bold tracking-tight mt-0.5 ${
-                  data.netBalance >= 0 ? "text-slate-900 dark:text-white" : "text-rose-600"
-                }`}
-              >
-                ₹{data.netBalance.toLocaleString("en-IN")}
-              </div>
-            </div>
-            <div className="w-11 h-11 rounded-2xl bg-[#F0EEFF] text-[#6C5CE7] flex items-center justify-center shrink-0">
-              <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-          </div>
-          <div className="text-xs font-semibold text-[#6C5CE7] uppercase flex items-center gap-1">
-            <span>Income minus expenses</span>
-          </div>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+        <PortalStatCard
+          label="NET CASH BALANCE"
+          value={`₹${data.netBalance.toLocaleString("en-IN")}`}
+          icon={<HugeiconsIcon icon={Coins01Icon} size={20} />}
+          iconBgColor="bg-[#F3F0FF] dark:bg-purple-950/40 text-brand-main"
+          subtext="Income minus expenses"
+        />
 
-        {/* Total Income */}
-        <div className="rounded-2xl bg-white dark:bg-slate-900 p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col justify-between h-[132px]">
-          <div className="flex items-start justify-between">
-            <div>
-              <span className="text-[11px] font-semibold tracking-wider text-[#9CA3AF] uppercase">
-                Total Income
-              </span>
-              <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400 tracking-tight mt-0.5">
-                +₹{data.totalIncome.toLocaleString("en-IN")}
-              </div>
-            </div>
-            <div className="w-11 h-11 rounded-2xl bg-[#E6FAF5] text-[#059669] flex items-center justify-center shrink-0">
-              <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11l5-5m0 0l5 5m-5-5v12" />
-              </svg>
-            </div>
-          </div>
-          <div className="text-xs font-semibold text-[#059669] uppercase flex items-center gap-1">
-            <span>↗ Customer earnings</span>
-          </div>
-        </div>
+        <PortalStatCard
+          label="TOTAL INCOME"
+          value={`+₹${data.totalIncome.toLocaleString("en-IN")}`}
+          icon={<HugeiconsIcon icon={ArrowUp01Icon} size={20} />}
+          iconBgColor="bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600"
+          subtext="Customer earnings"
+        />
 
-        {/* Total Expenses */}
-        <div className="rounded-2xl bg-white dark:bg-slate-900 p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col justify-between h-[132px]">
-          <div className="flex items-start justify-between">
-            <div>
-              <span className="text-[11px] font-semibold tracking-wider text-[#9CA3AF] uppercase">
-                Total Expenses
-              </span>
-              <div className="text-3xl font-bold text-rose-600 dark:text-rose-400 tracking-tight mt-0.5">
-                -₹{data.totalExpenses.toLocaleString("en-IN")}
-              </div>
-            </div>
-            <div className="w-11 h-11 rounded-2xl bg-[#FEE4E2] text-[#D92D20] flex items-center justify-center shrink-0">
-              <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 13l-5 5m0 0l-5-5m5 5V6" />
-              </svg>
-            </div>
-          </div>
-          <div className="text-xs font-semibold text-[#D92D20] uppercase flex items-center gap-1">
-            <span>↘ Business spending</span>
-          </div>
-        </div>
+        <PortalStatCard
+          label="TOTAL EXPENSES"
+          value={`-₹${data.totalExpenses.toLocaleString("en-IN")}`}
+          icon={<HugeiconsIcon icon={ArrowDown01Icon} size={20} />}
+          iconBgColor="bg-rose-50 dark:bg-rose-950/40 text-rose-600"
+          subtext="Business spending"
+        />
       </div>
 
       {/* 3. Comprehensive Filter Bar (Same Filters as Mobile User App) */}
@@ -461,24 +437,26 @@ export default function UserTransactionsPage() {
 
           {/* Custom Date Range Pickers (Visible when custom is selected) */}
           {dateOption === "custom" && (
-            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-850 flex flex-wrap items-center gap-4 animate-fade-in border border-slate-200/60 dark:border-slate-700/60">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            <div className="p-4 rounded-xl bg-neutral flex flex-wrap items-center gap-4 animate-fade-in border border-outline">
+              <span className="text-xs font-semibold text-secondary">
                 Date Range:
               </span>
-              <div className="flex items-center gap-2">
-                <input
-                  type="date"
-                  value={customFromDate}
-                  onChange={(e) => setCustomFromDate(e.target.value)}
-                  className="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs font-semibold outline-none focus:border-[#6C5CE7]"
-                />
-                <span className="text-xs text-slate-400">to</span>
-                <input
-                  type="date"
-                  value={customToDate}
-                  onChange={(e) => setCustomToDate(e.target.value)}
-                  className="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs font-semibold outline-none focus:border-[#6C5CE7]"
-                />
+              <div className="flex items-center gap-2 flex-wrap">
+                <div className="w-40 sm:w-44">
+                  <AppDatePicker
+                    value={customFromDate}
+                    placeholder="From Date"
+                    onChange={(e) => setCustomFromDate(e.target.value)}
+                  />
+                </div>
+                <span className="text-xs text-secondary font-medium">to</span>
+                <div className="w-40 sm:w-44">
+                  <AppDatePicker
+                    value={customToDate}
+                    placeholder="To Date"
+                    onChange={(e) => setCustomToDate(e.target.value)}
+                  />
+                </div>
               </div>
             </div>
           )}
@@ -555,20 +533,16 @@ export default function UserTransactionsPage() {
             <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Loading entries...</p>
           </div>
         ) : filteredList.length === 0 ? (
-          <div className="py-16 text-center space-y-3">
-            <div className="w-14 h-14 rounded-full bg-[#F0EEFF] text-[#6C5CE7] flex items-center justify-center mx-auto">
-              <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            </div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-white">No matching transactions</h3>
-            <p className="text-xs text-slate-400 max-w-sm mx-auto">
-              {hasActiveFilters
+          <PortalEmptyState
+            title="No matching transactions"
+            description={
+              hasActiveFilters
                 ? "No entries match your selected filter criteria. Try resetting the filters."
-                : 'Click "Record Transaction" above to log your first income or expense.'}
-            </p>
-          </div>
+                : 'Click "Record Transaction" above to log your first income or expense.'
+            }
+          />
         ) : (
+
           <div className="divide-y divide-slate-100 dark:divide-slate-800">
             {filteredList.map((item) => {
               const isIncome = item.type === "income";
@@ -618,7 +592,7 @@ export default function UserTransactionsPage() {
                         {item.description && (
                           <>
                             <span>•</span>
-                            <span className="truncate max-w-md italic">{item.description}</span>
+                            <span className="truncate max-w-md">{item.description}</span>
                           </>
                         )}
                       </div>
@@ -645,22 +619,18 @@ export default function UserTransactionsPage() {
                       <button
                         type="button"
                         onClick={() => openEditModal(item)}
-                        className="p-2 rounded-xl text-slate-500 hover:text-[#6C5CE7] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                        className="p-2 rounded-xl text-slate-500 hover:text-brand-main hover:bg-neutral transition-colors cursor-pointer"
                         title="Edit transaction"
                       >
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
+                        <HugeiconsIcon icon={TaskEdit02Icon} size={16} />
                       </button>
                       <button
                         type="button"
                         onClick={() => handleDelete(item.id)}
-                        className="p-2 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
+                        className="p-2 rounded-xl text-slate-500 hover:text-error-main hover:bg-error-lighter/50 transition-colors cursor-pointer"
                         title="Delete transaction"
                       >
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
+                        <HugeiconsIcon icon={Delete02Icon} size={16} />
                       </button>
                     </div>
                   </div>
@@ -672,183 +642,152 @@ export default function UserTransactionsPage() {
       </div>
 
       {/* 5. Modal: Add / Edit Transaction */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="fixed inset-0 bg-slate-950/50 backdrop-blur-xs"
-            onClick={() => setIsModalOpen(false)}
-          />
-          <div className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-2xl z-10 space-y-6">
-            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
-              <div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                  {editingItem ? "Edit Transaction Record" : "Record New Transaction"}
-                </h3>
-                <p className="text-xs text-slate-400 font-medium">
-                  {editingItem ? "Update payment details" : "Add an income or business expense entry"}
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsModalOpen(false)}
-                className="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-slate-800 flex items-center justify-center cursor-pointer"
-              >
-                ✕
-              </button>
-            </div>
-
-            <form onSubmit={handleFormSubmit} className="space-y-4">
-              {/* Type Switcher */}
-              <div className="grid grid-cols-2 gap-3 p-1 rounded-2xl bg-slate-100 dark:bg-slate-800">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFormType("income");
-                    if (!defaultIncomeCategories.includes(formCategory)) setFormCategory("Sales");
-                  }}
-                  className={`py-2.5 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                    formType === "income"
-                      ? "bg-white dark:bg-slate-900 text-[#059669] shadow-sm"
-                      : "text-slate-500 hover:text-slate-900"
-                  }`}
-                >
-                  <span>↗</span>
-                  <span>Income / Sales</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFormType("expense");
-                    if (!defaultExpenseCategories.includes(formCategory)) setFormCategory("Rent");
-                  }}
-                  className={`py-2.5 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                    formType === "expense"
-                      ? "bg-white dark:bg-slate-900 text-[#D92D20] shadow-sm"
-                      : "text-slate-500 hover:text-slate-900"
-                  }`}
-                >
-                  <span>↘</span>
-                  <span>Expense / Spending</span>
-                </button>
-              </div>
-
-              {/* Amount & Title */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="space-y-1">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Amount (₹) <span className="text-rose-500">*</span>
-                  </label>
-                  <input
-                    type="number"
-                    step="any"
-                    required
-                    value={formAmount}
-                    onChange={(e) => setFormAmount(e.target.value)}
-                    placeholder="e.g. 2500"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-bold outline-none focus:border-[#6C5CE7]"
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Date <span className="text-rose-500">*</span>
-                  </label>
-                  <input
-                    type="date"
-                    required
-                    value={formDate}
-                    onChange={(e) => setFormDate(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-semibold outline-none focus:border-[#6C5CE7]"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  Transaction Title / Item <span className="text-rose-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formTitle}
-                  onChange={(e) => setFormTitle(e.target.value)}
-                  placeholder={formType === "income" ? "e.g. Order payment, Consulting fee" : "e.g. Raw materials, Office electricity bill"}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-semibold outline-none focus:border-[#6C5CE7]"
-                />
-              </div>
-
-              {/* Category & Payment Mode */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="space-y-1">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Category
-                  </label>
-                  <select
-                    value={formCategory}
-                    onChange={(e) => setFormCategory(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-semibold outline-none focus:border-[#6C5CE7]"
-                  >
-                    {(formType === "income" ? defaultIncomeCategories : defaultExpenseCategories).map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="space-y-1">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Payment Mode
-                  </label>
-                  <select
-                    value={formPaymentMode}
-                    onChange={(e) => setFormPaymentMode(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs font-semibold outline-none focus:border-[#6C5CE7] capitalize"
-                  >
-                    {paymentModes.map((m) => (
-                      <option key={m} value={m} className="capitalize">
-                        {m.toUpperCase()}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              {/* Description */}
-              <div className="space-y-1">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  Notes / Description (Optional)
-                </label>
-                <textarea
-                  rows={2}
-                  value={formDescription}
-                  onChange={(e) => setFormDescription(e.target.value)}
-                  placeholder="Additional invoice reference, bill number, or notes..."
-                  className="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs outline-none focus:border-[#6C5CE7] resize-none"
-                />
-              </div>
-
-              {/* Submit Button */}
-              <div className="pt-2 flex items-center justify-end gap-3">
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold hover:bg-slate-50 cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="px-5 py-2.5 rounded-xl bg-[#6C5CE7] hover:bg-[#5850EC] text-white text-xs font-bold shadow-xs transition-all disabled:opacity-50 cursor-pointer"
-                >
-                  {submitting ? "Saving..." : editingItem ? "Update Record" : "Save Transaction"}
-                </button>
-              </div>
-            </form>
+      <AppModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title={editingItem ? "Edit Transaction Record" : "Record New Transaction"}
+        subtitle={
+          editingItem
+            ? "Update payment details"
+            : "Add an income or business expense entry"
+        }
+        maxWidth="lg"
+      >
+        <form onSubmit={handleFormSubmit} className="space-y-4">
+          {/* Type Switcher */}
+          <div className="grid grid-cols-2 gap-3 p-1 rounded-2xl bg-neutral border border-outline">
+            <button
+              type="button"
+              onClick={() => {
+                setFormType("income");
+                if (!defaultIncomeCategories.includes(formCategory))
+                  setFormCategory("Sales");
+              }}
+              className={`py-2.5 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                formType === "income"
+                  ? "bg-paper text-success-main shadow-z1"
+                  : "text-secondary hover:text-primary"
+              }`}
+            >
+              <span>↗</span>
+              <span>Income / Sales</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setFormType("expense");
+                if (!defaultExpenseCategories.includes(formCategory))
+                  setFormCategory("Rent");
+              }}
+              className={`py-2.5 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                formType === "expense"
+                  ? "bg-paper text-error-main shadow-z1"
+                  : "text-secondary hover:text-primary"
+              }`}
+            >
+              <span>↘</span>
+              <span>Expense / Spending</span>
+            </button>
           </div>
-        </div>
-      )}
+
+          {/* Amount & Date */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <AppInput
+              label="Amount (₹) *"
+              type="number"
+              step="any"
+              required
+              value={formAmount}
+              onChange={(e) => setFormAmount(e.target.value)}
+              placeholder="e.g. 2500"
+            />
+
+            <AppDatePicker
+              label="Date *"
+              required
+              value={formDate}
+              onChange={(e) => setFormDate(e.target.value)}
+            />
+          </div>
+
+          <AppInput
+            label="Transaction Title / Item *"
+            type="text"
+            required
+            value={formTitle}
+            onChange={(e) => setFormTitle(e.target.value)}
+            placeholder={
+              formType === "income"
+                ? "e.g. Order payment, Consulting fee"
+                : "e.g. Raw materials, Office electricity bill"
+            }
+          />
+
+          {/* Category & Payment Mode */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <AppSelect
+              label="Category"
+              value={formCategory}
+              onChange={(e) => setFormCategory(e.target.value)}
+            >
+              {(formType === "income"
+                ? defaultIncomeCategories
+                : defaultExpenseCategories
+              ).map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </AppSelect>
+
+            <AppSelect
+              label="Payment Mode"
+              value={formPaymentMode}
+              onChange={(e) => setFormPaymentMode(e.target.value)}
+            >
+              {paymentModes.map((m) => (
+                <option key={m} value={m} className="capitalize">
+                  {m.toUpperCase()}
+                </option>
+              ))}
+            </AppSelect>
+          </div>
+
+          {/* Description */}
+          <AppTextArea
+            label="Notes / Description (Optional)"
+            rows={2}
+            value={formDescription}
+            onChange={(e) => setFormDescription(e.target.value)}
+            placeholder="Additional invoice reference, bill number, or notes..."
+          />
+
+          {/* Submit Button */}
+          <div className="pt-2 flex items-center justify-end gap-3">
+            <AppButton
+              type="button"
+              variant="outline"
+              size="md"
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancel
+            </AppButton>
+            <AppButton
+              type="submit"
+              variant="primary"
+              size="md"
+              disabled={submitting}
+            >
+              {submitting
+                ? "Saving..."
+                : editingItem
+                ? "Update Record"
+                : "Save Transaction"}
+            </AppButton>
+          </div>
+        </form>
+      </AppModal>
     </div>
   );
 }
+

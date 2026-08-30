@@ -1,6 +1,7 @@
 "use client";
 
 import { UserAuthApi } from "@/api/repositories/userAuthApi";
+import { AppButton, AppCard, AppInput } from "@/library/ui";
 import { useAuthStore } from "@/store/authStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -47,160 +48,157 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen grid lg:grid-cols-12 bg-background text-primary selection:bg-brand-main selection:text-white">
-      {/* Left Column: Visual Brand Billboard */}
-      <div className="hidden lg:flex lg:col-span-5 bg-grey-900 text-white flex-col justify-between p-12 relative overflow-hidden">
-        {/* Subtle geometric grid background */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      {/* ─── Left Column: Ambient First Gradient Canvas (No Top Logo Here) ─── */}
+      <div className="hidden lg:flex lg:col-span-5 xl:col-span-5 bg-gradient-to-br from-[#0F0E17] via-[#191633] to-[#0A0914] text-white flex-col justify-between p-10 xl:p-14 relative overflow-hidden">
+        {/* Ambient Glows */}
+        <div className="absolute top-[-20%] left-[-20%] w-[500px] h-[500px] rounded-full bg-brand-main/25 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-20%] right-[-20%] w-[500px] h-[500px] rounded-full bg-brand-light/15 blur-[120px] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
 
-        <div className="relative z-10">
-          <Link href="/" className="inline-flex items-center gap-3">
-            <img src="/logo.svg" alt="MarketingSetu" className="h-10 w-auto" />
-            <span className="text-xl font-bold tracking-tight text-white">MarketingSetu</span>
+        {/* Center Main Product Feature Showcase */}
+        <div className="relative z-10 space-y-8 my-auto py-8">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-main/20 border border-brand-light/30 text-xs font-semibold text-brand-light backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-success-main animate-pulse" />
+              All-in-One Digital Marketing Platform
+            </div>
+            <h1 className="text-3xl xl:text-4xl font-bold tracking-tight leading-[1.2] text-white">
+              Power your business growth with <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-light via-white to-brand-main">smart automation.</span>
+            </h1>
+            <p className="text-grey-400 text-sm leading-relaxed">
+              Manage your customized digital business landing page, track caller leads, showcase catalogs, and monitor realtime analytics.
+            </p>
+          </div>
+
+          {/* Product Highlights Feature Cards */}
+          <div className="space-y-3">
+            {/* Feature 1: Digital Business Page */}
+            <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-md flex items-center gap-3.5 shadow-lg">
+              <div className="w-10 h-10 rounded-xl bg-brand-main/20 text-brand-light flex items-center justify-center shrink-0">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                </svg>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-white truncate">Smart Business Landing Page</p>
+                <p className="text-[11px] text-grey-400 truncate">Instant public page with product catalog & location</p>
+              </div>
+              <span className="text-[10px] font-bold text-success-light bg-success-main/20 px-2 py-0.5 rounded-full">
+                Realtime
+              </span>
+            </div>
+
+            {/* Feature 2: Lead Tracking & Analytics */}
+            <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-md flex items-center gap-3.5 shadow-lg">
+              <div className="w-10 h-10 rounded-xl bg-[#36B37E]/20 text-[#36B37E] flex items-center justify-center shrink-0">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-white truncate">Lead CRM & Visitor Insights</p>
+                <p className="text-[11px] text-grey-400 truncate">Track incoming client enquiries and call logs effortlessly</p>
+              </div>
+              <span className="text-[10px] font-bold text-brand-light bg-brand-main/20 px-2 py-0.5 rounded-full">
+                Auto-Sync
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer info */}
+        <div className="relative z-10 flex items-center justify-between text-xs text-grey-400 pt-4 border-t border-white/10">
+          <span>&copy; {new Date().getFullYear()} MarketingSetu</span>
+          <Link href="/privacy-policy" className="hover:text-white transition-colors">
+            Privacy & Terms
           </Link>
-        </div>
-
-        <div className="relative z-10 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-brand-light">
-            <span className="w-2 h-2 rounded-full bg-success-main animate-pulse" />
-            Business Web Portal
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight leading-tight text-white">
-            Manage your digital presence & leads effortlessly.
-          </h1>
-          <p className="text-grey-400 text-sm sm:text-base leading-relaxed">
-            Update your business landing page, monitor customer calls and WhatsApp inquiries, showcase products, and track real-time visitors.
-          </p>
-
-          <div className="pt-4 border-t border-white/10 grid grid-cols-2 gap-4 text-xs text-grey-400">
-            <div>
-              <p className="text-white font-semibold text-base mb-0.5">100% Realtime</p>
-              <p>Instant sync with your public digital page</p>
-            </div>
-            <div>
-              <p className="text-white font-semibold text-base mb-0.5">Secure Dual Login</p>
-              <p>Web management without interrupting your phone app</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="relative z-10 text-xs text-grey-500">
-          &copy; {new Date().getFullYear()} MarketingSetu. All rights reserved.
         </div>
       </div>
 
-      {/* Right Column: Clean Solid Form (No Glassmorphism) */}
-      <div className="lg:col-span-7 flex flex-col justify-center px-6 sm:px-12 lg:px-16 py-12">
-        <div className="max-w-md w-full mx-auto space-y-8">
-          <div className="space-y-2">
-            <Link href="/" className="lg:hidden inline-flex items-center gap-2 mb-4">
-              <img src="/logo.svg" alt="MarketingSetu" className="h-8 w-auto" />
-              <span className="font-bold text-lg text-primary">MarketingSetu</span>
+      {/* ─── Right Column: Crisp Modern Login Form with Top SVG Logo ─── */}
+      <div className="lg:col-span-7 flex flex-col justify-center items-center px-6 sm:px-12 lg:px-16 py-12 bg-paper text-primary">
+        <div className="max-w-[420px] w-full space-y-8">
+          {/* Top SVG Logo placed on Right Side Header (Extra Large) */}
+          <div className="flex items-center pb-1">
+            <Link href="/" className="inline-block group">
+              <img
+                src="/logo.svg"
+                alt="MarketingSetu"
+                className="h-20 sm:h-24 md:h-28 w-auto object-contain transition-transform group-hover:scale-105"
+              />
             </Link>
-            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-primary">
-              Sign in to Portal
-            </h2>
-            <p className="text-secondary text-sm">
-              Enter your registered mobile number and password to access your dashboard.
-            </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Phone Number Field */}
-            <div className="space-y-1.5">
-              <label className="block text-xs font-bold uppercase tracking-wider text-secondary">
-                Mobile Number
-              </label>
-              <div className="rounded-xl border border-outline bg-paper focus-within:border-brand-main focus-within:ring-2 focus-within:ring-brand-main/20 transition-all overflow-hidden">
-                <input
-                  type="tel"
-                  maxLength={10}
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
-                  placeholder="Enter 10-digit mobile number"
-                  className="w-full px-4 py-3 bg-transparent text-primary text-sm placeholder:text-disabled outline-none font-medium"
-                  required
-                />
-              </div>
-            </div>
+          {/* Login Card Form */}
+          <AppCard elevation="none" className="!p-0 space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Mobile Phone Field */}
+              <AppInput
+                label="Mobile Number"
+                type="tel"
+                maxLength={10}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
+                placeholder="Enter 10-digit mobile number"
+                required
+              />
 
-            {/* Password Field */}
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
-                <label className="block text-xs font-bold uppercase tracking-wider text-secondary">
+              {/* Password Field */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-semibold text-secondary">
                   Password
                 </label>
-                <Link
-                  href="/contact"
-                  className="text-xs font-semibold text-brand-main hover:text-brand-dark transition-colors"
-                >
-                  Need help?
-                </Link>
-              </div>
-              <div className="relative rounded-xl border border-outline bg-paper focus-within:border-brand-main focus-within:ring-2 focus-within:ring-brand-main/20 transition-all overflow-hidden">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your account password"
-                  className="w-full pl-4 pr-12 py-3 bg-transparent text-primary text-sm placeholder:text-disabled outline-none font-medium"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-secondary hover:text-primary px-2 py-1"
-                >
-                  {showPassword ? "Hide" : "Show"}
-                </button>
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-3.5 px-6 rounded-xl bg-brand-main hover:bg-brand-dark text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all transform active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            >
-              {loading ? (
-                <>
-                  <svg
-                    className="animate-spin h-4 w-4 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter account password"
+                    className="w-full px-3.5 pr-11 py-2.5 rounded-lg border border-outline bg-transparent text-primary placeholder:text-disabled text-sm font-medium outline-none transition-all focus:border-brand-main focus:ring-1 focus:ring-brand-main"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-secondary hover:text-primary p-1 cursor-pointer transition-colors"
+                    tabIndex={-1}
                   >
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    />
-                  </svg>
-                  <span>Signing In...</span>
-                </>
-              ) : (
-                "Sign In to Portal"
-              )}
-            </button>
-          </form>
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
+              </div>
 
-          {/* Quick Notice Info Box */}
-          <div className="p-4 rounded-xl border border-outline bg-neutral space-y-2">
-            <div className="flex items-center gap-2 text-xs font-bold text-primary">
-              <svg className="w-4 h-4 text-brand-main" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>Automated WhatsApp Note</span>
-            </div>
-            <p className="text-xs text-secondary leading-relaxed">
-              Automated missed call auto-replies run securely on your Android mobile device. Web portal allows you to edit profiles, view customer leads, and review billing.
-            </p>
-          </div>
+              {/* Submit CTA Button */}
+              <div className="pt-2">
+                <AppButton
+                  type="submit"
+                  disabled={loading}
+                  variant="primary"
+                  size="md"
+                  fullWidth
+                  className="!py-3 text-sm font-bold shadow-z8 hover:shadow-z16 transition-all"
+                >
+                  {loading ? (
+                    <span className="flex items-center gap-2">
+                      <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      Signing in...
+                    </span>
+                  ) : (
+                    <span>Sign In to Dashboard &rarr;</span>
+                  )}
+                </AppButton>
+              </div>
+            </form>
+          </AppCard>
 
-          <div className="text-center text-xs text-secondary">
-            Don&apos;t have an account yet?{" "}
-            <Link href="/pricing" className="font-semibold text-brand-main hover:underline">
-              Choose a plan to get started &rarr;
+          {/* Bottom Register CTA */}
+          <div className="text-center text-xs text-secondary pt-2">
+            Don&apos;t have an active plan?{" "}
+            <Link href="/contact" className="font-bold text-brand-main hover:underline">
+              Get Started with MarketingSetu &rarr;
             </Link>
           </div>
         </div>
