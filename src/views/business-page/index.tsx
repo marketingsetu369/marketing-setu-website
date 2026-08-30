@@ -184,7 +184,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
         <div className="w-full md:max-w-[1280px] bg-[var(--color-grey-100)] min-h-screen md:min-h-[820px] md:h-[820px] relative flex flex-col md:flex-row overflow-hidden animate-fade-in-up">
 
           {/* ── LEFT COLUMN ── */}
-          <div className="w-full md:w-[35%] bg-[var(--color-grey-100)] flex flex-col justify-between relative pb-20 md:pb-0 md:h-full md:overflow-y-auto no-scrollbar">
+          <div className="w-full md:w-[35%] bg-[var(--color-grey-100)] flex flex-col justify-between relative pb-4 md:pb-0 md:h-full md:overflow-y-auto no-scrollbar">
             <div>
               <BusinessHeader header={header} contact={contact} slug={slug} />
               <OwnerCard ownerList={ownerList} />

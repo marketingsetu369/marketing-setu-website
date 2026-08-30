@@ -27,7 +27,7 @@ export default function OwnerCard({ ownerList }: OwnerCardProps) {
   if (ownerList.length === 0) return null;
 
   return (
-    <div className="px-6 mt-6 pb-8 relative z-10 space-y-5 animate-fade-in-up">
+    <div className="px-6 mt-6 pb-3 relative z-10 space-y-5 animate-fade-in-up">
       {ownerList.map((owner, idx) => (
         <div key={idx}>
           {/* Owner Info Card */}
