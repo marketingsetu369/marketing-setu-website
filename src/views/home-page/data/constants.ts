@@ -1,5 +1,5 @@
 /** Shared WhatsApp business number — update here only */
-export const WA_NUMBER = "934999999999";
+export const WA_NUMBER = "919172415858";
 
 /** Default greeting for general enquiries */
 export const WA_DEFAULT_MSG = "Hi MarketingSetu! I'd like a free consultation.";
@@ -17,7 +17,7 @@ export const navLinks = [
 
 /** Contact details used in footer and ContactView */
 export const contactInfo = {
-  phone: "+91 99999 99999",
+  phone: "+91 9172415858",
   waRaw: WA_NUMBER,
   email: "support@marketingsetu.com",
   location: "Pune, Maharashtra, India",

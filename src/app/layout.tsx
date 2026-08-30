@@ -139,7 +139,7 @@ const jsonLdOrg = {
       },
       "contactPoint": {
         "@type": "ContactPoint",
-        "telephone": "+91-99999-99999",
+        "telephone": "+91 9172415858",
         "email": "support@marketingsetu.com",
         "contactType": "customer service",
         "areaServed": [
@@ -162,7 +162,7 @@ const jsonLdOrg = {
       "image": "https://marketingsetu.com/logo.svg",
       "logo": "https://marketingsetu.com/logo.svg",
       "url": "https://marketingsetu.com",
-      "telephone": "+91-99999-99999",
+      "telephone": "+91 9172415858",
       "email": "support@marketingsetu.com",
       "priceRange": "₹₹",
       "areaServed": [
