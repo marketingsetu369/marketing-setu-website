@@ -71,7 +71,7 @@ export default function OwnerCard({ ownerList }: OwnerCardProps) {
               </h2>
               <div
                 className={`text-sm text-gray-600 leading-relaxed markdown-content font-normal transition-all ${
-                  !isExpanded ? "line-clamp-2" : ""
+                  !isExpanded ? "line-clamp-4" : ""
                 }`}
                 style={{ fontFamily: fontSans }}
                 dangerouslySetInnerHTML={{ __html: snarkdown(owner.bio) }}
