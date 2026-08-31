@@ -195,10 +195,11 @@ export default function EnquiriesPage() {
           </div>
         </div>
 
-        {/* Content Listing */}
+        {/* Content Listing Grid */}
         {loading ? (
-          <div className="p-12 text-center text-secondary text-sm font-medium">
-            Loading inquiries...
+          <div className="p-16 text-center text-secondary text-sm font-medium border-2 border-dashed border-outline rounded-3xl bg-neutral/30">
+            <div className="w-8 h-8 border-3 border-brand-main border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            Loading incoming customer leads...
           </div>
         ) : filteredEnquiries.length === 0 ? (
           <PortalEmptyState
@@ -218,7 +219,7 @@ export default function EnquiriesPage() {
             }
           />
         ) : (
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
             {filteredEnquiries.map((item) => (
               <PortalLeadCard
                 key={item.id}
