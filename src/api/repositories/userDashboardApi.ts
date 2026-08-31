@@ -33,8 +33,11 @@ export interface BusinessPageData {
     id?: string;
     name: string;
     description?: string;
-    price?: number;
+    price?: any;
     price_unit?: string;
+    priceTiers?: Array<{ label: string; price: string }>;
+    buttonName?: string;
+    showPrice?: boolean;
     image?: string;
     imageUrl?: string;
     images?: string[];

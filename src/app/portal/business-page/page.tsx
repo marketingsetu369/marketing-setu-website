@@ -1,11 +1,11 @@
 "use client";
 
 import { BusinessPageData, UserDashboardApi } from "@/api/repositories/userDashboardApi";
-import { AppButton, AppCard, AppInput, AppSelect, AppTextArea } from "@/library/ui";
+import { AppButton, AppCard, AppInput, AppTextArea } from "@/library/ui";
 
 
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 
@@ -129,8 +129,11 @@ export default function BusinessPageEditor() {
       id?: string;
       name: string;
       description?: string;
-      price?: number;
+      price?: any;
       price_unit?: string;
+      priceTiers?: Array<{ label: string; price: string }>;
+      buttonName?: string;
+      showPrice?: boolean;
       image?: string;
       imageUrl?: string;
       images?: string[];
@@ -205,19 +208,44 @@ export default function BusinessPageEditor() {
           // 5. Products
           if (Array.isArray(bp.products)) {
             setProducts(
-              bp.products.map((p: any) => ({
-                id: p.id,
-                name: p.name || p.title || "",
-                description: p.description || "",
-                price: p.price,
-                price_unit: p.price_unit || "unit",
-                image: resolveImgUrl(p.image || p.imageUrl || (Array.isArray(p.images) ? p.images[0] : "")),
-                imageUrl: resolveImgUrl(p.imageUrl || p.image || (Array.isArray(p.images) ? p.images[0] : "")),
-                images: Array.isArray(p.images)
-                  ? p.images.map((img: any) => resolveImgUrl(img)).filter(Boolean)
-                  : [],
-                is_active: p.is_active ?? true,
-              }))
+              bp.products.map((p: any) => {
+                let parsedTiers: Array<{ label: string; price: string }> = [];
+                let rawPrice = p.price;
+                if (p.price && typeof p.price === "string" && p.price.trim().startsWith("[")) {
+                  try {
+                    const parsed = JSON.parse(p.price.trim());
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                      parsedTiers = parsed.map((item: any) => ({
+                        label: String(item.label || "").trim(),
+                        price: String(item.price || "").trim(),
+                      }));
+                    }
+                  } catch (_) {}
+                } else if (p.priceTiers && Array.isArray(p.priceTiers)) {
+                  parsedTiers = p.priceTiers;
+                }
+
+                if (parsedTiers.length === 0) {
+                  parsedTiers = [{ label: "", price: p.price ? String(p.price) : "" }];
+                }
+
+                return {
+                  id: p.id,
+                  name: p.name || p.title || "",
+                  description: p.description || p.type || "",
+                  price: rawPrice,
+                  price_unit: p.price_unit || "unit",
+                  priceTiers: parsedTiers,
+                  buttonName: p.buttonName ?? "Enquiry",
+                  showPrice: p.showPrice !== false,
+                  image: resolveImgUrl(p.image || p.imageUrl || (Array.isArray(p.images) ? p.images[0] : "")),
+                  imageUrl: resolveImgUrl(p.imageUrl || p.image || (Array.isArray(p.images) ? p.images[0] : "")),
+                  images: Array.isArray(p.images)
+                    ? p.images.map((img: any) => resolveImgUrl(img)).filter(Boolean)
+                    : [],
+                  is_active: p.is_active ?? true,
+                };
+              })
             );
           }
 
@@ -321,6 +349,50 @@ export default function BusinessPageEditor() {
       if (youtubeSocial.trim()) socialPayload.youtube = youtubeSocial.trim();
       if (twitter.trim()) socialPayload.twitter = twitter.trim();
 
+      // Format products in sync with Flutter App payload format
+      const formattedProducts = products.map((prod) => {
+        let serializedPrice: any = prod.price;
+        if (prod.priceTiers && Array.isArray(prod.priceTiers) && prod.priceTiers.length > 0) {
+          const validTiers = prod.priceTiers.filter(
+            (t) => (t.price && t.price.trim().length > 0) || (t.label && t.label.trim().length > 0)
+          );
+          if (validTiers.length === 1 && !validTiers[0].label?.trim()) {
+            serializedPrice = validTiers[0].price?.trim() || "";
+          } else if (validTiers.length > 0) {
+            serializedPrice = JSON.stringify(
+              validTiers.map((t) => ({ label: t.label?.trim() || "", price: t.price?.trim() || "" }))
+            );
+          }
+        }
+
+        return {
+          id: prod.id,
+          name: prod.name || "",
+          title: prod.name || "",
+          description: prod.description || "",
+          type: prod.description || "",
+          price: serializedPrice,
+          buttonName: prod.buttonName?.trim() || "Enquiry",
+          showPrice: prod.showPrice !== false,
+          image: prod.image || prod.imageUrl || "",
+          imageUrl: prod.imageUrl || prod.image || "",
+          images: prod.images || [],
+          is_active: prod.is_active ?? true,
+        };
+      });
+
+      // Format testimonials in sync with Flutter App & Backend Model (name, avatar, rating, comment)
+      const formattedTestimonials = testimonials.map((t) => ({
+        id: t.id,
+        name: (t.author_name || t.name || "").trim(),
+        author_name: (t.author_name || t.name || "").trim(),
+        avatar: t.avatar || t.avatar_url || "",
+        avatar_url: t.avatar_url || t.avatar || "",
+        rating: Number(t.rating) || 5,
+        comment: (t.content || (t as any).comment || "").trim(),
+        content: (t.content || (t as any).comment || "").trim(),
+      }));
+
       const payload: Partial<BusinessPageData> = {
         slug: slug || undefined,
         theme_color_hex: themeColorHex,
@@ -343,16 +415,16 @@ export default function BusinessPageEditor() {
         },
         owner: ownerPayload,
         social_links: socialPayload,
-        products,
+        products: formattedProducts,
         gallery,
         testimonials: testimonials.map((t) => ({
           ...(t.id ? { id: t.id } : {}),
           name: t.author_name || t.name || "",
           author_name: t.author_name || t.name || "",
           rating: Number(t.rating) || 5,
-          comment: t.content || "",
-          content: t.content || "",
-          text: t.content || "",
+          comment: t.content || (t as any).comment || "",
+          content: t.content || (t as any).comment || "",
+          text: t.content || (t as any).comment || "",
           avatar: t.avatar_url || t.avatar || "",
           avatar_url: t.avatar_url || t.avatar || "",
         })),
@@ -619,10 +691,16 @@ export default function BusinessPageEditor() {
               />
 
               {/* Theme Color Selector */}
-              <div className="space-y-2 pt-2">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-secondary">
-                  Page Theme Color Accent
-                </label>
+              <div className="space-y-3 pt-2">
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-secondary">
+                    Page Theme Color Accent
+                  </label>
+                  <span className="text-xs font-mono font-semibold text-primary px-2 py-0.5 rounded bg-neutral border border-outline">
+                    {themeColorHex.toUpperCase()}
+                  </span>
+                </div>
+
                 <div className="flex flex-wrap items-center gap-3">
                   {["#7265E3", "#673AB7", "#4CAF50", "#2196F3", "#FF5722", "#009688", "#E91E63"].map((hex) => (
                     <button
@@ -630,11 +708,51 @@ export default function BusinessPageEditor() {
                       type="button"
                       onClick={() => setThemeColorHex(hex)}
                       className={`w-9 h-9 rounded-full transition-transform cursor-pointer ${
-                        themeColorHex === hex ? "scale-110 ring-3 ring-offset-2 ring-brand-main" : "hover:scale-105"
+                        themeColorHex.toUpperCase() === hex.toUpperCase()
+                          ? "scale-110 ring-3 ring-offset-2 ring-brand-main"
+                          : "hover:scale-105"
                       }`}
                       style={{ backgroundColor: hex }}
+                      title={hex}
                     />
                   ))}
+
+                  {/* Custom Color Picker Button & Input */}
+                  <div className="relative flex items-center gap-2">
+                    <label
+                      className="w-9 h-9 rounded-full border-2 border-dashed border-outline hover:border-brand-main flex items-center justify-center cursor-pointer transition-all overflow-hidden relative"
+                      style={{
+                        backgroundColor: !["#7265E3", "#673AB7", "#4CAF50", "#2196F3", "#FF5722", "#009688", "#E91E63"].includes(themeColorHex.toUpperCase())
+                          ? themeColorHex
+                          : undefined,
+                      }}
+                      title="Pick custom color"
+                    >
+                      <input
+                        type="color"
+                        value={themeColorHex.startsWith("#") && themeColorHex.length === 7 ? themeColorHex : "#7265E3"}
+                        onChange={(e) => setThemeColorHex(e.target.value)}
+                        className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                      />
+                      {!["#7265E3", "#673AB7", "#4CAF50", "#2196F3", "#FF5722", "#009688", "#E91E63"].includes(themeColorHex.toUpperCase()) ? (
+                        <span className="text-[10px] font-bold text-white drop-shadow-md">✓</span>
+                      ) : (
+                        <span className="text-xs font-bold text-secondary">+</span>
+                      )}
+                    </label>
+                    <div className="w-28">
+                      <AppInput
+                        type="text"
+                        value={themeColorHex}
+                        onChange={(e) => {
+                          let val = e.target.value;
+                          if (!val.startsWith("#") && val.length > 0) val = `#${val}`;
+                          setThemeColorHex(val);
+                        }}
+                        placeholder="#7265E3"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -871,7 +989,18 @@ export default function BusinessPageEditor() {
                   onClick={() =>
                     setProducts([
                       ...products,
-                      { name: "New Product / Service", price: 0, price_unit: "unit", description: "", image: "", imageUrl: "", images: [] },
+                      {
+                        name: "",
+                        price: "",
+                        price_unit: "",
+                        description: "",
+                        buttonName: "Enquiry",
+                        showPrice: true,
+                        priceTiers: [{ label: "", price: "" }],
+                        image: "",
+                        imageUrl: "",
+                        images: [],
+                      },
                     ])
                   }
                 >
@@ -882,6 +1011,8 @@ export default function BusinessPageEditor() {
               <div className="space-y-4">
                 {products.map((item, index) => {
                   const productImg = resolveImgUrl(item.image || item.imageUrl || item.images?.[0]);
+                  const tiers = item.priceTiers && item.priceTiers.length > 0 ? item.priceTiers : [{ label: "", price: item.price ? String(item.price) : "" }];
+
                   return (
                     <div key={index} className="p-5 rounded-xl bg-neutral border border-outline space-y-4 shadow-z1">
                       <div className="flex items-center justify-between">
@@ -918,10 +1049,11 @@ export default function BusinessPageEditor() {
                           </label>
                         </div>
 
-                        <div className="flex-1 w-full space-y-3">
-                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            <div className="sm:col-span-2">
+                        <div className="flex-1 w-full space-y-4">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
                               <AppInput
+                                label="Product Name"
                                 type="text"
                                 value={item.name}
                                 onChange={(e) => {
@@ -929,24 +1061,26 @@ export default function BusinessPageEditor() {
                                   updated[index].name = e.target.value;
                                   setProducts(updated);
                                 }}
-                                placeholder="Item Name"
+                                placeholder="e.g. Nike Sportswear"
                               />
                             </div>
                             <div>
                               <AppInput
-                                type="number"
-                                value={item.price ?? ""}
+                                label="Button Name (CTA)"
+                                type="text"
+                                value={item.buttonName ?? "Enquiry"}
                                 onChange={(e) => {
                                   const updated = [...products];
-                                  updated[index].price = e.target.value ? Number(e.target.value) : undefined;
+                                  updated[index].buttonName = e.target.value;
                                   setProducts(updated);
                                 }}
-                                placeholder="Price (₹)"
+                                placeholder="e.g. Enquiry, बुक करा, Buy Now"
                               />
                             </div>
                           </div>
 
                           <AppTextArea
+                            label="Description"
                             rows={2}
                             value={item.description || ""}
                             onChange={(e) => {
@@ -954,8 +1088,101 @@ export default function BusinessPageEditor() {
                               updated[index].description = e.target.value;
                               setProducts(updated);
                             }}
-                            placeholder="Product details, specs, or warranty info..."
+                            placeholder="Women's Full-Zip Hoodie, specs or details..."
                           />
+
+                          {/* Show Price Switch & Dynamic Pricing Tiers */}
+                          <div className="p-3.5 rounded-lg bg-paper border border-outline space-y-3">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <span className="text-xs font-semibold text-primary">Show Price</span>
+                                <p className="text-[11px] text-secondary">Toggle product price display on business page</p>
+                              </div>
+                              <input
+                                type="checkbox"
+                                checked={item.showPrice !== false}
+                                onChange={(e) => {
+                                  const updated = [...products];
+                                  updated[index].showPrice = e.target.checked;
+                                  setProducts(updated);
+                                }}
+                                className="w-4 h-4 text-brand-main rounded border-outline focus:ring-brand-main cursor-pointer"
+                              />
+                            </div>
+
+                            {item.showPrice !== false && (
+                              <div className="pt-2 border-t border-outline space-y-2">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-[11px] font-semibold text-secondary">
+                                    Pricing Options (Leave Label empty if only one price)
+                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      const updated = [...products];
+                                      const currentTiers = item.priceTiers ? [...item.priceTiers] : [{ label: "", price: "" }];
+                                      currentTiers.push({ label: "", price: "" });
+                                      updated[index].priceTiers = currentTiers;
+                                      setProducts(updated);
+                                    }}
+                                    className="text-xs font-semibold text-brand-main hover:text-brand-dark cursor-pointer"
+                                  >
+                                    + Add Option
+                                  </button>
+                                </div>
+
+                                <div className="space-y-2">
+                                  {tiers.map((tier, tierIdx) => (
+                                    <div key={tierIdx} className="flex items-center gap-2">
+                                      <div className="flex-1">
+                                        <AppInput
+                                          type="text"
+                                          value={tier.label}
+                                          onChange={(e) => {
+                                            const updated = [...products];
+                                            const currentTiers = [...tiers];
+                                            currentTiers[tierIdx] = { ...currentTiers[tierIdx], label: e.target.value };
+                                            updated[index].priceTiers = currentTiers;
+                                            setProducts(updated);
+                                          }}
+                                          placeholder="Label (e.g. 1kg / 1unit)"
+                                        />
+                                      </div>
+                                      <div className="flex-1">
+                                        <AppInput
+                                          type="text"
+                                          value={tier.price}
+                                          onChange={(e) => {
+                                            const updated = [...products];
+                                            const currentTiers = [...tiers];
+                                            currentTiers[tierIdx] = { ...currentTiers[tierIdx], price: e.target.value };
+                                            updated[index].priceTiers = currentTiers;
+                                            setProducts(updated);
+                                          }}
+                                          placeholder="Price (₹ e.g. 499)"
+                                        />
+                                      </div>
+                                      {tiers.length > 1 && (
+                                        <button
+                                          type="button"
+                                          onClick={() => {
+                                            const updated = [...products];
+                                            const currentTiers = tiers.filter((_, tI) => tI !== tierIdx);
+                                            updated[index].priceTiers = currentTiers;
+                                            setProducts(updated);
+                                          }}
+                                          className="p-2 text-error-main hover:text-error-dark text-sm cursor-pointer"
+                                          title="Remove option"
+                                        >
+                                          ✕
+                                        </button>
+                                      )}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1093,6 +1320,7 @@ export default function BusinessPageEditor() {
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             <div className="sm:col-span-2">
                               <AppInput
+                                label="Customer Name"
                                 type="text"
                                 value={t.author_name}
                                 onChange={(e) => {
@@ -1101,28 +1329,30 @@ export default function BusinessPageEditor() {
                                   updated[index].name = e.target.value;
                                   setTestimonials(updated);
                                 }}
-                                placeholder="Client Name"
+                                placeholder="e.g. Rahul Sharma"
                               />
                             </div>
                             <div>
-                              <AppSelect
-                                value={t.rating}
+                              <AppInput
+                                label="Rating (1 - 5)"
+                                type="number"
+                                step="0.1"
+                                min={1}
+                                max={5}
+                                value={t.rating ?? 5}
                                 onChange={(e) => {
+                                  const val = parseFloat(e.target.value);
                                   const updated = [...testimonials];
-                                  updated[index].rating = Number(e.target.value);
+                                  updated[index].rating = isNaN(val) ? 5 : val;
                                   setTestimonials(updated);
                                 }}
-                              >
-                                <option value={5}>⭐⭐⭐⭐⭐ (5/5)</option>
-                                <option value={4}>⭐⭐⭐⭐ (4/5)</option>
-                                <option value={3}>⭐⭐⭐ (3/5)</option>
-                                <option value={2}>⭐⭐ (2/5)</option>
-                                <option value={1}>⭐ (1/5)</option>
-                              </AppSelect>
+                                placeholder="e.g. 5 or 4.7"
+                              />
                             </div>
                           </div>
 
                           <AppTextArea
+                            label="Feedback / Review Comment"
                             rows={3}
                             value={t.content}
                             onChange={(e) => {
@@ -1130,7 +1360,7 @@ export default function BusinessPageEditor() {
                               updated[index].content = e.target.value;
                               setTestimonials(updated);
                             }}
-                            placeholder="What did the client love about your business?..."
+                            placeholder="What did the client love about your business / service?..."
                           />
                         </div>
                       </div>
