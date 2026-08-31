@@ -36,6 +36,7 @@ export default function PageWrapper({ children }: PageWrapperProps) {
   const t = translations[language] || translations.en;
 
   const navLinks = [
+    { label: t.nav_home, href: "/" },
     { label: t.nav_services, href: "/services" },
     { label: t.nav_pricing, href: "/pricing" },
     { label: t.nav_about, href: "/about" },
@@ -63,7 +64,10 @@ export default function PageWrapper({ children }: PageWrapperProps) {
             {/* Desktop Navigation Links */}
             <div className="hidden lg:flex items-center justify-center space-x-1 xl:space-x-2">
               {navLinks.map((link) => {
-                const isActive = pathname.startsWith(link.href);
+                const isActive =
+                  link.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(link.href);
                 return (
                   <Link
                     key={link.href}

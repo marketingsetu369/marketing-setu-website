@@ -439,7 +439,7 @@ export default function HomeView() {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-gray-950 rounded-3xl p-10 sm:p-16 text-center text-white shadow-z24 relative overflow-hidden">
               <div className="relative z-10 max-w-2xl mx-auto">
-                <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight mb-4">{t.home_cta_heading}</h2>
+                <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight text-white mb-4">{t.home_cta_heading}</h2>
                 <p className="text-gray-400 text-base sm:text-lg mb-8 font-normal">{t.home_cta_description}</p>
                 <button
                   onClick={() => openWhatsApp()}
