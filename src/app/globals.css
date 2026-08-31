@@ -239,24 +239,45 @@ input[type=number] {
 
 /* ─── Scrollbar ──────────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: transparent;
   border-radius: 10px;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   background-clip: padding-box;
   transition: background-color 0.2s;
 }
 
 *:hover::-webkit-scrollbar-thumb {
-  background-color: rgba(145, 158, 171, 0.48);
+  background-color: rgba(145, 158, 171, 0.4);
 }
 
 ::-webkit-scrollbar-track {
   background: transparent;
+}
+
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 0px !important;
+    height: 0px !important;
+    display: none !important;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  height: 0px !important;
+}
+
+.no-scrollbar,
+.scrollbar-none {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
 }
 
 /* ─── Component Utilities ────────────────────────────────────── */

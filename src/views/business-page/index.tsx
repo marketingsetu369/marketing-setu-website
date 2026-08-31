@@ -178,7 +178,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
   return (
     <BusinessPageProvider primaryColor={primaryColor} language={pageLanguage}>
       <div
-        className="min-h-screen bg-[var(--color-grey-100)] flex justify-center items-start md:items-center py-0 md:py-8"
+        className="min-h-screen w-full bg-[var(--color-grey-100)] flex justify-center items-start md:items-center py-0 md:py-8 overflow-x-hidden"
         style={{ fontFamily: "var(--font-inter)" }}
       >
         <div className="w-full md:max-w-[1280px] bg-[var(--color-grey-100)] min-h-screen md:min-h-[820px] md:h-[820px] relative flex flex-col md:flex-row overflow-hidden animate-fade-in-up">
