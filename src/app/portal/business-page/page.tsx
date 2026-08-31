@@ -345,8 +345,8 @@ export default function BusinessPageEditor() {
       if (type === "logo") setUploadingLogo(true);
       if (type === "owner") setUploadingOwnerAvatar(true);
       if (type === "gallery") setUploadingGallery(true);
-      if (type === "product" && index !== undefined) setUploadingProductIdx(index);
-      if (type === "testimonial" && index !== undefined) setUploadingTestimonialIdx(index);
+      if (type === "product") setUploadingProductIdx(index ?? -1);
+      if (type === "testimonial") setUploadingTestimonialIdx(index ?? -1);
 
       const res = await UserDashboardApi.uploadMedia(file);
       if (res.data?.url) {
