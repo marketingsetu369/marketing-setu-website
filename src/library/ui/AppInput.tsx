@@ -26,7 +26,7 @@ export function AppInput({
       <input
         id={id}
         {...props}
-        className={`w-full px-3.5 py-2.5 rounded-lg border bg-transparent text-primary placeholder:text-disabled text-sm font-medium outline-none transition-all focus:border-brand-main focus:ring-1 focus:ring-brand-main ${
+        className={`w-full px-3.5 py-2.5 rounded-lg border bg-transparent text-primary placeholder:text-disabled text-sm font-medium outline-none transition-all focus:border-brand-main focus:ring-1 focus:ring-brand-main disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-neutral/50 ${
           error ? "border-error-main" : "border-outline"
         } ${className}`}
       />

@@ -973,50 +973,59 @@ export default function BusinessPageEditor() {
             <div className="space-y-6">
               <div>
                 <h2 className="text-lg font-semibold text-primary">Contact & Location Information</h2>
-                <p className="text-xs text-secondary font-medium">Provide contact channels and exact store/office location.</p>
+                <p className="text-xs text-secondary font-medium">Configure how customers can contact you directly and find your physical store/office.</p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <AppInput
-                  label="Calling Phone Number"
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="e.g. 9876543210"
-                />
+              <div className="space-y-4">
+                {/* Mobile Number (Disabled/Read-only in sync with App) */}
+                <div>
+                  <AppInput
+                    label="Mobile Number"
+                    type="tel"
+                    value={phone}
+                    disabled
+                    readOnly
+                    placeholder="Mobile number cannot be changed"
+                  />
+                  <p className="text-[11px] text-disabled font-medium mt-1">
+                    Mobile number is linked to your account and cannot be edited directly.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <AppInput
+                    label="WhatsApp Chat Number"
+                    type="tel"
+                    value={whatsapp}
+                    onChange={(e) => setWhatsapp(e.target.value)}
+                    placeholder="e.g. 9876543210"
+                  />
+
+                  <AppInput
+                    label="Email Address"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="contact@mybusiness.com"
+                  />
+                </div>
 
                 <AppInput
-                  label="WhatsApp Chat Number"
-                  type="tel"
-                  value={whatsapp}
-                  onChange={(e) => setWhatsapp(e.target.value)}
-                  placeholder="e.g. 9876543210"
+                  label="Google Maps Link"
+                  type="url"
+                  value={mapsLink}
+                  onChange={(e) => setMapsLink(e.target.value)}
+                  placeholder="Paste Google Maps share link (e.g. https://maps.app.goo.gl/...)"
+                />
+
+                <AppTextArea
+                  label="Physical Address Text"
+                  rows={3}
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Enter showroom or business address (e.g. Shop No. 4, MG Road, Pune, Maharashtra)"
                 />
               </div>
-
-              <AppInput
-                label="Business Email Address"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="contact@mybusiness.com"
-              />
-
-              <AppTextArea
-                label="Physical Store / Office Address"
-                rows={3}
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="Shop No. 4, MG Road, Pune, Maharashtra"
-              />
-
-              <AppInput
-                label="Google Maps Link / Share URL"
-                type="url"
-                value={mapsLink}
-                onChange={(e) => setMapsLink(e.target.value)}
-                placeholder="https://maps.app.goo.gl/..."
-              />
             </div>
           )}
 
