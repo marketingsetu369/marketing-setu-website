@@ -7,6 +7,7 @@ import {
 } from "@/api/repositories/userDashboardApi";
 import {
   AppButton,
+  AppConfirmDialog,
   AppDatePicker,
   AppInput,
   AppModal,
@@ -68,6 +69,8 @@ export default function UserTransactionsPage() {
   const [formPaymentMode, setFormPaymentMode] = useState("cash");
   const [formDate, setFormDate] = useState(() => new Date().toISOString().split("T")[0]);
   const [formDescription, setFormDescription] = useState("");
+  const [deleteTxId, setDeleteTxId] = useState<string | null>(null);
+  const [isDeletingTx, setIsDeletingTx] = useState(false);
 
   // ── Standard Default Categories (from UserTransactionsController) ────────
   const defaultIncomeCategories = [
@@ -232,14 +235,22 @@ export default function UserTransactionsPage() {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this transaction record?")) return;
+  const handleDelete = (id: string) => {
+    setDeleteTxId(id);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteTxId) return;
     try {
-      await UserDashboardApi.deleteTransaction(id);
+      setIsDeletingTx(true);
+      await UserDashboardApi.deleteTransaction(deleteTxId);
       toast.success("Transaction deleted successfully");
+      setDeleteTxId(null);
       loadTransactions();
     } catch (err: any) {
       toast.error(err.message || "Failed to delete transaction");
+    } finally {
+      setIsDeletingTx(false);
     }
   };
 
@@ -787,6 +798,18 @@ export default function UserTransactionsPage() {
           </div>
         </form>
       </AppModal>
+
+      {/* Reusable Delete Confirmation Dialog */}
+      <AppConfirmDialog
+        isOpen={Boolean(deleteTxId)}
+        onClose={() => setDeleteTxId(null)}
+        onConfirm={confirmDelete}
+        title="Delete Transaction Record?"
+        description="Are you sure you want to permanently delete this income/expense record? This action cannot be undone."
+        confirmText="Delete Record"
+        variant="danger"
+        isLoading={isDeletingTx}
+      />
     </div>
   );
 }

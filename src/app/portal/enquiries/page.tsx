@@ -12,7 +12,7 @@ import {
   PortalTabItem,
   PortalTabs,
 } from "@/components/portal";
-import { AppButton } from "@/library/ui";
+import { AppButton, AppConfirmDialog } from "@/library/ui";
 import {
   Chatting01Icon,
   Mail01Icon,
@@ -31,6 +31,8 @@ export default function EnquiriesPage() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [deleteEnquiryId, setDeleteEnquiryId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     loadEnquiries();
@@ -66,14 +68,18 @@ export default function EnquiriesPage() {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this enquiry?")) return;
+  const confirmDelete = async () => {
+    if (!deleteEnquiryId) return;
     try {
-      await UserDashboardApi.deleteEnquiry(id);
-      setEnquiries((prev) => prev.filter((e) => e.id !== id));
-      toast.success("Enquiry deleted");
+      setIsDeleting(true);
+      await UserDashboardApi.deleteEnquiry(deleteEnquiryId);
+      setEnquiries((prev) => prev.filter((e) => e.id !== deleteEnquiryId));
+      toast.success("Lead enquiry deleted");
+      setDeleteEnquiryId(null);
     } catch (err: any) {
       toast.error(err.message || "Failed to delete enquiry");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -225,12 +231,24 @@ export default function EnquiriesPage() {
                 key={item.id}
                 enquiry={item}
                 onMarkRead={handleMarkRead}
-                onDelete={handleDelete}
+                onDelete={(id) => setDeleteEnquiryId(id)}
               />
             ))}
           </div>
         )}
       </div>
+
+      {/* Reusable Delete Confirmation Dialog */}
+      <AppConfirmDialog
+        isOpen={Boolean(deleteEnquiryId)}
+        onClose={() => setDeleteEnquiryId(null)}
+        onConfirm={confirmDelete}
+        title="Delete Customer Lead?"
+        description="Are you sure you want to permanently delete this lead inquiry? This action cannot be undone."
+        confirmText="Delete Lead"
+        variant="danger"
+        isLoading={isDeleting}
+      />
     </div>
   );
 }

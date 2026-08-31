@@ -1,7 +1,14 @@
 "use client";
 
 import { BusinessPageData, UserDashboardApi } from "@/api/repositories/userDashboardApi";
-import { AppButton, AppCard, AppInput, AppTextArea } from "@/library/ui";
+import {
+  AppButton,
+  AppCard,
+  AppConfirmDialog,
+  AppInput,
+  AppModal,
+  AppTextArea,
+} from "@/library/ui";
 
 
 import Link from "next/link";
@@ -141,6 +148,25 @@ export default function BusinessPageEditor() {
     }>
   >([]);
 
+  // Product Modal State
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [editingProductIdx, setEditingProductIdx] = useState<number | null>(null);
+  const [productForm, setProductForm] = useState<{
+    name: string;
+    description: string;
+    buttonName: string;
+    showPrice: boolean;
+    priceTiers: Array<{ label: string; price: string }>;
+    image: string;
+  }>({
+    name: "",
+    description: "",
+    buttonName: "Enquiry",
+    showPrice: true,
+    priceTiers: [{ label: "", price: "" }],
+    image: "",
+  });
+
   // 6. Gallery
   const [gallery, setGallery] = useState<string[]>([]);
 
@@ -158,6 +184,34 @@ export default function BusinessPageEditor() {
       image?: string;
     }>
   >([]);
+
+  // Testimonial Modal State
+  const [isTestimonialModalOpen, setIsTestimonialModalOpen] = useState(false);
+  const [editingTestimonialIdx, setEditingTestimonialIdx] = useState<number | null>(null);
+  const [testimonialForm, setTestimonialForm] = useState<{
+    author_name: string;
+    rating: number;
+    content: string;
+    avatar_url: string;
+  }>({
+    author_name: "",
+    rating: 5,
+    content: "",
+    avatar_url: "",
+  });
+
+  // Common Delete Dialog State
+  const [deleteDialog, setDeleteDialog] = useState<{
+    isOpen: boolean;
+    title: string;
+    description: string;
+    onConfirm: () => void;
+  }>({
+    isOpen: false,
+    title: "",
+    description: "",
+    onConfirm: () => {},
+  });
 
   useEffect(() => {
     async function load() {
@@ -300,18 +354,26 @@ export default function BusinessPageEditor() {
         if (type === "logo") setLogoUrl(fullUrl);
         if (type === "owner") setOwnerAvatarUrl(fullUrl);
         if (type === "gallery") setGallery((prev) => [...prev, fullUrl]);
-        if (type === "product" && index !== undefined) {
-          const updated = [...products];
-          updated[index].image = fullUrl;
-          updated[index].imageUrl = fullUrl;
-          updated[index].images = [fullUrl];
-          setProducts(updated);
+        if (type === "product") {
+          if (index !== undefined) {
+            const updated = [...products];
+            updated[index].image = fullUrl;
+            updated[index].imageUrl = fullUrl;
+            updated[index].images = [fullUrl];
+            setProducts(updated);
+          } else {
+            setProductForm((prev) => ({ ...prev, image: fullUrl }));
+          }
         }
-        if (type === "testimonial" && index !== undefined) {
-          const updated = [...testimonials];
-          updated[index].avatar_url = fullUrl;
-          updated[index].avatar = fullUrl;
-          setTestimonials(updated);
+        if (type === "testimonial") {
+          if (index !== undefined) {
+            const updated = [...testimonials];
+            updated[index].avatar_url = fullUrl;
+            updated[index].avatar = fullUrl;
+            setTestimonials(updated);
+          } else {
+            setTestimonialForm((prev) => ({ ...prev, avatar_url: fullUrl }));
+          }
         }
         toast.success("Image uploaded successfully!");
       }
@@ -324,6 +386,127 @@ export default function BusinessPageEditor() {
       if (type === "product") setUploadingProductIdx(null);
       if (type === "testimonial") setUploadingTestimonialIdx(null);
     }
+  };
+
+  // Open Product Modal
+  const openProductModal = (index?: number) => {
+    if (index !== undefined) {
+      const prod = products[index];
+      setEditingProductIdx(index);
+      setProductForm({
+        name: prod.name || "",
+        description: prod.description || "",
+        buttonName: prod.buttonName || "Enquiry",
+        showPrice: prod.showPrice !== false,
+        priceTiers:
+          prod.priceTiers && prod.priceTiers.length > 0
+            ? [...prod.priceTiers]
+            : [{ label: "", price: prod.price ? String(prod.price) : "" }],
+        image: prod.image || prod.imageUrl || "",
+      });
+    } else {
+      setEditingProductIdx(null);
+      setProductForm({
+        name: "",
+        description: "",
+        buttonName: "Enquiry",
+        showPrice: true,
+        priceTiers: [{ label: "", price: "" }],
+        image: "",
+      });
+    }
+    setIsProductModalOpen(true);
+  };
+
+  const saveProductModal = () => {
+    if (!productForm.name.trim()) {
+      toast.error("Please enter a product name");
+      return;
+    }
+
+    const newProd = {
+      name: productForm.name.trim(),
+      description: productForm.description.trim(),
+      buttonName: productForm.buttonName.trim() || "Enquiry",
+      showPrice: productForm.showPrice,
+      priceTiers: productForm.priceTiers,
+      price:
+        productForm.priceTiers.length === 1 && !productForm.priceTiers[0].label
+          ? productForm.priceTiers[0].price
+          : "",
+      image: productForm.image,
+      imageUrl: productForm.image,
+      images: productForm.image ? [productForm.image] : [],
+      is_active: true,
+    };
+
+    if (editingProductIdx !== null) {
+      const updated = [...products];
+      updated[editingProductIdx] = { ...updated[editingProductIdx], ...newProd };
+      setProducts(updated);
+      toast.success("Product updated");
+    } else {
+      setProducts([...products, newProd]);
+      toast.success("Product added");
+    }
+
+    setIsProductModalOpen(false);
+  };
+
+  // Open Testimonial Modal
+  const openTestimonialModal = (index?: number) => {
+    if (index !== undefined) {
+      const t = testimonials[index];
+      setEditingTestimonialIdx(index);
+      setTestimonialForm({
+        author_name: t.author_name || t.name || "",
+        rating: Number(t.rating) || 5,
+        content: t.content || (t as any).comment || "",
+        avatar_url: t.avatar_url || t.avatar || "",
+      });
+    } else {
+      setEditingTestimonialIdx(null);
+      setTestimonialForm({
+        author_name: "",
+        rating: 5,
+        content: "",
+        avatar_url: "",
+      });
+    }
+    setIsTestimonialModalOpen(true);
+  };
+
+  const saveTestimonialModal = () => {
+    if (!testimonialForm.author_name.trim()) {
+      toast.error("Please enter customer name");
+      return;
+    }
+    if (!testimonialForm.content.trim()) {
+      toast.error("Please enter review / comment");
+      return;
+    }
+
+    const newTestimonial = {
+      author_name: testimonialForm.author_name.trim(),
+      name: testimonialForm.author_name.trim(),
+      rating: Number(testimonialForm.rating) || 5,
+      content: testimonialForm.content.trim(),
+      comment: testimonialForm.content.trim(),
+      avatar_url: testimonialForm.avatar_url,
+      avatar: testimonialForm.avatar_url,
+    };
+
+    if (editingTestimonialIdx !== null) {
+      const updated = [...testimonials];
+      updated[editingTestimonialIdx] = { ...updated[editingTestimonialIdx], ...newTestimonial };
+      setTestimonials(updated);
+      toast.success("Testimonial updated");
+    } else {
+      setTestimonials([...testimonials, newTestimonial]);
+      toast.success("Testimonial added");
+    }
+
+    setIsTestimonialModalOpen(false);
   };
 
   const handleSave = async () => {
@@ -986,203 +1169,80 @@ export default function BusinessPageEditor() {
                   type="button"
                   size="sm"
                   variant="primary"
-                  onClick={() =>
-                    setProducts([
-                      ...products,
-                      {
-                        name: "",
-                        price: "",
-                        price_unit: "",
-                        description: "",
-                        buttonName: "Enquiry",
-                        showPrice: true,
-                        priceTiers: [{ label: "", price: "" }],
-                        image: "",
-                        imageUrl: "",
-                        images: [],
-                      },
-                    ])
-                  }
+                  onClick={() => openProductModal()}
                 >
                   + Add Product
                 </AppButton>
               </div>
 
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {products.map((item, index) => {
                   const productImg = resolveImgUrl(item.image || item.imageUrl || item.images?.[0]);
-                  const tiers = item.priceTiers && item.priceTiers.length > 0 ? item.priceTiers : [{ label: "", price: item.price ? String(item.price) : "" }];
+                  const tiers = item.priceTiers && item.priceTiers.length > 0 ? item.priceTiers : [];
 
                   return (
-                    <div key={index} className="p-5 rounded-xl bg-neutral border border-outline space-y-4 shadow-z1">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold uppercase tracking-wider text-disabled">
-                          Item #{index + 1}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => setProducts(products.filter((_, i) => i !== index))}
-                          className="text-xs font-semibold text-error-main hover:text-error-dark cursor-pointer"
-                        >
-                          Delete Item
-                        </button>
-                      </div>
-
-                      {/* Product Photo Upload + Fields */}
-                      <div className="flex flex-col sm:flex-row gap-4 items-start">
-                        <div className="w-24 h-24 rounded-xl bg-paper border border-outline overflow-hidden flex-shrink-0 relative group flex items-center justify-center">
+                    <div key={index} className="p-4 rounded-2xl bg-neutral border border-outline space-y-3 shadow-z1 flex flex-col justify-between">
+                      <div className="flex items-start gap-3">
+                        <div className="w-16 h-16 rounded-xl bg-paper border border-outline overflow-hidden flex-shrink-0 flex items-center justify-center">
                           {productImg ? (
                             <img src={productImg} alt={item.name} className="w-full h-full object-cover" />
                           ) : (
-                            <span className="text-[11px] text-disabled font-semibold text-center px-1">No Image</span>
+                            <span className="text-[10px] text-disabled font-semibold text-center px-1">No Image</span>
                           )}
-                          <label className="absolute inset-0 bg-black/50 text-white text-[10px] font-semibold flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer text-center p-1">
-                            {uploadingProductIdx === index ? "..." : "Change"}
-                            <input
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              onChange={(e) => {
-                                if (e.target.files?.[0]) handleFileUpload(e.target.files[0], "product", index);
-                              }}
-                            />
-                          </label>
                         </div>
 
-                        <div className="flex-1 w-full space-y-4">
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                              <AppInput
-                                label="Product Name"
-                                type="text"
-                                value={item.name}
-                                onChange={(e) => {
-                                  const updated = [...products];
-                                  updated[index].name = e.target.value;
-                                  setProducts(updated);
-                                }}
-                                placeholder="e.g. Nike Sportswear"
-                              />
-                            </div>
-                            <div>
-                              <AppInput
-                                label="Button Name (CTA)"
-                                type="text"
-                                value={item.buttonName ?? "Enquiry"}
-                                onChange={(e) => {
-                                  const updated = [...products];
-                                  updated[index].buttonName = e.target.value;
-                                  setProducts(updated);
-                                }}
-                                placeholder="e.g. Enquiry, बुक करा, Buy Now"
-                              />
-                            </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-2">
+                            <h4 className="font-semibold text-sm text-primary truncate">{item.name || "Untitled Product"}</h4>
+                            <span className="text-[10px] px-2 py-0.5 rounded bg-brand-lighter text-brand-main font-semibold flex-shrink-0">
+                              {item.buttonName || "Enquiry"}
+                            </span>
                           </div>
+                          {item.description && (
+                            <p className="text-xs text-secondary line-clamp-2 mt-0.5">{item.description}</p>
+                          )}
+                          {item.showPrice !== false && (
+                            <p className="text-xs font-bold text-primary mt-1.5">
+                              {tiers.length > 1
+                                ? `From ₹${tiers[0].price} (${tiers.length} options)`
+                                : tiers.length === 1 && tiers[0].price
+                                ? `₹${tiers[0].price} ${tiers[0].label ? `(${tiers[0].label})` : ""}`
+                                : item.price
+                                ? `₹${item.price}`
+                                : "Price on enquiry"}
+                            </p>
+                          )}
+                        </div>
+                      </div>
 
-                          <AppTextArea
-                            label="Description"
-                            rows={2}
-                            value={item.description || ""}
-                            onChange={(e) => {
-                              const updated = [...products];
-                              updated[index].description = e.target.value;
-                              setProducts(updated);
-                            }}
-                            placeholder="Women's Full-Zip Hoodie, specs or details..."
-                          />
-
-                          {/* Show Price Switch & Dynamic Pricing Tiers */}
-                          <div className="p-3.5 rounded-lg bg-paper border border-outline space-y-3">
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <span className="text-xs font-semibold text-primary">Show Price</span>
-                                <p className="text-[11px] text-secondary">Toggle product price display on business page</p>
-                              </div>
-                              <input
-                                type="checkbox"
-                                checked={item.showPrice !== false}
-                                onChange={(e) => {
-                                  const updated = [...products];
-                                  updated[index].showPrice = e.target.checked;
-                                  setProducts(updated);
-                                }}
-                                className="w-4 h-4 text-brand-main rounded border-outline focus:ring-brand-main cursor-pointer"
-                              />
-                            </div>
-
-                            {item.showPrice !== false && (
-                              <div className="pt-2 border-t border-outline space-y-2">
-                                <div className="flex items-center justify-between">
-                                  <span className="text-[11px] font-semibold text-secondary">
-                                    Pricing Options (Leave Label empty if only one price)
-                                  </span>
-                                  <button
-                                    type="button"
-                                    onClick={() => {
-                                      const updated = [...products];
-                                      const currentTiers = item.priceTiers ? [...item.priceTiers] : [{ label: "", price: "" }];
-                                      currentTiers.push({ label: "", price: "" });
-                                      updated[index].priceTiers = currentTiers;
-                                      setProducts(updated);
-                                    }}
-                                    className="text-xs font-semibold text-brand-main hover:text-brand-dark cursor-pointer"
-                                  >
-                                    + Add Option
-                                  </button>
-                                </div>
-
-                                <div className="space-y-2">
-                                  {tiers.map((tier, tierIdx) => (
-                                    <div key={tierIdx} className="flex items-center gap-2">
-                                      <div className="flex-1">
-                                        <AppInput
-                                          type="text"
-                                          value={tier.label}
-                                          onChange={(e) => {
-                                            const updated = [...products];
-                                            const currentTiers = [...tiers];
-                                            currentTiers[tierIdx] = { ...currentTiers[tierIdx], label: e.target.value };
-                                            updated[index].priceTiers = currentTiers;
-                                            setProducts(updated);
-                                          }}
-                                          placeholder="Label (e.g. 1kg / 1unit)"
-                                        />
-                                      </div>
-                                      <div className="flex-1">
-                                        <AppInput
-                                          type="text"
-                                          value={tier.price}
-                                          onChange={(e) => {
-                                            const updated = [...products];
-                                            const currentTiers = [...tiers];
-                                            currentTiers[tierIdx] = { ...currentTiers[tierIdx], price: e.target.value };
-                                            updated[index].priceTiers = currentTiers;
-                                            setProducts(updated);
-                                          }}
-                                          placeholder="Price (₹ e.g. 499)"
-                                        />
-                                      </div>
-                                      {tiers.length > 1 && (
-                                        <button
-                                          type="button"
-                                          onClick={() => {
-                                            const updated = [...products];
-                                            const currentTiers = tiers.filter((_, tI) => tI !== tierIdx);
-                                            updated[index].priceTiers = currentTiers;
-                                            setProducts(updated);
-                                          }}
-                                          className="p-2 text-error-main hover:text-error-dark text-sm cursor-pointer"
-                                          title="Remove option"
-                                        >
-                                          ✕
-                                        </button>
-                                      )}
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-                          </div>
+                      <div className="pt-2 border-t border-outline/60 flex items-center justify-between text-xs">
+                        <span className="text-[11px] text-disabled font-medium">Item #{index + 1}</span>
+                        <div className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => openProductModal(index)}
+                            className="font-semibold text-brand-main hover:text-brand-dark cursor-pointer"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setDeleteDialog({
+                                isOpen: true,
+                                title: `Delete "${item.name || `Product #${index + 1}`}"?`,
+                                description: "Are you sure you want to remove this product from your catalog?",
+                                onConfirm: () => {
+                                  setProducts(products.filter((_, i) => i !== index));
+                                  setDeleteDialog((d) => ({ ...d, isOpen: false }));
+                                  toast.success("Product removed");
+                                },
+                              })
+                            }
+                            className="font-semibold text-error-main hover:text-error-dark cursor-pointer"
+                          >
+                            Delete
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -1190,7 +1250,7 @@ export default function BusinessPageEditor() {
                 })}
 
                 {products.length === 0 && (
-                  <div className="py-16 text-center text-disabled border-2 border-dashed border-outline rounded-2xl font-medium">
+                  <div className="col-span-full py-16 text-center text-disabled border-2 border-dashed border-outline rounded-2xl font-medium">
                     No products added yet. Click &quot;+ Add Product&quot; to begin.
                   </div>
                 )}
@@ -1223,7 +1283,7 @@ export default function BusinessPageEditor() {
                 {gallery.map((url, index) => {
                   const resolved = resolveImgUrl(url);
                   return (
-                    <div key={index} className="aspect-square rounded-xl overflow-hidden relative group bg-neutral border border-outline shadow-z1">
+                    <div key={index} className="aspect-square rounded-2xl overflow-hidden relative group bg-neutral border border-outline shadow-z1">
                       {resolved ? (
                         <img src={resolved} alt={`Gallery ${index}`} className="w-full h-full object-cover" />
                       ) : (
@@ -1233,7 +1293,18 @@ export default function BusinessPageEditor() {
                       )}
                       <button
                         type="button"
-                        onClick={() => setGallery(gallery.filter((_, i) => i !== index))}
+                        onClick={() =>
+                          setDeleteDialog({
+                            isOpen: true,
+                            title: "Delete Gallery Image?",
+                            description: "Are you sure you want to delete this image from your showcase gallery?",
+                            onConfirm: () => {
+                              setGallery(gallery.filter((_, i) => i !== index));
+                              setDeleteDialog((d) => ({ ...d, isOpen: false }));
+                              toast.success("Gallery photo removed");
+                            },
+                          })
+                        }
                         className="absolute top-2 right-2 p-1.5 rounded-full bg-black/70 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity hover:bg-error-main cursor-pointer"
                         title="Delete"
                       >
@@ -1264,104 +1335,69 @@ export default function BusinessPageEditor() {
                   type="button"
                   size="sm"
                   variant="primary"
-                  onClick={() =>
-                    setTestimonials([
-                      ...testimonials,
-                      { author_name: "Customer Name", rating: 5, content: "Outstanding service and quality!", avatar_url: "", avatar: "" },
-                    ])
-                  }
+                  onClick={() => openTestimonialModal()}
                 >
                   + Add Review
                 </AppButton>
               </div>
 
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {testimonials.map((t, index) => {
                   const avatarSrc = resolveImgUrl(t.avatar_url || t.avatar || t.photo || t.image);
                   return (
-                    <div key={index} className="p-5 rounded-xl bg-neutral border border-outline space-y-3 shadow-z1">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold uppercase tracking-wider text-disabled">
-                          Review #{index + 1}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => setTestimonials(testimonials.filter((_, i) => i !== index))}
-                          className="text-xs font-semibold text-error-main hover:text-error-dark cursor-pointer"
-                        >
-                          Delete
-                        </button>
-                      </div>
-
-                      <div className="flex flex-col sm:flex-row gap-4 items-start">
-                        {/* Testimonial Avatar */}
-                        <div className="w-14 h-14 rounded-full bg-paper border border-outline overflow-hidden flex-shrink-0 relative group flex items-center justify-center">
+                    <div key={index} className="p-4 rounded-2xl bg-neutral border border-outline space-y-3 shadow-z1 flex flex-col justify-between">
+                      <div className="flex items-start gap-3">
+                        <div className="w-12 h-12 rounded-full bg-paper border border-outline overflow-hidden flex-shrink-0 flex items-center justify-center">
                           {avatarSrc ? (
                             <img src={avatarSrc} alt={t.author_name} className="w-full h-full object-cover" />
                           ) : (
-                            <div className="w-full h-full bg-brand-lighter text-brand-main flex items-center justify-center font-bold text-sm">
+                            <div className="w-full h-full bg-brand-lighter text-brand-main flex items-center justify-center font-bold text-xs">
                               {t.author_name ? t.author_name.slice(0, 2).toUpperCase() : "CU"}
                             </div>
                           )}
-                          <label className="absolute inset-0 bg-black/50 text-white text-[9px] font-semibold flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer text-center p-1">
-                            {uploadingTestimonialIdx === index ? "..." : "Photo"}
-                            <input
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              onChange={(e) => {
-                                if (e.target.files?.[0]) handleFileUpload(e.target.files[0], "testimonial", index);
-                              }}
-                            />
-                          </label>
                         </div>
 
-                        <div className="flex-1 w-full space-y-3">
-                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            <div className="sm:col-span-2">
-                              <AppInput
-                                label="Customer Name"
-                                type="text"
-                                value={t.author_name}
-                                onChange={(e) => {
-                                  const updated = [...testimonials];
-                                  updated[index].author_name = e.target.value;
-                                  updated[index].name = e.target.value;
-                                  setTestimonials(updated);
-                                }}
-                                placeholder="e.g. Rahul Sharma"
-                              />
-                            </div>
-                            <div>
-                              <AppInput
-                                label="Rating (1 - 5)"
-                                type="number"
-                                step="0.1"
-                                min={1}
-                                max={5}
-                                value={t.rating ?? 5}
-                                onChange={(e) => {
-                                  const val = parseFloat(e.target.value);
-                                  const updated = [...testimonials];
-                                  updated[index].rating = isNaN(val) ? 5 : val;
-                                  setTestimonials(updated);
-                                }}
-                                placeholder="e.g. 5 or 4.7"
-                              />
-                            </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-2">
+                            <h4 className="font-semibold text-sm text-primary truncate">{t.author_name || t.name || "Anonymous Customer"}</h4>
+                            <span className="text-xs text-amber-500 font-bold flex items-center gap-0.5">
+                              ⭐ {t.rating ?? 5}
+                            </span>
                           </div>
+                          {t.content && (
+                            <p className="text-xs text-secondary line-clamp-3 mt-1 italic">&ldquo;{t.content}&rdquo;</p>
+                          )}
+                        </div>
+                      </div>
 
-                          <AppTextArea
-                            label="Feedback / Review Comment"
-                            rows={3}
-                            value={t.content}
-                            onChange={(e) => {
-                              const updated = [...testimonials];
-                              updated[index].content = e.target.value;
-                              setTestimonials(updated);
-                            }}
-                            placeholder="What did the client love about your business / service?..."
-                          />
+                      <div className="pt-2 border-t border-outline/60 flex items-center justify-between text-xs">
+                        <span className="text-[11px] text-disabled font-medium">Review #{index + 1}</span>
+                        <div className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => openTestimonialModal(index)}
+                            className="font-semibold text-brand-main hover:text-brand-dark cursor-pointer"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setDeleteDialog({
+                                isOpen: true,
+                                title: `Delete review from "${t.author_name || t.name || "Customer"}"?`,
+                                description: "Are you sure you want to remove this testimonial?",
+                                onConfirm: () => {
+                                  setTestimonials(testimonials.filter((_, i) => i !== index));
+                                  setDeleteDialog((d) => ({ ...d, isOpen: false }));
+                                  toast.success("Review removed");
+                                },
+                              })
+                            }
+                            className="font-semibold text-error-main hover:text-error-dark cursor-pointer"
+                          >
+                            Delete
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -1369,7 +1405,7 @@ export default function BusinessPageEditor() {
                 })}
 
                 {testimonials.length === 0 && (
-                  <div className="py-16 text-center text-disabled border-2 border-dashed border-outline rounded-2xl font-medium">
+                  <div className="col-span-full py-16 text-center text-disabled border-2 border-dashed border-outline rounded-2xl font-medium">
                     No customer reviews added yet. Click &quot;+ Add Review&quot; to build credibility.
                   </div>
                 )}
@@ -1397,6 +1433,249 @@ export default function BusinessPageEditor() {
           </div>
         </AppCard>
       </div>
+
+      {/* ── PRODUCT MODAL POPUP (AppModal) ── */}
+      <AppModal
+        isOpen={isProductModalOpen}
+        onClose={() => setIsProductModalOpen(false)}
+        title={editingProductIdx !== null ? "Edit Product / Service" : "Add Product / Service"}
+        subtitle="Configure product details, image, pricing options, and button name"
+        maxWidth="lg"
+      >
+        <div className="space-y-4 max-h-[75vh] overflow-y-auto pr-1">
+          {/* Photo Upload */}
+          <div className="flex items-center gap-4 p-3.5 rounded-xl bg-neutral border border-outline">
+            <div className="w-16 h-16 rounded-lg bg-paper border border-outline overflow-hidden flex-shrink-0 flex items-center justify-center relative">
+              {productForm.image ? (
+                <img src={resolveImgUrl(productForm.image)} alt="Product Preview" className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-[10px] text-disabled font-semibold text-center px-1">No Image</span>
+              )}
+            </div>
+            <div className="flex-1">
+              <span className="text-xs font-semibold text-primary block">Product Image</span>
+              <p className="text-[11px] text-secondary">Upload a clear photo for your product or service</p>
+              <label className="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-lighter text-brand-main font-semibold text-xs hover:bg-brand-lighter/80 cursor-pointer">
+                {uploadingProductIdx === -1 ? "Uploading..." : productForm.image ? "Change Image" : "Upload Image"}
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    if (e.target.files?.[0]) handleFileUpload(e.target.files[0], "product");
+                  }}
+                />
+              </label>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <AppInput
+              label="Product Name"
+              type="text"
+              value={productForm.name}
+              onChange={(e) => setProductForm((p) => ({ ...p, name: e.target.value }))}
+              placeholder="e.g. Nike Sportswear"
+            />
+            <AppInput
+              label="Button Name (CTA)"
+              type="text"
+              value={productForm.buttonName}
+              onChange={(e) => setProductForm((p) => ({ ...p, buttonName: e.target.value }))}
+              placeholder="e.g. Enquiry, बुक करा, Buy Now"
+            />
+          </div>
+
+          <AppTextArea
+            label="Description"
+            rows={3}
+            value={productForm.description}
+            onChange={(e) => setProductForm((p) => ({ ...p, description: e.target.value }))}
+            placeholder="Product details, specs, or warranty info..."
+          />
+
+          {/* Show Price Switch & Pricing Options */}
+          <div className="p-3.5 rounded-xl bg-neutral border border-outline space-y-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-xs font-semibold text-primary">Show Price</span>
+                <p className="text-[11px] text-secondary">Display product price on your business page</p>
+              </div>
+              <input
+                type="checkbox"
+                checked={productForm.showPrice}
+                onChange={(e) => setProductForm((p) => ({ ...p, showPrice: e.target.checked }))}
+                className="w-4 h-4 text-brand-main rounded border-outline focus:ring-brand-main cursor-pointer"
+              />
+            </div>
+
+            {productForm.showPrice && (
+              <div className="pt-3 border-t border-outline space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-semibold text-secondary">
+                    Pricing Options (Leave label empty if single price)
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setProductForm((p) => ({
+                        ...p,
+                        priceTiers: [...p.priceTiers, { label: "", price: "" }],
+                      }))
+                    }
+                    className="text-xs font-semibold text-brand-main hover:text-brand-dark cursor-pointer"
+                  >
+                    + Add Option
+                  </button>
+                </div>
+
+                <div className="space-y-2">
+                  {productForm.priceTiers.map((tier, tIdx) => (
+                    <div key={tIdx} className="flex items-center gap-2">
+                      <div className="flex-1">
+                        <AppInput
+                          type="text"
+                          value={tier.label}
+                          onChange={(e) => {
+                            const updated = [...productForm.priceTiers];
+                            updated[tIdx] = { ...updated[tIdx], label: e.target.value };
+                            setProductForm((p) => ({ ...p, priceTiers: updated }));
+                          }}
+                          placeholder="Label (e.g. 1kg / 1unit)"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <AppInput
+                          type="text"
+                          value={tier.price}
+                          onChange={(e) => {
+                            const updated = [...productForm.priceTiers];
+                            updated[tIdx] = { ...updated[tIdx], price: e.target.value };
+                            setProductForm((p) => ({ ...p, priceTiers: updated }));
+                          }}
+                          placeholder="Price (₹ e.g. 499)"
+                        />
+                      </div>
+                      {productForm.priceTiers.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const updated = productForm.priceTiers.filter((_, idx) => idx !== tIdx);
+                            setProductForm((p) => ({ ...p, priceTiers: updated }));
+                          }}
+                          className="p-2 text-error-main hover:text-error-dark text-sm cursor-pointer"
+                          title="Remove option"
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-outline">
+            <AppButton type="button" variant="outline" size="sm" onClick={() => setIsProductModalOpen(false)}>
+              Cancel
+            </AppButton>
+            <AppButton type="button" variant="primary" size="sm" onClick={saveProductModal}>
+              {editingProductIdx !== null ? "Update Product" : "Save Product"}
+            </AppButton>
+          </div>
+        </div>
+      </AppModal>
+
+      {/* ── TESTIMONIAL MODAL POPUP (AppModal) ── */}
+      <AppModal
+        isOpen={isTestimonialModalOpen}
+        onClose={() => setIsTestimonialModalOpen(false)}
+        title={editingTestimonialIdx !== null ? "Edit Customer Review" : "Add Customer Review"}
+        subtitle="Add customer name, feedback, avatar photo, and rating"
+        maxWidth="md"
+      >
+        <div className="space-y-4">
+          {/* Avatar Upload */}
+          <div className="flex items-center gap-4 p-3.5 rounded-xl bg-neutral border border-outline">
+            <div className="w-14 h-14 rounded-full bg-paper border border-outline overflow-hidden flex-shrink-0 flex items-center justify-center">
+              {testimonialForm.avatar_url ? (
+                <img src={resolveImgUrl(testimonialForm.avatar_url)} alt="Reviewer" className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-brand-lighter text-brand-main flex items-center justify-center font-bold text-sm">
+                  {testimonialForm.author_name ? testimonialForm.author_name.slice(0, 2).toUpperCase() : "CU"}
+                </div>
+              )}
+            </div>
+            <div className="flex-1">
+              <span className="text-xs font-semibold text-primary block">Customer Avatar</span>
+              <p className="text-[11px] text-secondary">Upload reviewer picture</p>
+              <label className="mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-lighter text-brand-main font-semibold text-xs hover:bg-brand-lighter/80 cursor-pointer">
+                {uploadingTestimonialIdx === -1 ? "Uploading..." : testimonialForm.avatar_url ? "Change Photo" : "Upload Photo"}
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    if (e.target.files?.[0]) handleFileUpload(e.target.files[0], "testimonial");
+                  }}
+                />
+              </label>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <AppInput
+              label="Customer Name"
+              type="text"
+              value={testimonialForm.author_name}
+              onChange={(e) => setTestimonialForm((t) => ({ ...t, author_name: e.target.value }))}
+              placeholder="e.g. Rahul Sharma"
+            />
+            <AppInput
+              label="Rating (1 - 5)"
+              type="number"
+              step="0.1"
+              min={1}
+              max={5}
+              value={testimonialForm.rating ?? 5}
+              onChange={(e) => {
+                const val = parseFloat(e.target.value);
+                setTestimonialForm((t) => ({ ...t, rating: isNaN(val) ? 5 : val }));
+              }}
+              placeholder="e.g. 5 or 4.7"
+            />
+          </div>
+
+          <AppTextArea
+            label="Feedback / Review Comment"
+            rows={4}
+            value={testimonialForm.content}
+            onChange={(e) => setTestimonialForm((t) => ({ ...t, content: e.target.value }))}
+            placeholder="What did the client love about your business / service?..."
+          />
+
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-outline">
+            <AppButton type="button" variant="outline" size="sm" onClick={() => setIsTestimonialModalOpen(false)}>
+              Cancel
+            </AppButton>
+            <AppButton type="button" variant="primary" size="sm" onClick={saveTestimonialModal}>
+              {editingTestimonialIdx !== null ? "Update Review" : "Save Review"}
+            </AppButton>
+          </div>
+        </div>
+      </AppModal>
+
+      {/* ── COMMON DELETE CONFIRMATION DIALOG (AppConfirmDialog) ── */}
+      <AppConfirmDialog
+        isOpen={deleteDialog.isOpen}
+        onClose={() => setDeleteDialog((d) => ({ ...d, isOpen: false }))}
+        onConfirm={deleteDialog.onConfirm}
+        title={deleteDialog.title}
+        description={deleteDialog.description}
+        confirmText="Delete"
+        variant="danger"
+      />
     </div>
   );
 }
