@@ -184,7 +184,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
         <div className="w-full md:max-w-[1280px] bg-[var(--color-grey-100)] min-h-screen md:min-h-[820px] md:h-[820px] relative flex flex-col md:flex-row overflow-hidden animate-fade-in-up">
 
           {/* ── LEFT COLUMN ── */}
-          <div className="w-full md:w-[35%] bg-[var(--color-grey-100)] flex flex-col justify-between relative pb-4 md:pb-0 md:h-full md:overflow-y-auto no-scrollbar">
+          <div className="w-full md:w-[35%] bg-[var(--color-grey-100)] flex flex-col justify-between relative pb-4 md:pb-0 md:h-full md:overflow-y-auto scrollbar-none">
             <div>
               <BusinessHeader header={header} contact={contact} slug={slug} />
               <OwnerCard ownerList={ownerList} />
@@ -193,7 +193,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
           </div>
 
           {/* ── RIGHT COLUMN ── */}
-          <div className="w-full md:w-[65%] flex flex-col overflow-y-auto md:h-full no-scrollbar bg-white pb-24 md:pb-24 md:border-l-[10px] md:border-white">
+          <div className="w-full md:w-[65%] flex flex-col overflow-y-auto md:h-full scrollbar-none bg-white pb-24 md:pb-24">
             <VideoSection youtubeUrl={data?.youtube_url} sectionClass={section("video")} />
             <ProductsSection products={products} slug={slug} sectionClass={section("products")} onEnquire={openProductEnquiry} />
             <GallerySection gallery={gallery} onImageClick={setActiveImageIndex} />
