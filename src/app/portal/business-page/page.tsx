@@ -599,7 +599,9 @@ export default function BusinessPageEditor() {
         owner: ownerPayload,
         social_links: socialPayload,
         products: formattedProducts,
-        gallery,
+        gallery: (gallery || []).map((g: any) =>
+          typeof g === "string" ? { url: g, type: "image" } : { url: g.url || "", type: g.type || "image" }
+        ) as any,
         testimonials: testimonials.map((t) => ({
           ...(t.id ? { id: t.id } : {}),
           name: t.author_name || t.name || "",
@@ -992,23 +994,13 @@ export default function BusinessPageEditor() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <AppInput
-                    label="WhatsApp Chat Number"
-                    type="tel"
-                    value={whatsapp}
-                    onChange={(e) => setWhatsapp(e.target.value)}
-                    placeholder="e.g. 9876543210"
-                  />
-
-                  <AppInput
-                    label="Email Address"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="contact@mybusiness.com"
-                  />
-                </div>
+                <AppInput
+                  label="Email Address"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="contact@mybusiness.com"
+                />
 
                 <AppInput
                   label="Google Maps Link"
