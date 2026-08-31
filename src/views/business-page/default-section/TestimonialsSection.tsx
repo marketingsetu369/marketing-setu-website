@@ -8,9 +8,15 @@ import { getImageUrl } from "../common/utils";
 
 interface Testimonial {
   name?: string;
+  author_name?: string;
   avatar?: string;
+  avatar_url?: string;
+  photo?: string;
+  image?: string;
   rating?: number;
   comment?: string;
+  content?: string;
+  text?: string;
 }
 
 interface TestimonialsSectionProps {
@@ -33,6 +39,10 @@ export default function TestimonialsSection({
 
   if (testimonials.length === 0 || !active) return null;
 
+  const authorName = active.name || active.author_name || "";
+  const authorAvatar = active.avatar || active.avatar_url || active.photo || active.image || "";
+  const reviewText = active.comment || active.content || active.text || "";
+
   return (
     <section className={`text-center flex flex-col items-center animate-fade-in-up animation-delay-300 w-full ${sectionClass}`}>
       <h2 className="text-lg font-semibold text-gray-950 tracking-tight mb-1" style={{ fontFamily: fontHeader }}>
@@ -47,8 +57,8 @@ export default function TestimonialsSection({
         {/* Overlapping Avatar */}
         <div className="absolute -top-14 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden bg-white ring-6 ring-[var(--color-gray-50)] shadow-sm">
           <img
-            src={getImageUrl(active.avatar)}
-            alt={active.name}
+            src={getImageUrl(authorAvatar)}
+            alt={authorName}
             className="w-full h-full object-cover rounded-full animate-fade-in-up"
           />
         </div>
@@ -56,11 +66,11 @@ export default function TestimonialsSection({
         <StarRating rating={Number(active.rating) || 5} />
 
         <h3 className="font-bold text-gray-900 text-lg mb-2" style={{ fontFamily: fontHeader }}>
-          {active.name}
+          {authorName}
         </h3>
 
         <p className="text-gray-600 text-sm leading-relaxed text-center font-normal max-w-sm">
-          &ldquo;{active.comment}&rdquo;
+          &ldquo;{reviewText}&rdquo;
         </p>
       </div>
 

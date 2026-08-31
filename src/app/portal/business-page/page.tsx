@@ -345,7 +345,17 @@ export default function BusinessPageEditor() {
         social_links: socialPayload,
         products,
         gallery,
-        testimonials,
+        testimonials: testimonials.map((t) => ({
+          ...(t.id ? { id: t.id } : {}),
+          name: t.author_name || t.name || "",
+          author_name: t.author_name || t.name || "",
+          rating: Number(t.rating) || 5,
+          comment: t.content || "",
+          content: t.content || "",
+          text: t.content || "",
+          avatar: t.avatar_url || t.avatar || "",
+          avatar_url: t.avatar_url || t.avatar || "",
+        })),
       };
 
       const res = await UserDashboardApi.saveBusinessPage(payload);
