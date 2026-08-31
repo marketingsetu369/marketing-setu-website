@@ -43,7 +43,7 @@ export default function GalleryLightbox({
         </button>
 
         <img
-          src={getImageUrl(gallery[activeIndex]?.url)}
+          src={getImageUrl(typeof gallery[activeIndex] === "string" ? gallery[activeIndex] : (gallery[activeIndex]?.url || (gallery[activeIndex] as any)?.imageUrl || (gallery[activeIndex] as any)?.image))}
           alt={`Gallery Full View ${activeIndex}`}
           className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl animate-fade-in-up"
         />

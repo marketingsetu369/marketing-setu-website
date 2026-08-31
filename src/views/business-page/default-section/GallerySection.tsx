@@ -15,7 +15,7 @@ interface GallerySectionProps {
 export default function GallerySection({ gallery, onImageClick }: GallerySectionProps) {
   const { primaryColor, fontHeader, t } = useBusinessPageTheme();
 
-  if (gallery.length === 0) return null;
+  if (!gallery || gallery.length === 0) return null;
 
   return (
     <section className="animate-fade-in-up animation-delay-200 bg-white py-10 px-6">
@@ -26,8 +26,9 @@ export default function GallerySection({ gallery, onImageClick }: GallerySection
       </div>
 
       <div className="columns-2 md:columns-3 gap-3 [column-fill:balance] space-y-3">
-        {gallery.slice(0, 6).map((item, idx) => {
+        {gallery.slice(0, 6).map((item: any, idx: number) => {
           const isLast = idx === 5 && gallery.length > 6;
+          const imgSrc = getImageUrl(typeof item === "string" ? item : (item?.url || item?.imageUrl || item?.image || item?.src || item));
           return (
             <div
               key={idx}
@@ -35,7 +36,7 @@ export default function GallerySection({ gallery, onImageClick }: GallerySection
               className="break-inside-avoid mb-3 rounded-2xl overflow-hidden bg-gray-100 hover:shadow-md relative group transition-shadow cursor-pointer"
             >
               <img
-                src={getImageUrl(item.url)}
+                src={imgSrc}
                 alt={`Gallery ${idx + 1}`}
                 className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500 rounded-2xl"
               />
