@@ -73,7 +73,7 @@ export function AppConfirmDialog({
         </div>
       </div>
 
-      <div className="flex items-center justify-end gap-3 pt-2 border-t border-outline">
+      <div className="flex items-center justify-end gap-3 pt-2">
         <AppButton
           type="button"
           variant="outline"

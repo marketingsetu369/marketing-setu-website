@@ -1215,7 +1215,7 @@ export default function BusinessPageEditor() {
                         </div>
                       </div>
 
-                      <div className="pt-2 border-t border-outline/60 flex items-center justify-between text-xs">
+                      <div className="pt-2 flex items-center justify-between text-xs">
                         <span className="text-[11px] text-disabled font-medium">Item #{index + 1}</span>
                         <div className="flex items-center gap-3">
                           <button
@@ -1370,7 +1370,7 @@ export default function BusinessPageEditor() {
                         </div>
                       </div>
 
-                      <div className="pt-2 border-t border-outline/60 flex items-center justify-between text-xs">
+                      <div className="pt-2 flex items-center justify-between text-xs">
                         <span className="text-[11px] text-disabled font-medium">Review #{index + 1}</span>
                         <div className="flex items-center gap-3">
                           <button
