@@ -121,7 +121,36 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
   const section = (key: string) => getSectionStyle(key, visibleStates);
 
   // ── Handlers ─────────────────────────────────────────────────────────────
-  const handleEnquirySubmit = async (e: React.FormEvent) => {
+  const handleGeneralEnquirySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name.trim() || !formData.phone.trim()) {
+      setErrorMessage("Name and phone number are required.");
+      setSubmitStatus("error");
+      return;
+    }
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+    setErrorMessage("");
+    try {
+      await BusinessPageApi.submitEnquiry(slug, {
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        message: formData.message.trim() || undefined,
+        isProduct: false,
+      });
+      setSubmitStatus("success");
+      setFormData({ name: "", phone: "", message: "", selectedPriceTier: "" });
+      setTimeout(() => { setSubmitStatus("idle"); }, 3000);
+    } catch (err: any) {
+      console.error(err);
+      setErrorMessage(err?.response?.data?.message || err?.message || "Failed to submit enquiry. Please try again.");
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleProductEnquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.phone.trim()) {
       setErrorMessage("Name and phone number are required.");
@@ -143,8 +172,8 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
         name: formData.name.trim(),
         phone: formData.phone.trim(),
         message: enquiryMsg,
-        isProduct: isProductEnquiry,
-        productName: selectedProduct?.name || selectedProduct?.title || undefined,
+        isProduct: true,
+        productName: selectedProduct?.name || selectedProduct?.title || "Product",
         productPrice: selectedProduct?.price?.toString() || undefined,
         productDescription: selectedProduct?.description || undefined,
       });
@@ -162,6 +191,9 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
   const scrollToEnquiry = () => {
     setIsProductEnquiry(false);
+    setSelectedProduct(null);
+    setSubmitStatus("idle");
+    setErrorMessage("");
     const el = document.getElementById("clientName");
     if (el) { el.scrollIntoView({ behavior: "smooth" }); el.focus(); }
   };
@@ -207,7 +239,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
             <EnquiryFormSection
               formData={formData}
               onChange={setFormData}
-              onSubmit={handleEnquirySubmit}
+              onSubmit={handleGeneralEnquirySubmit}
               onReset={() => { setFormData({ name: "", phone: "", message: "" }); setSubmitStatus("idle"); setErrorMessage(""); }}
               isSubmitting={isSubmitting}
               submitStatus={submitStatus}
@@ -246,7 +278,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
             product={selectedProduct}
             formData={formData}
             onChange={setFormData}
-            onSubmit={handleEnquirySubmit}
+            onSubmit={handleProductEnquirySubmit}
             onClose={() => setSelectedProduct(null)}
             isSubmitting={isSubmitting}
             submitStatus={submitStatus}
