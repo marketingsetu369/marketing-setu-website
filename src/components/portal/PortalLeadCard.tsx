@@ -2,7 +2,8 @@
 
 import { EnquiryItem } from "@/api/repositories/userDashboardApi";
 import { AppCard } from "@/components/library/AppCard";
-import React from "react";
+import { AppModal } from "@/library/ui";
+import React, { useState } from "react";
 import PortalBadge from "./PortalBadge";
 
 export interface PortalLeadCardProps {
@@ -18,6 +19,7 @@ export default function PortalLeadCard({
   onDelete,
   compact = false,
 }: PortalLeadCardProps) {
+  const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const isUnread = !enquiry.isRead;
   const isProduct = Boolean(enquiry.isProduct || enquiry.productName);
 
@@ -151,9 +153,25 @@ export default function PortalLeadCard({
 
         {/* Customer Message snippet */}
         {enquiry.message && !compact && (
-          <div className="mt-3 bg-neutral/80 dark:bg-neutral/40 p-3 rounded-xl border border-outline/60 text-xs text-secondary leading-relaxed line-clamp-3">
-            &ldquo;{enquiry.message}&rdquo;
-          </div>
+          <>
+            <div 
+              onClick={(e) => { e.stopPropagation(); setIsMessageModalOpen(true); }}
+              className="mt-3 bg-neutral/80 dark:bg-neutral/40 p-3 rounded-xl border border-outline/60 text-xs text-secondary leading-relaxed line-clamp-3 cursor-pointer hover:bg-neutral hover:border-brand-main/50 transition-colors"
+              title="Click to read full message"
+            >
+              &ldquo;{enquiry.message}&rdquo;
+            </div>
+
+            <AppModal
+              isOpen={isMessageModalOpen}
+              onClose={() => setIsMessageModalOpen(false)}
+              title="Customer Message"
+            >
+              <div className="p-4 mt-2 max-h-64 overflow-y-auto bg-neutral/30 rounded-xl border border-outline text-sm text-secondary whitespace-pre-wrap leading-relaxed">
+                {enquiry.message}
+              </div>
+            </AppModal>
+          </>
         )}
       </div>
 
