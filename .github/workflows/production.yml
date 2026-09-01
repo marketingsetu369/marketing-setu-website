@@ -21,10 +21,8 @@ jobs:
           script: |
             mkdir -p /root/marketingsetu-web
             cd /root/marketingsetu-web
-            echo "🛑 Stopping existing web container..."
-            docker compose down || true
-            echo "🧹 Cleaning old files..."
-            find . -mindepth 1 -not -name '.env*' -delete || true
+            echo "🧹 Cleaning old build artifacts (preserving .env)..."
+            rm -rf .next 2>/dev/null || true
 
       - name: Sync fresh web code to Production VPS
         uses: appleboy/scp-action@v0.1.7
