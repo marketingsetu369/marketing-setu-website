@@ -1,12 +1,14 @@
 import { AppButton } from "@/components/library";
 import Link from "next/link";
 import { PricingPlan } from "../data/plans";
+import { TranslationDictionary } from "@/translation";
 
 interface PricingCardProps {
   plan: PricingPlan;
   onSelect?: (message: string) => void;
   href?: string;
   isCompact?: boolean;
+  t?: TranslationDictionary;
 }
 
 export default function PricingCard({
@@ -14,6 +16,7 @@ export default function PricingCard({
   onSelect,
   href,
   isCompact = false,
+  t,
 }: PricingCardProps) {
   const displayFeatures = isCompact && plan.compactFeatures ? plan.compactFeatures : plan.features;
   const isFeatured = plan.featured;
@@ -75,14 +78,14 @@ export default function PricingCard({
             </span>
           </div>
           <p className="text-[11px] mt-1 font-medium text-secondary">
-            Billed annually • Zero setup fees
+            {t?.pricing_billed_annually || "Billed annually • Zero setup fees"}
           </p>
         </div>
 
         {/* Feature List Header */}
         <div className="mb-4">
           <span className="text-xs font-bold uppercase tracking-wider text-secondary">
-            What&apos;s included:
+            {t?.pricing_whats_included || "What's included:"}
           </span>
         </div>
 
@@ -118,7 +121,7 @@ export default function PricingCard({
                 : "bg-primary text-background hover:opacity-90 border border-outline hover:scale-[1.02]"
               }`}
           >
-            Choose Plan
+            {t?.pricing_choose_plan || "Choose Plan"}
           </Link>
         ) : (
           onSelect && (
@@ -127,7 +130,7 @@ export default function PricingCard({
               variant={isFeatured ? "primary" : "secondary"}
               fullWidth
             >
-              Choose Plan
+              {t?.pricing_choose_plan || "Choose Plan"}
             </AppButton>
           )
         )}

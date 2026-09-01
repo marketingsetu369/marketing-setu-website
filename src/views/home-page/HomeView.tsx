@@ -23,8 +23,8 @@ export default function HomeView() {
     {
       id: "card-1",
       layoutType: "cafe-artisan",
-      title: "Cafe",
-      category: "Cafe",
+      title: t.demo_title_cafe || "Cafe",
+      category: t.demo_cat_cafe || "Cafe",
       avatar: "☕",
       tagline: "Freshly Roasted Organic Coffee",
       bgClass: "bg-gradient-to-br from-amber-950 via-stone-900 to-amber-950",
@@ -43,8 +43,8 @@ export default function HomeView() {
     {
       id: "card-2",
       layoutType: "solar-tech",
-      title: "Solar",
-      category: "Solar",
+      title: t.demo_title_solar || "Solar",
+      category: t.demo_cat_solar || "Solar",
       avatar: "☀️",
       tagline: "Zero Electricity Bill Guarantee",
       bgClass: "bg-gradient-to-br from-cyan-950 via-teal-900 to-slate-950",
@@ -63,8 +63,8 @@ export default function HomeView() {
     {
       id: "card-3",
       layoutType: "parlour-beauty",
-      title: "Parlour",
-      category: "Parlour",
+      title: t.demo_title_parlour || "Parlour",
+      category: t.demo_cat_parlour || "Parlour",
       avatar: "💅",
       tagline: "Radiant Skin & Modern Hair Styling",
       bgClass: "bg-gradient-to-br from-rose-950 via-pink-900 to-slate-950",
@@ -83,8 +83,8 @@ export default function HomeView() {
     {
       id: "card-4",
       layoutType: "two-wheeler-broker",
-      title: "Two Wheeler Broker",
-      category: "Two Wheeler Broker",
+      title: t.demo_title_two_wheeler || "Two Wheeler Broker",
+      category: t.demo_cat_two_wheeler || "Two Wheeler Broker",
       avatar: "🏍️",
       tagline: "Best Deals on Pre-Owned & New Bikes",
       bgClass: "bg-gradient-to-br from-red-950 via-orange-900 to-slate-950",
@@ -103,8 +103,8 @@ export default function HomeView() {
     {
       id: "card-5",
       layoutType: "personal-portfolio",
-      title: "Personal Portfolio",
-      category: "Personal Portfolio",
+      title: t.demo_title_portfolio || "Personal Portfolio",
+      category: t.demo_cat_portfolio || "Personal Portfolio",
       avatar: "👨‍💻",
       tagline: "Crafting Digital Experiences",
       bgClass: "bg-gradient-to-br from-purple-950 via-indigo-900 to-slate-950",
@@ -123,8 +123,8 @@ export default function HomeView() {
     {
       id: "card-6",
       layoutType: "default-marketing-setu",
-      title: "Default",
-      category: "Default",
+      title: t.demo_title_default || "Default",
+      category: t.demo_cat_default || "Default",
       avatar: "🚀",
       tagline: "Original Smart Business Page",
       bgClass: "bg-gradient-to-br from-blue-950 via-indigo-900 to-slate-950",
@@ -153,8 +153,8 @@ export default function HomeView() {
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             {/* Top Rating Badge */}
             <div className="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-full bg-paper border border-outline text-xs sm:text-sm font-medium text-secondary mb-8 shadow-z1">
-              <span className="bg-brand-dark text-white px-2 py-0.5 rounded-full text-[11px] font-semibold">#1 Platform</span>
-              <span>Digital Marketing & Smart Card Software</span>
+              <span className="bg-brand-dark text-white px-2 py-0.5 rounded-full text-[11px] font-semibold">{t.home_hero_badge_platform}</span>
+              <span>{t.home_hero_badge_software}</span>
               <span className="text-disabled hidden sm:inline">•</span>
               <span className="text-primary font-semibold hidden sm:flex items-center gap-1">
                 4.9
@@ -166,13 +166,13 @@ export default function HomeView() {
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight text-primary max-w-4xl mx-auto leading-[1.1] mb-6">
-              All-in-One Digital Marketing Platform <br />
-              <span className="text-brand-main font-medium">for Small Businesses</span>
+              {t.home_hero_title_1} <br />
+              <span className="text-brand-main font-medium">{t.home_hero_title_for}</span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-lg sm:text-xl text-secondary max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
-              Build your digital presence, connect with customers, manage your marketing, and grow your business — all from one simple platform.
+              {t.home_hero_lead}
             </p>
 
             {/* CTA Action Buttons */}
@@ -181,7 +181,7 @@ export default function HomeView() {
                 onClick={() => openWhatsApp()}
                 className="w-full sm:w-auto px-8 py-4 bg-brand-main hover:bg-brand-dark text-white font-semibold text-base rounded-xl shadow-z8 hover:shadow-z16 transition-all ease-out flex items-center justify-center gap-2 cursor-pointer"
               >
-                Create Digital Business Card
+                {t.home_hero_cta_create_card}
               </button>
               <Link
                 href="/services"
@@ -332,13 +332,13 @@ export default function HomeView() {
             {/* Center Aligned Header (Matching Other Sections) */}
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-semibold uppercase tracking-wider text-secondary bg-paper border border-outline px-3 py-1 rounded-full inline-block mb-4">
-                CORE PRODUCTS & ADD-ONS
+                {t.showcase_header_eyebrow || "CORE PRODUCTS & ADD-ONS"}
               </span>
               <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-primary mb-4">
-                Digital Business Cards & Custom Landing Pages
+                {t.showcase_header_title || "Digital Business Cards & Custom Landing Pages"}
               </h2>
               <p className="text-secondary text-base sm:text-lg">
-                Our core digital identity solutions powered by automated WhatsApp messaging and customer growth add-ons.
+                {t.showcase_header_subtext || "Our core digital identity solutions powered by automated WhatsApp messaging and customer growth add-ons."}
               </p>
             </div>
 
@@ -368,6 +368,7 @@ export default function HomeView() {
                   key={idx}
                   plan={plan}
                   href="/pricing"
+                  t={t}
                 />
               ))}
             </div>
@@ -379,9 +380,9 @@ export default function HomeView() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-semibold uppercase tracking-wider text-secondary bg-neutral px-3 py-1 rounded-full inline-block mb-4">
-                WHY MARKETINGSETU
+                {t.home_why_eyebrow || "WHY MARKETINGSETU"}
               </span>
-              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-primary mb-4">Results-driven. Reliable.<br />Affordable.</h2>
+              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-primary mb-4">{t.home_why_heading || "Results-driven. Reliable. Affordable."}</h2>
             </div>
             <div className="grid md:grid-cols-2 gap-x-12 gap-y-10 max-w-4xl mx-auto">
               <div className="group flex gap-4 p-6 rounded-2xl bg-paper shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
@@ -421,10 +422,10 @@ export default function HomeView() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-semibold uppercase tracking-wider text-secondary bg-background border border-outline px-3 py-1 rounded-full inline-block mb-4">
-                TESTIMONIALS
+                {t.home_testimonials_eyebrow || "TESTIMONIALS"}
               </span>
               <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-primary mb-4">{t.home_testimonials_heading}</h2>
-              <p className="text-secondary text-base">Real stories from small businesses across Maharashtra growing with MarketingSetu.</p>
+              <p className="text-secondary text-base">{t.home_testimonials_subtext}</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {getTranslatedTestimonials().map((item, idx) => (

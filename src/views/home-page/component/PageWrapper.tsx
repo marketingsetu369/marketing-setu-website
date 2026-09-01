@@ -236,29 +236,29 @@ export default function PageWrapper({ children }: PageWrapperProps) {
               </div>
 
               <p className="text-sm leading-relaxed mb-6">
-                The bridge between your business and your customers — WhatsApp marketing, landing pages, and local growth tools for Bharat's small businesses.
+                {t.footer_tagline}
               </p>
             </div>
             <div>
-              <h4 className="text-white font-heading font-semibold mb-4">Company</h4>
+              <h4 className="text-white font-heading font-semibold mb-4">{t.footer_company || "Company"}</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link className="hover:text-brand-purple transition-colors" href="/about">About</Link></li>
-                <li><Link className="hover:text-brand-purple transition-colors" href="/services">Services</Link></li>
-                <li><Link className="hover:text-brand-purple transition-colors" href="/pricing">Pricing</Link></li>
-                <li><Link className="hover:text-brand-purple transition-colors" href="/blog">Blog</Link></li>
+                <li><Link className="hover:text-brand-purple transition-colors" href="/about">{t.nav_about || "About"}</Link></li>
+                <li><Link className="hover:text-brand-purple transition-colors" href="/services">{t.nav_services || "Services"}</Link></li>
+                <li><Link className="hover:text-brand-purple transition-colors" href="/pricing">{t.nav_pricing || "Pricing"}</Link></li>
+                <li><Link className="hover:text-brand-purple transition-colors" href="/blog">{t.nav_blog || "Blog"}</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-heading font-semibold mb-4">Services</h4>
+              <h4 className="text-white font-heading font-semibold mb-4">{t.footer_services || "Services"}</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link className="hover:text-brand-purple transition-colors" href="/services#whatsapp-marketing">WhatsApp Marketing</Link></li>
-                <li><Link className="hover:text-brand-purple transition-colors" href="/services#landing-pages">Landing Page Design</Link></li>
-                <li><Link className="hover:text-brand-purple transition-colors" href="/services#missed-call">Missed Call Auto Text</Link></li>
-                <li><Link className="hover:text-brand-purple transition-colors" href="/services#google-business">Google Business Setup</Link></li>
+                <li><Link className="hover:text-brand-purple transition-colors" href="/services#whatsapp-marketing">{t.service_wa_title || "WhatsApp Marketing"}</Link></li>
+                <li><Link className="hover:text-brand-purple transition-colors" href="/services#landing-pages">{t.service_lp_title || "Landing Page Design"}</Link></li>
+                <li><Link className="hover:text-brand-purple transition-colors" href="/services#missed-call">{t.service_mc_title || "Missed Call Auto Text"}</Link></li>
+                <li><Link className="hover:text-brand-purple transition-colors" href="/services#google-business">{t.service_gb_title || "Google Business Setup"}</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-heading font-semibold mb-4">Get in Touch</h4>
+              <h4 className="text-white font-heading font-semibold mb-4">{t.footer_get_in_touch || "Get in Touch"}</h4>
               <button
                 onClick={() => handleWhatsAppChat()}
                 className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm transition-colors mb-4 border border-gray-700 cursor-pointer"
@@ -277,16 +277,16 @@ export default function PageWrapper({ children }: PageWrapperProps) {
                     <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
                     <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
                   </svg>
-                  {contactInfo.location}
+                  {language === "mr" ? "पुणे, महाराष्ट्र, भारत" : language === "hi" ? "पुणे, महाराष्ट्र, भारत" : contactInfo.location}
                 </li>
               </ul>
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-            <p>© 2026 MarketingSetu. All rights reserved.</p>
+            <p>{t.footer_rights}</p>
             <div className="flex gap-4">
-              <Link className="hover:text-white transition-colors" href="/privacy-policy">Privacy Policy</Link>
-              <Link className="hover:text-white transition-colors" href="/terms">Terms of Service</Link>
+              <Link className="hover:text-white transition-colors" href="/privacy-policy">{t.footer_privacy || "Privacy Policy"}</Link>
+              <Link className="hover:text-white transition-colors" href="/terms">{t.footer_terms || "Terms of Service"}</Link>
             </div>
           </div>
         </div>

@@ -23,10 +23,14 @@ export interface TranslationDictionary {
   btn_get_started: string;
   btn_view_plan: string;
   btn_see_all_services: string;
+  home_hero_badge_platform: string;
+  home_hero_badge_software: string;
   home_hero_eyebrow: string;
   home_hero_title_1: string;
+  home_hero_title_for: string;
   home_hero_title_gradient: string;
   home_hero_lead: string;
+  home_hero_cta_create_card: string;
   home_hero_stat_1: string;
   home_hero_stat_2: string;
   home_hero_stat_3: string;
@@ -43,6 +47,7 @@ export interface TranslationDictionary {
   home_how_heading: string;
   home_testimonials_eyebrow: string;
   home_testimonials_heading: string;
+  home_testimonials_subtext: string;
   home_cta_heading: string;
   home_cta_description: string;
   about_hero_breadcrumb: string;
@@ -286,6 +291,12 @@ export interface TranslationDictionary {
   bp_gallery_heading: string;
   bp_more: string;
   // Showcase Grid Localization
+  showcase_badge_main: string;
+  showcase_badge_growth: string;
+  showcase_header_eyebrow: string;
+  showcase_header_title: string;
+  showcase_header_subtext: string;
+
   showcase_filter_all: string;
   showcase_filter_main: string;
   showcase_filter_growth: string;
@@ -294,23 +305,42 @@ export interface TranslationDictionary {
   showcase_bullet_digital_1: string;
   showcase_bullet_digital_2: string;
   showcase_bullet_digital_3: string;
+  showcase_btn_digital: string;
+
+  showcase_card_wa_title: string;
+  showcase_card_wa_desc: string;
   showcase_bullet_wa_1: string;
   showcase_bullet_wa_2: string;
   showcase_bullet_wa_3: string;
+  showcase_btn_wa: string;
+
+  showcase_card_lp_title: string;
+  showcase_card_lp_desc: string;
   showcase_bullet_lp_1: string;
   showcase_bullet_lp_2: string;
   showcase_bullet_lp_3: string;
+  showcase_btn_lp: string;
+
+  showcase_card_gb_title: string;
+  showcase_card_gb_desc: string;
   showcase_bullet_gb_1: string;
   showcase_bullet_gb_2: string;
   showcase_bullet_gb_3: string;
+  showcase_btn_gb: string;
+
+  showcase_card_ie_title: string;
+  showcase_card_ie_desc: string;
   showcase_bullet_ie_1: string;
   showcase_bullet_ie_2: string;
   showcase_bullet_ie_3: string;
+  showcase_btn_ie: string;
+
+  showcase_card_pc_title: string;
+  showcase_card_pc_desc: string;
   showcase_bullet_pc_1: string;
   showcase_bullet_pc_2: string;
   showcase_bullet_pc_3: string;
-  showcase_btn_digital: string;
-  showcase_btn_wa: string;
+  showcase_btn_pc: string;
 
   // Service Block Page Keys
   service_block_card_title: string;
@@ -331,4 +361,51 @@ export interface TranslationDictionary {
   pricing_billing_yearly: string;
   pricing_billing_monthly: string;
   pricing_save_badge: string;
+  pricing_whats_included: string;
+  pricing_billed_annually: string;
+  pricing_choose_plan: string;
+
+  // Plan 1 Feature Keys
+  plan_p1_f1_title: string;
+  plan_p1_f1_desc: string;
+  plan_p1_f2_title: string;
+  plan_p1_f2_desc: string;
+  plan_p1_f3_title: string;
+  plan_p1_f3_desc: string;
+  plan_p1_f4_title: string;
+  plan_p1_f4_desc: string;
+
+  // Plan 2 Feature Keys
+  plan_p2_f1_title: string;
+  plan_p2_f1_desc: string;
+  plan_p2_f2_title: string;
+  plan_p2_f2_desc: string;
+  plan_p2_f3_title: string;
+  plan_p2_f3_desc: string;
+  plan_p2_f4_title: string;
+  plan_p2_f4_desc: string;
+
+  // Plan 3 Feature Keys
+  plan_p3_f1_title: string;
+  plan_p3_f1_desc: string;
+  plan_p3_f2_title: string;
+  plan_p3_f2_desc: string;
+  plan_p3_f3_title: string;
+  plan_p3_f3_desc: string;
+  plan_p3_f4_title: string;
+  plan_p3_f4_desc: string;
+
+  // Carousel Demo Card Category & Titles
+  demo_cat_default: string;
+  demo_title_default: string;
+  demo_cat_cafe: string;
+  demo_title_cafe: string;
+  demo_cat_solar: string;
+  demo_title_solar: string;
+  demo_cat_parlour: string;
+  demo_title_parlour: string;
+  demo_cat_two_wheeler: string;
+  demo_title_two_wheeler: string;
+  demo_cat_portfolio: string;
+  demo_title_portfolio: string;
 }

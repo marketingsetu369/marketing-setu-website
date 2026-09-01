@@ -33,27 +33,27 @@ export function getPricingPlans(t: TranslationDictionary): PricingPlan[] {
       whatsappMessage: `Hi MarketingSetu! I'd like to get the ${t.plan_quick_name || "Default Digital Card"} plan.`,
       features: [
         {
-          bold: t.plan_feat_digital_card || "Automated Customer Messaging",
-          desc: "Instant automated reply & lead capture on missed calls or inquiries."
+          bold: t.plan_p1_f1_title || "Digital Business Card",
+          desc: t.plan_p1_f1_desc || "Instant automated reply & lead capture on missed calls or inquiries."
         },
         {
-          bold: t.plan_feat_auto_sms || "Smart Digital Business Card",
-          desc: "Standard mobile-responsive digital business card template."
+          bold: t.plan_p1_f2_title || "Missed Call Auto Text",
+          desc: t.plan_p1_f2_desc || "Standard mobile-responsive digital business card template."
         },
         {
-          bold: "Brand & Contact Details",
-          desc: "Logo, business name, category, phone, email & map location."
+          bold: t.plan_p1_f3_title || "Brand & Contact Details",
+          desc: t.plan_p1_f3_desc || "Logo, business name, category, phone, email & map location."
         },
         {
-          bold: "Social & Owner Links",
-          desc: "Direct tap-to-connect links for WhatsApp & social profiles."
+          bold: t.plan_p1_f4_title || "Social & Owner Links",
+          desc: t.plan_p1_f4_desc || "Direct tap-to-connect links for WhatsApp & social profiles."
         }
       ],
       compactFeatures: [
-        { bold: t.plan_feat_digital_card || "Automated Customer Messaging" },
-        { bold: t.plan_feat_auto_sms || "Smart Digital Business Card" },
-        { bold: "Brand & Contact Details" },
-        { bold: "Social & Owner Links" }
+        { bold: t.plan_p1_f1_title || "Digital Business Card" },
+        { bold: t.plan_p1_f2_title || "Missed Call Auto Text" },
+        { bold: t.plan_p1_f3_title || "Brand & Contact Details" },
+        { bold: t.plan_p1_f4_title || "Social & Owner Links" }
       ]
     },
     {
@@ -67,25 +67,28 @@ export function getPricingPlans(t: TranslationDictionary): PricingPlan[] {
       discountBadge: "MOST POPULAR",
       whatsappMessage: `Hi MarketingSetu! I'd like to get the ${t.plan_smart_name || "Category Smart Card"} plan.`,
       features: [
-        { bold: t.plan_feat_everything_starter || "Everything in Smart Digital Business Card" },
         {
-          bold: t.plan_feat_auto_wa || "Category Special Generated Template",
-          desc: "Customized layout for your business (Cafe, Beauty, Solar, Broker, etc.)."
+          bold: t.plan_p2_f1_title || "Everything in Starter",
+          desc: t.plan_p2_f1_desc || undefined
         },
         {
-          bold: t.plan_feat_festivals || "Products & Services Catalog",
-          desc: "Display your items, pricing, photos, and direct WhatsApp inquiry."
+          bold: t.plan_p2_f2_title || "WhatsApp Broadcast",
+          desc: t.plan_p2_f2_desc || "Customized layout for your business (Cafe, Beauty, Solar, Broker, etc.)."
         },
         {
-          bold: "Photo Gallery & Reviews",
-          desc: "High-resolution showcase gallery and customer rating testimonials."
+          bold: t.plan_p2_f3_title || "Festival Social Media Posts",
+          desc: t.plan_p2_f3_desc || "Display your items, pricing, photos, and direct WhatsApp inquiry."
+        },
+        {
+          bold: t.plan_p2_f4_title || "Photo Gallery & Reviews",
+          desc: t.plan_p2_f4_desc || "High-resolution showcase gallery and customer rating testimonials."
         }
       ],
       compactFeatures: [
-        { bold: t.plan_feat_everything_starter || "Everything in Smart Digital Business Card" },
-        { bold: t.plan_feat_auto_wa || "Category Special Generated Template" },
-        { bold: t.plan_feat_festivals || "Products & Services Catalog" },
-        { bold: "Photo Gallery & Reviews" }
+        { bold: t.plan_p2_f1_title || "Everything in Starter" },
+        { bold: t.plan_p2_f2_title || "WhatsApp Broadcast" },
+        { bold: t.plan_p2_f3_title || "Festival Social Media Posts" },
+        { bold: t.plan_p2_f4_title || "Photo Gallery & Reviews" }
       ]
     },
     {
@@ -98,25 +101,28 @@ export function getPricingPlans(t: TranslationDictionary): PricingPlan[] {
       discountBadge: "25% OFF",
       whatsappMessage: `Hi MarketingSetu! I'd like to get the ${t.plan_power_name || "Custom 1-Page Website"} plan.`,
       features: [
-        { bold: t.plan_feat_everything_growth || "Everything in Category Smart Card" },
         {
-          bold: t.plan_feat_landing_page || "Full Custom Single Page Website",
-          desc: "Bespoke UI design built exclusively for your business brand."
+          bold: t.plan_p3_f1_title || "Everything in Growth",
+          desc: t.plan_p3_f1_desc || undefined
         },
         {
-          bold: t.plan_feat_domain || "Custom Domain & Hosting Setup",
-          desc: "Connected to your custom .com or .in domain."
+          bold: t.plan_p3_f2_title || "1 Landing Page",
+          desc: t.plan_p3_f2_desc || "Bespoke UI design built exclusively for your business brand."
         },
         {
-          bold: t.plan_feat_google || "Google Business & SEO Setup",
-          desc: "Local search map optimization and SEO index setup."
+          bold: t.plan_p3_f3_title || "Custom Landing Page + Domain",
+          desc: t.plan_p3_f3_desc || "Connected to your custom .com or .in domain."
+        },
+        {
+          bold: t.plan_p3_f4_title || "Google Maps Setup",
+          desc: t.plan_p3_f4_desc || "Local search map optimization and SEO index setup."
         }
       ],
       compactFeatures: [
-        { bold: t.plan_feat_everything_growth || "Everything in Category Smart Card" },
-        { bold: t.plan_feat_landing_page || "Full Custom Single Page Website" },
-        { bold: t.plan_feat_domain || "Custom Domain & Hosting Setup" },
-        { bold: t.plan_feat_google || "Google Business & SEO Setup" }
+        { bold: t.plan_p3_f1_title || "Everything in Growth" },
+        { bold: t.plan_p3_f2_title || "1 Landing Page" },
+        { bold: t.plan_p3_f3_title || "Custom Landing Page + Domain" },
+        { bold: t.plan_p3_f4_title || "Google Maps Setup" }
       ]
     }
   ];
