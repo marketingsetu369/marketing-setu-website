@@ -15,6 +15,7 @@ export { default as StatBar } from "./StatBar";
 export { default as StepsSection } from "./StepsSection";
 export { default as TestimonialCard } from "./TestimonialCard";
 export { default as InteractiveShowcase } from "./InteractiveShowcase";
+export { default as InstantCardGenerator } from "./InstantCardGenerator";
 export { useWhatsApp } from "./useWhatsApp";
 
 // Type re-exports

@@ -255,6 +255,21 @@ export default function PageWrapper({ children }: PageWrapperProps) {
                 <li><Link className="hover:text-brand-purple transition-colors" href="/services#landing-pages">{t.service_lp_title || "Landing Page Design"}</Link></li>
                 <li><Link className="hover:text-brand-purple transition-colors" href="/services#missed-call">{t.service_mc_title || "Missed Call Auto Text"}</Link></li>
                 <li><Link className="hover:text-brand-purple transition-colors" href="/services#google-business">{t.service_gb_title || "Google Business Setup"}</Link></li>
+                <li>
+                  <Link className="text-emerald-400 hover:text-emerald-300 transition-colors font-medium flex items-center gap-1 mt-1" href="/tools/whatsapp-link-generator">
+                    <span>⚡ WhatsApp Link Generator</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-indigo-400 hover:text-indigo-300 transition-colors font-medium flex items-center gap-1 mt-1" href="/tools/standee-generator">
+                    <span>🖨️ Free QR Standee & Flyer</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-blue-400 hover:text-blue-300 transition-colors font-medium flex items-center gap-1 mt-1" href="/tools/google-review-qr-generator">
+                    <span>⭐ Google Review QR Standee</span>
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>

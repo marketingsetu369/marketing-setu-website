@@ -2,7 +2,7 @@
 
 import { useThemeStore } from "@/store/themeStore";
 import { TranslationDictionary } from "@/translation";
-import { InteractiveShowcase, PageWrapper, PricingCard, TestimonialCard, useWhatsApp } from "@/views/home-page/component";
+import { InstantCardGenerator, InteractiveShowcase, PageWrapper, PricingCard, TestimonialCard, useWhatsApp } from "@/views/home-page/component";
 import { getPricingPlans, getTestimonialsData, translations } from "@/views/home-page/data";
 import CafeCardView from "@/views/home-page/hero-section/CafeCardView";
 import MarketingSetuCardView from "@/views/home-page/hero-section/MarketingSetuCardView";
@@ -325,6 +325,9 @@ export default function HomeView() {
             </div>
           </div>
         </section>
+
+        {/* INSTANT LIVE CARD BUILDER SIMULATOR */}
+        <InstantCardGenerator t={t} />
 
         {/* SERVICES SECTION */}
         <section className="py-24 bg-gray-50 dark:bg-gray-900/50 border-y border-outline/60 overflow-hidden" id="services">
