@@ -104,6 +104,8 @@ export interface TranslationDictionary {
   reviews_join_eyebrow: string;
   reviews_join_heading: string;
   reviews_join_desc: string;
+  reviews_grid_heading: string;
+  reviews_grid_lead: string;
   blog_hero_breadcrumb: string;
   blog_hero_eyebrow: string;
   blog_hero_title: string;
@@ -219,6 +221,8 @@ export interface TranslationDictionary {
   faq_pricing_a2: string;
   faq_pricing_q3: string;
   faq_pricing_a3: string;
+  faq_pricing_q4: string;
+  faq_pricing_a4: string;
   faq_contact_q1: string;
   faq_contact_a1: string;
   faq_contact_q2: string;
@@ -437,4 +441,39 @@ export interface TranslationDictionary {
   generator_theme_color_label: string;
   generator_publish_btn: string;
   generator_footer_trust: string;
+
+  // Services Features (Gallery & Reviews)
+  service_feat_gallery_1: string;
+  service_feat_gallery_2: string;
+  service_feat_gallery_3: string;
+  service_feat_gallery_4: string;
+  service_feat_reviews_1: string;
+  service_feat_reviews_2: string;
+  service_feat_reviews_3: string;
+  service_feat_reviews_4: string;
+
+  // Comparison Table Keys
+  comp_feat_auto_messaging: string;
+  comp_feat_default_template: string;
+  comp_feat_category_template: string;
+  comp_feat_catalog: string;
+  comp_feat_gallery_reviews: string;
+  comp_feat_custom_website: string;
+  comp_feat_domain_hosting: string;
+  comp_feat_google_seo: string;
+  comp_feat_price_year: string;
+  plan_renew_notice: string;
+  cta_join_businesses: string;
+
+  // Blog Posts Keys
+  blog_date_coming_soon: string;
+  blog_cat_wa: string;
+  blog_cat_seo: string;
+  blog_cat_auto: string;
+  blog_p1_title: string;
+  blog_p1_desc: string;
+  blog_p2_title: string;
+  blog_p2_desc: string;
+  blog_p3_title: string;
+  blog_p3_desc: string;
 }

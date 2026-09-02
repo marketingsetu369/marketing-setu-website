@@ -10,6 +10,15 @@ export default function CompareTable() {
 
   const translateFeature = (feat: string) => {
     const mapping: Record<string, keyof TranslationDictionary> = {
+      "Automated Customer Messaging": "comp_feat_auto_messaging",
+      "Default Digital Card Template": "comp_feat_default_template",
+      "Category Special Generated Template": "comp_feat_category_template",
+      "Products & Services Catalog": "comp_feat_catalog",
+      "Photo Gallery & Reviews": "comp_feat_gallery_reviews",
+      "Full Custom Single Page Website": "comp_feat_custom_website",
+      "Custom Domain & Hosting Setup": "comp_feat_domain_hosting",
+      "Google Business & SEO Setup": "comp_feat_google_seo",
+      "Price / Year": "comp_feat_price_year",
       "Digital Business Card": "plan_feat_digital_card",
       "Auto SMS on Missed Call": "plan_feat_auto_sms",
       "Auto WhatsApp on Missed Call": "plan_feat_auto_wa",
@@ -17,7 +26,6 @@ export default function CompareTable() {
       "Custom Domain": "comp_feat_domain",
       "Festival Social Media Posts": "plan_feat_festivals",
       "Google Business Setup": "comp_feat_gb",
-      "Price / Year": "comp_feat_price",
       "Landing Pages": "comp_feat_lp",
       "WhatsApp Broadcasts": "comp_feat_wa",
       "Missed Call Automation": "comp_feat_mc",

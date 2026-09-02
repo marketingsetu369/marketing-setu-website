@@ -17,8 +17,8 @@ export function getPricingFaqs(t: TranslationDictionary): FaqItem[] {
       answer: t.faq_pricing_a3 || "You can use your existing number — we help you set it up for WhatsApp Business and connect the automation tools included in your plan.",
     },
     {
-      question: "What happens after one year?",
-      answer: "Your plan renews annually. We send a reminder in advance, and you can switch plans at renewal if your needs have changed.",
+      question: t.faq_pricing_q4 || "What happens after one year?",
+      answer: t.plan_renew_notice || "Your plan renews annually. We send a reminder in advance, and you can switch plans at renewal if your needs have changed.",
     },
   ];
 }

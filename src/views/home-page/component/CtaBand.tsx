@@ -1,6 +1,8 @@
 "use client";
 
 import { useWhatsApp } from "./useWhatsApp";
+import { useThemeStore } from "@/store/themeStore";
+import { translations } from "@/views/home-page/data";
 
 interface CtaBandProps {
   heading: string;
@@ -16,6 +18,8 @@ export default function CtaBand({
   whatsappMessage = "Hi MarketingSetu! I'd like a free consultation.",
 }: CtaBandProps) {
   const { openWhatsApp } = useWhatsApp();
+  const { language } = useThemeStore();
+  const t = translations[language] || translations.en;
 
   return (
     <section className="py-16 md:py-20 bg-background">
@@ -34,7 +38,7 @@ export default function CtaBand({
               {/* Eyebrow pill */}
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[11px] font-semibold text-white/70 mb-5">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-main animate-pulse" />
-                Join 500+ Businesses
+                {t.cta_join_businesses || "Join 500+ Businesses"}
               </span>
 
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white tracking-tight leading-tight max-w-lg">

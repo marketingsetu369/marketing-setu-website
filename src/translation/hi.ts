@@ -122,6 +122,8 @@ export const hi: TranslationDictionary = {
   reviews_join_eyebrow: "जुड़ें",
   reviews_join_heading: "आपका व्यवसाय हमारी अगली सफलता की कहानी हो सकता है",
   reviews_join_desc: "अपने व्यवसाय के बारे में बताएं और देखें कि हमारे प्लान आपके लिए कैसे काम कर सकते हैं।",
+  reviews_grid_heading: "हमारे ग्राहक क्या कहते हैं",
+  reviews_grid_lead: "भारत भर के छोटे व्यवसायों के वास्तविक अनुभव और परिणाम।",
 
   // Blog Page
   blog_hero_breadcrumb: "ब्लॉग",
@@ -254,6 +256,8 @@ export const hi: TranslationDictionary = {
   faq_pricing_a2: "हाँ, आप किसी भी समय अपने प्लान को अपग्रेड या डाउनग्रेड कर सकते हैं। बची हुई राशि तदनुसार एडजस्ट की जाएगी।",
   faq_pricing_q3: "क्या इसमें व्हाट्सएप एपीआई की लागत शामिल है?",
   faq_pricing_a3: "हमारे प्लान्स सामान्य उपयोग के लिए पर्याप्त हैं। बहुत बड़े पैमाने पर संदेश भेजने की स्थिति में मामूली व्हाट्सएप चार्जेस की जानकारी आपको पहले ही दी जाएगी।",
+  faq_pricing_q4: "एक वर्ष के बाद क्या होगा?",
+  faq_pricing_a4: "आपकी योजना का वार्षिक नवीनीकरण होता है। हम पहले से रिमाइंडर भेजते हैं, और ज़रूरतें बदलने पर आप रिन्यूअल के समय प्लान बदल सकते हैं।",
 
   faq_contact_q1: "साइन अप के बाद काम शुरू होने में कितना समय लगता है?",
   faq_contact_a1: "आम तौर पर ५ से ७ कार्यदिवसों में आपका लैंडिंग पेज और व्हाट्सएप सिस्टम तैयार हो जाता है।",
@@ -284,9 +288,10 @@ export const hi: TranslationDictionary = {
   // Fallbacks synced from English
   contact_faq_eyebrow: "Quick Answers",
   contact_faq_heading: "Before you reach out",
-  reviews_stat_rating: "Average Rating",
-  reviews_stat_reviews: "Client Reviews",
-  reviews_stat_served: "Businesses Served",
+  reviews_stat_rating: "औसत रेटिंग",
+  reviews_stat_reviews: "ग्राहक समीक्षाएं",
+  reviews_stat_served: "संतुष्ट व्यवसाय",
+  cta_join_businesses: "५००+ व्यवसायों से जुड़ें",
   plan_quick_badge: "🌿 Starter · Setu Connect",
   plan_smart_badge: "🚀 Growth · Setu Bridge",
   plan_power_badge: "👑 Pro · Setu Summit",
@@ -492,4 +497,38 @@ export const hi: TranslationDictionary = {
   generator_theme_color_label: "🎨 बिज़नेस पेज थीम रंग",
   generator_publish_btn: "यह पेज मार्केटिंगसेतु के साथ लाइव करें",
   generator_footer_trust: "✓ १५ मिनट में ऑनबोर्डिंग • कस्टम डोमेन / सबडोमेन • व्हाट्सएप ऑटो-रिप्लाई इंजन",
+
+  // Services Features (Gallery & Reviews)
+  service_feat_gallery_1: "दुकान/कार्यालय के लिए उच्च गुणवत्ता वाले फोटो अपलोड",
+  service_feat_gallery_2: "ग्राहकों का विश्वास बढ़ाने के लिए व्यवस्थित गैलरी दृश्य",
+  service_feat_gallery_3: "सभी उपकरणों पर त्वरित मोबाइल व्यू",
+  service_feat_gallery_4: "मोबाइल ऐप द्वारा आसान फोटो प्रबंधन",
+  service_feat_reviews_1: "ग्राहकों के रिव्यू, रेटिंग और फीडबैक प्रदर्शित करें",
+  service_feat_reviews_2: "उच्च रूपांतरण और विश्वसनीयता के लिए सोशल प्रूफ",
+  service_feat_reviews_3: "मालिक की प्रोफाइल और पार्टनर्स के विशेष कार्ड",
+  service_feat_reviews_4: "ऐप के माध्यम से रिव्यू को आसानी से अपडेट करें",
+
+  // Comparison Table Keys
+  comp_feat_auto_messaging: "ऑटोमेटेड कस्टमर मैसेजिंग",
+  comp_feat_default_template: "डिफ़ॉल्ट डिजिटल कार्ड टेम्पलेट",
+  comp_feat_category_template: "श्रेणी अनुसार विशेष जनरेटेड टेम्पलेट",
+  comp_feat_catalog: "उत्पाद और सेवा कैटलॉग",
+  comp_feat_gallery_reviews: "फोटो गैलरी और रिव्यू",
+  comp_feat_custom_website: "फुल कस्टम सिंगल पेज वेबसाइट",
+  comp_feat_domain_hosting: "कस्टम डोमेन और होस्टिंग सेटअप",
+  comp_feat_google_seo: "गूगल बिज़नेस और SEO सेटअप",
+  comp_feat_price_year: "कीमत / वर्ष",
+  plan_renew_notice: "आपकी योजना का वार्षिक नवीनीकरण होता है। हम पहले से रिमाइंडर भेजते हैं, और ज़रूरतें बदलने पर आप रिन्यूअल के समय प्लान बदल सकते हैं।",
+
+  // Blog Posts Keys
+  blog_date_coming_soon: "जल्द आ रहा है",
+  blog_cat_wa: "व्हाट्सएप मार्केटिंग",
+  blog_cat_seo: "लोकल SEO",
+  blog_cat_auto: "ऑटोमेशन",
+  blog_p1_title: "छोटे व्यवसायों के लिए व्हाट्सएप मार्केटिंग: एक व्यावहारिक गाइड",
+  blog_p1_desc: "भारतीय छोटे व्यवसाय व्हाट्सएप ब्रॉडकास्ट और ऑटोमेशन का उपयोग करके रोज़ाना आने वाली पूछताछ को बार-बार आने वाले ग्राहकों में कैसे बदल सकते हैं।",
+  blog_p2_title: "गूगल मैप्स पर अपना व्यवसाय खोजने के ५ तरीके",
+  blog_p2_desc: "अपने गूगल बिज़नेस प्रोफ़ाइल को सेट और अनुकूलित करने के लिए एक सरल चेकलिस्ट ताकि आस-पास के ग्राहक आपको पहले खोजें।",
+  blog_p3_title: "मिस्ड कॉल, मिस्ड सेल? ऑटो-एसएमएस से बढ़ाएं बिक्री",
+  blog_p3_desc: "व्यस्त दुकानदारों और सेवा व्यवसायों के लिए मिस्ड-कॉल ऑटोमेशन सबसे अधिक रिटर्न देने वाले टूल्स में से एक क्यों है।",
 };

@@ -1,5 +1,5 @@
 // Data barrel — import from "@/views/home-page/data"
-export { blogPosts } from "./blogs";
+export { blogPosts, getBlogPosts } from "./blogs";
 export { WA_NUMBER, WA_DEFAULT_MSG, navLinks, contactInfo } from "./constants";
 export { pricingFaqs, contactFaqs, getPricingFaqs, getContactFaqs } from "./faqs";
 export { whyUsFeatures, aboutValues, getWhyUsFeatures, getAboutValues } from "./features";

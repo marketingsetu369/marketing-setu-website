@@ -127,6 +127,8 @@ export const en: TranslationDictionary = {
   reviews_join_eyebrow: "Join Them",
   reviews_join_heading: "Your business could be our next success story",
   reviews_join_desc: "Tell us about your business and we'll show you exactly how our plans would work for you.",
+  reviews_grid_heading: "What our customers are saying",
+  reviews_grid_lead: "Real results from real small businesses across India.",
 
   // Blog Page
   blog_hero_breadcrumb: "Blog",
@@ -266,6 +268,8 @@ export const en: TranslationDictionary = {
   faq_pricing_a2: "Yes. You can upgrade at any time. We will prorate the difference for the remaining months of your subscription.",
   faq_pricing_q3: "Does it include WhatsApp API costs?",
   faq_pricing_a3: "For basic broadcasts, yes. For extremely high-volume corporate automation, we help you set up official WhatsApp business API rates.",
+  faq_pricing_q4: "What happens after one year?",
+  faq_pricing_a4: "Your plan renews annually. We send a reminder in advance, and you can switch plans at renewal if your needs have changed.",
 
   faq_contact_q1: "How long does it take to set up?",
   faq_contact_a1: "Once we have your business details, your landing page and WhatsApp automation are live within 5 to 7 working days.",
@@ -489,4 +493,39 @@ export const en: TranslationDictionary = {
   generator_theme_color_label: "🎨 Business Page Theme Color",
   generator_publish_btn: "Publish This Page with MarketingSetu",
   generator_footer_trust: "✓ 15-Minute Onboarding • Customized Domain / Subdomain • WhatsApp Auto-Reply Engine",
+
+  // Services Features (Gallery & Reviews)
+  service_feat_gallery_1: "High-quality photo uploads for shop/office",
+  service_feat_gallery_2: "Organised gallery view for customer trust",
+  service_feat_gallery_3: "Instant mobile viewing on all devices",
+  service_feat_gallery_4: "Easy photo management via mobile app",
+  service_feat_reviews_1: "Display customer reviews, ratings & feedback",
+  service_feat_reviews_2: "Social proof elements for higher conversion",
+  service_feat_reviews_3: "Owner profiles & partner spotlight cards",
+  service_feat_reviews_4: "Easily update reviews through the app",
+
+  // Comparison Table Keys
+  comp_feat_auto_messaging: "Automated Customer Messaging",
+  comp_feat_default_template: "Default Digital Card Template",
+  comp_feat_category_template: "Category Special Generated Template",
+  comp_feat_catalog: "Products & Services Catalog",
+  comp_feat_gallery_reviews: "Photo Gallery & Reviews",
+  comp_feat_custom_website: "Full Custom Single Page Website",
+  comp_feat_domain_hosting: "Custom Domain & Hosting Setup",
+  comp_feat_google_seo: "Google Business & SEO Setup",
+  comp_feat_price_year: "Price / Year",
+  plan_renew_notice: "Your plan renews annually. We send a reminder in advance, and you can switch plans at renewal if your needs have changed.",
+  cta_join_businesses: "Join 500+ Businesses",
+
+  // Blog Posts Keys
+  blog_date_coming_soon: "Coming soon",
+  blog_cat_wa: "WhatsApp Marketing",
+  blog_cat_seo: "Local SEO",
+  blog_cat_auto: "Automation",
+  blog_p1_title: "WhatsApp Marketing for Small Businesses: A Practical Guide",
+  blog_p1_desc: "How Indian small businesses can use WhatsApp broadcasts and automation to turn everyday enquiries into repeat customers.",
+  blog_p2_title: "5 Ways to Get Your Business Found on Google Maps",
+  blog_p2_desc: "A simple checklist for setting up and optimising your Google Business Profile so nearby customers find you first.",
+  blog_p3_title: "Missed Call, Missed Sale? Fixing the Gap With Auto-SMS",
+  blog_p3_desc: "Why missed-call automation is one of the highest-ROI tools for busy shop owners and service businesses.",
 };

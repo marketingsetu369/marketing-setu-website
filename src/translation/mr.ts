@@ -122,6 +122,8 @@ export const mr: TranslationDictionary = {
   reviews_join_eyebrow: "सहभागी व्हा",
   reviews_join_heading: "तुमचा व्यवसाय आमची पुढील यशोगाथा असू शकतो",
   reviews_join_desc: "तुमच्या व्यवसायाबद्दल सांगा आणि आमचे प्लॅन्स तुमच्यासाठी कसे काम करतील ते पहा.",
+  reviews_grid_heading: "आमचे ग्राहक काय म्हणतात",
+  reviews_grid_lead: "संपूर्ण भारतातील छोट्या व्यवसायांचे खरे अनुभव आणि निकाल.",
 
   // Blog Page
   blog_hero_breadcrumb: "ब्लॉग",
@@ -254,6 +256,8 @@ export const mr: TranslationDictionary = {
   faq_pricing_a2: "होय, तुम्ही तुमच्या गरजेनुसार कोणत्याही महिन्याला प्लॅन अपग्रेड किंवा डाउनग्रेड करू शकता. राहिलेली रक्कम ॲडजस्ट केली जाईल.",
   faq_pricing_q3: "व्हॉट्सॲपचे अधिकृत नंबर किंवा एपीआय खर्च समाविष्ट आहे का?",
   faq_pricing_a3: "आमच्या प्लॅन्समध्ये प्राथमिक मार्केटिंग मोहीम खर्च समाविष्ट आहे. अत्यंत मोठ्या प्रमाणावर मेसेज असल्यास व्हॉट्सॲपच्या मूळ चार्जेसचे मार्गदर्शन आम्ही करतो.",
+  faq_pricing_q4: "एका वर्षानंतर काय होईल?",
+  faq_pricing_a4: "तुमचा प्लॅन दरवर्षी रिन्यू होतो. आम्ही आधीच रिमाइंडर पाठवतो आणि गरजा बदलल्यास तुम्ही रिन्युअलच्या वेळी प्लॅन बदलू शकता.",
 
   faq_contact_q1: "साइन अप केल्यानंतर सेटअप व्हायला किती वेळ लागतो?",
   faq_contact_a1: "मोठ्या प्रमाणावर ५ ते ७ दिवसांत तुमचे लँडिंग पेज आणि व्हॉट्सॲप सेटअप तयार होते.",
@@ -284,9 +288,10 @@ export const mr: TranslationDictionary = {
   // Fallbacks synced from English
   contact_faq_eyebrow: "Quick Answers",
   contact_faq_heading: "Before you reach out",
-  reviews_stat_rating: "Average Rating",
-  reviews_stat_reviews: "Client Reviews",
-  reviews_stat_served: "Businesses Served",
+  reviews_stat_rating: "सरासरी रेटिंग",
+  reviews_stat_reviews: "ग्राहक रिव्ह्यूज",
+  reviews_stat_served: "सेवा दिलेले व्यवसाय",
+  cta_join_businesses: "५००+ व्यवसायांमध्ये सामील व्हा",
   plan_quick_badge: "🌿 Starter · Setu Connect",
   plan_smart_badge: "🚀 Growth · Setu Bridge",
   plan_power_badge: "👑 Pro · Setu Summit",
@@ -492,4 +497,38 @@ export const mr: TranslationDictionary = {
   generator_theme_color_label: "🎨 बिझनेस पेज थीम रंग",
   generator_publish_btn: "हे पेज मार्केटिंगसेतू सोबत लाईव्ह करा",
   generator_footer_trust: "✓ १५ मिनिटांत सेटअप • स्वतःचे डोमेन / सबडोमेन • व्हॉट्सॲप ऑटो-रिप्लाय इंजिन",
+
+  // Services Features (Gallery & Reviews)
+  service_feat_gallery_1: "दुकान/ऑफिससाठी उच्च दर्जाचे फोटो अपलोड",
+  service_feat_gallery_2: "ग्राहकांचा विश्वास वाढवण्यासाठी सुव्यवस्थित गॅलरी",
+  service_feat_gallery_3: "सर्व उपकरणांवर झटपट मोबाईल व्ह्यू",
+  service_feat_gallery_4: "मोबाईल ॲपद्वारे सोपे फोटो व्यवस्थापन",
+  service_feat_reviews_1: "ग्राहकांचे रिव्ह्यूज, रेटिंग आणि फीडबॅक दाखवा",
+  service_feat_reviews_2: "अधिक विक्री आणि विश्वासासाठी सोशल प्रूफ",
+  service_feat_reviews_3: "मालकाचे प्रोफाईल आणि भागीदारांचे विशेष कार्ड",
+  service_feat_reviews_4: "ॲपद्वारे रिव्ह्यूज सहजपणे अपडेट करा",
+
+  // Comparison Table Keys
+  comp_feat_auto_messaging: "ऑटोमेटेड कस्टमर मेसेजिंग",
+  comp_feat_default_template: "डिफॉल्ट डिजिटल कार्ड टेम्पलेट",
+  comp_feat_category_template: "कॅटेगरीनुसार स्पेशल जनरेट केलेले टेम्पलेट",
+  comp_feat_catalog: "प्रॉडक्ट्स आणि सर्व्हिसेस कॅटलॉग",
+  comp_feat_gallery_reviews: "फोटो गॅलरी आणि रिव्ह्यूज",
+  comp_feat_custom_website: "फुल कस्टम सिंगल पेज वेबसाईट",
+  comp_feat_domain_hosting: "कस्टम डोमेन आणि होस्टिंग सेटअप",
+  comp_feat_google_seo: "गुगल बिझनेस आणि SEO सेटअप",
+  comp_feat_price_year: "किंमत / वर्ष",
+  plan_renew_notice: "तुमचा प्लॅन दरवर्षी रिन्यू होतो. आम्ही आधीच रिमाइंडर पाठवतो आणि गरजा बदलल्यास तुम्ही रिन्युअलच्या वेळी प्लॅन बदलू शकता.",
+
+  // Blog Posts Keys
+  blog_date_coming_soon: "लवकरच येत आहे",
+  blog_cat_wa: "व्हॉट्सॲप मार्केटिंग",
+  blog_cat_seo: "स्थानिक SEO",
+  blog_cat_auto: "ऑटोमेशन",
+  blog_p1_title: "छोट्या व्यवसायांसाठी व्हॉट्सॲप मार्केटिंग: एक व्यावहारिक मार्गदर्शक",
+  blog_p1_desc: "भारतीय लहान व्यवसाय व्हॉट्सॲप ब्रॉडकास्ट आणि ऑटोमेशनचा वापर करून रोजच्या चौकशीचे रूपांतर नियमित ग्राहकांमध्ये कसे करू शकतात.",
+  blog_p2_title: "गुगल मॅप्सवर तुमचा व्यवसाय शोधण्याचे ५ मार्ग",
+  blog_p2_desc: "तुमचे गुगल बिझनेस प्रोफाईल सेट आणि ऑप्टिमाइझ करण्यासाठी सोपी चेकलिस्ट, जेणेकरून जवळचे ग्राहक तुम्हाला प्रथम शोधतील.",
+  blog_p3_title: "मिस्ड कॉल, मिस्ड सेल? ऑटो-एसएमएस द्वारे वाढवा विक्री",
+  blog_p3_desc: "व्यस्त दुकानदार आणि सेवा व्यवसायांसाठी मिस्ड-कॉल ऑटोमेशन हे सर्वाधिक नफा मिळवून देणारे साधन का आहे.",
 };

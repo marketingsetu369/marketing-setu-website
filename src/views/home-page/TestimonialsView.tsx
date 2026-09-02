@@ -54,10 +54,10 @@ export default function TestimonialsView() {
           {/* Section heading */}
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold text-primary tracking-tight">
-              What our customers are saying
+              {t.reviews_grid_heading || "What our customers are saying"}
             </h2>
             <p className="text-secondary text-sm mt-3 max-w-xl mx-auto leading-relaxed">
-              Real results from real small businesses across India.
+              {t.reviews_grid_lead || "Real results from real small businesses across India."}
             </p>
           </div>
 
