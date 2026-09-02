@@ -80,10 +80,10 @@ export const metadata: Metadata = {
       "MarketingSetu helps small businesses grow online with smart digital business cards, WhatsApp marketing automation, custom landing pages, Google Business map SEO, and daily cash flow ledger app.",
     images: [
       {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "MarketingSetu Digital Growth Platform",
+        url: "/logo_icon.png",
+        width: 1024,
+        height: 1024,
+        alt: "MarketingSetu – Connecting Brands to Growth",
       },
     ],
   },
@@ -92,7 +92,7 @@ export const metadata: Metadata = {
     title: "MarketingSetu – #1 Digital Business Card & WhatsApp Automation Platform India",
     description:
       "MarketingSetu helps small businesses grow online with smart digital business cards, WhatsApp marketing automation, custom landing pages, Google Business map SEO, and daily cash flow ledger app.",
-    images: ["/og-image.png"],
+    images: ["/logo_icon.png"],
   },
   robots: {
     index: true,
