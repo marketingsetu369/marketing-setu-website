@@ -408,4 +408,33 @@ export interface TranslationDictionary {
   demo_title_two_wheeler: string;
   demo_cat_portfolio: string;
   demo_title_portfolio: string;
+
+  // Instant Live Card Builder Simulator
+  generator_badge: string;
+  generator_title: string;
+  generator_title_highlight: string;
+  generator_subtitle: string;
+  generator_template_label: string;
+  generator_tpl_cafe: string;
+  generator_tpl_beauty: string;
+  generator_tpl_solar: string;
+  generator_tpl_broker: string;
+  generator_tpl_retail: string;
+  generator_business_name_label: string;
+  generator_business_name_placeholder: string;
+  generator_category_chip_label: string;
+  generator_category_chip_placeholder: string;
+  generator_tagline_label: string;
+  generator_tagline_placeholder: string;
+  generator_owner_name_label: string;
+  generator_owner_name_placeholder: string;
+  generator_owner_role_label: string;
+  generator_owner_role_placeholder: string;
+  generator_phone_label: string;
+  generator_email_label: string;
+  generator_city_label: string;
+  generator_city_placeholder: string;
+  generator_theme_color_label: string;
+  generator_publish_btn: string;
+  generator_footer_trust: string;
 }

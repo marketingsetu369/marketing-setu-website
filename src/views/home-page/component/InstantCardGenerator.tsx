@@ -226,14 +226,15 @@ export default function InstantCardGenerator({ t }: InstantCardGeneratorProps) {
         <div className="text-center max-w-3xl mx-auto mb-14">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 mb-4 uppercase tracking-wider">
             <HugeiconsIcon icon={SparklesIcon} size={14} />
-            Instant Live Preview • Exact Business Page UI
+            {t.generator_badge || "Instant Live Preview • Exact Business Page UI"}
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-primary mb-4 leading-tight">
-            Design Your Digital Business Page <br className="hidden sm:inline" />
-            <span className="text-[#5B3DF5]">in 30 Seconds</span>
+            {t.generator_title || "Design Your Digital Business Page"}{" "}
+            <br className="hidden sm:inline" />
+            <span className="text-[#5B3DF5]">{t.generator_title_highlight || "in 30 Seconds"}</span>
           </h2>
           <p className="text-secondary text-base sm:text-lg leading-relaxed">
-            Fill in your actual business details below and test your live mobile-responsive Digital Business Page layout in real time.
+            {t.generator_subtitle || "Fill in your actual business details below and test your live mobile-responsive Digital Business Page layout in real time."}
           </p>
         </div>
 
@@ -246,24 +247,33 @@ export default function InstantCardGenerator({ t }: InstantCardGeneratorProps) {
             {/* Header / Preset Chips */}
             <div className="mb-6">
               <label className="block text-xs font-bold uppercase tracking-wider text-secondary mb-2.5">
-                ⚡ Pick a Starting Industry Template
+                {t.generator_template_label || "⚡ Pick a Starting Industry Template"}
               </label>
               <div className="flex flex-wrap gap-2">
-                {PRESET_CATEGORIES.map((preset) => (
-                  <button
-                    key={preset.id}
-                    type="button"
-                    onClick={() => handleSelectPreset(preset)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border flex items-center gap-1.5 cursor-pointer ${
-                      selectedTemplate.id === preset.id
-                        ? "bg-primary text-background border-primary shadow-xs scale-[1.02]"
-                        : "bg-background text-secondary border-outline hover:border-outline/80 hover:text-primary"
-                    }`}
-                  >
-                    <span>{preset.avatarIcon}</span>
-                    <span>{preset.name.split("/")[0]}</span>
-                  </button>
-                ))}
+                {PRESET_CATEGORIES.map((preset) => {
+                  let localizedName = preset.name.split("/")[0];
+                  if (preset.id === "cafe") localizedName = t.generator_tpl_cafe || "Cafe";
+                  if (preset.id === "beauty") localizedName = t.generator_tpl_beauty || "Beauty Parlour";
+                  if (preset.id === "solar") localizedName = t.generator_tpl_solar || "Solar & Energy Solutions";
+                  if (preset.id === "broker") localizedName = t.generator_tpl_broker || "Two Wheeler Broker";
+                  if (preset.id === "general") localizedName = t.generator_tpl_retail || "Retail";
+
+                  return (
+                    <button
+                      key={preset.id}
+                      type="button"
+                      onClick={() => handleSelectPreset(preset)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all border flex items-center gap-1.5 cursor-pointer ${
+                        selectedTemplate.id === preset.id
+                          ? "bg-primary text-background border-primary shadow-xs scale-[1.02]"
+                          : "bg-background text-secondary border-outline hover:border-outline/80 hover:text-primary"
+                      }`}
+                    >
+                      <span>{preset.avatarIcon}</span>
+                      <span>{localizedName}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -271,26 +281,26 @@ export default function InstantCardGenerator({ t }: InstantCardGeneratorProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-secondary mb-1.5">
-                  Business Name <span className="text-rose-500">*</span>
+                  {t.generator_business_name_label || "Business Name"} <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={businessName}
                   onChange={(e) => setBusinessName(e.target.value)}
-                  placeholder="e.g. Royal Sweets & Cafe"
+                  placeholder={t.generator_business_name_placeholder || "e.g. Artisanal Hearth Cafe"}
                   className="w-full px-4 py-2.5 rounded-xl bg-background border border-outline text-primary text-sm font-semibold focus:outline-none focus:border-[#5B3DF5]"
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-secondary mb-1.5">
-                  Category Chip
+                  {t.generator_category_chip_label || "Category Chip"}
                 </label>
                 <input
                   type="text"
                   value={categoryName}
                   onChange={(e) => setCategoryName(e.target.value)}
-                  placeholder="e.g. Cafe & Bakery"
+                  placeholder={t.generator_category_chip_placeholder || "e.g. Cafe & Bakery"}
                   className="w-full px-4 py-2.5 rounded-xl bg-background border border-outline text-primary text-sm font-semibold focus:outline-none focus:border-[#5B3DF5]"
                 />
               </div>
@@ -299,13 +309,13 @@ export default function InstantCardGenerator({ t }: InstantCardGeneratorProps) {
             {/* Tagline */}
             <div className="mb-4">
               <label className="block text-xs font-bold uppercase tracking-wider text-secondary mb-1.5">
-                Tagline / Slogan
+                {t.generator_tagline_label || "Tagline / Slogan"}
               </label>
               <input
                 type="text"
                 value={tagline}
                 onChange={(e) => setTagline(e.target.value)}
-                placeholder="e.g. Freshly Baked Daily & Premium Coffee"
+                placeholder={t.generator_tagline_placeholder || "e.g. Freshly Roasted Coffee & Handcrafted Bakes"}
                 className="w-full px-4 py-2.5 rounded-xl bg-background border border-outline text-primary text-sm font-semibold focus:outline-none focus:border-[#5B3DF5]"
               />
             </div>
@@ -314,26 +324,26 @@ export default function InstantCardGenerator({ t }: InstantCardGeneratorProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-secondary mb-1.5">
-                  Owner / Founder Name
+                  {t.generator_owner_name_label || "Owner / Founder Name"}
                 </label>
                 <input
                   type="text"
                   value={ownerName}
                   onChange={(e) => setOwnerName(e.target.value)}
-                  placeholder="e.g. Siddharth Verma"
+                  placeholder={t.generator_owner_name_placeholder || "e.g. Kabir Mehta"}
                   className="w-full px-4 py-2.5 rounded-xl bg-background border border-outline text-primary text-sm font-semibold focus:outline-none focus:border-[#5B3DF5]"
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-secondary mb-1.5">
-                  Owner Role / Title
+                  {t.generator_owner_role_label || "Owner Role / Title"}
                 </label>
                 <input
                   type="text"
                   value={ownerRole}
                   onChange={(e) => setOwnerRole(e.target.value)}
-                  placeholder="e.g. Founder & Head Barista"
+                  placeholder={t.generator_owner_role_placeholder || "e.g. Head Barista & Owner"}
                   className="w-full px-4 py-2.5 rounded-xl bg-background border border-outline text-primary text-sm font-semibold focus:outline-none focus:border-[#5B3DF5]"
                 />
               </div>
@@ -343,7 +353,7 @@ export default function InstantCardGenerator({ t }: InstantCardGeneratorProps) {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-secondary mb-1.5">
-                  Phone / WhatsApp
+                  {t.generator_phone_label || "Phone / WhatsApp"}
                 </label>
                 <input
                   type="tel"
@@ -356,26 +366,26 @@ export default function InstantCardGenerator({ t }: InstantCardGeneratorProps) {
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-secondary mb-1.5">
-                  Email
+                  {t.generator_email_label || "Email"}
                 </label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="info@shop.com"
+                  placeholder="contact@artisanalhearth.com"
                   className="w-full px-4 py-2.5 rounded-xl bg-background border border-outline text-primary text-sm font-semibold focus:outline-none focus:border-[#5B3DF5]"
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-secondary mb-1.5">
-                  City / Location
+                  {t.generator_city_label || "City / Location"}
                 </label>
                 <input
                   type="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
-                  placeholder="Pune, MH"
+                  placeholder={t.generator_city_placeholder || "e.g. Pune, Maharashtra"}
                   className="w-full px-4 py-2.5 rounded-xl bg-background border border-outline text-primary text-sm font-semibold focus:outline-none focus:border-[#5B3DF5]"
                 />
               </div>
@@ -384,7 +394,7 @@ export default function InstantCardGenerator({ t }: InstantCardGeneratorProps) {
             {/* Theme Color Picker */}
             <div className="mb-6 pt-2">
               <label className="block text-xs font-bold uppercase tracking-wider text-secondary mb-2">
-                🎨 Business Page Theme Color
+                {t.generator_theme_color_label || "🎨 Business Page Theme Color"}
               </label>
               <div className="flex items-center gap-3">
                 {COLOR_PALETTES.map((palette) => (
@@ -412,11 +422,11 @@ export default function InstantCardGenerator({ t }: InstantCardGeneratorProps) {
                 }}
               >
                 <HugeiconsIcon icon={WhatsappIcon} size={20} />
-                <span>Publish This Page with MarketingSetu</span>
+                <span>{t.generator_publish_btn || "Publish This Page with MarketingSetu"}</span>
                 <HugeiconsIcon icon={ArrowRight01Icon} size={18} />
               </button>
               <p className="text-[11px] text-center text-secondary mt-2">
-                ✓ 15-Minute Onboarding • Customized Domain / Subdomain • WhatsApp Auto-Reply Engine
+                {t.generator_footer_trust || "✓ 15-Minute Onboarding • Customized Domain / Subdomain • WhatsApp Auto-Reply Engine"}
               </p>
             </div>
 
