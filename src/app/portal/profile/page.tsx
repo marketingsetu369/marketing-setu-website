@@ -151,12 +151,6 @@ export default function UserProfilePage() {
 
               <div className="pt-4 border-t border-outline text-left text-xs space-y-2.5 text-secondary">
                 <div className="flex justify-between items-center">
-                  <span className="text-disabled">Account ID:</span>
-                  <span className="font-mono text-primary font-semibold truncate max-w-[150px]">
-                    {profile?.id}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center">
                   <span className="text-disabled">Member Since:</span>
                   <span className="font-medium text-primary">{formattedJoinDate}</span>
                 </div>
