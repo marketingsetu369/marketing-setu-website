@@ -1,4 +1,6 @@
+// Server Component — fetches live blog posts from the API
 import BlogView from "@/views/home-page/BlogView";
+import { fetchPublishedBlogs, ApiBlogPost } from "@/api/repositories/blogApi";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -26,39 +28,35 @@ export const metadata: Metadata = {
     "geo.region": "IN-MH",
     "geo.placename": "Satara, Sangli, Kolhapur, Pune, Maharashtra",
     "geo.position": "18.5204;73.8567",
-    "ICBM": "18.5204, 73.8567",
+    ICBM: "18.5204, 73.8567",
   },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Blog",
-  "name": "MarketingSetu Maharashtra Growth Blog",
-  "description":
+  name: "MarketingSetu Maharashtra Growth Blog",
+  description:
     "Marketing guides, local SEO tutorials, and WhatsApp automation tips for business owners across Maharashtra.",
-  "publisher": {
+  publisher: {
     "@type": "Organization",
-    "name": "MarketingSetu",
-    "url": "https://marketingsetu.com",
-    "areaServed": [
-      "Satara",
-      "Sangli",
-      "Kolhapur",
-      "Pune",
-      "Maharashtra",
-      "India"
-    ]
+    name: "MarketingSetu",
+    url: "https://marketingsetu.com",
+    areaServed: ["Satara", "Sangli", "Kolhapur", "Pune", "Maharashtra", "India"],
   },
 };
 
-export default function Page() {
+export default async function Page() {
+  // Fetch live posts from the API (server-side, with 60s ISR revalidation)
+  const apiPosts: ApiBlogPost[] = await fetchPublishedBlogs();
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <BlogView />
+      <BlogView apiPosts={apiPosts} />
     </>
   );
 }
