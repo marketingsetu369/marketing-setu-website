@@ -119,8 +119,11 @@ export default function LocationSection({ mapsLink, address, businessName }: Loc
           className="w-full h-full"
         />
 
+        {/* Transparent overlay to block Google's native "Open in Maps" link in the top-left of the iframe */}
+        <div className="absolute top-0 left-0 w-36 h-10 z-10 pointer-events-auto" />
+
         {directMapsUrl && (
-          <div className="absolute bottom-3 right-3 pointer-events-auto">
+          <div className="absolute bottom-3 right-3 pointer-events-auto z-20">
             <a
               href={directMapsUrl}
               target="_blank"
