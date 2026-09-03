@@ -119,9 +119,19 @@ export default function LocationSection({ mapsLink, address, businessName }: Loc
           className="w-full h-full"
         />
 
-        {/* Transparent overlay to block Google's native "Open in Maps" link in the top-left of the iframe */}
-        <div className="absolute top-0 left-0 w-36 h-10 z-10 pointer-events-auto" />
+        {/* Full clickable overlay — tapping anywhere on the map opens the owner's Maps link.
+            Also blocks Google's native "Open in Maps" link baked into the iframe. */}
+        {directMapsUrl && (
+          <a
+            href={directMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open in Google Maps"
+            className="absolute inset-0 z-10"
+          />
+        )}
 
+        {/* Custom "GOOGLE MAPS वर पहा" button — z-20 keeps it above the full overlay */}
         {directMapsUrl && (
           <div className="absolute bottom-3 right-3 pointer-events-auto z-20">
             <a
