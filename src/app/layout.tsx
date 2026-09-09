@@ -106,8 +106,14 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/logo.svg",
-    apple: "/logo.svg",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/logo_icon.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/logo_icon.png" },
+    ],
+    shortcut: "/favicon.ico",
   },
   other: {
     "geo.region": "IN-MH",

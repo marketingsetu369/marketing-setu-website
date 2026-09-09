@@ -18,21 +18,69 @@ export interface ProductItem {
   showPrice?: boolean;
 }
 
+export interface BusinessPageHeader {
+  business_name?: string;
+  business_category?: string;
+  tagline?: string;
+  description?: string;
+  logo_url?: string | null;
+}
+
+export interface BusinessPageContact {
+  phone?: string;
+  whatsapp?: string;
+  email?: string;
+  address?: string;
+  maps_link?: string;
+  google_maps_url?: string;
+  city?: string;
+  state?: string;
+}
+
+export interface BusinessPageOwner {
+  name: string;
+  title: string;
+  bio: string;
+  avatar_url?: string;
+  happy_customers_count?: number;
+  experience_years?: number;
+}
+
+export interface BusinessPageSocialLinks {
+  instagram?: string;
+  facebook?: string;
+  youtube?: string;
+  twitter?: string;
+}
+
 export interface BusinessPageData {
   slug: string;
-  business_name: string;
+  custom_url?: string;
+  theme_color_hex?: string;
+  language?: string;
+  youtube_url?: string | null;
+  header?: BusinessPageHeader;
+  contact?: BusinessPageContact;
+  owner?: BusinessPageOwner[];
+  social_links?: BusinessPageSocialLinks;
+  products?: ProductItem[];
+  gallery?: Array<{ url: string; type?: string } | string>;
+  testimonials?: any[];
+  // Legacy backward-compat accessors
+  business_name?: string;
   business_category?: string;
   about_us?: string;
   mobile_number?: string;
   email_address?: string;
   location_address?: string;
   logo_url?: string;
-  theme_color_hex?: string;
   facebook_link?: string;
   instagram_link?: string;
   website_link?: string;
-  products?: ProductItem[];
   gallery_images?: string[];
+  category?: string;
+  city?: string;
+  state?: string;
 }
 
 // ── Derived / UI Types ─────────────────────────────────────────────────────

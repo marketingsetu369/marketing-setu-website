@@ -113,6 +113,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description,
       images: logoUrl ? [logoUrl] : [],
     },
+    icons: {
+      icon: [
+        { url: "/favicon.ico" },
+        { url: "/logo_icon.png", type: "image/png" },
+      ],
+      apple: [
+        { url: "/logo_icon.png" },
+      ],
+      shortcut: "/favicon.ico",
+    },
     other: {
       "geo.region": "IN-MH",
       "geo.placename": city,
