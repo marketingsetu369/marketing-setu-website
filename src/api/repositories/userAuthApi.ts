@@ -53,4 +53,23 @@ export const UserAuthApi = {
   logout: async () => {
     return fetchClient.post<{ statusCode: number; message: string }>("/user/logout", {});
   },
+
+  sendChangePasswordCode: async (email?: string) => {
+    return fetchClient.post<{ statusCode: number; message: string }>("/user/change-password/send-code", {
+      ...(email ? { email } : {}),
+    });
+  },
+
+  verifyChangePasswordCode: async (code: string) => {
+    return fetchClient.post<{ statusCode: number; message: string }>("/user/change-password/verify-code", {
+      code,
+    });
+  },
+
+  changePassword: async (code: string, newPassword: string) => {
+    return fetchClient.post<{ statusCode: number; message: string }>("/user/change-password", {
+      code,
+      newPassword,
+    });
+  },
 };

@@ -5,6 +5,7 @@ import {
   AppButton,
   AppCard,
   AppInput,
+  AppModal,
   PortalBadge,
   PortalCard,
   PortalPageHeader,
@@ -24,6 +25,17 @@ export default function UserProfilePage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+
+  // Change Password Modal & Flow State
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [passwordStep, setPasswordStep] = useState<"email" | "otp" | "newPassword">("otp");
+  const [pwdEmail, setPwdEmail] = useState("");
+  const [otpCode, setOtpCode] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isSendingCode, setIsSendingCode] = useState(false);
+  const [isVerifyingCode, setIsVerifyingCode] = useState(false);
+  const [isSubmittingPassword, setIsSubmittingPassword] = useState(false);
 
   const loadProfile = async () => {
     try {
@@ -80,6 +92,86 @@ export default function UserProfilePage() {
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
     toast.success(`${label} copied to clipboard!`);
+  };
+
+  const openChangePasswordModal = () => {
+    const currentEmail = profile?.email || user?.email || "";
+    setPwdEmail(currentEmail);
+    setOtpCode("");
+    setNewPassword("");
+    setConfirmPassword("");
+    if (currentEmail) {
+      setPasswordStep("otp");
+      handleSendCode(currentEmail);
+    } else {
+      setPasswordStep("email");
+    }
+    setIsPasswordModalOpen(true);
+  };
+
+  const handleSendCode = async (emailToSend?: string) => {
+    const targetEmail = emailToSend || pwdEmail;
+    if (!targetEmail || !targetEmail.includes("@")) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    try {
+      setIsSendingCode(true);
+      const res = await UserAuthApi.sendChangePasswordCode(targetEmail);
+      toast.success(res.message || `Verification code sent to ${targetEmail}`);
+      setPasswordStep("otp");
+      if (!profile?.email) {
+        setEmail(targetEmail);
+        updateUser({ email: targetEmail });
+      }
+    } catch (err: any) {
+      toast.error(err.message || "Failed to send verification code");
+    } finally {
+      setIsSendingCode(false);
+    }
+  };
+
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!otpCode || otpCode.trim().length !== 6) {
+      toast.error("Please enter the complete 6-digit verification code");
+      return;
+    }
+
+    try {
+      setIsVerifyingCode(true);
+      const res = await UserAuthApi.verifyChangePasswordCode(otpCode.trim());
+      toast.success(res.message || "Code verified successfully!");
+      setPasswordStep("newPassword");
+    } catch (err: any) {
+      toast.error(err.message || "Invalid or expired verification code");
+    } finally {
+      setIsVerifyingCode(false);
+    }
+  };
+
+  const handleChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newPassword || newPassword.length < 6) {
+      toast.error("New password must be at least 6 characters long");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    try {
+      setIsSubmittingPassword(true);
+      const res = await UserAuthApi.changePassword(otpCode.trim(), newPassword);
+      toast.success(res.message || "Password changed successfully!");
+      setIsPasswordModalOpen(false);
+    } catch (err: any) {
+      toast.error(err.message || "Failed to change password");
+    } finally {
+      setIsSubmittingPassword(false);
+    }
   };
 
   const initials =
@@ -262,6 +354,39 @@ export default function UserProfilePage() {
               </form>
             </PortalCard>
 
+            {/* Security & Password Card */}
+            <PortalCard
+              title="Account Security"
+              subtitle="Keep your account safe by setting a secure password."
+              action={
+                <AppButton
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={openChangePasswordModal}
+                >
+                  Change Password 🔒
+                </AppButton>
+              }
+            >
+              <div className="flex items-center justify-between p-4 rounded-xl bg-neutral border border-outline">
+                <div className="space-y-0.5">
+                  <p className="text-xs font-bold text-primary">Password Protection</p>
+                  <p className="text-[11px] text-secondary">
+                    Requires email OTP verification to ensure only you can update your credentials.
+                  </p>
+                </div>
+                <AppButton
+                  type="button"
+                  variant="primary"
+                  size="sm"
+                  onClick={openChangePasswordModal}
+                >
+                  Update
+                </AppButton>
+              </div>
+            </PortalCard>
+
             {/* API & Access Key Card */}
             {profile?.accessKey && (
               <PortalCard
@@ -312,6 +437,150 @@ export default function UserProfilePage() {
           </div>
         </div>
       )}
+
+      {/* Change Password Modal */}
+      <AppModal
+        isOpen={isPasswordModalOpen}
+        onClose={() => setIsPasswordModalOpen(false)}
+        title="Change Account Password 🔐"
+        subtitle={
+          passwordStep === "email"
+            ? "Enter your email address to receive a 6-digit verification code."
+            : passwordStep === "otp"
+            ? `Enter the 6-digit code sent to ${pwdEmail || profile?.email || user?.email}.`
+            : "Create and confirm your strong new password."
+        }
+        maxWidth="md"
+      >
+        {/* Step 1: Provide Email if missing */}
+        {passwordStep === "email" && (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSendCode();
+            }}
+            className="space-y-4"
+          >
+            <AppInput
+              label="Email Address *"
+              type="email"
+              required
+              value={pwdEmail}
+              onChange={(e) => setPwdEmail(e.target.value)}
+              placeholder="e.g. name@business.com"
+            />
+            <p className="text-xs text-secondary">
+              A 6-digit verification code will be sent to this email to verify your ownership.
+            </p>
+            <div className="pt-2 flex justify-end gap-2">
+              <AppButton
+                type="button"
+                variant="ghost"
+                size="md"
+                onClick={() => setIsPasswordModalOpen(false)}
+              >
+                Cancel
+              </AppButton>
+              <AppButton
+                type="submit"
+                variant="primary"
+                size="md"
+                disabled={isSendingCode}
+              >
+                {isSendingCode ? "Sending Code..." : "Send Verification Code"}
+              </AppButton>
+            </div>
+          </form>
+        )}
+
+        {/* Step 2: Enter OTP */}
+        {passwordStep === "otp" && (
+          <form onSubmit={handleVerifyOtp} className="space-y-4">
+            <AppInput
+              label="Verification Code (OTP) *"
+              type="text"
+              maxLength={6}
+              required
+              value={otpCode}
+              onChange={(e) => setOtpCode(e.target.value)}
+              placeholder="000000"
+              className="tracking-widest font-mono text-center text-lg"
+            />
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-secondary">Didn't receive the code?</span>
+              <button
+                type="button"
+                disabled={isSendingCode}
+                onClick={() => handleSendCode()}
+                className="font-bold text-brand-main hover:underline disabled:opacity-50 cursor-pointer"
+              >
+                {isSendingCode ? "Resending..." : "Resend Code"}
+              </button>
+            </div>
+            <div className="pt-2 flex justify-end gap-2">
+              <AppButton
+                type="button"
+                variant="ghost"
+                size="md"
+                onClick={() => setIsPasswordModalOpen(false)}
+              >
+                Cancel
+              </AppButton>
+              <AppButton
+                type="submit"
+                variant="primary"
+                size="md"
+                disabled={isVerifyingCode}
+              >
+                {isVerifyingCode ? "Verifying..." : "Verify Code"}
+              </AppButton>
+            </div>
+          </form>
+        )}
+
+        {/* Step 3: New Password */}
+        {passwordStep === "newPassword" && (
+          <form onSubmit={handleChangePassword} className="space-y-4">
+            <AppInput
+              label="New Password *"
+              type="password"
+              required
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="••••••••"
+            />
+            <AppInput
+              label="Confirm New Password *"
+              type="password"
+              required
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="••••••••"
+            />
+            <p className="text-xs text-secondary">
+              Must be at least 6 characters. Make sure both passwords match.
+            </p>
+            <div className="pt-2 flex justify-end gap-2">
+              <AppButton
+                type="button"
+                variant="ghost"
+                size="md"
+                onClick={() => setIsPasswordModalOpen(false)}
+              >
+                Cancel
+              </AppButton>
+              <AppButton
+                type="submit"
+                variant="primary"
+                size="md"
+                disabled={isSubmittingPassword}
+              >
+                {isSubmittingPassword ? "Updating Password..." : "Save New Password"}
+              </AppButton>
+            </div>
+          </form>
+        )}
+      </AppModal>
     </div>
   );
 }
