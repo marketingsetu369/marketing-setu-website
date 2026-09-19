@@ -27,16 +27,49 @@ import {
   ArrowUp01Icon,
   Coins01Icon,
   Delete02Icon,
-  Download01Icon,
+  Edit02Icon,
+  FileDownloadIcon,
   FilterIcon,
   Search01Icon,
   TaskEdit02Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
+function getTodayLocalDate(): string {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = (d.getMonth() + 1).toString().padStart(2, "0");
+  const day = d.getDate().toString().padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
 
+function formatDisplayDate(dateStr?: string | null): string {
+  if (!dateStr) return "";
+  const clean = dateStr.split("T")[0];
+  const parts = clean.split("-");
+  if (parts.length === 3) {
+    const y = parseInt(parts[0], 10);
+    const m = parseInt(parts[1], 10) - 1;
+    const d = parseInt(parts[2], 10);
+    if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+      return new Date(y, m, d).toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      });
+    }
+  }
+  const parsed = new Date(dateStr);
+  return isNaN(parsed.getTime()) ? dateStr : parsed.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
 
 export default function UserTransactionsPage() {
   const [data, setData] = useState<UserTransactionsSummary>({
@@ -67,7 +100,7 @@ export default function UserTransactionsPage() {
   const [formTitle, setFormTitle] = useState("");
   const [formCategory, setFormCategory] = useState("Sales");
   const [formPaymentMode, setFormPaymentMode] = useState("cash");
-  const [formDate, setFormDate] = useState(() => new Date().toISOString().split("T")[0]);
+  const [formDate, setFormDate] = useState(() => getTodayLocalDate());
   const [formDescription, setFormDescription] = useState("");
   const [deleteTxId, setDeleteTxId] = useState<string | null>(null);
   const [isDeletingTx, setIsDeletingTx] = useState(false);
@@ -170,7 +203,7 @@ export default function UserTransactionsPage() {
     setFormTitle("");
     setFormCategory("Sales");
     setFormPaymentMode("cash");
-    setFormDate(new Date().toISOString().split("T")[0]);
+    setFormDate(getTodayLocalDate());
     setFormDescription("");
     setIsModalOpen(true);
   };
@@ -182,9 +215,8 @@ export default function UserTransactionsPage() {
     setFormTitle(item.title);
     setFormCategory(item.category || (item.type === "income" ? "Sales" : "Rent"));
     setFormPaymentMode(item.paymentMode ? item.paymentMode.toLowerCase() : "cash");
-    setFormDate(
-      item.date ? new Date(item.date).toISOString().split("T")[0] : new Date().toISOString().split("T")[0]
-    );
+    const rawDateStr = item.date || item.createdAt || "";
+    setFormDate(rawDateStr ? rawDateStr.split("T")[0] : getTodayLocalDate());
     setFormDescription(item.description || "");
     setIsModalOpen(true);
   };
@@ -329,7 +361,7 @@ export default function UserTransactionsPage() {
     // Transactions table
     const tableRows = filteredList.map((t) => {
       const isIncome = t.type === "income";
-      const dateStr = new Date(t.date || t.createdAt || "").toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+      const dateStr = formatDisplayDate(t.date || t.createdAt);
       return [
         dateStr,
         t.type.toUpperCase(),
@@ -439,7 +471,7 @@ export default function UserTransactionsPage() {
               variant="outline"
               size="md"
             >
-              <HugeiconsIcon icon={Download01Icon} size={16} />
+              <HugeiconsIcon icon={FileDownloadIcon} size={16} />
               <span>Export PDF</span>
             </AppButton>
 
@@ -661,11 +693,7 @@ export default function UserTransactionsPage() {
           <div className="divide-y divide-slate-100 dark:divide-slate-800">
             {filteredList.map((item) => {
               const isIncome = item.type === "income";
-              const formattedDate = new Date(item.date || item.createdAt || "").toLocaleDateString("en-IN", {
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-              });
+              const formattedDate = formatDisplayDate(item.date || item.createdAt);
 
               return (
                 <div key={item.id} className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">

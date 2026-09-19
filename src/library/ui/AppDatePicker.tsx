@@ -44,6 +44,28 @@ const MONTH_NAMES = [
 
 const WEEKDAY_NAMES = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
+function formatLocalDate(year: number, month: number, day: number): string {
+  const y = year.toString();
+  const m = (month + 1).toString().padStart(2, "0");
+  const d = day.toString().padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+function parseLocalDate(dateStr: string): Date | null {
+  if (!dateStr) return null;
+  const parts = dateStr.split("T")[0].split("-");
+  if (parts.length === 3) {
+    const y = parseInt(parts[0], 10);
+    const m = parseInt(parts[1], 10) - 1;
+    const d = parseInt(parts[2], 10);
+    if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+      return new Date(y, m, d);
+    }
+  }
+  const fallback = new Date(dateStr);
+  return isNaN(fallback.getTime()) ? null : fallback;
+}
+
 export function AppDatePicker({
   id,
   name,
@@ -71,8 +93,8 @@ export function AppDatePicker({
   // Track the view month & year of the calendar popup
   const [viewDate, setViewDate] = useState(() => {
     if (selectedValue) {
-      const parsed = new Date(selectedValue);
-      if (!isNaN(parsed.getTime())) return parsed;
+      const parsed = parseLocalDate(selectedValue);
+      if (parsed) return parsed;
     }
     return new Date();
   });
@@ -81,8 +103,8 @@ export function AppDatePicker({
     if (value !== undefined) {
       setInternalValue(value);
       if (value) {
-        const parsed = new Date(value);
-        if (!isNaN(parsed.getTime())) {
+        const parsed = parseLocalDate(value);
+        if (parsed) {
           setViewDate(parsed);
         }
       }
@@ -126,8 +148,8 @@ export function AppDatePicker({
   ) => {
     e.preventDefault();
     e.stopPropagation();
-    const targetDate = new Date(viewYear, viewMonth + monthOffset, day);
-    const dateStr = targetDate.toISOString().split("T")[0];
+    const dateObj = new Date(viewYear, viewMonth + monthOffset, day);
+    const dateStr = formatLocalDate(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
 
     if (min && dateStr < min) return;
     if (max && dateStr > max) return;
@@ -145,9 +167,10 @@ export function AppDatePicker({
   const handleSelectToday = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const todayStr = new Date().toISOString().split("T")[0];
+    const now = new Date();
+    const todayStr = formatLocalDate(now.getFullYear(), now.getMonth(), now.getDate());
     setInternalValue(todayStr);
-    setViewDate(new Date());
+    setViewDate(now);
     if (onChange) {
       onChange({ target: { value: todayStr, name } });
     }
@@ -186,13 +209,14 @@ export function AppDatePicker({
       isSelected: boolean;
     }> = [];
 
-    const todayStr = new Date().toISOString().split("T")[0];
+    const now = new Date();
+    const todayStr = formatLocalDate(now.getFullYear(), now.getMonth(), now.getDate());
 
     // Previous month padding days
     for (let i = firstDayIndex - 1; i >= 0; i--) {
       const day = daysInPrevMonth - i;
       const d = new Date(viewYear, viewMonth - 1, day);
-      const dateStr = d.toISOString().split("T")[0];
+      const dateStr = formatLocalDate(d.getFullYear(), d.getMonth(), d.getDate());
       days.push({
         day,
         isCurrentMonth: false,
@@ -207,7 +231,7 @@ export function AppDatePicker({
     // Current month days
     for (let day = 1; day <= daysInCurrentMonth; day++) {
       const d = new Date(viewYear, viewMonth, day);
-      const dateStr = d.toISOString().split("T")[0];
+      const dateStr = formatLocalDate(d.getFullYear(), d.getMonth(), d.getDate());
       days.push({
         day,
         isCurrentMonth: true,
@@ -223,7 +247,7 @@ export function AppDatePicker({
     const remaining = (7 - (days.length % 7)) % 7;
     for (let day = 1; day <= remaining; day++) {
       const d = new Date(viewYear, viewMonth + 1, day);
-      const dateStr = d.toISOString().split("T")[0];
+      const dateStr = formatLocalDate(d.getFullYear(), d.getMonth(), d.getDate());
       days.push({
         day,
         isCurrentMonth: false,
@@ -241,8 +265,8 @@ export function AppDatePicker({
   // Formatted display text (e.g. "30 Aug 2026")
   const displayLabel = useMemo(() => {
     if (!selectedValue) return "";
-    const parsed = new Date(selectedValue);
-    if (isNaN(parsed.getTime())) return selectedValue;
+    const parsed = parseLocalDate(selectedValue);
+    if (!parsed) return selectedValue;
     return parsed.toLocaleDateString("en-IN", {
       day: "numeric",
       month: "short",
