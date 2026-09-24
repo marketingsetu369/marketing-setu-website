@@ -2,7 +2,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  compress: true,
   reactCompiler: true,
+  experimental: {
+    optimizePackageImports: ["@hugeicons/react", "@hugeicons/core-free-icons"],
+  },
   images: {
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
