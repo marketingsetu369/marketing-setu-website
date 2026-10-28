@@ -30,6 +30,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.marketingsetu.com" }],
+        destination: "https://marketingsetu.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://api.marketingsetu.com";
     return [
