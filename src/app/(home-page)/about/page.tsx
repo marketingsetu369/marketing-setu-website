@@ -36,24 +36,47 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "AboutPage",
-  "name": "About MarketingSetu",
-  "description":
-    "MarketingSetu empowers local businesses across Satara, Sangli, Kolhapur, Pune, and all over Maharashtra with WhatsApp marketing automation, digital cards, and Google Business ranking.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "MarketingSetu",
-    "url": "https://marketingsetu.com",
-    "logo": "https://marketingsetu.com/logo.svg",
-    "areaServed": [
-      "Satara",
-      "Sangli",
-      "Kolhapur",
-      "Pune",
-      "Maharashtra",
-      "India"
-    ]
-  },
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://marketingsetu.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "About Us",
+          "item": "https://marketingsetu.com/about"
+        }
+      ]
+    },
+    {
+      "@type": "AboutPage",
+      "@id": "https://marketingsetu.com/about#webpage",
+      "name": "About MarketingSetu",
+      "url": "https://marketingsetu.com/about",
+      "description":
+        "MarketingSetu empowers local businesses across Satara, Sangli, Kolhapur, Pune, and all over Maharashtra with WhatsApp marketing automation, digital cards, and Google Business ranking.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "MarketingSetu",
+        "url": "https://marketingsetu.com",
+        "logo": "https://marketingsetu.com/logo.svg",
+        "areaServed": [
+          "Satara",
+          "Sangli",
+          "Kolhapur",
+          "Pune",
+          "Maharashtra",
+          "India"
+        ]
+      }
+    }
+  ]
 };
 
 export default function Page() {

@@ -34,35 +34,60 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "ContactPage",
-  "name": "Contact MarketingSetu Maharashtra",
-  "description": "Contact details, phone number, and enquiry form for MarketingSetu in Maharashtra (Pune, Satara, Sangli, Kolhapur)",
-  "mainEntity": {
-    "@type": "LocalBusiness",
-    "name": "MarketingSetu",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Pune",
-      "addressRegion": "MH",
-      "postalCode": "411001",
-      "addressCountry": "IN",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://marketingsetu.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Contact",
+          "item": "https://marketingsetu.com/contact"
+        }
+      ]
     },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 18.5204,
-      "longitude": 73.8567,
-    },
-    "telephone": "+91-9876543210",
-    "url": "https://marketingsetu.com/contact",
-    "areaServed": [
-      "Satara",
-      "Sangli",
-      "Kolhapur",
-      "Pune",
-      "Maharashtra",
-      "India"
-    ]
-  },
+    {
+      "@type": "ContactPage",
+      "@id": "https://marketingsetu.com/contact#webpage",
+      "name": "Contact MarketingSetu",
+      "description": "Contact details, phone number, and enquiry form for MarketingSetu in Pune, Satara, Sangli, Kolhapur and Maharashtra.",
+      "url": "https://marketingsetu.com/contact",
+      "mainEntity": {
+        "@type": "LocalBusiness",
+        "name": "MarketingSetu",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Hinjawadi - Wakad Road, Hinjawadi",
+          "addressLocality": "Pune",
+          "addressRegion": "MH",
+          "postalCode": "411057",
+          "addressCountry": "IN"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 18.5912,
+          "longitude": 73.7389
+        },
+        "telephone": "+91 9172415858",
+        "email": "support@marketingsetu.com",
+        "url": "https://marketingsetu.com/contact",
+        "areaServed": [
+          "Satara",
+          "Sangli",
+          "Kolhapur",
+          "Pune",
+          "Maharashtra",
+          "India"
+        ]
+      }
+    }
+  ]
 };
 
 export default function Page() {

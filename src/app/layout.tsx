@@ -229,6 +229,55 @@ const jsonLdOrg = {
       "inLanguage": ["en-IN", "hi-IN", "mr-IN"]
     },
     {
+      "@type": "ItemList",
+      "@id": "https://marketingsetu.com/#sitelinks",
+      "name": "MarketingSetu Sitelinks Navigation",
+      "itemListElement": [
+        {
+          "@type": "SiteNavigationElement",
+          "position": 1,
+          "name": "Pricing",
+          "description": "Simple, transparent pricing starting from ₹3,499/year for businesses across Maharashtra.",
+          "url": "https://marketingsetu.com/pricing"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 2,
+          "name": "About Us",
+          "description": "Learn about MarketingSetu's mission to empower local businesses with digital growth.",
+          "url": "https://marketingsetu.com/about"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 3,
+          "name": "Services",
+          "description": "Explore WhatsApp marketing automation, custom landing pages, and Google local SEO.",
+          "url": "https://marketingsetu.com/services"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 4,
+          "name": "Contact",
+          "description": "Get in touch with MarketingSetu for customer support, onboarding, and local marketing inquiries.",
+          "url": "https://marketingsetu.com/contact"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 5,
+          "name": "Reviews",
+          "description": "Read verified client reviews and case studies from businesses using MarketingSetu across Maharashtra.",
+          "url": "https://marketingsetu.com/testimonials"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 6,
+          "name": "Download App",
+          "description": "Download the official MarketingSetu Android app to automate customer follow-ups on missed calls.",
+          "url": "https://marketingsetu.com/download"
+        }
+      ]
+    },
+    {
       "@type": "FAQPage",
       "@id": "https://marketingsetu.com/#faq",
       "mainEntity": [
@@ -291,6 +340,22 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
+        {/* Google tag (gtag.js) */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-GRLXXLC4MS"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-GRLXXLC4MS');
+            `,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrg) }}

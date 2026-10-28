@@ -38,9 +38,28 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "ItemList",
-  "name": "MarketingSetu Services in Maharashtra",
-  "itemListElement": [
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://marketingsetu.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://marketingsetu.com/services"
+        }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "MarketingSetu Services in Maharashtra",
+      "itemListElement": [
     {
       "@type": "Service",
       "position": 1,
@@ -116,6 +135,8 @@ const jsonLd = {
         "Maharashtra",
         "IN"
       ],
+    },
+  ],
     },
   ],
 };
