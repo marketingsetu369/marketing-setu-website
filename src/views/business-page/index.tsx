@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { BusinessPageProvider, useBusinessPageTheme } from "./common/BusinessPageContext";
 import { getSectionStyle, getYouTubeId } from "./common/utils";
 import {
+  BookingsAvailabilitySection,
   BusinessHeader,
   DesktopCta,
   EnquiryFormSection,
@@ -38,8 +39,8 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
     message: string;
     selectedPriceTier?: string;
   }>({ name: "", phone: "", message: "", selectedPriceTier: "" });
-  const [isProductEnquiry, setIsProductEnquiry] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
+  const [isProductEnquiry, setIsProductEnquiry] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -252,6 +253,9 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
               address={contact.address}
               businessName={header.business_name}
             />
+
+            {/* ── Public Booked Dates & Slots (Real-time Availability) ── */}
+            <BookingsAvailabilitySection slug={slug} />
 
             {/* ── MarketingSetu Advertisement Link ── */}
             <BusinessFooter />

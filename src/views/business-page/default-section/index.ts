@@ -11,3 +11,4 @@ export { default as LocationSection } from "./LocationSection";
 export { default as FloatingCta } from "./FloatingCta";
 export { default as GalleryLightbox } from "./GalleryLightbox";
 export { default as ProductEnquiryModal } from "./ProductEnquiryModal";
+export { BookingsAvailabilitySection } from "./BookingsAvailabilitySection";

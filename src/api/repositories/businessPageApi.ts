@@ -13,4 +13,6 @@ export const BusinessPageApi = {
     fetchClient.post<ApiResponse<any>>(`/business-page/public/${slug}/click`, { action }).then((r) => r.data),
   submitEnquiry: (slug: string, body: { name: string; phone: string; message?: string; isProduct?: boolean; productName?: string; productPrice?: string; productDescription?: string }) =>
     fetchClient.post<ApiResponse<any>>(`/business-page/public/${slug}/enquiry`, body).then((r) => r.data),
+  getPublicBookings: (slug: string) =>
+    fetchClient.get<ApiResponse<any>>(`/business-page/public/${slug}/bookings`).then((r) => r.data),
 };
