@@ -4,6 +4,36 @@ import React, { useMemo, useState } from "react";
 import { useBusinessPageTheme } from "../common/BusinessPageContext";
 import { PublicBookingSlot, usePublicBookings } from "../hooks";
 
+// Helper to convert "14:00" or "09:30" to 12-hour format like "2:00 PM" or "6 PM"
+function format12Hour(timeStr?: string): string {
+  if (!timeStr) return "";
+  const parts = timeStr.trim().split(":");
+  if (parts.length < 2) return timeStr;
+
+  let hour = parseInt(parts[0], 10);
+  const min = parseInt(parts[1], 10);
+  if (isNaN(hour) || isNaN(min)) return timeStr;
+
+  const ampm = hour >= 12 ? "PM" : "AM";
+  hour = hour % 12;
+  if (hour === 0) hour = 12;
+
+  const minStr = min > 0 ? `:${String(min).padStart(2, "0")}` : "";
+  return `${hour}${minStr} ${ampm}`;
+}
+
+// Helper to format slot range "14:00 - 18:30" -> "2 PM - 6:30 PM"
+function formatSlotRange(slot: PublicBookingSlot): string {
+  if (slot.startTime && slot.endTime) {
+    return `${format12Hour(slot.startTime)} - ${format12Hour(slot.endTime)}`;
+  }
+  if (slot.displaySlot && slot.displaySlot.includes("-")) {
+    const [start, end] = slot.displaySlot.split("-").map((s) => s.trim());
+    return `${format12Hour(start)} - ${format12Hour(end)}`;
+  }
+  return slot.displaySlot || "";
+}
+
 export function BookingsAvailabilitySection({ slug }: { slug: string }) {
   const { primaryColor } = useBusinessPageTheme();
   const { slots, loading } = usePublicBookings(slug);
@@ -35,6 +65,13 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
     const d = String(now.getDate()).padStart(2, "0");
     return `${y}-${m}-${d}`;
   }, []);
+
+  // Filter upcoming & today events for horizontal reel
+  const upcomingEvents = useMemo(() => {
+    return slots
+      .filter((s) => s.date >= todayStr)
+      .sort((a, b) => (a.date === b.date ? a.startTime.localeCompare(b.startTime) : a.date.localeCompare(b.date)));
+  }, [slots, todayStr]);
 
   // Calendar month calculation
   const calendarDays = useMemo(() => {
@@ -93,15 +130,11 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
   }, [currentMonthDate, bookingsByDate, todayStr]);
 
   const handlePrevMonth = () => {
-    setCurrentMonthDate(
-      (prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1)
-    );
+    setCurrentMonthDate((prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
   };
 
   const handleNextMonth = () => {
-    setCurrentMonthDate(
-      (prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1)
-    );
+    setCurrentMonthDate((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
   };
 
   const monthLabel = currentMonthDate.toLocaleDateString("en-US", {
@@ -113,7 +146,7 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
 
   return (
     <div className="pt-2 pb-6 px-4 md:px-8">
-      {/* ── Calendar Trigger Header ── */}
+      {/* ── Top Header with "View Calendar" Button ── */}
       <div className="bg-gradient-to-r from-gray-50 to-white rounded-2xl border border-gray-200/80 p-4 shadow-xs">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -131,9 +164,10 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
             </div>
           </div>
 
+          {/* VIEW CALENDAR BUTTON ON TOP */}
           <button
             onClick={() => setIsCalendarOpen(true)}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-white shadow-xs hover:opacity-95 transition-all cursor-pointer"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-white shadow-xs hover:opacity-95 transition-all cursor-pointer shrink-0"
             style={{ backgroundColor: primaryColor }}
           >
             <span>View Calendar</span>
@@ -147,17 +181,79 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
         <div className="mt-3 pt-3 border-t border-gray-100 flex flex-wrap items-center gap-4 text-[11px] text-gray-600 font-medium">
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-gray-400" />
-            <span>Past Bookings</span>
+            <span>Past</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
-            <span>Today's Bookings</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-blue-600" />
+            <span>Today</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-            <span>Upcoming Bookings</span>
+            <span>Upcoming</span>
           </div>
         </div>
+
+        {/* ── BELOW: Horizontal Scroll of Upcoming Event Details ── */}
+        {upcomingEvents.length > 0 && (
+          <div className="mt-3.5 pt-3 border-t border-gray-100">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-bold text-gray-800">
+                Upcoming Reserved Slots
+              </span>
+              <span className="text-[11px] text-gray-400 font-medium">
+                {upcomingEvents.length} upcoming
+              </span>
+            </div>
+
+            <div className="flex gap-2.5 overflow-x-auto pb-2 pt-1 scrollbar-none scroll-smooth">
+              {upcomingEvents.map((slot) => {
+                const dateObj = new Date(slot.date);
+                const dateLabel = isNaN(dateObj.getTime())
+                  ? slot.date
+                  : dateObj.toLocaleDateString("en-US", {
+                      weekday: "short",
+                      month: "short",
+                      day: "numeric",
+                    });
+
+                return (
+                  <button
+                    key={slot.id}
+                    onClick={() => {
+                      const daySlots = bookingsByDate.get(slot.date) || [slot];
+                      setSelectedDayBookings({
+                        dateStr: slot.date,
+                        slots: daySlots,
+                      });
+                    }}
+                    className="shrink-0 flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white shadow-xs hover:border-gray-300 hover:shadow-sm transition-all text-left group cursor-pointer"
+                  >
+                    <div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold shrink-0"
+                      style={{
+                        backgroundColor: `${primaryColor}15`,
+                        color: primaryColor,
+                      }}
+                    >
+                      ⏰
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-bold text-gray-800">
+                        {dateLabel}
+                      </span>
+                      <span className="text-[11px] text-gray-600 font-medium">
+                        {formatSlotRange(slot)}
+                      </span>
+                    </div>
+                    <span className="ml-1 text-[10px] px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/60 font-bold">
+                      Booked
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ── Calendar Modal Overlay ── */}
@@ -219,22 +315,18 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
                   return <div key={`empty-${idx}`} className="h-10" />;
                 }
 
-                // Status circle color badge logic:
+                // Circle status colors:
                 // Past: Gray
                 // Today: Blue
                 // Upcoming: Green
                 let circleBadgeClass = "";
-                let badgeText = "";
                 if (day.hasBookings) {
                   if (day.status === "past") {
                     circleBadgeClass = "bg-gray-400 text-white ring-2 ring-gray-200";
-                    badgeText = "Past";
                   } else if (day.status === "today") {
                     circleBadgeClass = "bg-blue-600 text-white ring-2 ring-blue-200 shadow-sm";
-                    badgeText = "Today";
                   } else {
                     circleBadgeClass = "bg-emerald-500 text-white ring-2 ring-emerald-200 shadow-sm";
-                    badgeText = "Upcoming";
                   }
                 }
 
@@ -303,17 +395,20 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
         </div>
       )}
 
-      {/* ── Day Bookings Detail Popup (Height 80%, Centered with Internal Scroll) ── */}
+      {/* ── Day Bookings Detail Popup (Precise 80vh Height, Centered with Internal Scroll) ── */}
       {selectedDayBookings && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white rounded-3xl max-w-lg w-full h-[80%] shadow-2xl border border-gray-100 flex flex-col overflow-hidden">
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div
+            className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-gray-100 flex flex-col overflow-hidden"
+            style={{ height: "80vh", maxHeight: "80vh" }}
+          >
             {/* Popup Header */}
-            <div className="p-5 sm:p-6 border-b border-gray-100 flex items-center justify-between shrink-0 bg-gray-50/60">
+            <div className="p-5 sm:p-6 border-b border-gray-100 flex items-center justify-between shrink-0 bg-gray-50/70">
               <div>
                 <span className="text-[11px] font-bold uppercase tracking-wider text-gray-500">
                   Bookings for Day
                 </span>
-                <h4 className="text-lg font-bold text-gray-900">
+                <h4 className="text-base sm:text-lg font-bold text-gray-900">
                   {new Date(selectedDayBookings.dateStr).toLocaleDateString("en-US", {
                     weekday: "long",
                     year: "numeric",
@@ -331,11 +426,11 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
               </button>
             </div>
 
-            {/* Slots Scrollable List (Internal Scroll with height flex-1) */}
-            <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-3.5 divide-y divide-gray-100">
-              <div className="flex items-center justify-between pb-2 text-xs font-semibold text-gray-500">
+            {/* Slots Scrollable List (Internal Scroll with flex-1 min-h-0) */}
+            <div className="flex-1 min-h-0 overflow-y-auto p-5 sm:p-6 space-y-3.5">
+              <div className="flex items-center justify-between pb-1 text-xs font-semibold text-gray-500">
                 <span>{selectedDayBookings.slots.length} Reserved Slot(s)</span>
-                <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60 font-bold">
+                <span className="text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-200/60 font-bold">
                   Status: Reserved
                 </span>
               </div>
@@ -343,7 +438,7 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
               {selectedDayBookings.slots.map((slot, index) => (
                 <div
                   key={slot.id || index}
-                  className="pt-3.5 first:pt-0 flex items-center justify-between bg-white rounded-2xl p-4 border border-gray-200/80 shadow-xs hover:border-gray-300 transition-all"
+                  className="flex items-center justify-between bg-white rounded-2xl p-4 border border-gray-200/90 shadow-xs hover:border-gray-300 transition-all"
                 >
                   <div className="flex items-center gap-3">
                     <div
@@ -356,30 +451,31 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
                       ⏰
                     </div>
                     <div>
+                      {/* 12-Hour formatted timing (e.g. 2 PM - 6:30 PM) */}
                       <div className="text-sm font-bold text-gray-900">
-                        {slot.displaySlot}
+                        {formatSlotRange(slot)}
                       </div>
                       <div className="text-xs text-gray-500">
-                        From {slot.startTime} to {slot.endTime}
+                        {format12Hour(slot.startTime)} to {format12Hour(slot.endTime)}
                       </div>
                     </div>
                   </div>
 
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200/60">
-                    Booked
+                  <span className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200/60 shrink-0">
+                    Reserved
                   </span>
                 </div>
               ))}
 
-              <div className="pt-4">
-                <div className="p-3.5 rounded-2xl bg-blue-50/60 border border-blue-100 text-xs text-blue-900 leading-relaxed">
-                  💡 <strong>Need this date?</strong> Please contact or submit an enquiry to check if slots outside these booked hours or on neighboring dates can be arranged.
+              <div className="pt-3">
+                <div className="p-3.5 rounded-2xl bg-blue-50/70 border border-blue-100 text-xs text-blue-900 leading-relaxed">
+                  💡 <strong>Need this date?</strong> Please contact or submit an enquiry to check if slots outside these booked hours can be arranged.
                 </div>
               </div>
             </div>
 
             {/* Popup Footer */}
-            <div className="p-4 sm:p-5 border-t border-gray-100 shrink-0 bg-gray-50/60 flex items-center justify-end">
+            <div className="p-4 sm:p-5 border-t border-gray-100 shrink-0 bg-gray-50/70 flex items-center justify-end">
               <button
                 onClick={() => setSelectedDayBookings(null)}
                 className="px-6 py-2.5 rounded-xl text-xs font-bold text-white shadow-xs cursor-pointer hover:opacity-95 transition-all"
