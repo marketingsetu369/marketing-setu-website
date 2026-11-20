@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { useBusinessPageTheme } from "../common/BusinessPageContext";
 import { PublicBookingSlot, usePublicBookings } from "../hooks";
 
@@ -38,12 +39,29 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
   const { primaryColor } = useBusinessPageTheme();
   const { slots, loading } = usePublicBookings(slug);
 
+  const [mounted, setMounted] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [currentMonthDate, setCurrentMonthDate] = useState(() => new Date());
   const [selectedDayBookings, setSelectedDayBookings] = useState<{
     dateStr: string;
     slots: PublicBookingSlot[];
   } | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Prevent background scroll and lock position when modal or popup is open
+  useEffect(() => {
+    const isOpen = isCalendarOpen || selectedDayBookings !== null;
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isCalendarOpen, selectedDayBookings]);
 
   // Group bookings by YYYY-MM-DD
   const bookingsByDate = useMemo(() => {
@@ -256,10 +274,16 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
         )}
       </div>
 
-      {/* ── Calendar Modal Overlay ── */}
-      {isCalendarOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="bg-white rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-gray-100 flex flex-col max-h-[92vh] overflow-hidden">
+      {/* ── Calendar Modal Overlay (Rendered into body with createPortal for true fixed positioning) ── */}
+      {mounted && isCalendarOpen && createPortal(
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm"
+          style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0 }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsCalendarOpen(false);
+          }}
+        >
+          <div className="bg-white rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-gray-100 flex flex-col max-h-[92vh] overflow-hidden animate-in fade-in zoom-in-95 duration-150">
             {/* Modal Header */}
             <div className="flex items-center justify-between pb-4 border-b border-gray-100 shrink-0">
               <div>
@@ -392,14 +416,21 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
               </span>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
-      {/* ── Day Bookings Detail Popup (Precise 80vh Height, Centered with Internal Scroll) ── */}
-      {selectedDayBookings && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+      {/* ── Day Bookings Detail Popup (Rendered into body with createPortal for fixed viewport centering) ── */}
+      {mounted && selectedDayBookings && createPortal(
+        <div
+          className="fixed inset-0 z-[10000] flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-sm"
+          style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0 }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setSelectedDayBookings(null);
+          }}
+        >
           <div
-            className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-gray-100 flex flex-col overflow-hidden"
+            className="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-gray-100 flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-150"
             style={{ height: "80vh", maxHeight: "80vh" }}
           >
             {/* Popup Header */}
@@ -485,7 +516,8 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
