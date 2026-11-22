@@ -4,11 +4,12 @@
   --font-sans: var(--font-inter);
 
   /* Brand */
-  --color-brand-lighter: #EDEAFC;
-  --color-brand-light: #A59DEE;
-  --color-brand-main: #7265E3;
-  --color-brand-dark: #4A3DAB;
-  --color-brand-darker: #2B1F70;
+  --color-brand-lighter: #E7EBF0;
+  --color-brand-light: rgba(15, 44, 89, 0.05);
+  --color-brand-main: #0F2C59;
+  --color-brand-secondary: #14B8A6;
+  --color-brand-dark: #0A1E3D;
+  --color-brand-darker: #061326;
 
   /* Info */
   --color-info-lighter: #CAFDF5;
@@ -89,6 +90,28 @@
    Everything else lives statically in @theme above.
 ─────────────────────────────────────────────────────────────── */
 @layer base {
+  html,
+  body {
+    cursor: url(/assets/cursors/mouse-pointer.svg) 1 1, auto;
+  }
+
+  a,
+  button,
+  label,
+  select,
+  summary,
+  [role="button"],
+  [onclick],
+  input[type="button"],
+  input[type="submit"],
+  input[type="checkbox"],
+  input[type="radio"],
+  .cursor-pointer,
+  [class*=" cursor-pointer"],
+  [class^="cursor-pointer"] {
+    cursor: url(/assets/cursors/hover-mouse-pointer.svg) 9 1, pointer !important;
+  }
+
   :root {
     --bg-default: var(--color-grey-100);
     --bg-paper: #ffffff;
@@ -372,8 +395,8 @@ input[type=number] {
   }
 
   .selection-card-selected {
-    border-color: var(--color-brand-main, #7265E3);
-    background-color: rgba(114, 101, 227, 0.05);
+    border-color: var(--color-brand-main);
+    background-color: var(--color-brand-light);
     box-shadow: var(--shadow-z8);
     transform: scale(1.02);
   }
@@ -384,7 +407,7 @@ input[type=number] {
   }
 
   .selection-card-unselected:hover {
-    border-color: rgba(114, 101, 227, 0.4);
+    border-color: color-mix(in srgb, var(--color-brand-main) 40%, transparent);
     box-shadow: var(--shadow-z4);
   }
 }
@@ -573,7 +596,7 @@ input[type=number] {
 }
 
 .app-date-picker-calendar .react-datepicker__navigation:hover .react-datepicker__navigation-icon::before {
-  border-color: #7265E3 !important;
+  border-color: var(--color-brand-main) !important;
 }
 
 /* Day-of-week labels (Mon, Tue…) */
@@ -606,13 +629,13 @@ input[type=number] {
 }
 
 .app-date-picker-calendar .react-datepicker__day:hover {
-  background-color: rgba(114, 101, 227, 0.1) !important;
-  color: #7265E3 !important;
+  background-color: color-mix(in srgb, var(--color-brand-main) 8%, transparent) !important;
+  color: var(--color-brand-main) !important;
   font-weight: 600 !important;
 }
 
 .app-date-picker-calendar .react-datepicker__day--selected {
-  background-color: #7265E3 !important;
+  background-color: var(--color-brand-main) !important;
   color: #ffffff !important;
   font-weight: 700 !important;
   border-radius: 8px !important;
@@ -620,12 +643,12 @@ input[type=number] {
 
 .app-date-picker-calendar .react-datepicker__day--today {
   font-weight: 800 !important;
-  color: #7265E3 !important;
-  background-color: rgba(114, 101, 227, 0.08) !important;
+  color: var(--color-brand-main) !important;
+  background-color: var(--color-brand-light) !important;
 }
 
 .app-date-picker-calendar .react-datepicker__day--today.react-datepicker__day--selected {
-  background-color: #7265E3 !important;
+  background-color: var(--color-brand-main) !important;
   color: #ffffff !important;
 }
 
@@ -635,8 +658,8 @@ input[type=number] {
 }
 
 .app-date-picker-calendar .react-datepicker__day--keyboard-selected {
-  background-color: rgba(114, 101, 227, 0.15) !important;
-  color: #7265E3 !important;
+  background-color: color-mix(in srgb, var(--color-brand-main) 10%, transparent) !important;
+  color: var(--color-brand-main) !important;
 }
 
 .app-date-picker-calendar .react-datepicker__day--disabled {
@@ -671,25 +694,25 @@ input[type=number] {
 }
 
 .app-date-picker-calendar .react-datepicker__year-text:hover {
-  background-color: rgba(114, 101, 227, 0.1) !important;
-  color: #7265E3 !important;
+  background-color: color-mix(in srgb, var(--color-brand-main) 8%, transparent) !important;
+  color: var(--color-brand-main) !important;
 }
 
 .app-date-picker-calendar .react-datepicker__year-text--selected {
-  background-color: #7265E3 !important;
+  background-color: var(--color-brand-main) !important;
   color: #ffffff !important;
   font-weight: 700 !important;
 }
 
 .app-date-picker-calendar .react-datepicker__year-text--today {
-  color: #7265E3 !important;
+  color: var(--color-brand-main) !important;
   font-weight: 800 !important;
-  background-color: rgba(114, 101, 227, 0.08) !important;
+  background-color: var(--color-brand-light) !important;
 }
 
 .app-date-picker-calendar .react-datepicker__year-text--keyboard-selected {
-  background-color: rgba(114, 101, 227, 0.15) !important;
-  color: #7265E3 !important;
+  background-color: color-mix(in srgb, var(--color-brand-main) 10%, transparent) !important;
+  color: var(--color-brand-main) !important;
 }
 
 .app-date-picker-calendar .react-datepicker__year-text--disabled {

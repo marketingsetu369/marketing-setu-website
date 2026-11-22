@@ -24,9 +24,9 @@ export function AppButton({
   ...props
 }: AppButtonProps) {
   const sizeStyles = {
-    sm: "px-3.5 py-2 text-xs font-semibold rounded-lg",
-    md: "px-5 py-3 text-sm font-bold rounded-lg",
-    lg: "px-7 py-3.5 text-base font-bold rounded-lg",
+    sm: "h-9 px-3.5 text-xs font-semibold rounded-lg",
+    md: "h-[52px] px-5 text-sm font-bold rounded-lg",
+    lg: "h-[56px] px-7 text-base font-bold rounded-lg",
   };
 
   const variantStyles = {

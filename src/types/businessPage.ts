@@ -52,6 +52,22 @@ export interface BusinessPageOwner {
   experienceYears?: number;
 }
 
+export interface BusinessOffer {
+  id: string;
+  title: string;
+  badgeText?: string;
+  badge_text?: string;
+  description?: string;
+  offerPrice?: string;
+  offer_price?: string;
+  originalPrice?: string;
+  original_price?: string;
+  validTill?: string;
+  valid_till?: string;
+  isActive: boolean;
+  is_active?: boolean;
+}
+
 export interface BusinessPageSocialLinks {
   instagram?: string;
   facebook?: string;
@@ -76,6 +92,9 @@ export interface BusinessPageData {
   products?: ProductItem[];
   gallery?: Array<{ url: string; type?: string } | string>;
   testimonials?: any[];
+  show_offers_section?: boolean;
+  showOffersSection?: boolean;
+  offers?: BusinessOffer[];
   // Legacy backward-compat accessors
   business_name?: string;
   businessName?: string;

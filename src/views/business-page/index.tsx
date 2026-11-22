@@ -13,6 +13,7 @@ import {
   GalleryLightbox,
   GallerySection,
   LocationSection,
+  OffersSection,
   OwnerCard,
   ProductEnquiryModal,
   ProductsSection,
@@ -63,6 +64,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
     email: data?.contact?.email || "",
     mapsLink: data?.contact?.mapsLink || "",
     address: data?.contact?.address || "",
+    googleReviewLink: data?.contact?.googleReviewLink || data?.contact?.google_review_link || "",
   };
 
   const ownerList = Array.isArray(data?.owner) ? data.owner : [];
@@ -228,6 +230,13 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
           {/* ── RIGHT COLUMN ── */}
           <div className="w-full md:w-[65%] flex flex-col overflow-y-auto md:h-full scrollbar-none bg-white pb-24 md:pb-24">
+            <OffersSection
+              offers={data?.offers}
+              showOffers={data?.showOffersSection ?? data?.show_offers_section ?? true}
+              businessName={header.businessName || data?.businessName}
+              whatsapp={contact.whatsapp}
+              phone={contact.phone}
+            />
             <VideoSection youtubeUrl={data?.youtubeUrl} sectionClass={section("video")} />
             <ProductsSection products={products} slug={slug} sectionClass={section("products")} onEnquire={openProductEnquiry} />
             <GallerySection gallery={gallery} onImageClick={setActiveImageIndex} />
@@ -237,7 +246,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
               onPrev={() => setActiveTestimonial((p) => (p === 0 ? testimonials.length - 1 : p - 1))}
               onNext={() => setActiveTestimonial((p) => (p === testimonials.length - 1 ? 0 : p + 1))}
               sectionClass={section("testimonials")}
-              googleReviewLink={contact.googleReviewLink || contact.google_review_link}
+              googleReviewLink={contact.googleReviewLink}
               businessName={header.businessName || data?.businessName}
             />
             <EnquiryFormSection

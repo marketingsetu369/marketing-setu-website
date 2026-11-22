@@ -1,6 +1,7 @@
 export { default as BusinessHeader } from "./BusinessHeader";
 export { default as OwnerCard } from "./OwnerCard";
 export { default as DesktopCta } from "./DesktopCta";
+export { default as OffersSection } from "./OffersSection";
 export { default as VideoSection } from "./VideoSection";
 export { default as ProductsSection } from "./ProductsSection";
 export { default as GallerySection } from "./GallerySection";

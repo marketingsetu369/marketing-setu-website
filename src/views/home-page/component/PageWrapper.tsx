@@ -5,6 +5,7 @@ import { contactInfo, translations } from "@/views/home-page/data";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { AnimatedLogo } from "@/components/common";
 import { useWhatsApp } from "./useWhatsApp";
 
 interface PageWrapperProps {
@@ -47,89 +48,100 @@ export default function PageWrapper({ children }: PageWrapperProps) {
 
   return (
     <div className="min-h-screen flex flex-col font-sans text-primary bg-background transition-colors duration-300">
-      {/* BEGIN: Navigation - Glassmorphism floating header */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-outline/40 transition-colors duration-300">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-18 sm:h-20 items-center justify-between gap-4">
+      {/* BEGIN: Navigation - Modern floating header */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md transition-colors duration-300">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex h-18 sm:h-20 items-center justify-between gap-6">
             {/* Logo (Left side) */}
-            <Link href="/" className="flex-shrink-0 flex items-center group">
-              <img
-                src="/logo.svg"
-                alt="MarketingSetu Logo"
-                className="h-12 sm:h-14 lg:h-16 w-auto object-contain transition-transform group-hover:scale-105"
-              />
-            </Link>
+            <div className="flex items-center gap-12 sm:gap-14 lg:gap-16">
+              <Link href="/" className="flex-shrink-0 flex items-center gap-2.5 group">
+                <AnimatedLogo className="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105" />
+                <span className="text-lg sm:text-xl font-bold tracking-tight text-primary font-sans flex items-center">
+                  Marketing<span className="text-brand-secondary font-black ml-0.5">Setu</span>
+                </span>
+              </Link>
 
-
-            {/* Desktop Navigation Links */}
-            <div className="hidden lg:flex items-center justify-center space-x-1 xl:space-x-2">
-              {navLinks.map((link) => {
-                const isActive =
-                  link.href === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(link.href);
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`px-3 py-2 text-sm font-medium transition-colors rounded-xl ${
-                      isActive
-                        ? "text-brand-main bg-brand-lighter/60 dark:bg-brand-main/15 dark:text-brand-main font-semibold"
-                        : "text-gray-600 hover:text-gray-950 dark:text-gray-300 dark:hover:text-white hover:bg-gray-100/60 dark:hover:bg-gray-800/60"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
+              {/* Desktop Navigation Links */}
+              <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+                {navLinks.map((link) => {
+                  const isActive =
+                    link.href === "/"
+                      ? pathname === "/"
+                      : pathname.startsWith(link.href);
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={`text-sm py-1 font-semibold transition-colors ${
+                        isActive
+                          ? "text-black dark:text-white hover:text-black/70 dark:hover:text-white/70"
+                          : "text-black dark:text-white hover:text-black/60 dark:hover:text-white/60"
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Header Right Actions */}
             <div className="hidden md:flex items-center gap-2.5">
               {/* Language Switcher Pill */}
               {mounted && (
-                <select
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value as "en" | "mr" | "hi")}
-                  className="bg-gray-100/80 dark:bg-gray-800/80 border border-gray-200/60 dark:border-gray-700/60 text-gray-800 dark:text-gray-200 text-xs font-semibold rounded-xl px-2.5 py-2 focus:ring-0 focus:outline-none cursor-pointer hover:bg-gray-200/80 dark:hover:bg-gray-700/80 transition-colors"
-                >
-                  <option value="en" className="dark:bg-brand-dark">EN</option>
-                  <option value="mr" className="dark:bg-brand-dark">मराठी</option>
-                  <option value="hi" className="dark:bg-brand-dark">हिंदी</option>
-                </select>
+                <div className="relative flex items-center">
+                  <select
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value as "en" | "mr" | "hi")}
+                    className="appearance-none font-sans rounded-full cursor-pointer pl-3 pr-6 py-2 text-[13px] bg-transparent text-primary font-semibold border border-outline hover:bg-neutral/60 transition-colors focus:outline-none"
+                  >
+                    <option value="en" className="dark:bg-grey-900">EN</option>
+                    <option value="mr" className="dark:bg-grey-900">मराठी</option>
+                    <option value="hi" className="dark:bg-grey-900">हिंदी</option>
+                  </select>
+                  <svg className="w-3 h-3 text-secondary pointer-events-none absolute right-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               )}
 
               {/* Theme Toggle Button */}
               {mounted && (
                 <button
                   onClick={toggleTheme}
-                  className="p-2 rounded-xl bg-gray-100/80 dark:bg-gray-800/80 hover:bg-gray-200/80 dark:hover:bg-gray-700/80 text-gray-600 dark:text-gray-300 transition-colors cursor-pointer text-xs font-semibold"
+                  className="w-9 h-9 rounded-full bg-transparent hover:bg-neutral/60 border border-outline text-secondary hover:text-primary transition-colors cursor-pointer flex items-center justify-center shrink-0"
                   aria-label="Toggle theme"
+                  title={theme === "dark" ? "Switch to Light mode" : "Switch to Dark mode"}
                 >
-                  {theme === "dark" ? "☀️" : "🌙"}
+                  {theme === "dark" ? (
+                    <svg className="w-4 h-4 text-warning-main" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  ) : (
+                    <svg className="w-4 h-4 text-grey-700 dark:text-grey-300" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                  )}
                 </button>
               )}
 
-              {/* Portal Login Button */}
-              <Link
-                href="/login"
-                className="bg-paper hover:bg-neutral border border-outline text-primary px-3.5 py-2 rounded-xl text-xs font-semibold shadow-xs transition-all flex items-center gap-1.5"
-              >
-                <svg className="w-3.5 h-3.5 text-brand-main" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                Login
-              </Link>
-
-              {/* Download App Action Button */}
+              {/* Download App Pill Button */}
               <Link
                 href="/download"
-                className="bg-brand-main hover:bg-brand-dark text-white px-3.5 py-2 rounded-xl text-xs font-semibold shadow-xs hover:shadow-sm transition-all flex items-center gap-1.5"
+                className="inline-flex items-center gap-1.5 font-sans rounded-full cursor-pointer px-4 py-2 text-[13px] sm:text-[14px] bg-transparent text-primary font-semibold border border-outline hover:bg-neutral/60 transition-colors"
               >
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                <span>Download App</span>
+                <svg className="w-4 h-4 text-secondary shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                 </svg>
-                Download App
+              </Link>
+
+              {/* Login Button */}
+              <Link
+                href="/login"
+                className="inline-flex items-center justify-center font-sans rounded-full cursor-pointer px-5 py-2 text-[13px] sm:text-[14px] bg-brand-main hover:bg-brand-dark text-white font-semibold transition-colors shadow-2xs hover:shadow-sm"
+              >
+                Login
               </Link>
             </div>
 

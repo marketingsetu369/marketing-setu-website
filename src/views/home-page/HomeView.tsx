@@ -1,14 +1,16 @@
 "use client";
 
 import { useThemeStore } from "@/store/themeStore";
+import {
+  CafeCardView,
+  MarketingSetuCardView,
+  ParlourCardView,
+  PortfolioCardView,
+  SolarCardView,
+  TwoWheelerCardView,
+} from "@/views/home-page/card-views";
 import { InstantCardGenerator, InteractiveShowcase, PageWrapper, PricingCard, TestimonialCard, useWhatsApp } from "@/views/home-page/component";
 import { getPricingPlans, getTestimonialsData, translations } from "@/views/home-page/data";
-import CafeCardView from "@/views/home-page/hero-section/CafeCardView";
-import MarketingSetuCardView from "@/views/home-page/hero-section/MarketingSetuCardView";
-import ParlourCardView from "@/views/home-page/hero-section/ParlourCardView";
-import PortfolioCardView from "@/views/home-page/hero-section/PortfolioCardView";
-import SolarCardView from "@/views/home-page/hero-section/SolarCardView";
-import TwoWheelerCardView from "@/views/home-page/hero-section/TwoWheelerCardView";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -148,59 +150,22 @@ export default function HomeView() {
     <PageWrapper>
       <div className="font-sans text-primary bg-background">
         {/* HERO SECTION */}
-        <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-background">
+        <section className="relative pt-26 pb-8 md:pb-8 overflow-hidden bg-background">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            {/* Top Rating Badge */}
-            <div className="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-full bg-paper border border-outline text-xs sm:text-sm font-medium text-secondary mb-8 shadow-z1">
-              <span className="bg-brand-dark text-white px-2 py-0.5 rounded-full text-[11px] font-semibold">{t.home_hero_badge_platform}</span>
-              <span>{t.home_hero_badge_software}</span>
-              <span className="text-disabled hidden sm:inline">•</span>
-              <span className="text-primary font-semibold hidden sm:flex items-center gap-1">
-                4.9
-                <svg className="w-3.5 h-3.5 text-warning-main fill-current" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              </span>
-            </div>
-
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight text-primary max-w-4xl mx-auto leading-[1.1] mb-6">
-              {t.home_hero_title_1} <br />
-              <span className="text-brand-main font-medium">{t.home_hero_title_for}</span>
-            </h1>
-
-            {/* Subtitle */}
-            <p className="text-lg sm:text-xl text-secondary max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
-              {t.home_hero_lead}
-            </p>
-
-            {/* CTA Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-              <button
-                onClick={() => openWhatsApp()}
-                className="w-full sm:w-auto px-8 py-4 bg-brand-main hover:bg-brand-dark text-white font-semibold text-base rounded-xl shadow-z8 hover:shadow-z16 transition-all ease-out flex items-center justify-center gap-2 cursor-pointer"
-              >
-                {t.home_hero_cta_create_card}
-              </button>
-              <Link
-                href="/services"
-                className="w-full sm:w-auto px-8 py-4 bg-paper hover:bg-neutral text-primary font-semibold text-base rounded-xl transition-all border border-outline text-center"
-              >
-                {t.nav_explore_services}
-              </Link>
-            </div>
-
-            {/* Stateful 3D Coverflow Interactive Carousel */}
-            <div className="relative max-w-7xl mx-auto pt-6 pb-8 px-4 overflow-hidden">
+            
+             {/* Stateful 3D Coverflow Interactive Carousel */}
+            <div className="relative max-w-7xl mx-auto pb-18 px-4 overflow-hidden">
 
               {/* Active Category Name Title Above Slider */}
-              <div className="text-center mb-6 transition-all duration-300">
-                <span className="inline-block px-3 py-1 rounded-full bg-brand-lighter text-brand-dark font-semibold text-xs uppercase tracking-wider mb-2 border border-brand-light/40 shadow-xs">
+              <div className="text-center mb-4 transition-all duration-300">
+                <span className="inline-block px-3.5 py-1 rounded-full bg-brand-lighter text-brand-dark font-semibold text-xs uppercase tracking-wider border border-brand-light/40 shadow-xs">
                   {carouselCards[activeCardIndex].category}
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-semibold text-primary tracking-tight">
-                  {carouselCards[activeCardIndex].title}
-                </h3>
+                {carouselCards[activeCardIndex].title !== carouselCards[activeCardIndex].category && (
+                  <h3 className="text-2xl sm:text-3xl font-semibold text-primary tracking-tight mt-2">
+                    {carouselCards[activeCardIndex].title}
+                  </h3>
+                )}
               </div>
 
               {/* Coverflow Carousel Outer Stage */}
@@ -308,7 +273,7 @@ export default function HomeView() {
               </div>
 
               {/* Dots Pagination Below Carousel */}
-              <div className="flex justify-center items-center gap-2.5 mt-6">
+              <div className="flex justify-center items-center gap-2.5 mt-8">
                 {carouselCards.map((_, idx) => (
                   <button
                     key={idx}
@@ -322,6 +287,60 @@ export default function HomeView() {
                 ))}
               </div>
             </div>
+            
+            {/* Headline and Get Started CTA */}
+            <div className="max-w-2xl mx-auto pt-6 pb-4">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-medium tracking-tight text-primary leading-snug mb-3">
+                All-in-One Digital Marketing Platform <br />
+                <span className="text-brand-secondary">for Small Businesses</span>
+              </h1>
+              <p className="text-sm sm:text-base text-secondary max-w-xl mx-auto mb-8 leading-relaxed font-normal">
+                Build your digital presence, connect with customers, manage your marketing, and grow your business — all from one simple platform.
+              </p>
+
+              {/* Free Consultation CTA Button */}
+              <div className="flex justify-center mb-10">
+                <button
+                  onClick={() => openWhatsApp()}
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-black hover:bg-black/90 dark:bg-white dark:hover:bg-white/90 text-white dark:text-black font-semibold text-base rounded-full shadow-lg hover:shadow-xl transition-all cursor-pointer"
+                >
+                  <span>{t.btn_free_consultation || "Free Consultation"}</span>
+                  <svg className="w-4 h-4 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Divider with 'Or' */}
+              <div className="relative flex items-center justify-center max-w-xl mx-auto mb-8">
+                <div className="flex-grow border-t border-outline/70"></div>
+                <span className="shrink-0 px-4 text-sm text-secondary font-normal bg-background">Or</span>
+                <div className="flex-grow border-t border-outline/70"></div>
+              </div>
+
+              {/* Android Google Play Store Badge */}
+              <div className="flex justify-center items-center">
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.marketingsetu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 px-5 py-2.5 bg-black text-white rounded-xl border border-gray-800 hover:scale-105 active:scale-95 transition-all shadow-md group"
+                >
+                  <svg className="w-7 h-7 flex-shrink-0" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M3.6 1.8L13.8 12 3.6 22.2c-.4-.3-.6-.8-.6-1.4V3.2c0-.6.2-1.1.6-1.4z" />
+                    <path fill="#34A853" d="M17.2 8.6L13.8 12l3.4 3.4 4-2.3c.7-.4.7-1.7 0-2.2l-4-2.3z" />
+                    <path fill="#FBBC04" d="M3.6 1.8l10.2 10.2 3.4-3.4L6.1 1.2c-.8-.5-1.9-.3-2.5.6z" />
+                    <path fill="#EA4335" d="M3.6 22.2l13.6-7.8-3.4-3.4L3.6 22.2z" />
+                  </svg>
+                  <div className="text-left leading-tight">
+                    <p className="text-[10px] uppercase tracking-wider text-gray-300 font-medium">GET IT ON</p>
+                    <p className="text-base font-semibold text-white tracking-wide">Google Play</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+           
           </div>
         </section>
 
