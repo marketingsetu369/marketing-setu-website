@@ -1,132 +1,254 @@
-<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    /* Keyframe definitions */
-    @keyframes drawBridge {
-      to {
-        stroke-dashoffset: 0;
-      }
-    }
-    @keyframes scalePillarLeft {
-      0% {
-        transform: translateY(100px) scale(0.8);
-        opacity: 0;
-      }
-      100% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-    }
-    @keyframes scalePillarRight {
-      0% {
-        transform: translateY(100px) scale(0.8);
-        opacity: 0;
-      }
-      100% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-    }
-    @keyframes fadeInNode {
-      0% {
-        transform: scale(0);
-        opacity: 0;
-      }
-      70% {
-        transform: scale(1.2);
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-    @keyframes gradientShift {
-      0% {
-        stop-color: #5B2DEE;
-      }
-      50% {
-        stop-color: #09C95B;
-      }
-      100% {
-        stop-color: #5B2DEE;
-      }
-    }
-    @keyframes gradientShiftRight {
-      0% {
-        stop-color: #09C95B;
-      }
-      50% {
-        stop-color: #5B2DEE;
-      }
-      100% {
-        stop-color: #09C95B;
-      }
-    }
-
-    /* Target class stylings */
-    .bg-card {
-      transform-origin: center;
-      transition: transform 0.5s ease;
-    }
-    .pillar-left {
-      transform-origin: 245px 510px;
-      animation: scalePillarLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-      opacity: 0;
-    }
-    .pillar-right {
-      transform-origin: 778px 510px;
-      animation: scalePillarRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s forwards;
-      opacity: 0;
-    }
-    .node-left {
-      transform-origin: 442px 550px;
-      animation: fadeInNode 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s forwards;
-      opacity: 0;
-    }
-    .node-right {
-      transform-origin: 581px 550px;
-      animation: fadeInNode 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.65s forwards;
-      opacity: 0;
-    }
-    .bridge-line {
-      stroke-dasharray: 600;
-      stroke-dashoffset: 600;
-      animation: drawBridge 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
-    }
-    .stop-1 {
-      animation: gradientShift 6s infinite alternate;
-    }
-    .stop-2 {
-      animation: gradientShiftRight 6s infinite alternate;
-    }
-  </style>
-
-  <g clip-path="url(#clip0_1934_9206)">
-    <!-- Background Card -->
-    <path class="bg-card" d="M800 0H224C100.288 0 0 100.288 0 224V800C0 923.712 100.288 1024 224 1024H800C923.712 1024 1024 923.712 1024 800V224C1024 100.288 923.712 0 800 0Z" fill="white"/>
-    
-    <!-- Left Pillar -->
-    <path class="pillar-left" d="M240.186 315.918C255.607 303.949 274.093 302.617 289.796 308.078C303.585 312.874 314.513 322.414 322.457 332.639L438.435 458.854C443.134 463.969 445.963 470.138 446.962 476.521C441.846 473.541 435.847 471.826 429.432 471.826C410.704 471.826 395.523 486.441 395.522 504.471C395.522 506.703 395.755 508.883 396.198 510.989C393.406 509.336 390.805 507.254 388.496 504.741L279.86 386.516C279.835 387.704 279.82 388.957 279.82 390.275V685.562C279.82 704.29 264.638 719.472 245.91 719.473C227.182 719.473 212 704.29 212 685.562V390.275C212 379.17 212.638 366.159 215.989 353.695C219.433 340.886 226.276 326.743 239.918 316.126L239.917 316.125C239.944 316.104 239.972 316.084 239.998 316.063C240.06 316.015 240.122 315.965 240.185 315.917L240.186 315.918Z" fill="#5B2DEE"/>
-    
-    <!-- Right Pillar -->
-    <path class="pillar-right" d="M783.816 315.918C768.394 303.949 749.909 302.617 734.206 308.078C720.417 312.874 709.489 322.414 701.545 332.639L585.567 458.854C580.861 463.977 578.03 470.156 577.034 476.55C582.16 473.552 588.178 471.826 594.614 471.826C613.342 471.826 628.524 486.441 628.524 504.471C628.524 506.692 628.294 508.862 627.854 510.959C630.627 509.311 633.211 507.238 635.506 504.741L744.142 386.516C744.167 387.704 744.182 388.957 744.182 390.275V685.562C744.182 704.29 759.364 719.473 778.092 719.473C796.82 719.473 812.002 704.29 812.002 685.562V390.275C812.002 379.17 811.364 366.159 808.013 353.695C804.569 340.886 797.726 326.743 784.084 316.126L784.085 316.125C784.058 316.104 784.03 316.084 784.004 316.063C783.942 316.015 783.88 315.965 783.817 315.917L783.816 315.918Z" fill="#09C95B"/>
-    
-    <!-- Left Node -->
-    <path class="node-left" d="M442.935 502.474C457.807 502.474 469.863 514.531 469.863 529.403V579.27C469.863 587.265 466.378 594.445 460.845 599.376C456.458 594.763 450.711 591.966 444.42 591.966C437.51 591.966 431.257 595.339 426.741 600.788C420.221 595.873 416.006 588.064 416.006 579.27V529.403C416.006 514.531 428.062 502.474 442.935 502.474Z" fill="#5B2DEE"/>
-    
-    <!-- Right Node -->
-    <path class="node-right" d="M581.063 502.474C595.935 502.474 607.992 514.531 607.992 529.403V579.27C607.992 586.46 605.173 592.991 600.581 597.821C595.763 592.359 589.085 588.976 581.705 588.976C574.016 588.976 567.089 592.649 562.233 598.518C557.237 593.629 554.135 586.812 554.135 579.27V529.403C554.135 514.531 566.191 502.474 581.063 502.474Z" fill="#09C95B"/>
-    
-    <!-- Connector Bridge -->
-    <path class="bridge-line" d="M329.721 676.006C444.337 618.671 580.921 616.331 690.761 676.006" stroke="url(#paint0_linear_1934_9206)" stroke-width="49.8675" stroke-linecap="round" stroke-linejoin="round"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
   <defs>
-    <linearGradient id="paint0_linear_1934_9206" x1="333.541" y1="647.954" x2="692.672" y2="647.954" gradientUnits="userSpaceOnUse">
-      <stop class="stop-1" offset="0" stop-color="#5B2DEE"/>
-      <stop offset="0.5" stop-color="#6240E8"/>
-      <stop class="stop-2" offset="1" stop-color="#09C95B"/>
+    <!-- Fresh 2026 Gradients -->
+    <linearGradient id="bridgeFlowGrad" x1="150" y1="310" x2="620" y2="115" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0F2C59" />
+      <stop offset="50%" stop-color="#0D9488" />
+      <stop offset="100%" stop-color="#10B981" />
     </linearGradient>
-    <clipPath id="clip0_1934_9206">
-      <rect width="1024" height="1024" fill="white"/>
+
+    <linearGradient id="barGrad1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0D9488" />
+      <stop offset="100%" stop-color="#0F2C59" />
+    </linearGradient>
+
+    <linearGradient id="barGrad2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#0D9488" />
+    </linearGradient>
+
+    <linearGradient id="leafGrad" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0D9488" />
+      <stop offset="100%" stop-color="#10B981" />
+    </linearGradient>
+
+    <!-- Clip Path for Smooth Growth Pathway Sweep -->
+    <clipPath id="pathwaySweepClip">
+      <rect class="sweep-rect" x="240" y="100" width="0" height="230" />
     </clipPath>
+
+    <style>
+      /* 1. Bridge Towers & Deck Slide/Fade */
+      .bridge-structure {
+        opacity: 0;
+        transform: translateY(12px);
+        animation: riseFade 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+      }
+
+      /* 2. Suspension Cables Stroke Draw */
+      .bridge-cable {
+        stroke-dasharray: 320;
+        stroke-dashoffset: 320;
+        animation: drawCable 0.9s cubic-bezier(0.25, 1, 0.5, 1) 0.35s forwards;
+      }
+
+      .suspender-line {
+        opacity: 0;
+        animation: simpleFade 0.5s ease-out 0.65s forwards;
+      }
+
+      /* 3. Analytics Bars Growing Upward */
+      .growth-bar {
+        transform: scaleY(0);
+        animation: growBar 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      }
+
+      .bar-1 {
+        transform-origin: 415px 226px;
+        animation-delay: 0.6s;
+      }
+
+      .bar-2 {
+        transform-origin: 445px 220px;
+        animation-delay: 0.72s;
+      }
+
+      .bar-3 {
+        transform-origin: 475px 208px;
+        animation-delay: 0.84s;
+      }
+
+      /* 4. Connecting Pathway & Arrow Sweep */
+      .sweep-rect {
+        animation: sweepOpen 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.85s forwards;
+      }
+
+      /* 5. Organic Leaves Spring Unfurl */
+      .leaf-upper {
+        opacity: 0;
+        transform-origin: 518px 176px;
+        transform: scale(0.3) rotate(-18deg);
+        animation: unfurlLeaf 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 1.3s forwards;
+      }
+
+      .leaf-lower {
+        opacity: 0;
+        transform-origin: 532px 232px;
+        transform: scale(0.3) rotate(18deg);
+        animation: unfurlLeaf 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 1.42s forwards;
+      }
+
+      /* 6. Brand Typography Settle */
+      .brand-title {
+        opacity: 0;
+        transform: translateY(14px);
+        animation: riseFade 0.75s cubic-bezier(0.22, 1, 0.36, 1) 1.2s forwards;
+      }
+
+      .brand-tagline {
+        opacity: 0;
+        letter-spacing: 8px;
+        animation: taglineSettle 0.85s cubic-bezier(0.22, 1, 0.36, 1) 1.4s forwards;
+      }
+
+      /* Subtle Hover Polish for Interactive Web Headers */
+      #marketing-setu-logo {
+        cursor: pointer;
+        transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      #marketing-setu-logo:hover {
+        transform: translateY(-2px);
+      }
+
+      /* Keyframes */
+      @keyframes riseFade {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes drawCable {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes simpleFade {
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes growBar {
+        to {
+          transform: scaleY(1);
+        }
+      }
+
+      @keyframes sweepOpen {
+        to {
+          width: 390px;
+        }
+      }
+
+      @keyframes unfurlLeaf {
+        to {
+          opacity: 1;
+          transform: scale(1) rotate(0deg);
+        }
+      }
+
+      @keyframes taglineSettle {
+        to {
+          opacity: 1;
+          letter-spacing: 4.5px;
+        }
+      }
+
+      /* Accessibility: Respect OS Reduced Motion Settings */
+      @media (prefers-reduced-motion: reduce) {
+        .bridge-structure,
+        .bridge-cable,
+        .suspender-line,
+        .growth-bar,
+        .sweep-rect,
+        .leaf-upper,
+        .leaf-lower,
+        .brand-title,
+        .brand-tagline {
+          animation: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+          stroke-dashoffset: 0 !important;
+          width: 390px !important;
+          letter-spacing: 4.5px !important;
+        }
+      }
+    </style>
   </defs>
+
+  <!-- Main Logo Wrapper -->
+  <g id="marketing-setu-logo">
+    <g id="marketing-setu-emblem">
+
+      <!-- 1. Bridge Towers & Deck -->
+      <g class="bridge-structure">
+        <path d="M276 110 H290 L294 252 H272 Z" fill="#0F2C59" />
+        <path d="M332 110 H346 L350 232 H328 Z" fill="#0F2C59" />
+        <rect x="284" y="138" width="54" height="10" rx="2" fill="#0F2C59" />
+        <rect x="282" y="175" width="58" height="7" rx="1.5" fill="#0F2C59" />
+        <path d="M175 262 H295 L355 244" fill="none" stroke="#0F2C59" stroke-width="7" stroke-linecap="round" />
+      </g>
+
+      <!-- 2. Main Suspension Cables -->
+      <path class="bridge-cable" d="M180 258 C230 235, 265 185, 283 116" fill="none" stroke="#0F2C59" stroke-width="5.5"
+        stroke-linecap="round" />
+      <path class="bridge-cable" d="M283 116 C300 175, 322 175, 339 116" fill="none" stroke="#0F2C59" stroke-width="5"
+        stroke-linecap="round" />
+      <path class="bridge-cable" d="M339 116 C358 175, 392 212, 435 224" fill="none" stroke="#0F2C59" stroke-width="5"
+        stroke-linecap="round" />
+
+      <!-- Vertical Suspender Cables -->
+      <g class="suspender-line" stroke="#0F2C59" stroke-width="2.5" stroke-linecap="round">
+        <line x1="210" y1="244" x2="210" y2="262" />
+        <line x1="230" y1="228" x2="230" y2="262" />
+        <line x1="250" y1="202" x2="250" y2="262" />
+        <line x1="268" y1="162" x2="268" y2="262" />
+        <line x1="303" y1="156" x2="303" y2="242" />
+        <line x1="319" y1="156" x2="319" y2="236" />
+        <line x1="362" y1="162" x2="362" y2="225" />
+        <line x1="382" y1="188" x2="382" y2="223" />
+        <line x1="402" y1="208" x2="402" y2="223" />
+      </g>
+
+      <!-- 3. Rising Analytics Bars -->
+      <rect class="growth-bar bar-1" x="405" y="182" width="20" height="44" rx="3" fill="url(#barGrad1)" />
+      <rect class="growth-bar bar-2" x="435" y="160" width="20" height="60" rx="3" fill="url(#barGrad1)" />
+      <rect class="growth-bar bar-3" x="465" y="136" width="20" height="72" rx="3" fill="url(#barGrad2)" />
+
+      <!-- 4. Organic Growth Leaves -->
+      <g class="leaf-upper">
+        <path d="M518 176 C502 152, 504 126, 524 112 C538 132, 536 158, 518 176 Z" fill="url(#leafGrad)" />
+        <path d="M518 173 C516 154, 519 135, 523 120" fill="none" stroke="#FFFFFF" stroke-width="1.8"
+          stroke-linecap="round" opacity="0.75" />
+      </g>
+
+      <g class="leaf-lower">
+        <path d="M532 232 C552 204, 586 198, 616 206 C598 232, 566 244, 532 232 Z" fill="url(#leafGrad)" />
+        <path d="M536 230 C562 222, 584 214, 606 209" fill="none" stroke="#FFFFFF" stroke-width="1.8"
+          stroke-linecap="round" opacity="0.75" />
+      </g>
+
+      <!-- 5. Dynamic Connecting Bridge Pathway & Arrow -->
+      <g clip-path="url(#pathwaySweepClip)">
+        <path
+          d="M250 315 C295 255, 375 258, 445 235 C500 217, 540 185, 572 145 L552 136 L608 110 L602 170 L584 157 C546 205, 500 242, 435 262 C368 282, 315 278, 286 315 Z"
+          fill="url(#bridgeFlowGrad)" />
+        <path
+          d="M302 315 C330 282, 385 285, 448 265 C488 252, 520 232, 545 206 C526 238, 492 264, 446 279 C388 298, 345 294, 326 315 Z"
+          fill="#0D9488" />
+        <path d="M486 258 C504 275, 515 295, 518 315 H502 C499 296, 490 280, 474 266 Z" fill="#0D9488" />
+      </g>
+    </g>
+
+    <!-- 6. Typography -->
+    <g id="brand-typography" text-anchor="middle" font-family="'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+      <text class="brand-title" x="400" y="378" font-size="44" font-weight="800" letter-spacing="3.5"
+        fill="#0F2C59">MARKETING SETU</text>
+      <text class="brand-tagline" x="400" y="410" font-size="15" font-weight="600" letter-spacing="4.5"
+        fill="#0D9488">CONNECTING GROWTH</text>
+    </g>
+  </g>
 </svg>
