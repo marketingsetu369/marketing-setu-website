@@ -19,11 +19,11 @@ export interface ProductItem {
 }
 
 export interface BusinessPageHeader {
-  business_name?: string;
-  business_category?: string;
+  businessName?: string;
+  businessCategory?: string;
   tagline?: string;
   description?: string;
-  logo_url?: string | null;
+  logoUrl?: string | null;
 }
 
 export interface BusinessPageContact {
@@ -31,10 +31,13 @@ export interface BusinessPageContact {
   whatsapp?: string;
   email?: string;
   address?: string;
-  maps_link?: string;
-  google_maps_url?: string;
+  mapsLink?: string;
   city?: string;
   state?: string;
+  googleReviewLink?: string;
+  google_review_link?: string;
+  gstNumber?: string;
+  gst_number?: string;
 }
 
 export interface BusinessPageOwner {
@@ -42,8 +45,11 @@ export interface BusinessPageOwner {
   title: string;
   bio: string;
   avatar_url?: string;
+  avatarUrl?: string;
   happy_customers_count?: number;
+  happyCustomersCount?: number;
   experience_years?: number;
+  experienceYears?: number;
 }
 
 export interface BusinessPageSocialLinks {
@@ -56,24 +62,31 @@ export interface BusinessPageSocialLinks {
 export interface BusinessPageData {
   slug: string;
   custom_url?: string;
+  customUrl?: string;
   theme_color_hex?: string;
+  themeColorHex?: string;
   language?: string;
   youtube_url?: string | null;
+  youtubeUrl?: string | null;
   header?: BusinessPageHeader;
   contact?: BusinessPageContact;
   owner?: BusinessPageOwner[];
   social_links?: BusinessPageSocialLinks;
+  socialLinks?: BusinessPageSocialLinks;
   products?: ProductItem[];
   gallery?: Array<{ url: string; type?: string } | string>;
   testimonials?: any[];
   // Legacy backward-compat accessors
   business_name?: string;
+  businessName?: string;
   business_category?: string;
+  businessCategory?: string;
   about_us?: string;
   mobile_number?: string;
   email_address?: string;
   location_address?: string;
   logo_url?: string;
+  logoUrl?: string;
   facebook_link?: string;
   instagram_link?: string;
   website_link?: string;

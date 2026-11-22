@@ -45,7 +45,7 @@ const getImageUrl = (url?: string) => {
 async function getBusinessData(slug: string) {
   try {
     const res = await BusinessPageApi.getPublicBusinessPage(slug);
-    return res && (res.business_name || res.header?.business_name) ? res : null;
+    return res && res.header?.businessName ? res : null;
   } catch (error) {
     console.error("Error fetching business data on server:", error);
     return null;
@@ -62,15 +62,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const businessName =
-    data.header?.businessName ||
-    data.header?.business_name ||
-    data.business_name ||
-    "";
+  const businessName = data.header?.businessName || "";
   const tagline = data.header?.tagline || "";
-  const category = data.header?.business_category || data.category || "";
-  const city = data.contact?.city || data.city || "Pune";
-  const state = data.contact?.state || data.state || "Maharashtra";
+  const category = data.header?.businessCategory || "";
+  const city = data.contact?.city || "Pune";
+  const state = data.contact?.state || "Maharashtra";
 
   const title = tagline ? `${businessName} — ${tagline}` : `${businessName} | MarketingSetu`;
   const description =
@@ -140,14 +136,14 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  const businessName = data?.header?.business_name || data?.business_name || "";
-  const businessDescription = data?.header?.tagline || data?.about_us || "";
-  const telephone = data?.contact?.phone || data?.mobile_number || "";
-  const email = data?.contact?.email || data?.email_address || "";
-  const streetAddress = data?.contact?.address || data?.location_address || "";
-  const city = data?.contact?.city || data?.city || "Pune";
-  const state = data?.contact?.state || data?.state || "Maharashtra";
-  const logo = getImageUrl(data?.header?.logo_url || data?.logo_url) || undefined;
+  const businessName = data?.header?.businessName || "";
+  const businessDescription = data?.header?.tagline || "";
+  const telephone = data?.contact?.phone || "";
+  const email = data?.contact?.email || "";
+  const streetAddress = data?.contact?.address || "";
+  const city = data?.contact?.city || "Pune";
+  const state = data?.contact?.state || "Maharashtra";
+  const logo = getImageUrl(data?.header?.logoUrl) || undefined;
 
   // JSON-LD LocalBusiness Schema
   const jsonLd = data

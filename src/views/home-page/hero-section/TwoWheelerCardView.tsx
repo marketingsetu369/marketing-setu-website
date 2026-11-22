@@ -3,8 +3,6 @@
 import React from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  CallIcon,
-  WhatsappIcon,
   RoadIcon,
   BankIcon,
   File01Icon,

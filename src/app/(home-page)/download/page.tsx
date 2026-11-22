@@ -2,23 +2,22 @@ import DownloadView from "@/views/home-page/DownloadView";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Download Android App — Automatic WhatsApp Missed-Call Marketing",
+  title: "Get MarketingSetu on Google Play",
   description:
-    "Download the official MarketingSetu Android app to automate your business customer follow-ups on missed calls, manage business inquiries, and grow your sales on autopilot.",
+    "Install the official MarketingSetu Android app from Google Play for business follow-ups, enquiries, and digital catalogs.",
   keywords: [
-    "Download MarketingSetu App",
-    "Missed Call WhatsApp App Android",
-    "Business Followup App APK",
+    "MarketingSetu Google Play",
+    "MarketingSetu Android App",
+    "Business Followup App",
     "Customer Engagement Android App",
-    "MarketingSetu Mobile App",
   ],
   alternates: {
     canonical: "/download",
   },
   openGraph: {
-    title: "Download MarketingSetu Android App",
+    title: "Get MarketingSetu on Google Play",
     description:
-      "Automate customer follow-ups on missed calls and convert inquiries into loyal customers directly from your phone.",
+      "Install MarketingSetu from the official Google Play listing and receive app updates through Google Play.",
     url: "/download",
     type: "website",
   },
@@ -26,27 +25,28 @@ export const metadata: Metadata = {
     "geo.region": "IN-MH",
     "geo.placename": "Pune",
     "geo.position": "18.5204;73.8567",
-    "ICBM": "18.5204, 73.8567",
+    ICBM: "18.5204, 73.8567",
   },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "MobileApplication",
-  "name": "MarketingSetu Android App",
-  "operatingSystem": "Android",
-  "applicationCategory": "BusinessApplication",
-  "offers": {
+  name: "MarketingSetu Android App",
+  operatingSystem: "Android",
+  applicationCategory: "BusinessApplication",
+  installUrl: "https://play.google.com/store/apps/details?id=com.marketingsetu",
+  offers: {
     "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "INR",
+    price: "0",
+    priceCurrency: "INR",
   },
-  "description":
-    "Automate WhatsApp and SMS follow-ups on missed calls, digital business card sharing, and customer engagement directly from your smartphone.",
-  "publisher": {
+  description:
+    "Manage customer follow-ups, digital business catalogs, and enquiries from your smartphone.",
+  publisher: {
     "@type": "Organization",
-    "name": "MarketingSetu",
-    "url": "https://marketingsetu.com",
+    name: "MarketingSetu",
+    url: "https://marketingsetu.com",
   },
 };
 

@@ -46,21 +46,22 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
   const [errorMessage, setErrorMessage] = useState("");
 
   // ── Data defaults ────────────────────────────────────────────────────────
-  const primaryColor = data?.theme_color_hex || "#7265E3";
+  const primaryColor = data?.themeColorHex || "#7265E3";
   const pageLanguage: string = data?.language || "en";
 
+  // NestJS TypeORM BusinessPage entity shape (camelCase JSONB fields)
   const header = {
-    business_name: data?.header?.business_name || "",
+    businessName: data?.header?.businessName || "",
     tagline: data?.header?.tagline || "",
-    business_category: data?.header?.business_category || "",
-    logo_url: data?.header?.logo_url || "",
+    businessCategory: data?.header?.businessCategory || "",
+    logoUrl: data?.header?.logoUrl || "",
   };
 
   const contact = {
     phone: data?.contact?.phone || "",
     whatsapp: data?.contact?.whatsapp || "",
     email: data?.contact?.email || "",
-    maps_link: data?.contact?.maps_link || "",
+    mapsLink: data?.contact?.mapsLink || "",
     address: data?.contact?.address || "",
   };
 
@@ -101,14 +102,14 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
   }, [data]);
 
   const socialLinks = {
-    instagram: data?.social_links?.instagram || (data as any)?.socialLinks?.instagram || "",
-    facebook: data?.social_links?.facebook || (data as any)?.socialLinks?.facebook || "",
-    youtube: data?.social_links?.youtube || (data as any)?.socialLinks?.youtube || "",
-    twitter: data?.social_links?.twitter || (data as any)?.socialLinks?.twitter || (data?.social_links as any)?.x || "",
+    instagram: data?.socialLinks?.instagram || "",
+    facebook: data?.socialLinks?.facebook || "",
+    youtube: data?.socialLinks?.youtube || "",
+    twitter: data?.socialLinks?.twitter || "",
   };
 
   // ── Section visibility ───────────────────────────────────────────────────
-  const showVideo = !!(data?.youtube_url && getYouTubeId(data.youtube_url));
+  const showVideo = !!(data?.youtubeUrl && getYouTubeId(data.youtubeUrl));
   const visibleStates = [
     false, // stats (in left column)
     showVideo,
@@ -117,7 +118,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
     gallery.length > 0,
     !!(socialLinks.instagram || socialLinks.facebook || socialLinks.youtube || socialLinks.twitter),
     true, // enquiry always visible
-    !!contact.maps_link,
+    !!contact.mapsLink,
   ];
   const section = (key: string) => getSectionStyle(key, visibleStates);
 
@@ -227,7 +228,7 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
 
           {/* ── RIGHT COLUMN ── */}
           <div className="w-full md:w-[65%] flex flex-col overflow-y-auto md:h-full scrollbar-none bg-white pb-24 md:pb-24">
-            <VideoSection youtubeUrl={data?.youtube_url} sectionClass={section("video")} />
+            <VideoSection youtubeUrl={data?.youtubeUrl} sectionClass={section("video")} />
             <ProductsSection products={products} slug={slug} sectionClass={section("products")} onEnquire={openProductEnquiry} />
             <GallerySection gallery={gallery} onImageClick={setActiveImageIndex} />
             <TestimonialsSection
@@ -236,6 +237,8 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
               onPrev={() => setActiveTestimonial((p) => (p === 0 ? testimonials.length - 1 : p - 1))}
               onNext={() => setActiveTestimonial((p) => (p === testimonials.length - 1 ? 0 : p + 1))}
               sectionClass={section("testimonials")}
+              googleReviewLink={contact.googleReviewLink || contact.google_review_link}
+              businessName={header.businessName || data?.businessName}
             />
             <EnquiryFormSection
               formData={formData}
@@ -249,9 +252,9 @@ export default function BusinessView({ data, slug }: BusinessViewProps) {
             />
             <SocialLinksSection socialLinks={socialLinks} />
             <LocationSection
-              mapsLink={contact.maps_link}
+              mapsLink={contact.mapsLink}
               address={contact.address}
-              businessName={header.business_name}
+              businessName={header.businessName}
             />
 
             {/* ── Public Booked Dates & Slots (Real-time Availability) ── */}

@@ -1,7 +1,6 @@
 "use client";
 
 import { useThemeStore } from "@/store/themeStore";
-import { TranslationDictionary } from "@/translation";
 import { InstantCardGenerator, InteractiveShowcase, PageWrapper, PricingCard, TestimonialCard, useWhatsApp } from "@/views/home-page/component";
 import { getPricingPlans, getTestimonialsData, translations } from "@/views/home-page/data";
 import CafeCardView from "@/views/home-page/hero-section/CafeCardView";

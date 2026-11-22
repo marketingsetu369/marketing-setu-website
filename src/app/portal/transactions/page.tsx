@@ -15,8 +15,6 @@ import {
   AppTextArea,
 } from "@/library/ui";
 import {
-  PortalBadge,
-  PortalCard,
   PortalEmptyState,
   PortalPageHeader,
   PortalStatCard,
@@ -27,15 +25,10 @@ import {
   ArrowUp01Icon,
   Coins01Icon,
   Delete02Icon,
-  Edit02Icon,
   FileDownloadIcon,
-  FilterIcon,
-  Search01Icon,
   TaskEdit02Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
 import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 

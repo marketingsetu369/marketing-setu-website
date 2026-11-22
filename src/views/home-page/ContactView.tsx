@@ -3,7 +3,6 @@
 import React from "react";
 import { useThemeStore } from "@/store/themeStore";
 import {
-  BridgeDivider,
   FaqSection,
   PageHero,
   PageWrapper,
@@ -11,7 +10,6 @@ import {
   useWhatsApp,
 } from "@/views/home-page/component";
 import { getContactFaqs, translations, contactInfo } from "@/views/home-page/data";
-import { AppButton } from "@/components/library";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   WhatsappIcon,

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import QRCode from "qrcode";
 import { PageWrapper } from "@/views/home-page/component";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -10,10 +10,8 @@ import {
   Download01Icon,
   QrCodeIcon,
   Tick01Icon,
-  Share01Icon,
   SparklesIcon,
   ArrowRight01Icon,
-  CheckmarkCircle02Icon,
 } from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -26,7 +24,6 @@ export default function WhatsAppLinkGeneratorView() {
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState("");
   const [copied, setCopied] = useState(false);
   const [qrColor, setQrColor] = useState("#128C7E");
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Suggested message templates for quick selection
   const templates = [

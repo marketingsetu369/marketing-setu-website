@@ -63,14 +63,34 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
     }
   }, [isCalendarOpen, selectedDayBookings]);
 
-  // Group bookings by YYYY-MM-DD
+  // Group bookings by YYYY-MM-DD (including expanding date ranges)
   const bookingsByDate = useMemo(() => {
     const map = new Map<string, PublicBookingSlot[]>();
     for (const slot of slots) {
-      if (!map.has(slot.date)) {
-        map.set(slot.date, []);
+      const startDate = slot.date;
+      const endDate = slot.endDate || slot.date;
+
+      if (!endDate || endDate <= startDate) {
+        // Single day
+        if (!map.has(startDate)) map.set(startDate, []);
+        map.get(startDate)!.push(slot);
+      } else {
+        // Multi-day range: populate each day from startDate to endDate
+        const current = new Date(`${startDate}T00:00:00`);
+        const end = new Date(`${endDate}T00:00:00`);
+
+        while (current <= end) {
+          const y = current.getFullYear();
+          const m = String(current.getMonth() + 1).padStart(2, "0");
+          const d = String(current.getDate()).padStart(2, "0");
+          const dStr = `${y}-${m}-${d}`;
+
+          if (!map.has(dStr)) map.set(dStr, []);
+          map.get(dStr)!.push(slot);
+
+          current.setDate(current.getDate() + 1);
+        }
       }
-      map.get(slot.date)!.push(slot);
     }
     return map;
   }, [slots]);
@@ -87,7 +107,7 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
   // Filter upcoming & today events for horizontal reel
   const upcomingEvents = useMemo(() => {
     return slots
-      .filter((s) => s.date >= todayStr)
+      .filter((s) => (s.endDate || s.date) >= todayStr)
       .sort((a, b) => (a.date === b.date ? a.startTime.localeCompare(b.startTime) : a.date.localeCompare(b.date)));
   }, [slots, todayStr]);
 
@@ -165,16 +185,16 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
   return (
     <div className="pt-2 pb-6 px-4 md:px-8">
       {/* ── Top Header with "View Calendar" Button ── */}
-      <div className="bg-gradient-to-r from-gray-50 to-white rounded-2xl border border-gray-200/80 p-4 shadow-xs">
+      <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-5 shadow-xs">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <span
-              className="w-3 h-3 rounded-full animate-pulse"
+              className="w-2.5 h-2.5 rounded-full"
               style={{ backgroundColor: primaryColor }}
             />
             <div>
-              <h3 className="text-sm font-bold text-gray-900 tracking-tight flex items-center gap-1.5">
-                📅 Availability & Booked Dates
+              <h3 className="text-sm font-bold text-gray-900 tracking-tight">
+                Availability & Booked Dates
               </h3>
               <p className="text-xs text-gray-500">
                 Check schedule and reserved slots
@@ -185,36 +205,20 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
           {/* VIEW CALENDAR BUTTON ON TOP */}
           <button
             onClick={() => setIsCalendarOpen(true)}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-white shadow-xs hover:opacity-95 transition-all cursor-pointer shrink-0"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold text-white shadow-xs hover:opacity-95 transition-all cursor-pointer shrink-0"
             style={{ backgroundColor: primaryColor }}
           >
             <span>View Calendar</span>
-            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-white/20 font-bold">
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-white/25 font-bold">
               {slots.length}
             </span>
           </button>
         </div>
 
-        {/* ── Quick Legend Bar ── */}
-        <div className="mt-3 pt-3 border-t border-gray-100 flex flex-wrap items-center gap-4 text-[11px] text-gray-600 font-medium">
-          <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-gray-400" />
-            <span>Past</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-blue-600" />
-            <span>Today</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-            <span>Upcoming</span>
-          </div>
-        </div>
-
         {/* ── BELOW: Horizontal Scroll of Upcoming Event Details ── */}
         {upcomingEvents.length > 0 && (
-          <div className="mt-3.5 pt-3 border-t border-gray-100">
-            <div className="flex items-center justify-between mb-2">
+          <div className="mt-4 pt-3.5 border-t border-gray-100">
+            <div className="flex items-center justify-between mb-2.5">
               <span className="text-xs font-bold text-gray-800">
                 Upcoming Reserved Slots
               </span>
@@ -223,10 +227,11 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
               </span>
             </div>
 
-            <div className="flex gap-2.5 overflow-x-auto pb-2 pt-1 scrollbar-none scroll-smooth">
+            <div className="flex gap-2.5 overflow-x-auto pb-2 pt-0.5 scrollbar-none scroll-smooth">
               {upcomingEvents.map((slot) => {
-                const dateObj = new Date(slot.date);
-                const dateLabel = isNaN(dateObj.getTime())
+                const isRange = slot.endDate && slot.endDate !== slot.date;
+                const dateObj = new Date(`${slot.date}T00:00:00`);
+                let dateLabel = isNaN(dateObj.getTime())
                   ? slot.date
                   : dateObj.toLocaleDateString("en-US", {
                       weekday: "short",
@@ -234,38 +239,53 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
                       day: "numeric",
                     });
 
+                if (isRange && slot.endDate) {
+                  const endObj = new Date(`${slot.endDate}T00:00:00`);
+                  const endLabel = isNaN(endObj.getTime())
+                    ? slot.endDate
+                    : endObj.toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      });
+                  dateLabel = `${dateLabel} - ${endLabel}`;
+                }
+
+                const bookingTitle = slot.title?.trim() || (isRange ? "Work In Progress" : "Reserved");
+
                 return (
                   <button
                     key={slot.id}
                     onClick={() => {
                       const daySlots = bookingsByDate.get(slot.date) || [slot];
                       setSelectedDayBookings({
-                        dateStr: slot.date,
+                        dateStr: isRange && slot.endDate ? `${slot.date} to ${slot.endDate}` : slot.date,
                         slots: daySlots,
                       });
                     }}
-                    className="shrink-0 flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white shadow-xs hover:border-gray-300 hover:shadow-sm transition-all text-left group cursor-pointer"
+                    className="shrink-0 flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white hover:border-gray-300 transition-all text-left group cursor-pointer"
                   >
                     <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold shrink-0"
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-sm shrink-0"
                       style={{
-                        backgroundColor: `${primaryColor}15`,
+                        backgroundColor: `${primaryColor}12`,
                         color: primaryColor,
                       }}
                     >
-                      ⏰
+                      📅
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-xs font-bold text-gray-800">
-                        {dateLabel}
-                      </span>
-                      <span className="text-[11px] text-gray-600 font-medium">
-                        {formatSlotRange(slot)}
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold text-gray-900">
+                          {dateLabel}
+                        </span>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-gray-100 text-gray-700 font-semibold border border-gray-200/80">
+                          {bookingTitle}
+                        </span>
+                      </div>
+                      <span className="text-[11px] text-gray-500 font-medium">
+                        {isRange ? `Daily ${formatSlotRange(slot)}` : formatSlotRange(slot)}
                       </span>
                     </div>
-                    <span className="ml-1 text-[10px] px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/60 font-bold">
-                      Booked
-                    </span>
                   </button>
                 );
               })}
@@ -339,19 +359,10 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
                   return <div key={`empty-${idx}`} className="h-10" />;
                 }
 
-                // Circle status colors:
-                // Past: Gray
-                // Today: Blue
-                // Upcoming: Green
+                // Sober circle status colors:
                 let circleBadgeClass = "";
                 if (day.hasBookings) {
-                  if (day.status === "past") {
-                    circleBadgeClass = "bg-gray-400 text-white ring-2 ring-gray-200";
-                  } else if (day.status === "today") {
-                    circleBadgeClass = "bg-blue-600 text-white ring-2 ring-blue-200 shadow-sm";
-                  } else {
-                    circleBadgeClass = "bg-emerald-500 text-white ring-2 ring-emerald-200 shadow-sm";
-                  }
+                  circleBadgeClass = "bg-gray-900 text-white shadow-xs";
                 }
 
                 const isTodayDate = day.dateStr === todayStr;
@@ -400,21 +411,7 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
               })}
             </div>
 
-            {/* Footer Summary / Legend */}
-            <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-around text-[11px] font-semibold text-gray-600 shrink-0">
-              <span className="flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-gray-400" />
-                Past
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-blue-600" />
-                Today
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                Upcoming
-              </span>
-            </div>
+
           </div>
         </div>,
         document.body
@@ -466,37 +463,44 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
                 </span>
               </div>
 
-              {selectedDayBookings.slots.map((slot, index) => (
-                <div
-                  key={slot.id || index}
-                  className="flex items-center justify-between bg-white rounded-2xl p-4 border border-gray-200/90 shadow-xs hover:border-gray-300 transition-all"
-                >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shrink-0"
-                      style={{
-                        backgroundColor: `${primaryColor}15`,
-                        color: primaryColor,
-                      }}
-                    >
-                      ⏰
-                    </div>
-                    <div>
-                      {/* 12-Hour formatted timing (e.g. 2 PM - 6:30 PM) */}
-                      <div className="text-sm font-bold text-gray-900">
-                        {formatSlotRange(slot)}
+              {selectedDayBookings.slots.map((slot, index) => {
+                const bookingTitle = slot.title?.trim() || "Reserved";
+                return (
+                  <div
+                    key={slot.id || index}
+                    className="flex items-center justify-between bg-white rounded-2xl p-4 border border-gray-200/90 shadow-xs hover:border-gray-300 transition-all"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shrink-0"
+                        style={{
+                          backgroundColor: `${primaryColor}15`,
+                          color: primaryColor,
+                        }}
+                      >
+                        📅
                       </div>
-                      <div className="text-xs text-gray-500">
-                        {format12Hour(slot.startTime)} to {format12Hour(slot.endTime)}
+                      <div>
+                        {/* Title / Reason (e.g. Hall Booking, Painting Project) */}
+                        <div className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                          <span>{bookingTitle}</span>
+                        </div>
+                        {/* 12-Hour formatted timing (e.g. 2 PM - 6:30 PM) */}
+                        <div className="text-xs font-medium text-gray-600 mt-0.5">
+                          {formatSlotRange(slot)}
+                        </div>
+                        <div className="text-[11px] text-gray-400">
+                          {format12Hour(slot.startTime)} to {format12Hour(slot.endTime)}
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200/60 shrink-0">
-                    Reserved
-                  </span>
-                </div>
-              ))}
+                    <span className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-gray-100 text-gray-700 border border-gray-200 shrink-0">
+                      Booked
+                    </span>
+                  </div>
+                );
+              })}
 
               <div className="pt-3">
                 <div className="p-3.5 rounded-2xl bg-blue-50/70 border border-blue-100 text-xs text-blue-900 leading-relaxed">

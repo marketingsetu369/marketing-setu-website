@@ -6,18 +6,12 @@ import { PageWrapper } from "@/views/home-page/component";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   PrinterIcon,
-  Download01Icon,
   SparklesIcon,
   StarIcon,
   Store01Icon,
-  MapsLocation01Icon,
-  ShieldCheck,
   Copy01Icon,
   Tick01Icon,
-  ArrowRight01Icon,
-  FavouriteIcon,
 } from "@hugeicons/core-free-icons";
-import Link from "next/link";
 import { toast } from "sonner";
 
 export default function GoogleReviewQrView() {

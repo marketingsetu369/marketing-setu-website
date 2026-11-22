@@ -39,9 +39,9 @@ export default function ProductsListView({ data, slug }: ProductsListViewProps) 
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
  
-  const primaryColor = data?.theme_color_hex || "#7265E3";
-  const businessName = data?.header?.business_name || data?.business_name || "";
-  const logoUrl = data?.header?.logo_url || data?.logo_url || "";
+  const primaryColor = data?.themeColorHex || data?.theme_color_hex || "#7265E3";
+  const businessName = data?.header?.businessName || "";
+  const logoUrl = data?.header?.logoUrl || "";
  
   // Map raw product pricing json to tiers
   const products: Product[] = useMemo(() => {

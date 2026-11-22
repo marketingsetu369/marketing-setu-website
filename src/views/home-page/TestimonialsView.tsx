@@ -13,7 +13,6 @@ import { TranslationDictionary } from "@/translation";
 import { useWhatsApp } from "@/views/home-page/component";
 
 export default function TestimonialsView() {
-  const { openWhatsApp } = useWhatsApp();
   const { language } = useThemeStore();
   const t = translations[language] || translations.en;
 

@@ -1,8 +1,7 @@
-import Link from "next/link";
 import React from "react";
 
 interface PageHeroProps {
-  breadcrumbLabel: string;
+  breadcrumbLabel?: string;
   eyebrow?: string;
   title: React.ReactNode;
   lead?: string;
@@ -10,8 +9,6 @@ interface PageHeroProps {
 }
 
 export default function PageHero({
-  breadcrumbLabel,
-  eyebrow,
   title,
   lead,
   children,

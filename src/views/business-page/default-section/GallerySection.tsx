@@ -13,7 +13,7 @@ interface GallerySectionProps {
 }
 
 export default function GallerySection({ gallery, onImageClick }: GallerySectionProps) {
-  const { primaryColor, fontHeader, t } = useBusinessPageTheme();
+  const { fontHeader, t } = useBusinessPageTheme();
 
   if (!gallery || gallery.length === 0) return null;
 

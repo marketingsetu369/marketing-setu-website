@@ -17,16 +17,16 @@ import { getImageUrl } from "../common/utils";
 
 interface BusinessHeaderProps {
   header: {
-    business_name: string;
+    businessName: string;
     tagline: string;
-    business_category: string;
-    logo_url: string;
+    businessCategory: string;
+    logoUrl: string;
   };
   contact: {
     phone: string;
     whatsapp: string;
     email: string;
-    maps_link: string;
+    mapsLink: string;
   };
   slug: string;
 }
@@ -47,7 +47,7 @@ export default function BusinessHeader({ header, contact, slug }: BusinessHeader
           onClick={() => {
             if (navigator.share) {
               navigator
-                .share({ title: header.business_name || "Business Profile", url: window.location.href })
+                .share({ title: header.businessName || "Business Profile", url: window.location.href })
                 .catch(console.error);
             } else {
               navigator.clipboard.writeText(window.location.href);
@@ -62,10 +62,10 @@ export default function BusinessHeader({ header, contact, slug }: BusinessHeader
 
       {/* Logo */}
       <div className="w-28 h-28 bg-white rounded-full flex items-center justify-center shadow-md border-4 border-white mb-4.5 overflow-hidden p-1.5">
-        {header.logo_url ? (
+        {header.logoUrl ? (
           <img
-            src={getImageUrl(header.logo_url)}
-            alt={header.business_name || "Logo"}
+            src={getImageUrl(header.logoUrl)}
+            alt={header.businessName || "Logo"}
             className="w-full h-full object-contain rounded-full"
           />
         ) : (
@@ -80,7 +80,7 @@ export default function BusinessHeader({ header, contact, slug }: BusinessHeader
 
       <div className="flex items-center gap-1.5 justify-center mb-1 max-w-full px-4 flex-nowrap">
         <h1 className="text-xl max-[400px]:text-base font-semibold text-gray-900 tracking-tight truncate min-w-0" style={{ fontFamily: fontHeader }}>
-          {header.business_name || ""}
+          {header.businessName || ""}
         </h1>
         <span className="flex items-center justify-center flex-shrink-0">
           <HugeiconsIcon icon={ShieldCheck} size={18} color={primaryColor} />
@@ -93,12 +93,12 @@ export default function BusinessHeader({ header, contact, slug }: BusinessHeader
       )}
 
       {/* Category Chip */}
-      {header.business_category && (
+      {header.businessCategory && (
         <span
           className="text-white text-sm font-medium px-4.5 py-1.5 rounded-full tracking-wide"
           style={{ backgroundColor: primaryColor }}
         >
-          {header.business_category}
+          {header.businessCategory}
         </span>
       )}
 
@@ -141,9 +141,9 @@ export default function BusinessHeader({ header, contact, slug }: BusinessHeader
           </a>
         )}
 
-        {contact.maps_link && (
+        {contact.mapsLink && (
           <a
-            href={contact.maps_link}
+            href={contact.mapsLink}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => { if (slug) trackUniqueAction(slug, TrackAction.Directions); }}

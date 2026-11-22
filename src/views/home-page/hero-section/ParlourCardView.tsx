@@ -10,16 +10,8 @@ import {
   Clock01Icon,
   MapPinIcon,
   Calendar01Icon,
-  RupeeIcon,
   StarIcon,
-  ArrowRight01Icon,
-  UserIcon,
 } from "@hugeicons/core-free-icons";
-
-const PRIMARY = "#73584d";
-const PRIMARY_LIGHT = "#f4d0c1";
-const SECONDARY = "#735c00";
-const SECONDARY_BG = "#fed65b";
 
 export default function ParlourCardView({ isCenter = true }: { isCenter?: boolean }) {
   return (

@@ -6,18 +6,13 @@ import { PageWrapper } from "@/views/home-page/component";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   PrinterIcon,
-  Download01Icon,
   SparklesIcon,
   WhatsappIcon,
   Store01Icon,
   ShieldCheck,
-  StarIcon,
   ArrowRight01Icon,
-  Call02Icon,
-  MapsLocation01Icon,
 } from "@hugeicons/core-free-icons";
 import Link from "next/link";
-import { toast } from "sonner";
 
 type StandeeType = "table-tent" | "counter-a4" | "review-standee";
 

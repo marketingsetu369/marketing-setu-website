@@ -25,6 +25,8 @@ interface TestimonialsSectionProps {
   onPrev: () => void;
   onNext: () => void;
   sectionClass: string;
+  googleReviewLink?: string;
+  businessName?: string;
 }
 
 export default function TestimonialsSection({
@@ -33,8 +35,10 @@ export default function TestimonialsSection({
   onPrev,
   onNext,
   sectionClass,
+  googleReviewLink,
+  businessName,
 }: TestimonialsSectionProps) {
-  const { primaryColor, fontHeader, t } = useBusinessPageTheme();
+  const { fontHeader, t } = useBusinessPageTheme();
   const active = testimonials[activeIndex];
 
   if (testimonials.length === 0 || !active) return null;
@@ -74,23 +78,36 @@ export default function TestimonialsSection({
         </p>
       </div>
 
-      {/* Navigation */}
-      {testimonials.length > 1 && (
-        <div className="flex gap-4 mt-6">
-          <button
-            onClick={onPrev}
-            className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-gray-600 hover:bg-gray-50 active:scale-95 transition-all shadow-xs border border-gray-100 cursor-pointer"
+      {/* Navigation & Google Review CTA */}
+      <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
+        {testimonials.length > 1 && (
+          <div className="flex gap-4">
+            <button
+              onClick={onPrev}
+              className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-gray-600 hover:bg-gray-50 active:scale-95 transition-all shadow-xs border border-gray-100 cursor-pointer"
+            >
+              <HugeiconsIcon icon={ArrowLeft02Icon} size={20} />
+            </button>
+            <button
+              onClick={onNext}
+              className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-gray-600 hover:bg-gray-50 active:scale-95 transition-all shadow-xs border border-gray-100 cursor-pointer"
+            >
+              <HugeiconsIcon icon={ArrowRight02Icon} size={20} />
+            </button>
+          </div>
+        )}
+
+        {googleReviewLink && (
+          <a
+            href={googleReviewLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold bg-white text-gray-800 border border-gray-200 shadow-xs hover:bg-gray-50 hover:border-gray-300 transition-all active:scale-95"
           >
-            <HugeiconsIcon icon={ArrowLeft02Icon} size={20} />
-          </button>
-          <button
-            onClick={onNext}
-            className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-gray-600 hover:bg-gray-50 active:scale-95 transition-all shadow-xs border border-gray-100 cursor-pointer"
-          >
-            <HugeiconsIcon icon={ArrowRight02Icon} size={20} />
-          </button>
-        </div>
-      )}
+            <span>⭐ Rate us on Google</span>
+          </a>
+        )}
+      </div>
     </section>
   );
 }

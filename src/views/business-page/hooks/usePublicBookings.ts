@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 
 export interface PublicBookingSlot {
   id: string;
+  title?: string;
   date: string; // YYYY-MM-DD
+  endDate?: string; // YYYY-MM-DD (for multi-day work/range)
   startTime: string; // HH:mm
   endTime: string; // HH:mm
   displaySlot: string;

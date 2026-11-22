@@ -4,7 +4,6 @@ import { EnquiryItem } from "@/api/repositories/userDashboardApi";
 import { AppCard } from "@/components/library/AppCard";
 import { AppModal } from "@/library/ui";
 import React, { useState } from "react";
-import PortalBadge from "./PortalBadge";
 
 export interface PortalLeadCardProps {
   enquiry: EnquiryItem;
