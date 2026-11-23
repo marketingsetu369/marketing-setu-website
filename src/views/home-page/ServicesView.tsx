@@ -17,12 +17,22 @@ export default function ServicesView() {
 
   return (
     <PageWrapper>
-      {/* PAGE HERO */}
+      {/* PAGE HERO (Centered with Brand Secondary Accents) */}
       <PageHero
-        breadcrumbLabel={t.services_hero_breadcrumb}
-        eyebrow={t.services_hero_eyebrow}
-        title={t.services_hero_title}
-        lead={t.services_hero_lead}
+        breadcrumbLabel="Services"
+        eyebrow="GROWTH TOOLS • PAN INDIA"
+        center
+        title={
+          <>
+            Digital Marketing & <span className="text-brand-secondary">Local Growth Services</span> for Businesses in India
+          </>
+        }
+        lead={
+          <>
+            Turn local customer calls and walk-ins into repeat business across Pune, Satara, Sangli, Kolhapur, and{" "}
+            <span className="text-brand-secondary font-medium">all over India</span> with automated WhatsApp replies, digital business pages, and daily growth tools.
+          </>
+        }
       />
 
       {/* SERVICE BLOCKS */}

@@ -1,82 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 320" width="1100" height="320">
-  <defs>
-    <linearGradient id="hBridgeFlowGrad" x1="50" y1="280" x2="480" y2="85" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#0F2C59" />
-      <stop offset="50%" stop-color="#0D9488" />
-      <stop offset="100%" stop-color="#10B981" />
-    </linearGradient>
-
-    <linearGradient id="hBarGrad1" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0D9488" />
-      <stop offset="100%" stop-color="#0F2C59" />
-    </linearGradient>
-
-    <linearGradient id="hBarGrad2" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#10B981" />
-      <stop offset="100%" stop-color="#0D9488" />
-    </linearGradient>
-
-    <linearGradient id="hLeafGrad" x1="0" y1="1" x2="1" y2="0">
-      <stop offset="0%" stop-color="#0D9488" />
-      <stop offset="100%" stop-color="#10B981" />
-    </linearGradient>
-  </defs>
-
-  <!-- Left Emblem (Scaled down and positioned at x: 20, y: 30) -->
-  <g transform="translate(-100, -50)">
-    <!-- Bridge Towers & Deck -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 320" width="1120" height="320">
+  <!-- Left Emblem -->
+  <g transform="translate(-80, -45)">
+    <!-- Bridge Structure -->
     <g class="bridge-structure">
-      <path d="M276 110 H290 L294 252 H272 Z" fill="#0F2C59" />
-      <path d="M332 110 H346 L350 232 H328 Z" fill="#0F2C59" />
-      <rect x="284" y="138" width="54" height="10" rx="2" fill="#0F2C59" />
-      <rect x="282" y="175" width="58" height="7" rx="1.5" fill="#0F2C59" />
-      <path d="M175 262 H295 L355 244" fill="none" stroke="#0F2C59" stroke-width="7" stroke-linecap="round" />
+      <path d="M280 108 H298 L303 252 H275 Z" fill="#003058" />
+      <path d="M342 108 H360 L365 232 H337 Z" fill="#003058" />
+      <rect x="290" y="136" width="60" height="13" rx="2" fill="#003058" />
+      <rect x="288" y="174" width="64" height="10" rx="2" fill="#003058" />
+      <path d="M165 262 H300 L368 244" fill="none" stroke="#003058" stroke-width="9" stroke-linecap="round" />
     </g>
 
     <!-- Cables -->
-    <path class="bridge-cable" d="M180 258 C230 235, 265 185, 283 116" fill="none" stroke="#0F2C59" stroke-width="5.5" stroke-linecap="round" />
-    <path class="bridge-cable" d="M283 116 C300 175, 322 175, 339 116" fill="none" stroke="#0F2C59" stroke-width="5" stroke-linecap="round" />
-    <path class="bridge-cable" d="M339 116 C358 175, 392 212, 435 224" fill="none" stroke="#0F2C59" stroke-width="5" stroke-linecap="round" />
+    <path class="bridge-cable" d="M170 258 C225 235, 268 182, 288 114" fill="none" stroke="#003058" stroke-width="7" stroke-linecap="round" />
+    <path class="bridge-cable" d="M288 114 C308 178, 332 178, 351 114" fill="none" stroke="#003058" stroke-width="6.5" stroke-linecap="round" />
+    <path class="bridge-cable" d="M351 114 C372 178, 408 214, 452 225" fill="none" stroke="#003058" stroke-width="6.5" stroke-linecap="round" />
 
     <!-- Suspenders -->
-    <g stroke="#0F2C59" stroke-width="2.5" stroke-linecap="round">
-      <line x1="210" y1="244" x2="210" y2="262" />
-      <line x1="230" y1="228" x2="230" y2="262" />
-      <line x1="250" y1="202" x2="250" y2="262" />
-      <line x1="268" y1="162" x2="268" y2="262" />
-      <line x1="303" y1="156" x2="303" y2="242" />
-      <line x1="319" y1="156" x2="319" y2="236" />
-      <line x1="362" y1="162" x2="362" y2="225" />
-      <line x1="382" y1="188" x2="382" y2="223" />
-      <line x1="402" y1="208" x2="402" y2="223" />
+    <g class="suspender-line" stroke="#003058" stroke-width="3.5" stroke-linecap="round">
+      <line x1="205" y1="244" x2="205" y2="262" />
+      <line x1="228" y1="226" x2="228" y2="262" />
+      <line x1="250" y1="198" x2="250" y2="262" />
+      <line x1="272" y1="156" x2="272" y2="262" />
+      <line x1="312" y1="152" x2="312" y2="242" />
+      <line x1="330" y1="152" x2="330" y2="236" />
+      <line x1="375" y1="158" x2="375" y2="226" />
+      <line x1="398" y1="184" x2="398" y2="224" />
+      <line x1="420" y1="206" x2="420" y2="224" />
     </g>
 
-    <!-- Analytics Bars -->
-    <rect x="405" y="182" width="20" height="44" rx="3" fill="url(#hBarGrad1)" />
-    <rect x="435" y="160" width="20" height="60" rx="3" fill="url(#hBarGrad1)" />
-    <rect x="465" y="136" width="20" height="72" rx="3" fill="url(#hBarGrad2)" />
+    <!-- Rising Bars -->
+    <rect class="growth-bar bar-1" x="424" y="174" width="22" height="52" rx="3.5" fill="#089848" />
+    <rect class="growth-bar bar-2" x="456" y="148" width="22" height="72" rx="3.5" fill="#089848" />
+    <rect class="growth-bar bar-3" x="488" y="118" width="22" height="92" rx="3.5" fill="#089848" />
 
-    <!-- Leaves -->
-    <g>
-      <path d="M518 176 C502 152, 504 126, 524 112 C538 132, 536 158, 518 176 Z" fill="url(#hLeafGrad)" />
-      <path d="M518 173 C516 154, 519 135, 523 120" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" opacity="0.75" />
-    </g>
-    <g>
-      <path d="M532 232 C552 204, 586 198, 616 206 C598 232, 566 244, 532 232 Z" fill="url(#hLeafGrad)" />
-      <path d="M536 230 C562 222, 584 214, 606 209" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" opacity="0.75" />
-    </g>
-
-    <!-- Pathway & Arrow -->
-    <g>
-      <path d="M250 315 C295 255, 375 258, 445 235 C500 217, 540 185, 572 145 L552 136 L608 110 L602 170 L584 157 C546 205, 500 242, 435 262 C368 282, 315 278, 286 315 Z" fill="url(#hBridgeFlowGrad)" />
-      <path d="M302 315 C330 282, 385 285, 448 265 C488 252, 520 232, 545 206 C526 238, 492 264, 446 279 C388 298, 345 294, 326 315 Z" fill="#0D9488" />
-      <path d="M486 258 C504 275, 515 295, 518 315 H502 C499 296, 490 280, 474 266 Z" fill="#0D9488" />
-    </g>
+    <!-- Dynamic Connecting Arrow -->
+    <path
+      d="M240 315 C295 250, 385 252, 460 228 C518 208, 560 174, 595 132 L574 122 L634 94 L626 158 L608 144 C568 196, 520 236, 450 258 C378 280, 318 276, 280 315 Z"
+      fill="#089848"
+    />
+    <path
+      d="M298 315 C330 278, 392 280, 460 258 C505 244, 540 222, 568 194 C546 228, 510 256, 458 273 C396 294, 350 290, 326 315 Z"
+      fill="#003058"
+    />
   </g>
 
-  <!-- Right Typography -->
-  <g font-family="'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
-    <text x="540" y="170" font-size="52" font-weight="800" letter-spacing="4" fill="#0F2C59">MARKETING SETU</text>
-    <text x="545" y="215" font-size="18" font-weight="600" letter-spacing="5.5" fill="#0D9488">CONNECTING GROWTH</text>
+  <!-- Typography: MARKETING SETU -->
+  <g transform="translate(580, 160)">
+    <text font-family="'Poppins', sans-serif" font-weight="800" font-size="64" letter-spacing="2">
+      <tspan fill="#003058">MARKETING </tspan>
+      <tspan fill="#089848">SETU</tspan>
+    </text>
+    <text y="54" font-family="'Inter', sans-serif" font-weight="600" font-size="20" fill="#003058" letter-spacing="3" opacity="0.85">
+      “THE MARKETING BRIDGE”
+    </text>
   </g>
 </svg>

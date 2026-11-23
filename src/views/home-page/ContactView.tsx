@@ -27,89 +27,99 @@ export default function ContactView() {
 
   return (
     <PageWrapper>
-      {/* PAGE HERO */}
+      {/* PAGE HERO (Centered with Brand Secondary Accents) */}
       <PageHero
-        breadcrumbLabel={t.contact_hero_breadcrumb}
-        eyebrow={t.contact_hero_eyebrow}
-        title={t.contact_hero_title}
-        lead={t.contact_hero_lead}
+        breadcrumbLabel="Contact"
+        eyebrow="SUPPORT & CONSULTATION • PAN INDIA"
+        center
+        title={
+          <>
+            Get in Touch with <span className="text-brand-secondary">MarketingSetu</span>
+          </>
+        }
+        lead={
+          <>
+            Have questions about WhatsApp automation, digital business pages, or local setup?{" "}
+            <span className="text-brand-secondary font-medium">We are here to help</span> your business grow across India.
+          </>
+        }
       />
 
-      {/* CONTACT CONTENT SECTION WITH MODERN GRADIENT BLOBS */}
-      <section className="relative py-20 md:py-28 bg-background overflow-hidden">
-        {/* Glow Blobs */}
-        <div className="absolute top-1/4 left-0 -translate-x-1/2 w-96 h-96 bg-brand-main/15 dark:bg-brand-main/10 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-0 translate-x-1/2 w-96 h-96 bg-blue-500/15 dark:bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
-
-        <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      {/* CONTACT CONTENT SECTION WITH UNIFIED DESIGN */}
+      <section className="relative py-16 sm:py-20 bg-background overflow-hidden border-t border-outline/40">
+        <div className="relative max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
             
-            {/* LEFT COLUMN: Clean List of Channels (No Parent Card Wrapper) */}
-            <div className="lg:col-span-5 space-y-8">
-              <div className="space-y-4">
-                <span className="text-xs font-bold uppercase tracking-wider text-secondary bg-neutral border border-outline px-3 py-1 rounded-full inline-block">
-                  {t.contact_hero_eyebrow || "CONNECT"}
+            {/* LEFT COLUMN: Clean List of Channels with Dashed Border Cards */}
+            <div className="lg:col-span-5 space-y-6">
+              <div className="space-y-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-brand-secondary bg-brand-light border border-brand-secondary/20 px-3.5 py-1 rounded-full inline-block">
+                  DIRECT CHANNELS
                 </span>
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-primary leading-tight">
-                  {t.contact_info_title}
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-primary leading-tight">
+                  Reach Out to Our Team
                 </h2>
-                <p className="text-secondary leading-relaxed text-sm sm:text-base">
-                  {t.contact_info_subtitle}
+                <p className="text-secondary leading-relaxed text-xs sm:text-sm max-w-md">
+                  Whether you prefer a quick WhatsApp chat, direct call, or email enquiry, we reply promptly within business hours.
                 </p>
               </div>
               
-              <div className="space-y-5">
+              <div className="space-y-3.5">
                 {/* WhatsApp Channel */}
-                <div className="group flex gap-4 p-6 rounded-2xl bg-paper shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-success-lighter text-success-main flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">
-                    <HugeiconsIcon icon={WhatsappIcon} size={22} strokeWidth={1.8} />
+                <div
+                  onClick={() => openWhatsApp()}
+                  className="group flex gap-4 p-5 rounded-2xl bg-paper border border-outline/70 hover:border-emerald-500 transition-all duration-300 cursor-pointer shadow-xs hover:shadow-card hover:-translate-y-0.5"
+                >
+                  <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 flex items-center justify-center font-bold group-hover:scale-105 transition-transform">
+                    <HugeiconsIcon icon={WhatsappIcon} size={20} />
                   </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-primary mb-1">WhatsApp</h4>
-                    <button 
-                      onClick={() => openWhatsApp()} 
-                      className="bg-transparent border-none p-0 cursor-pointer text-base sm:text-lg font-bold text-success-main hover:underline text-left"
-                    >
+                  <div className="min-w-0">
+                    <h4 className="text-xs font-bold text-secondary uppercase tracking-wider mb-0.5">WhatsApp Support</h4>
+                    <p className="text-sm sm:text-base font-bold text-emerald-600 group-hover:underline">
                       {contactInfo.phone}
-                    </button>
+                    </p>
+                    <p className="text-[11px] text-secondary mt-0.5 font-normal">Tap to start instant chat</p>
                   </div>
                 </div>
 
                 {/* Email Channel */}
-                <div className="group flex gap-4 p-6 rounded-2xl bg-paper shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-brand-lighter text-brand-main flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">
-                    <HugeiconsIcon icon={Mail01Icon} size={22} strokeWidth={1.8} />
+                <a
+                  href={`mailto:${contactInfo.email}`}
+                  className="group flex gap-4 p-5 rounded-2xl bg-paper border border-outline/70 hover:border-brand-main dark:hover:border-brand-secondary transition-all duration-300 shadow-xs hover:shadow-card hover:-translate-y-0.5 block"
+                >
+                  <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-brand-lighter/80 dark:bg-brand-main/20 text-brand-main dark:text-brand-secondary flex items-center justify-center font-bold group-hover:scale-105 transition-transform">
+                    <HugeiconsIcon icon={Mail01Icon} size={20} />
                   </div>
                   <div className="min-w-0">
-                    <h4 className="text-sm font-bold text-primary mb-1">{t.contact_info_email}</h4>
-                    <a 
-                      href={`mailto:${contactInfo.email}`} 
-                      className="text-base sm:text-lg font-bold text-brand-main hover:underline break-all block"
-                    >
+                    <h4 className="text-xs font-bold text-secondary uppercase tracking-wider mb-0.5">Email Support</h4>
+                    <p className="text-sm sm:text-base font-bold text-primary group-hover:text-brand-main truncate">
                       {contactInfo.email}
-                    </a>
+                    </p>
+                    <p className="text-[11px] text-secondary mt-0.5 font-normal">Expect reply within 24 hours</p>
                   </div>
-                </div>
+                </a>
 
                 {/* Location Channel */}
-                <div className="group flex gap-4 p-6 rounded-2xl bg-paper shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-info-lighter text-info-main flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">
-                    <HugeiconsIcon icon={Location01Icon} size={22} strokeWidth={1.8} />
+                <div className="group flex gap-4 p-5 rounded-2xl bg-paper border border-outline/70 hover:border-brand-main dark:hover:border-brand-secondary transition-all duration-300 shadow-xs hover:shadow-card hover:-translate-y-0.5">
+                  <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-brand-lighter/80 dark:bg-brand-main/20 text-brand-main dark:text-brand-secondary flex items-center justify-center font-bold group-hover:scale-105 transition-transform">
+                    <HugeiconsIcon icon={Location01Icon} size={20} />
                   </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-primary mb-1">{t.contact_info_location}</h4>
-                    <span className="text-secondary font-medium text-sm sm:text-base leading-snug">{contactInfo.location}</span>
+                  <div className="min-w-0">
+                    <h4 className="text-xs font-bold text-secondary uppercase tracking-wider mb-0.5">Headquarters</h4>
+                    <p className="text-sm font-bold text-primary leading-snug">{contactInfo.location}</p>
+                    <p className="text-[11px] text-secondary mt-0.5 font-normal">Serving businesses across India</p>
                   </div>
                 </div>
 
                 {/* Hours Channel */}
-                <div className="group flex gap-4 p-6 rounded-2xl bg-paper shadow-card hover:shadow-z16 hover:-translate-y-1.5 transition-all duration-300">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-warning-lighter text-warning-main flex items-center justify-center font-bold group-hover:scale-110 transition-transform duration-300">
-                    <HugeiconsIcon icon={Clock02Icon} size={22} strokeWidth={1.8} />
+                <div className="group flex gap-4 p-5 rounded-2xl bg-paper border border-outline/70 transition-all duration-300 shadow-xs">
+                  <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-amber-50 dark:bg-amber-950/30 text-amber-600 flex items-center justify-center font-bold">
+                    <HugeiconsIcon icon={Clock02Icon} size={20} />
                   </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-primary mb-1">{t.contact_info_hours}</h4>
-                    <span className="text-secondary font-medium text-sm sm:text-base">{t.contact_info_hours_val}</span>
+                  <div className="min-w-0">
+                    <h4 className="text-xs font-bold text-secondary uppercase tracking-wider mb-0.5">Working Hours</h4>
+                    <p className="text-sm font-bold text-primary">{t.contact_info_hours_val || "Mon – Sat: 9:00 AM – 7:00 PM"}</p>
+                    <p className="text-[11px] text-secondary mt-0.5 font-normal">Sunday: Automated WhatsApp Available</p>
                   </div>
                 </div>
               </div>

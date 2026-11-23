@@ -3,6 +3,7 @@
 import { ContactApi } from "@/api/repositories/contactApi";
 import { useThemeStore } from "@/store/themeStore";
 import { getContactFieldsConfig, translations } from "@/views/home-page/data";
+import { FormInput, FormSelect, FormTextarea } from "@/components/ui";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -106,75 +107,50 @@ export default function ContactForm() {
 
             const cellClass = field.fullWidth ? "col-span-1 sm:col-span-2" : "col-span-1";
 
-            // Common class for inputs/selects/textareas for solid premium styling with clearly visible borders
-            const inputBaseClass = `
-              w-full px-4 py-3.5 rounded-xl border bg-gray-50 dark:bg-grey-900/50 
-              text-primary placeholder:text-secondary/50 font-medium text-sm
-              transition-all duration-300 outline-none
-              ${hasError 
-                ? "border-red-500/80 focus:border-red-500" 
-                : "border-gray-300 dark:border-gray-700 focus:border-brand-main"
-              }
-              disabled:opacity-50 disabled:cursor-not-allowed
-            `.trim().replace(/\s+/g, " ");
-
             return (
-              <div key={field.id} className={`${cellClass} flex flex-col gap-2`}>
-                <label 
-                  htmlFor={field.id} 
-                  className="text-sm font-bold text-primary tracking-wide"
-                >
-                  {field.label}
-                  {field.required && <span className="text-error-main ml-1">*</span>}
-                </label>
-
+              <div key={field.id} className={cellClass}>
                 {field.component === "input" && (
-                  <input
+                  <FormInput
                     id={field.id}
                     name={field.id}
+                    label={field.label}
+                    required={field.required}
                     type={field.type}
                     value={value}
                     onChange={handleChange}
                     placeholder={field.placeholder}
                     disabled={status === "submitting"}
-                    className={inputBaseClass}
+                    error={hasError ? errors[field.id] : undefined}
                   />
                 )}
 
                 {field.component === "select" && (
-                  <select
+                  <FormSelect
                     id={field.id}
                     name={field.id}
+                    label={field.label}
+                    required={field.required}
                     value={value}
                     onChange={handleChange}
                     disabled={status === "submitting"}
-                    className={`${inputBaseClass} appearance-none cursor-pointer`}
-                  >
-                    {(field.options || []).map((opt) => (
-                      <option key={opt.value} value={opt.value} className="bg-background text-primary">
-                        {opt.label}
-                      </option>
-                    ))}
-                  </select>
+                    options={field.options}
+                    error={hasError ? errors[field.id] : undefined}
+                  />
                 )}
 
                 {field.component === "textarea" && (
-                  <textarea
+                  <FormTextarea
                     id={field.id}
                     name={field.id}
+                    label={field.label}
+                    required={field.required}
                     value={value}
                     onChange={handleChange}
                     placeholder={field.placeholder}
                     disabled={status === "submitting"}
                     rows={4}
-                    className={`${inputBaseClass} resize-none`}
+                    error={hasError ? errors[field.id] : undefined}
                   />
-                )}
-
-                {hasError && (
-                  <span className="text-xs font-semibold text-error-main animate-fade-in">
-                    {errors[field.id]}
-                  </span>
                 )}
               </div>
             );

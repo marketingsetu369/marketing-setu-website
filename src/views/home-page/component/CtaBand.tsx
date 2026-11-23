@@ -22,7 +22,7 @@ export default function CtaBand({
   const t = translations[language] || translations.en;
 
   return (
-    <section className="py-16 md:py-20 bg-background">
+    <section className="py-12 md:py-14 bg-background">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative rounded-3xl overflow-hidden bg-gray-950 dark:bg-gray-900 shadow-z24">
 

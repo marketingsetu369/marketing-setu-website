@@ -340,7 +340,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${poppins.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${poppins.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
         {/* Google tag (gtag.js) */}
         <Script
@@ -365,7 +365,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrg) }}
         />
       </head>
-      <body className="bg-background text-primary antialiased selection:bg-brand-main selection:text-white min-h-screen">
+      <body suppressHydrationWarning className="bg-background text-primary antialiased selection:bg-brand-main selection:text-white min-h-screen">
         {children}
         <Toaster position="bottom-right" expand={false} richColors />
       </body>

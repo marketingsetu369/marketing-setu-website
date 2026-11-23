@@ -2,37 +2,32 @@ import ServicesView from "@/views/home-page/ServicesView";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Services — WhatsApp Marketing, Local SEO & Custom Business Pages in Maharashtra",
+  title: "Services — WhatsApp Marketing, Local SEO & Custom Business Pages in India",
   description:
-    "Explore MarketingSetu's high-impact digital marketing services across Pune, Satara, Sangli, Kolhapur & Maharashtra: Automated WhatsApp Missed-Call Follow-ups, Digital Business Cards, Instant Landing Pages, Google Map Ranking, and Festival Social Post Templates.",
+    "Explore MarketingSetu's high-impact digital marketing services across India: Automated WhatsApp Missed-Call Follow-ups, Digital Business Cards, Instant Landing Pages, Google Map Ranking, and Festival Social Post Templates.",
   keywords: [
-    "WhatsApp Marketing Satara",
-    "WhatsApp Marketing Sangli",
-    "WhatsApp Marketing Kolhapur",
-    "WhatsApp Marketing Pune",
-    "Local SEO Satara",
-    "Local SEO Sangli",
-    "Local SEO Kolhapur",
-    "Local SEO Maharashtra",
-    "Digital Business Landing Pages Maharashtra",
-    "Google Business Profile Setup Pune Kolhapur",
+    "WhatsApp Marketing India",
+    "Local SEO India",
+    "Digital Business Landing Pages India",
+    "Google Business Profile Setup India",
     "Missed Call Auto Response India",
+    "WhatsApp Automation Pune Mumbai Delhi Bengaluru",
+    "Festival Poster Maker India",
+    "Digital Khata Passbook India",
   ],
   alternates: {
     canonical: "/services",
   },
   openGraph: {
-    title: "Digital Marketing & WhatsApp Automation Services in Maharashtra | MarketingSetu",
+    title: "Digital Marketing & WhatsApp Automation Services in India | MarketingSetu",
     description:
-      "Convert missed calls into repeat customers in Satara, Sangli, Kolhapur, Pune & all over Maharashtra with automated WhatsApp marketing.",
+      "Convert missed calls into repeat customers across India with automated WhatsApp marketing and digital business pages.",
     url: "/services",
     type: "website",
   },
   other: {
-    "geo.region": "IN-MH",
-    "geo.placename": "Satara, Sangli, Kolhapur, Pune, Maharashtra",
-    "geo.position": "18.5204;73.8567",
-    "ICBM": "18.5204, 73.8567",
+    "geo.region": "IN",
+    "geo.placename": "India",
   },
 };
 

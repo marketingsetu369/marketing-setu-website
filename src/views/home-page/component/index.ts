@@ -15,8 +15,14 @@ export { default as StatBar } from "./StatBar";
 export { default as StepsSection } from "./StepsSection";
 export { default as TestimonialCard } from "./TestimonialCard";
 export { default as InteractiveShowcase } from "./InteractiveShowcase";
+export { default as FeatureShowcase } from "./FeatureShowcase";
+export { default as HomeFaq } from "./HomeFaq";
+export { default as HomeTestimonials } from "./HomeTestimonials";
 export { default as InstantCardGenerator } from "./InstantCardGenerator";
 export { useWhatsApp } from "./useWhatsApp";
+
+// Reusable UI Primitives
+export * from "@/components/ui";
 
 // Type re-exports
 export type { FaqItem } from "./FaqSection";

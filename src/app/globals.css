@@ -4,12 +4,12 @@
   --font-sans: var(--font-inter);
 
   /* Brand */
-  --color-brand-lighter: #E7EBF0;
-  --color-brand-light: rgba(15, 44, 89, 0.05);
-  --color-brand-main: #0F2C59;
-  --color-brand-secondary: #14B8A6;
-  --color-brand-dark: #0A1E3D;
-  --color-brand-darker: #061326;
+  --color-brand-lighter: #E6EDF5;
+  --color-brand-light: rgba(0, 48, 88, 0.05);
+  --color-brand-main: #003058;
+  --color-brand-secondary: #089848;
+  --color-brand-dark: #002240;
+  --color-brand-darker: #00172B;
 
   /* Info */
   --color-info-lighter: #CAFDF5;

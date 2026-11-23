@@ -8,6 +8,9 @@ import {
   WhatsappIcon,
   CheckmarkCircle02Icon,
   MoneyBag01Icon,
+  PaintBoardIcon,
+  AnalyticsUpIcon,
+  Calendar01Icon,
 } from "@hugeicons/core-free-icons";
 
 export interface ServiceBlockItem {
@@ -30,11 +33,12 @@ export default function ServiceBlock({ service }: ServiceBlockProps) {
   const getServiceIcon = (id: string) => {
     switch (id) {
       case "digital-business-card": return SmartphoneNfcIcon;
-      case "products-services":     return ShoppingBag01Icon;
-      case "photo-gallery":         return Image01Icon;
-      case "testimonials-reviews":  return StarsIcon;
       case "whatsapp-marketing":    return WhatsappIcon;
+      case "poster-maker":          return PaintBoardIcon;
+      case "enquiries-manager":     return AnalyticsUpIcon;
+      case "advance-bookings":      return Calendar01Icon;
       case "income-expense-log":    return MoneyBag01Icon;
+      case "products-services":     return ShoppingBag01Icon;
       default:                      return SmartphoneNfcIcon;
     }
   };
@@ -42,11 +46,12 @@ export default function ServiceBlock({ service }: ServiceBlockProps) {
   const getServiceColor = (id: string) => {
     switch (id) {
       case "digital-business-card": return "text-[#4F46E5] bg-[#EDEAFC] dark:bg-[#4F46E5]/15";
-      case "products-services":     return "text-brand-main bg-brand-lighter dark:bg-brand-main/15";
-      case "photo-gallery":         return "text-blue-500 bg-blue-50 dark:bg-blue-950/15";
-      case "testimonials-reviews":  return "text-warning-dark bg-warning-lighter dark:bg-warning-dark/15";
       case "whatsapp-marketing":    return "text-[#10C85A] bg-[#D8FBDE] dark:bg-[#10C85A]/15";
+      case "poster-maker":          return "text-brand-main bg-brand-lighter dark:bg-brand-main/15";
+      case "enquiries-manager":     return "text-indigo-600 bg-indigo-50 dark:bg-indigo-950/20";
+      case "advance-bookings":      return "text-blue-600 bg-blue-50 dark:bg-blue-950/20";
       case "income-expense-log":    return "text-emerald-700 bg-emerald-50 dark:bg-emerald-950/20";
+      case "products-services":     return "text-purple-600 bg-purple-50 dark:bg-purple-950/20";
       default:                      return "text-brand-main bg-brand-lighter";
     }
   };
@@ -61,47 +66,53 @@ export default function ServiceBlock({ service }: ServiceBlockProps) {
   const iconRotate = service.reversed ? "rotate-6"  : "-rotate-6";
 
   return (
-    <section id={service.id} className="py-16 md:py-24 bg-background">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <section id={service.id} className="py-16 md:py-20 bg-background border-t border-outline/40">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
 
-          {/* Text Content */}
-          <div className={`space-y-6 ${textOrder}`}>
-            <div className="flex items-center gap-3">
-              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-z4 ${colorClasses}`}>
-                <HugeiconsIcon icon={IconComponent} size={24} strokeWidth={1.8} />
-              </div>
-              {service.badge && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full bg-paper border border-outline text-[10px] font-bold uppercase tracking-wider text-secondary">
+          {/* Text Content: Sober, modern, refined typography with compact subtitle */}
+          <div className={`space-y-5 ${textOrder}`}>
+            
+            {/* Top Eyebrow / Category Tag */}
+            {service.badge && (
+              <div>
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-brand-light text-brand-main dark:text-brand-secondary border border-brand-secondary/20 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">
                   {service.badge}
                 </span>
-              )}
-            </div>
+              </div>
+            )}
 
-            <h2 className="text-3xl sm:text-4xl font-semibold text-primary tracking-tight leading-tight">
+            {/* Title */}
+            <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-bold text-primary tracking-tight leading-snug">
               {service.title}
             </h2>
 
-            <p className="text-base sm:text-lg text-secondary leading-relaxed font-normal">
+            {/* Subtitle - slightly larger, comfortable text size */}
+            <p className="text-sm sm:text-base text-secondary leading-relaxed font-normal max-w-xl">
               {service.lead}
             </p>
 
-            <div className="space-y-3 pt-2">
-              {service.features.map((feat, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <span className="text-[#10C85A] mt-0.5 shrink-0">
-                    <HugeiconsIcon icon={CheckmarkCircle02Icon} size={16} />
-                  </span>
-                  <p className="text-sm font-medium text-primary/95">{feat}</p>
-                </div>
-              ))}
+            {/* Feature Highlights - clean, minimal inline list with subtle check icon */}
+            <div className="pt-2">
+              <ul className="space-y-3">
+                {service.features.map((feat, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="w-5 h-5 rounded-full bg-brand-light text-brand-main dark:text-brand-secondary flex items-center justify-center shrink-0 mt-0.5 border border-brand-secondary/30">
+                      <HugeiconsIcon icon={CheckmarkCircle02Icon} size={13} strokeWidth={2.5} />
+                    </span>
+                    <span className="text-sm sm:text-[15px] font-medium text-primary leading-snug">
+                      {feat}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
           {/* Icon Mockup Panel */}
-          <div className={`w-full flex items-center justify-center py-6 md:py-10 ${iconOrder}`}>
-            <div className={`rounded-[32px] shadow-z12 p-12 w-56 h-56 flex items-center justify-center transform transition-all duration-300 hover:scale-105 hover:-translate-y-1 ${colorClasses} ${iconRotate}`}>
-              <HugeiconsIcon icon={IconComponent} size={96} strokeWidth={1.2} />
+          <div className={`w-full flex items-center justify-center py-6 md:py-8 ${iconOrder}`}>
+            <div className={`rounded-[36px] shadow-card border border-white/60 dark:border-white/10 p-12 w-52 h-52 sm:w-60 sm:h-60 flex items-center justify-center transform transition-all duration-300 hover:scale-105 hover:-translate-y-1 ${colorClasses} ${iconRotate}`}>
+              <HugeiconsIcon icon={IconComponent} size={88} strokeWidth={1.2} />
             </div>
           </div>
 

@@ -56,6 +56,7 @@ export const useThemeStore = create<ThemeState>()(
     }),
     {
       name: 'Theme-store', // key in localStorage
+      skipHydration: true,
     }
   )
 );

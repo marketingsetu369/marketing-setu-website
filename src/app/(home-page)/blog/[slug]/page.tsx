@@ -41,7 +41,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <PageWrapper>
-      <article className="max-w-[800px] mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+      <article className="max-w-[800px] mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         {/* Breadcrumb */}
         <nav className="text-sm text-secondary mb-8 flex items-center gap-2">
           <Link href="/" className="hover:text-brand-main transition-colors">Home</Link>
