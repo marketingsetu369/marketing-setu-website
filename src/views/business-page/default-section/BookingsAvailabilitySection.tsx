@@ -180,7 +180,7 @@ export function BookingsAvailabilitySection({ slug }: { slug: string }) {
     year: "numeric",
   });
 
-  if (loading && slots.length === 0) return null;
+  if (loading || slots.length === 0) return null;
 
   return (
     <div className="pt-2 pb-6 px-4 md:px-8">

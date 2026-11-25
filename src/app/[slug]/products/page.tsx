@@ -44,7 +44,7 @@ const getImageUrl = (url?: string) => {
 async function getBusinessData(slug: string) {
   try {
     const res = await BusinessPageApi.getPublicBusinessPage(slug);
-    return res && (res.business_name || res.header?.business_name) ? res : null;
+    return res && res.header?.businessName ? res : null;
   } catch (error) {
     console.error("Error fetching business data on server:", error);
     return null;
@@ -63,19 +63,13 @@ export async function generateMetadata({
     };
   }
 
-  const businessName =
-    data.header?.businessName ||
-    data.header?.business_name ||
-    data.business_name ||
-    "";
+  const businessName = data.header?.businessName || "";
   const city = data.contact?.city || data.city || "Pune";
   const state = data.contact?.state || data.state || "Maharashtra";
 
   const title = `Products & Services — ${businessName} | MarketingSetu`;
   const description = `Browse all products, offerings, and services provided by ${businessName} in ${city}, ${state}. Contact directly or order on WhatsApp.`;
-  const logoUrl = getImageUrl(
-    data.header?.logoUrl || data.header?.logo_url || data.logo_url
-  );
+  const logoUrl = getImageUrl(data.header?.logoUrl);
 
   const keywords = [
     `${businessName} Products`,
@@ -123,7 +117,7 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  const businessName = data?.header?.business_name || data?.business_name || "";
+  const businessName = data?.header?.businessName || "";
   const products = Array.isArray(data?.products) ? data.products : [];
 
   const jsonLd = {
