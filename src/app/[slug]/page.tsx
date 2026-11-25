@@ -45,7 +45,11 @@ const getImageUrl = (url?: string) => {
 async function getBusinessData(slug: string) {
   try {
     const res = await BusinessPageApi.getPublicBusinessPage(slug);
-    return res && res.header?.businessName ? res : null;
+    const hasName =
+      res?.header?.businessName ||
+      res?.header?.business_name ||
+      res?.business_name;
+    return res && hasName ? res : null;
   } catch (error) {
     console.error("Error fetching business data on server:", error);
     return null;
@@ -62,9 +66,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const businessName = data.header?.businessName || "";
+  const businessName =
+    data.header?.businessName ||
+    data.header?.business_name ||
+    data.business_name ||
+    "";
   const tagline = data.header?.tagline || "";
-  const category = data.header?.businessCategory || "";
+  const category =
+    data.header?.businessCategory || data.header?.business_category || "";
   const city = data.contact?.city || "Pune";
   const state = data.contact?.state || "Maharashtra";
 
@@ -136,14 +145,21 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  const businessName = data?.header?.businessName || "";
+  const businessName =
+    data?.header?.businessName ||
+    data?.header?.business_name ||
+    data?.business_name ||
+    "";
   const businessDescription = data?.header?.tagline || "";
   const telephone = data?.contact?.phone || "";
   const email = data?.contact?.email || "";
   const streetAddress = data?.contact?.address || "";
   const city = data?.contact?.city || "Pune";
   const state = data?.contact?.state || "Maharashtra";
-  const logo = getImageUrl(data?.header?.logoUrl) || undefined;
+  const logo =
+    getImageUrl(
+      data?.header?.logoUrl || data?.header?.logo_url || data?.logo_url
+    ) || undefined;
 
   // JSON-LD LocalBusiness Schema
   const jsonLd = data
